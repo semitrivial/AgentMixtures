@@ -1,0 +1,141 @@
+\documentclass[runningheads]{llncs}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+% \smartqed  % flush right qed marks, e.g. at end of proof
+% \usepackage{graphicx}
+
+\newcommand{\myclaim}[1]{\textbf{Claim #1:}}
+\def\myulcorner{\mathord{\ulcorner}}
+\def\myurcorner{\mathord{\urcorner}}
+\def\HD{\textsc{HD}}
+\def\R{\mathbb{R}}
+\def\N{\mathbb{N}}
+%\newtheorem{definition}[definition]{Definition}
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+\title{Convention-ignorers and symmetric universal intelligence}
+\titlerunning{Convention-ignorers}
+\author{Samuel Allen
+Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
+
+\institute{The U.S.\ Securities and Exchange Commission
+\email{samuelallenalexander@gmail.com}
+\url{https://philpeople.org/profiles/samuel-alexander/publications}}
+
+\maketitle
+
+\begin{abstract}
+    If a Reinforcement Learning (RL) agent has intelligence +N, then should
+    that agent's massochistic alter-ego (who sees rewards as punishments and
+    punishments as rewards) have intelligence -N? Alexander and Hutter argued for
+    the plausibility of this symmetry constraint as an axiom for RL
+    intelligence measurement. As part of their argument, they sketched an
+    informal proof that this symmetry constraint is implied by a weaker-seeming
+    constraint. We strengthen this part of the argument, showing that an even
+    weaker-seeming constraint implies full symmetry, and we make the argument
+    rigorous. We formalize and prove: if intelligence is measured
+    as weighted average performance, with weights chosen such that every agent
+    that equals its own alter-ego has intelligence $0$, then this implies the
+    above symmetry condition for all RL agents.
+\end{abstract}
+
+\section{Introduction}
+
+Reinforcement Learning (RL) is one of the main paradigms of machine learning.
+In RL, an \emph{agent} $\pi$ interacts with an \emph{environment} $\mu$ (see Section ... for
+a precise formalization). The agent and the environment take turns. On $\pi$'s
+turn, $\pi$ chooses an \emph{action}. On $\mu$'s turn, $\mu$
+responds with an \emph{observation} and a numerical \emph{reward}. A good agent $\pi$
+should attempt to use this interaction to gradually learn how the environment works,
+and, armed with that
+knowledge, choose actions so as to maximize rewards (or equivalently, minimize
+punishments---each reward of $+r$ being synonymous with a punishment of $-r$ and
+vice versa).
+
+Legg and Hutter proposed a formal intelligence measure for reinforcement learning agents.
+The idea is fairly simple. Restrict attention to certain well-behaved computable
+environments, and define an agent $\pi$'s intelligence $\Upsilon(\pi)$ to
+be $\pi$'s suitably-weighted
+average performance across all those environments. As for the weights, Legg and
+Hutter proposed using the so-called universal prior, that is to say: give each environment
+$\mu$ a weight of $2^{-K(\mu)}$ where $K(\mu)$ is the Kolmogorov complexity of $\mu$. The
+Kolmogorov complexity of $\mu$ is the length of the shortest computer program for
+$\mu$. There are good reasons for these weights, but in the present paper,
+we will take a step back and consider arbitrary weights.
+Note, however, that Kolmogorov
+complexity implicitly depends on the background choice of a model of computation: the same
+environment could have a different Kolmogorov complexity depending on how computer programs
+are formalized.
+
+In Legg and Hutter's original paper, environments were only allowed to give
+non-negative rewards.
+Alexander and Hutter relaxed this requirement, allowing environments to give negative
+rewards (punishments). This allows the consideration of an
+agent $\pi$'s \emph{dual} (or ``alter-ego'') $\overline\pi$.
+For each agent $\pi$, $\overline\pi$ is the agent which acts exactly the way $\pi$ would
+act if all rewards sent to $\pi$ had their sign flipped. Thus, intuitively, $\overline\pi$
+is a massochistic version of $\pi$. Whatever ingenuity $\pi$
+uses to maximize reward, $\overline\pi$ uses the exact same ingenuity to maximize
+punishment. Similarly, for every environment $\mu$, the dual environment $\overline\mu$
+is exactly like $\mu$ except that all rewards have their signs flipped. Thus if $\mu$ is
+an environment which rewards (resp.\ punishes) the agent for winning (resp.\ losing) chess,
+then $\overline\mu$ is the same, except that $\overline\mu$
+punishes (resp.\ rewards) the agent for winning (resp.\ losing).
+
+Alexander and Hutter proved that if the background model of computation is such that
+$K(\mu)=K(\overline\mu)$ for every computable environment $\mu$, then for every agent $\pi$,
+$\Upsilon(\overline\pi)=-\Upsilon(\pi)$ (where $\Upsilon$ is the Legg-Hutter universal
+intelligence measure, defined as weighted-average performance where each environment $\mu$
+has weight $2^{-K(\mu)}$).
+Alexander and Hutter argued that the necessity of the hypothesis $K(\mu)=K(\overline\mu)$
+reflects a hidden bias in the very foundation of reinforcement learning.
+Namely: RL's convention that positive rewards are good and negative rewards are bad,
+is arbitrary. RL would be just as valid with the opposite convention (in which case the
+word ``reward'' might be changed to ``cost''). This arbitrary convention can inadvertently
+add bias to the universal prior, because for some environments $\mu$, a priori, $K(\mu)$ and
+$K(\overline\mu)$ might be unequal. If, for instance, $K(\mu)>K(\overline\mu)$, then this
+leads to an unintended bias in the universal prior, namely, that $\mu$ receives less weight
+than $\overline\mu$, whereas, if RL had used the opposite convention (``cost'' instead of
+``reward''), then $\mu$ and $\overline\mu$ would be swapped, and $\mu$ would receive
+\emph{more} weight than $\overline\mu$. The relative complexity of two environments should
+not depend on whether RL is formalized in terms of ``reward'' or in terms of ``cost''!
+This scandal can be avoided by requiring that the background model of computation satisfy
+$K(\mu)=K(\overline\mu)$ for every $\mu$.
+
+Alexander and Hutter argued that the property $\Upsilon(\overline\pi)=-\Upsilon(\pi)$
+is a natural axiom for RL agent intelligence measures
+(here ``axiom'' is meant as ``classification axiom'', not as
+``prescriptive axiom'', i.e., the claim is \emph{not} that all intelligence
+measures $\Upsilon$ should have this symmetry property, but rather, that
+this symmetry property is a natural way to partition intelligence measures into two
+classes, just like how in group theory the commutative ``axiom'' partitions
+groups into abelian and non-abelian groups). In order to justify the plausibility of this
+axiom, they sketched an informal proof that it is implied by a weaker-seeming axiom.
+Say that an intelligence measure $\Upsilon$ is \emph{weakly symmetric} if for every agent
+$\pi$, if $\Upsilon(\pi)\not=0$ then $\Upsilon(\pi)\not=\Upsilon(\overline\pi)$.
+Alexander and Hutter informally proved that if $\Upsilon$ measures intelligence as
+weighted-average performance, then weak symmetry
+implies $\Upsilon(\overline\pi)=-\Upsilon(\pi)$. The proof was informal because it
+involved applying $\Upsilon$ to certain objects which intuitively look like agents but
+which are not technically agents according to the precise RL formalization used by
+Alexander and Hutter.
+
+We will make the above proof formal. We will also prove a similar result.
+Say that $\pi$ \emph{ignores convention} if $\pi=\overline\pi$ (we say that such
+$\pi$ ignore convention because, intuitively, such agents $\pi$ are unaware whether they
+are acting in the ``positive is good'' version of RL, where the environment outputs ``rewards'',
+or the ``negative is good'' version of RL,where the environment outputs ``costs''.)
+We will prove that if $\Upsilon$ measures intelligence as weighted-average performance,
+and if every convention-ignorer has intelligence $0$, then every agent $\pi$ satisfies
+$\Upsilon(\overline\pi)=-\Upsilon(\pi)$.
+
+
+
+\bibliographystyle{splncs04}
+\bibliography{main}
+
+\end{document}
