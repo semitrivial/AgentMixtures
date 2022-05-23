@@ -145,6 +145,7 @@ The structure of this paper is as follows.
 \end{definition}
 
 \begin{lemma}
+\label{factorizationlemma}
     For all $s$, $\pi$, $\mu$ as in Definition \ref{pullbackdef},
     \[
         (\pi,\mu)_*(s) = \pi_*(s)\mu_*(s).
@@ -157,7 +158,6 @@ The structure of this paper is as follows.
 
 \begin{lemma}
 \label{basicprobabilitylemma}
-    For any agent $\pi$, environment $\mu$, and $n\in\mathbb N$,
     $V^\pi_{\mu,n}=\sum_{s\in S_n}(\pi,\mu)_*(s)r(s),$
     where $S_n$ is the set of all length-$n$ initial
     percept-action sequences and $r(s)$ is the total reward in $s$.
@@ -168,6 +168,7 @@ The structure of this paper is as follows.
 \end{proof}
 
 \begin{definition}
+\label{maindefn}
     Assume $\pi$ and $\rho$ are agents.
     Define the new agent $\pi\oplus\rho$ by
     \[
@@ -184,7 +185,30 @@ The structure of this paper is as follows.
 \end{lemma}
 
 \begin{proof}
-    ...
+    We must show $\sum_{a\in\mathcal A}(\pi\oplus\rho)(a|s)=1$ for every
+    percept-action sequence $s$ ending in a percept. Fix some such $s$.
+
+    Case 1: $\pi_*(s)=\rho_*(s)=0$. Then by definition each
+    $(\pi\oplus\rho)(a|s)=1/|\mathcal A|$ so the claim is immediate.
+
+    Case 2: $\pi_*(s)+\rho_*(s)>0$. Then
+    \begin{align*}
+        \sum_{a\in\mathcal A}(\pi\oplus\rho)(a|s)
+            &= \sum_{a\in\mathcal A}
+                \frac{\pi_*(s\frown a)+\rho_*(s\frown a)}{\pi_*(s)+\rho_*(s)}
+                &\mbox{(Definition \ref{maindefn})}\\
+            &= \sum_{a\in\mathcal A}
+                \frac{\pi_*(s)\pi(a|s)+\rho_*(s)\rho(a|s)}{\pi_*(s)+\rho_*(s)}
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \frac{
+                \pi_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi(a|s)$}\right)
+                +
+                \rho_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\rho(a|s)$}\right)
+                }{\pi_*(s)+\rho_*(s)}
+                &\mbox{(Algebra)}\\
+            &= \frac{\pi_*(s)+\rho_*(s)}{\pi_*(s)+\rho_*(s)}=1.
+                &\mbox{($\pi$, $\rho$ are agents)}
+    \end{align*}
 \end{proof}
 
 \begin{theorem}
@@ -213,21 +237,54 @@ The structure of this paper is as follows.
         (\pi\oplus\rho,\mu)_*(s) &= (\pi\oplus\rho,\mu)_*(t\frown p)\\
             &= (\pi\oplus\rho,\mu)_*(t)\mu(p|t)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \frac12((\pi,\mu)_*(t)+(\rho,\mu)_*(t))\mu(p|t)
+            &= ((\pi,\mu)_*(t)+(\rho,\mu)_*(t))\mu(p|t)/2
                 &\mbox{(Induction)}\\
-            &= \frac12((\pi,\mu)_*(t)\mu(p|t) + (\rho,\mu)_*(t)\mu(p|t))
+            &= ((\pi,\mu)_*(t)\mu(p|t) + (\rho,\mu)_*(t)\mu(p|t))/2
                 &\mbox{(Algebra)}\\
-            &= \frac12((\pi,\mu)_*(t\frown p) + (\rho,\mu)_*(t\frown p))
+            &= ((\pi,\mu)_*(t\frown p) + (\rho,\mu)_*(t\frown p))/2
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \frac12((\pi,\mu)_*(s) + (\rho,\mu)_*(s)),
+            &= ((\pi,\mu)_*(s) + (\rho,\mu)_*(s))/2,
     \end{align*}
     as desired.
 
     Case 3: $s=t\frown a$ for some action $a$.
 
     Subcase 3.1: $\pi_*(t)=\rho_*(t)=0$.
-        By induction, $(\pi\oplus\rho)_*(t)=\frac12(0+0)=0$.
-        
+        By Lemma \ref{factorizationlemma}, $(\pi,\mu)_*(t)=(\rho,\mu)_*(t)=0$.
+        So by induction, $(\pi\oplus\rho,\mu)_*(t)=\frac12(0+0)=0$.
+        By Definition \ref{pullbackdef},
+        \[
+            (\pi,\mu)_*(s)=(\pi,\mu)_*(t\frown a)=(\pi,\mu)_*(t)\pi(a|t)=0\pi(a|t)=0,
+        \]
+        and similarly $(\rho,\mu)_*(s)=0$ and $(\pi\oplus\rho,\mu)_*(s)=0$.
+        Thus $(\pi\oplus\rho,\mu)_*(s)=\frac12((\pi,\mu)_*(s)+(\rho,\mu)_*(s))$
+        as desired.
+
+    Subcase 3.2: $\pi_*(t)+\rho_*(t)>0$. Then
+    \begin{align*}
+        (\pi\oplus\rho,\mu)_*(s) &= (\pi\oplus\rho,\mu)_*(t\frown a)\\
+            &= (\pi\oplus\rho,\mu)_*(t)(\pi\oplus\rho)(a|t)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= (\pi\oplus\rho,\mu)_*(t)\frac{\pi_*(t\frown a)+\rho_*(t\frown a)}
+                {\pi_*(t)+\rho_*(t)}
+                &\mbox{(Definition \ref{maindefn})}\\
+            &= (\pi\oplus\rho,\mu)_*(t)\frac{\pi_*(t)\pi(a|t)+\rho_*(t)\rho(a|t)}
+                {\pi_*(t)+\rho_*(t)}
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \frac{(\pi,\mu)_*(t)+(\rho,\mu)_*(t)}2
+                \frac{\pi_*(t)\pi(a|t)+\rho_*(t)\rho(a|t)}{\pi_*(t)+\rho_*(t)}
+                &\mbox{(Induction)}\\
+            &= \frac{(\pi_*(t)+\rho_*(t))\mu_*(t)}2
+                \frac{\pi_*(t)\pi(a|t)+\rho_*(t)\rho(a|t)}{\pi_*(t)+\rho_*(t)}
+                &\mbox{(Lemma \ref{factorizationlemma})}\\
+            &= (\pi_*(t)\mu_*(t)\pi(a|t) + \rho_*(t)\mu_*(t)\rho(a|t))/2
+                &\mbox{(Algebra)}\\
+            &= ((\pi,\mu)_*(t)\pi(a|t) + (\rho,\mu)_*(t)\rho(a|t))/2
+                &\mbox{(Lemma \ref{factorizationlemma})}\\
+            &= ((\pi,\mu)_*(t\frown a) + (\rho,\mu)_*(t\frown a))/2,
+                &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+    as desired.
 \end{proof}
 
 \section{Duality and Janus agents:
@@ -390,7 +447,7 @@ make it clearer what exactly a Markov agent is.
     Then
     \[
         (\pi\oplus\rho)(a_1|s_1)
-        &= \frac{\pi_*(s_1\frown a_1) + \rho_*(s_1\frown a_1)}{\pi_*(s_1)+\rho_*(s_1)}
+        = \frac{\pi_*(s_1\frown a_1) + \rho_*(s_1\frown a_1)}{\pi_*(s_1)+\rho_*(s_1)}
         = \frac{0.9 + 0.1}{1+1} = \frac12
     \]
     and
