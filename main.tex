@@ -13,12 +13,12 @@
 \def\N{\mathbb{N}}
 %\newtheorem{definition}[definition]{Definition}
 
-\pagenumbering{gobble}
+% \pagenumbering{gobble}
 
 \begin{document}
 
-\title{Environments cannot reward agents for being Markov}
-\titlerunning{Environments cannot reward Markov}
+\title{Environments cannot detect Markov agents}
+\titlerunning{Environments cannot detect Markov agents}
 \author{Samuel Allen
 Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
 
@@ -32,7 +32,7 @@ Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
     We introduce a method for combining two reinforcement learning agents
     (equivalently: two decision theoretical agents) into a new agent
     with the property that the expected total reward the new agent gets in
-    any environment is the average of the expected total rewards the
+    each environment is the average of the expected total rewards the
     two original agents get in that environment. Using this, we formalize
     and strengthen an informal result of Alexander and Hutter, and
     we prove a surprising additional result. Call an agent ``Markov''
@@ -66,7 +66,8 @@ These turns continue forever, and the whole sequence of turns
 is called an agent-environment interaction.
 
 If $\pi$ and $\rho$ are two agents, we can informally imagine a new agent
-$\sigma$ as follows. At the beginning of every agent-environment interaction,
+$\sigma$ (first described in \cite{alexander2021reward})
+as follows. At the beginning of every agent-environment interaction,
 $\sigma$ flips a coin. If the coin lands heads, then $\sigma$ transforms into
 $\pi$; otherwise, $\sigma$ transforms into $\rho$. Note that the coin is only
 flipped one time, at the very start of the agent-environment interaction:
@@ -83,7 +84,7 @@ agent $\pi\oplus\rho$, within the formal framework, such that the expected
 total reward when $\pi\oplus\rho$ interacts with $\mu$ is the average of the
 expected total rewards when $\pi$ or $\rho$ interact with $\mu$.
 Thus, at least up to expected total reward, $\pi\oplus\rho$ has the exact
-same exact performance as the above informal coin-flipping agent.
+same performance as the above informal coin-flipping agent.
 
 The structure of this paper is as follows.
 
@@ -291,8 +292,12 @@ The structure of this paper is as follows.
 Strengthening and formalizing a result of Alexander and Hutter}
 
 \begin{definition}
-    (Duality)
+    (Duality) Define $\overline s$, $\overline \pi$, $\overline \mu$
+    as in Reward-Punishment Symmetric Universal Intelligence.
 \end{definition}
+
+The following class of agents are named after Janus, the Roman god of duality,
+who features two faces, one facing forward, one facing backward.
 
 \begin{definition}
     (Janus agents)
@@ -300,15 +305,17 @@ Strengthening and formalizing a result of Alexander and Hutter}
     $\overline{\pi}=\pi$.
 \end{definition}
 
-\begin{proposition}
-    (Alternate characterization of Janus agents)
-    An agent $\pi$ is a Janus agent if and only if
-    $\pi=\rho\oplus\overline{\rho}$ for some agent $\rho$.
-\end{proposition}
+% \begin{proposition}
+%     (Alternate characterization of Janus agents)
+%     An agent $\pi$ is a Janus agent if and only if
+%     there is some agent $\rho$ such that
+%     $\pi(a|s)=(\rho\oplus\overline\rho)(a|s)$
+%     whenever $\pi_*(s)\not=0$.
+% \end{proposition}
 
-\begin{proof}
-    ...
-\end{proof}
+% \begin{proof}
+%     ...
+% \end{proof}
 
 \begin{theorem}
     Suppose $\Upsilon$ is a weighted performance averager.
@@ -321,44 +328,21 @@ Strengthening and formalizing a result of Alexander and Hutter}
     ...
 \end{proof}
 
-\section{Incentivizability and unincentivizability}
+\section{Detectability of sets of agents}
 
 \begin{definition}
 \label{incentivizabilitydefn}
-    Let $\Pi$ be a set of agents.
+    A set $\Pi$ of agents is \emph{detectable} if there exists
+    an environment $\mu$ such that for every agent $\pi$:
     \begin{enumerate}
         \item
-            $\Pi$ is \emph{strongly incentivizable} if there exists
-            an environment $\mu$ such that for every agent $\pi$,
-            \[
-                V^\pi_\mu
-                =
-                \begin{cases}
-                    1 &\mbox{if $\pi\in\Pi$,}\\
-                    0 &\mbox{if $\pi\not\in\Pi$.}
-                \end{cases}
-            \]
+        $V^\pi_\mu$ exists.
         \item
-            $\Pi$ is \emph{weakly incentivizable} if there exists
-            an environment $\mu$ such that for every agent $\pi$:
-            \begin{enumerate}
-                \item
-                $V^\pi_\mu$ exists.
-                \item
-                $V^\pi_\mu>0$ if $\pi\in\Pi$.
-                \item
-                $V^\pi_\mu\leq 0$ if $\pi\not\in\Pi$.
-            \end{enumerate}
+        $V^\pi_\mu>0$ if $\pi\in\Pi$.
+        \item
+        $V^\pi_\mu\leq 0$ if $\pi\not\in\Pi$.
     \end{enumerate}
 \end{definition}
-
-\begin{lemma}
-    Strong incentivizability implies weak incentivizability.
-\end{lemma}
-
-\begin{proof}
-    Trivial.
-\end{proof}
 
 \begin{definition}
     A set $\Pi$ is \emph{closed under $\oplus$} if the following
@@ -369,26 +353,21 @@ Strengthening and formalizing a result of Alexander and Hutter}
 \begin{theorem}
 \label{closuretheorem}
     Let $\Pi$ be any set of agents.
-    \begin{enumerate}
-        \item
-        If $\Pi$ is strongly incentivizable,
-        then both $\Pi$ and its complement $\Pi^c$ are closed under $\oplus$.
-        \item
-        If $\Pi$ is weakly incentivizable,
-        then $\Pi$ is closed under $\oplus$.
-    \end{enumerate}
+    If $\Pi$ is detectable, then $\Pi$ is closed under $\oplus$, and so
+    is its complement $\Pi^c$.
 \end{theorem}
 
 \begin{proof}
-    (1) Assume $\Pi$ is strongly incentivizable. Let $\mu$ be as in
-    Definition \ref{incentivizabilitydefn} (part 1).
+    Assume $\Pi$ is detectable.
+    Let $\mu$ be as in
+    Definition \ref{incentivizabilitydefn}.
     To see $\Pi$ is closed under $\oplus$, let $\pi,\rho\in\Pi$.
-    Then $V^\pi_\mu=V^\rho_\mu=1$ by choice of $\mu$.
-    By Theorem \ref{maintheorem}, $V^{\pi\oplus\rho}_\mu=\frac12(1+1)=1$.
-    By choice of $\mu$, this implies $\pi\oplus\rho\in\Pi$.
-    The proof that $\Pi^c$ is closed under $\oplus$ is similar.
-
-    (2) Similar to (1).
+    Then $V^\pi_\mu>0$ and $V^\rho_\mu>0$, thus
+    $V^{\pi\oplus\rho}_\mu>0$ since
+    $V^{\pi\oplus\rho}_\mu=\frac12(V^\pi_\mu+V^\rho_\mu)$ by Theorem
+    \ref{maintheorem}.
+    So by choice of $\mu$, $\pi\oplus\rho\in \Pi$.
+    A similar argument shows that $\Pi^c$ is closed under $\oplus$.
 \end{proof}
 
 \begin{definition}
@@ -417,7 +396,7 @@ make it clearer what exactly a Markov agent is.
 
 \begin{theorem}
 \label{markovcorollary}
-    The set of Markov agents is not weakly incentivizable.
+    The set of Markov agents is not detectable.
 \end{theorem}
 
 \begin{proof}
@@ -467,14 +446,14 @@ enough RL agents is a direct pathway to Artificial General Intelligence
 (see \cite{RLvsRL} for some other thoughts of ours on this conjecture).
 It seems reasonable to expect that an AGI should easily be capable of performing
 the task commanded by the command: ``Please act in a Markov way.''
-Theorem \ref{markovcorollary} shows that despite this task's apparent
+Theorem \ref{markovcorollary} suggests that despite this task's apparent
 simplicity (in contrast with playing chess or Go, for example), there is no way
 to \emph{express} the task (or our desire for the AGI to perform it) using
 only the incentive structure of RL.
 
 
 
-\bibliographystyle{splncs04}
+\bibliographystyle{alpha}
 \bibliography{main}
 
 \end{document}
