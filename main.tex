@@ -17,8 +17,8 @@
 
 \begin{document}
 
-\title{Convention-ignorers and symmetric universal intelligence}
-\titlerunning{Convention-ignorers}
+\title{Environments cannot reward agents for being Markov}
+\titlerunning{Environments cannot reward Markov}
 \author{Samuel Allen
 Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
 
@@ -29,109 +29,391 @@ Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
 \maketitle
 
 \begin{abstract}
-    If a Reinforcement Learning (RL) agent has intelligence +N, then should
-    that agent's massochistic alter-ego (who sees rewards as punishments and
-    punishments as rewards) have intelligence -N? Alexander and Hutter argued for
-    the plausibility of this symmetry constraint as an axiom for RL
-    intelligence measurement. As part of their argument, they sketched an
-    informal proof that this symmetry constraint is implied by a weaker-seeming
-    constraint. We strengthen this part of the argument, showing that an even
-    weaker-seeming constraint implies full symmetry, and we make the argument
-    rigorous. We formalize and prove: if intelligence is measured
-    as weighted average performance, with weights chosen such that every agent
-    that equals its own alter-ego has intelligence $0$, then this implies the
-    above symmetry condition for all RL agents.
+    We introduce a method for combining two reinforcement learning agents
+    (equivalently: two decision theoretical agents) into a new agent
+    with the property that the expected total reward the new agent gets in
+    any environment is the average of the expected total rewards the
+    two original agents get in that environment. Using this, we formalize
+    and strengthen an informal result of Alexander and Hutter, and
+    we prove a surprising additional result. Call an agent ``Markov''
+    if that agent ignores all training data. We show that no environment can
+    reward agents for being Markov. More precisely: if an environment
+    gives positive expected total reward to every Markov agent, then it
+    must give positive expected total reward to some non-Markov agent.
+    We informally argue that this result casts doubt on an informal
+    conjecture of Silver et al.
 \end{abstract}
 
 \section{Introduction}
 
-Reinforcement Learning (RL) is one of the main paradigms of machine learning.
-In RL, an \emph{agent} $\pi$ interacts with an \emph{environment} $\mu$ (see Section ... for
-a precise formalization). The agent and the environment take turns. On $\pi$'s
-turn, $\pi$ chooses an \emph{action}. On $\mu$'s turn, $\mu$
-responds with an \emph{observation} and a numerical \emph{reward}. A good agent $\pi$
-should attempt to use this interaction to gradually learn how the environment works,
-and, armed with that
-knowledge, choose actions so as to maximize rewards (or equivalently, minimize
-punishments---each reward of $+r$ being synonymous with a punishment of $-r$ and
-vice versa).
+In reinforcement learning, an agent $\pi$ interacts with an environment $\mu$.
+The agent and the environment take turns.
+\begin{itemize}
+\item
+On $\pi$'s turn, $\pi$
+outputs a probability distribution over a fixed action-set.
+Based on this distribution, an action is randomly chosen
+and is transmitted to $\pi$ and $\mu$.
+\item
+On $\mu$'s turn, $\mu$
+outputs a probability distribution over a fixed percept-set,
+where every percept includes an observation (thought of as
+the agent's view of the world) and a numerical reward.
+Based on this distribution, a percept is randomly chosen and
+is transmitted to $\pi$ and $\mu$.
+\end{itemize}
+These turns continue forever, and the whole sequence of turns
+is called an agent-environment interaction.
 
-Legg and Hutter proposed a formal intelligence measure for reinforcement learning agents.
-The idea is fairly simple. Restrict attention to certain well-behaved computable
-environments, and define an agent $\pi$'s intelligence $\Upsilon(\pi)$ to
-be $\pi$'s suitably-weighted
-average performance across all those environments. As for the weights, Legg and
-Hutter proposed using the so-called universal prior, that is to say: give each environment
-$\mu$ a weight of $2^{-K(\mu)}$ where $K(\mu)$ is the Kolmogorov complexity of $\mu$. The
-Kolmogorov complexity of $\mu$ is the length of the shortest computer program for
-$\mu$. There are good reasons for these weights, but in the present paper,
-we will take a step back and consider arbitrary weights.
-Note, however, that Kolmogorov
-complexity implicitly depends on the background choice of a model of computation: the same
-environment could have a different Kolmogorov complexity depending on how computer programs
-are formalized.
+If $\pi$ and $\rho$ are two agents, we can informally imagine a new agent
+$\sigma$ as follows. At the beginning of every agent-environment interaction,
+$\sigma$ flips a coin. If the coin lands heads, then $\sigma$ transforms into
+$\pi$; otherwise, $\sigma$ transforms into $\rho$. Note that the coin is only
+flipped one time, at the very start of the agent-environment interaction:
+it is not repeatedly flipped every turn. Intuitively, it seems like the
+expected total reward in the agent-environment interaction
+when $\sigma$ interacts with $\mu$, should be the average
+of the corresponding expected total rewards when $\pi$ or $\rho$ interact
+with $\mu$. But this is all quite informal, as the reinforcement learning
+framework does not actually provide any mechanism for such an initial
+coin-flip.
 
-In Legg and Hutter's original paper, environments were only allowed to give
-non-negative rewards.
-Alexander and Hutter relaxed this requirement, allowing environments to give negative
-rewards (punishments). This allows the consideration of an
-agent $\pi$'s \emph{dual} (or ``alter-ego'') $\overline\pi$.
-For each agent $\pi$, $\overline\pi$ is the agent which acts exactly the way $\pi$ would
-act if all rewards sent to $\pi$ had their sign flipped. Thus, intuitively, $\overline\pi$
-is a massochistic version of $\pi$. Whatever ingenuity $\pi$
-uses to maximize reward, $\overline\pi$ uses the exact same ingenuity to maximize
-punishment. Similarly, for every environment $\mu$, the dual environment $\overline\mu$
-is exactly like $\mu$ except that all rewards have their signs flipped. Thus if $\mu$ is
-an environment which rewards (resp.\ punishes) the agent for winning (resp.\ losing) chess,
-then $\overline\mu$ is the same, except that $\overline\mu$
-punishes (resp.\ rewards) the agent for winning (resp.\ losing).
+We will show that there is a way to combine $\pi$ and $\rho$ into a new
+agent $\pi\oplus\rho$, within the formal framework, such that the expected
+total reward when $\pi\oplus\rho$ interacts with $\mu$ is the average of the
+expected total rewards when $\pi$ or $\rho$ interact with $\mu$.
+Thus, at least up to expected total reward, $\pi\oplus\rho$ has the exact
+same exact performance as the above informal coin-flipping agent.
 
-Alexander and Hutter proved that if the background model of computation is such that
-$K(\mu)=K(\overline\mu)$ for every computable environment $\mu$, then for every agent $\pi$,
-$\Upsilon(\overline\pi)=-\Upsilon(\pi)$ (where $\Upsilon$ is the Legg-Hutter universal
-intelligence measure, defined as weighted-average performance where each environment $\mu$
-has weight $2^{-K(\mu)}$).
-Alexander and Hutter argued that the necessity of the hypothesis $K(\mu)=K(\overline\mu)$
-reflects a hidden bias in the very foundation of reinforcement learning.
-Namely: RL's convention that positive rewards are good and negative rewards are bad,
-is arbitrary. RL would be just as valid with the opposite convention (in which case the
-word ``reward'' might be changed to ``cost''). This arbitrary convention can inadvertently
-add bias to the universal prior, because for some environments $\mu$, a priori, $K(\mu)$ and
-$K(\overline\mu)$ might be unequal. If, for instance, $K(\mu)>K(\overline\mu)$, then this
-leads to an unintended bias in the universal prior, namely, that $\mu$ receives less weight
-than $\overline\mu$, whereas, if RL had used the opposite convention (``cost'' instead of
-``reward''), then $\mu$ and $\overline\mu$ would be swapped, and $\mu$ would receive
-\emph{more} weight than $\overline\mu$. The relative complexity of two environments should
-not depend on whether RL is formalized in terms of ``reward'' or in terms of ``cost''!
-This scandal can be avoided by requiring that the background model of computation satisfy
-$K(\mu)=K(\overline\mu)$ for every $\mu$.
+The structure of this paper is as follows.
 
-Alexander and Hutter argued that the property $\Upsilon(\overline\pi)=-\Upsilon(\pi)$
-is a natural axiom for RL agent intelligence measures
-(here ``axiom'' is meant as ``classification axiom'', not as
-``prescriptive axiom'', i.e., the claim is \emph{not} that all intelligence
-measures $\Upsilon$ should have this symmetry property, but rather, that
-this symmetry property is a natural way to partition intelligence measures into two
-classes, just like how in group theory the commutative ``axiom'' partitions
-groups into abelian and non-abelian groups). In order to justify the plausibility of this
-axiom, they sketched an informal proof that it is implied by a weaker-seeming axiom.
-Say that an intelligence measure $\Upsilon$ is \emph{weakly symmetric} if for every agent
-$\pi$, if $\Upsilon(\pi)\not=0$ then $\Upsilon(\pi)\not=\Upsilon(\overline\pi)$.
-Alexander and Hutter informally proved that if $\Upsilon$ measures intelligence as
-weighted-average performance, then weak symmetry
-implies $\Upsilon(\overline\pi)=-\Upsilon(\pi)$. The proof was informal because it
-involved applying $\Upsilon$ to certain objects which intuitively look like agents but
-which are not technically agents according to the precise RL formalization used by
-Alexander and Hutter.
+...
 
-We will make the above proof formal. We will also prove a similar result.
-Say that $\pi$ \emph{ignores convention} if $\pi=\overline\pi$ (we say that such
-$\pi$ ignore convention because, intuitively, such agents $\pi$ are unaware whether they
-are acting in the ``positive is good'' version of RL, where the environment outputs ``rewards'',
-or the ``negative is good'' version of RL,where the environment outputs ``costs''.)
-We will prove that if $\Upsilon$ measures intelligence as weighted-average performance,
-and if every convention-ignorer has intelligence $0$, then every agent $\pi$ satisfies
-$\Upsilon(\overline\pi)=-\Upsilon(\pi)$.
+\section{Preliminaries}
+
+(Define RL)
+
+\section{The $\oplus$ operator}
+
+\begin{definition}
+\label{pullbackdef}
+    Suppose $s$ is a finite sequence of alternating percepts and actions.
+    Let $\pi$ be an agent. Let $\mu$ be an environment.
+    \begin{enumerate}
+        \item
+        The \emph{probability of $s$ according to $\pi$}, written
+        $\pi_*(s)$, is the probability that when $\pi$ and $\mu$ interact,
+        the interaction begins with $s$, given that all
+        percepts are as in $s$. Formally we define $\pi_*(s)$ by induction:
+        \begin{enumerate}
+            \item
+            If $s$ contains no action, then $\pi_*(s)=1$.
+            \item
+            If $s=t\frown a$ (where $a$ is an action) or $s=t\frown a\frown p$
+            (where $a$ is an action and $p$ is a percept),
+            then $\pi_*(s)=\pi_*(t)\pi(a|t)$.
+        \end{enumerate}
+        \item
+        The \emph{probability of $s$ according to $\mu$}, written
+        $\mu_*(s)$, is the probability that when $\pi$ and $\mu$ interact,
+        the interaction begins with $s$, given that all
+        actions are as in $s$. Formally we define $\mu_*(s)$ by induction:
+        \begin{enumerate}
+            \item
+            If $s$ has length $0$, then $\mu_*(s)=1$.
+            \item
+            If $s=t\frown p$ (where $p$ is a percept) or $s=t\frown p\frown a$
+            (where $a$ is an action and $p$ is a percept),
+            then $\mu_*(s)=\mu_*(t)\mu(p|t)$.
+        \end{enumerate}
+        \item
+        The \emph{probability of $s$ according to $\pi$ and $\mu$},
+        written $(\pi,\mu)_*(s)$, is the probability that when $\pi$ and
+        $\mu$ interact, the interactin begins with $s$.
+        Formally, we define $(\pi,\mu)_*(s)$ by induction:
+        \begin{enumerate}
+            \item
+            If $s$ has length $0$, then $(\pi,\mu)_*(s)=1$.
+            \item
+            If $s=t\frown p$ (where $p$ is a percept),
+            then $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\mu(p|t)$.
+            \item
+            If $s=t\frown a$ (where $a$ is an action),
+            then $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\pi(a|t)$.
+        \end{enumerate}
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    For all $s$, $\pi$, $\mu$ as in Definition \ref{pullbackdef},
+    \[
+        (\pi,\mu)_*(s) = \pi_*(s)\mu_*(s).
+    \]
+\end{lemma}
+
+\begin{proof}
+    By induction.
+\end{proof}
+
+\begin{lemma}
+\label{basicprobabilitylemma}
+    For any agent $\pi$, environment $\mu$, and $n\in\mathbb N$,
+    $V^\pi_{\mu,n}=\sum_{s\in S_n}(\pi,\mu)_*(s)r(s),$
+    where $S_n$ is the set of all length-$n$ initial
+    percept-action sequences and $r(s)$ is the total reward in $s$.
+\end{lemma}
+
+\begin{proof}
+    Basic probability theory.
+\end{proof}
+
+\begin{definition}
+    Assume $\pi$ and $\rho$ are agents.
+    Define the new agent $\pi\oplus\rho$ by
+    \[
+        (\pi\oplus\rho)(a|s)
+        =
+        \frac{\pi_*(s\frown a) + \rho_*(s\frown a)}{\pi_*(s)+\rho_*(s)}
+    \]
+    provided $\pi_*(s)+\rho_*(s)>0$; otherwise,
+    let $(\pi\oplus\rho)(a|s)=1/|\mathcal{A}|$.
+\end{definition}
+
+\begin{lemma}
+    If $\pi$ and $\rho$ are agents then $\pi\oplus\rho$ really is an agent.
+\end{lemma}
+
+\begin{proof}
+    ...
+\end{proof}
+
+\begin{theorem}
+\label{maintheorem}
+    For all agents $\pi$ and $\rho$, for every environment $\mu$,
+    if $V^\pi_\mu$ and $V^\rho_\mu$ converge, then
+    \[
+        V^{\pi\oplus\rho}_\mu = \frac12(V^\pi_\mu+V^\rho_\mu).
+    \]
+\end{theorem}
+
+\begin{proof}
+    It suffices to show that for every $n\in\mathbb N$,
+    $V^{\pi\oplus\rho}_{\mu,n}=\frac12(V^\pi_{\mu,n}+V^\rho_{\mu,n})$.
+    Let $n\in\mathbb N$. Let $S_n$ be the set of all length-$n$ percept-action
+    sequences, and for each $s\in S_n$, let $r(s)$ be the sum of rewards in $s$.
+    By Lemma \ref{basicprobabilitylemma}, it suffices to show that
+    $(\pi\oplus\rho,\mu)_*(s)=\frac12((\pi,\mu)_*(s)+(\rho,\mu)_*(s))$ for each
+    $s\in S_n$. Fix $s\in S_n$.
+
+    Case 1: $s=\langle\rangle$. Then
+    $(\pi\oplus\rho,\mu)_*(s)=1=\frac12(1+1)=\frac12((\pi,\mu)_*(s)+(\rho,\mu)_*(s))$.
+
+    Case 2: $s=t\frown p$ for some percept $p$. Then
+    \begin{align*}
+        (\pi\oplus\rho,\mu)_*(s) &= (\pi\oplus\rho,\mu)_*(t\frown p)\\
+            &= (\pi\oplus\rho,\mu)_*(t)\mu(p|t)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \frac12((\pi,\mu)_*(t)+(\rho,\mu)_*(t))\mu(p|t)
+                &\mbox{(Induction)}\\
+            &= \frac12((\pi,\mu)_*(t)\mu(p|t) + (\rho,\mu)_*(t)\mu(p|t))
+                &\mbox{(Algebra)}\\
+            &= \frac12((\pi,\mu)_*(t\frown p) + (\rho,\mu)_*(t\frown p))
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \frac12((\pi,\mu)_*(s) + (\rho,\mu)_*(s)),
+    \end{align*}
+    as desired.
+
+    Case 3: $s=t\frown a$ for some action $a$.
+
+    Subcase 3.1: $\pi_*(t)=\rho_*(t)=0$.
+        By induction, $(\pi\oplus\rho)_*(t)=\frac12(0+0)=0$.
+        
+\end{proof}
+
+\section{Duality and Janus agents:
+Strengthening and formalizing a result of Alexander and Hutter}
+
+\begin{definition}
+    (Duality)
+\end{definition}
+
+\begin{definition}
+    (Janus agents)
+    By a \emph{Janus agent}, we mean an agent $\pi$ such that
+    $\overline{\pi}=\pi$.
+\end{definition}
+
+\begin{proposition}
+    (Alternate characterization of Janus agents)
+    An agent $\pi$ is a Janus agent if and only if
+    $\pi=\rho\oplus\overline{\rho}$ for some agent $\rho$.
+\end{proposition}
+
+\begin{proof}
+    ...
+\end{proof}
+
+\begin{theorem}
+    Suppose $\Upsilon$ is a weighted performance averager.
+    If $\Upsilon(\pi)=0$ for every Janus agent $\pi$,
+    then $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$
+    for every agent $\pi$.
+\end{theorem}
+
+\begin{proof}
+    ...
+\end{proof}
+
+\section{Incentivizability and unincentivizability}
+
+\begin{definition}
+\label{incentivizabilitydefn}
+    Let $\Pi$ be a set of agents.
+    \begin{enumerate}
+        \item
+            $\Pi$ is \emph{strongly incentivizable} if there exists
+            an environment $\mu$ such that for every agent $\pi$,
+            \[
+                V^\pi_\mu
+                =
+                \begin{cases}
+                    1 &\mbox{if $\pi\in\Pi$,}\\
+                    0 &\mbox{if $\pi\not\in\Pi$.}
+                \end{cases}
+            \]
+        \item
+            $\Pi$ is \emph{weakly incentivizable} if there exists
+            an environment $\mu$ such that for every agent $\pi$:
+            \begin{enumerate}
+                \item
+                $V^\pi_\mu$ exists.
+                \item
+                $V^\pi_\mu>0$ if $\pi\in\Pi$.
+                \item
+                $V^\pi_\mu\leq 0$ if $\pi\not\in\Pi$.
+            \end{enumerate}
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    Strong incentivizability implies weak incentivizability.
+\end{lemma}
+
+\begin{proof}
+    Trivial.
+\end{proof}
+
+\begin{definition}
+    A set $\Pi$ is \emph{closed under $\oplus$} if the following
+    condition holds: whenever $\pi\in\Pi$ and $\rho\in\Pi$,
+    then $\pi\oplus\rho\in\Pi$.
+\end{definition}
+
+\begin{theorem}
+\label{closuretheorem}
+    Let $\Pi$ be any set of agents.
+    \begin{enumerate}
+        \item
+        If $\Pi$ is strongly incentivizable,
+        then both $\Pi$ and its complement $\Pi^c$ are closed under $\oplus$.
+        \item
+        If $\Pi$ is weakly incentivizable,
+        then $\Pi$ is closed under $\oplus$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (1) Assume $\Pi$ is strongly incentivizable. Let $\mu$ be as in
+    Definition \ref{incentivizabilitydefn} (part 1).
+    To see $\Pi$ is closed under $\oplus$, let $\pi,\rho\in\Pi$.
+    Then $V^\pi_\mu=V^\rho_\mu=1$ by choice of $\mu$.
+    By Theorem \ref{maintheorem}, $V^{\pi\oplus\rho}_\mu=\frac12(1+1)=1$.
+    By choice of $\mu$, this implies $\pi\oplus\rho\in\Pi$.
+    The proof that $\Pi^c$ is closed under $\oplus$ is similar.
+
+    (2) Similar to (1).
+\end{proof}
+
+\begin{definition}
+    An agent $\pi$ is \emph{Markov} if
+    $\pi(a|s)$ only depends on the most recent observation in $s$.
+\end{definition}
+
+We will not use the following Lemma, but we state it in order to
+make it clearer what exactly a Markov agent is.
+
+\begin{lemma}
+    By a \emph{policy} we mean a function $f$ which takes a single observation
+    $o\in\mathcal O$ as input, and outputs a probability distribution
+    $a\mapsto f(a|o)$ on $\mathcal A$.
+    For each policy $f$, let $\hat f$, the \emph{agent defined by $f$},
+    be the agent defined as follows:
+    for every $s$ with most recent observation $o$,
+    $\hat f(a|s)=f(a|o)$.
+    Then:
+    The set of Markov agents is exactly $\{\hat f\,:\,\mbox{$f$ is a policy}\}$.
+\end{lemma}
+
+\begin{proof}
+    Straightforward.
+\end{proof}
+
+\begin{theorem}
+\label{markovcorollary}
+    The set of Markov agents is not weakly incentivizable.
+\end{theorem}
+
+\begin{proof}
+    Let $\Pi$ be the set of Markov agents.
+    By Theorem \ref{closuretheorem}, it suffices to show $\Pi$ is not
+    closed under $\oplus$.
+    Since $|\mathcal A|>1$, we may choose two distinct $a_1,a_2\in\mathcal A$.
+    Define agents $\pi,\rho$ by
+    \begin{align*}
+        \pi(a|s)
+        &=
+        \begin{cases}
+            .9 & \mbox{if $a=a_1$,}\\
+            .1 & \mbox{if $a=a_2$,}\\
+            0 & \mbox{otherwise;}
+        \end{cases}\\
+        \rho(a|s)
+        &=
+        \begin{cases}
+            .1 & \mbox{if $a=a_1$,}\\
+            .9 & \mbox{if $a=a_2$,}\\
+            0 & \mbox{otherwise.}
+        \end{cases}
+    \end{align*}
+    Let $p$ be any percept,
+    let $s_1=\langle p\rangle$, and let $s_2=\langle p,a_1,p\rangle$.
+    Then
+    \[
+        (\pi\oplus\rho)(a_1|s_1)
+        &= \frac{\pi_*(s_1\frown a_1) + \rho_*(s_1\frown a_1)}{\pi_*(s_1)+\rho_*(s_1)}
+        = \frac{0.9 + 0.1}{1+1} = \frac12
+    \]
+    and
+    \[
+        (\pi\oplus\rho)(a_1|s_2)
+        = \frac{\pi_*(s_2\frown a_1) + \rho_*(s_2\frown a_1)}{\pi_*(s_2)+\rho_*(s_2)}
+        = \frac{0.9\cdot 0.9 + 0.1\cdot 0.1}{0.9+0.1}=\frac{82}{100}\not=\frac12.
+    \]
+    So $(\pi\oplus\rho)(a|s)$ depends on more than just the most recent
+    observation in $s$, so $\pi\oplus\rho$ is not Markov.
+\end{proof}
+
+Theorem \ref{markovcorollary} seems to cast doubt on Silver et al's
+informal conjecture \cite{silver2021reward}
+that the creation of strong
+enough RL agents is a direct pathway to Artificial General Intelligence
+(see \cite{RLvsRL} for some other thoughts of ours on this conjecture).
+It seems reasonable to expect that an AGI should easily be capable of performing
+the task commanded by the command: ``Please act in a Markov way.''
+Theorem \ref{markovcorollary} shows that despite this task's apparent
+simplicity (in contrast with playing chess or Go, for example), there is no way
+to \emph{express} the task (or our desire for the AGI to perform it) using
+only the incentive structure of RL.
 
 
 
