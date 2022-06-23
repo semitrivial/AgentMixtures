@@ -296,6 +296,23 @@ Strengthening and formalizing a result of Alexander and Hutter}
     as in Reward-Punishment Symmetric Universal Intelligence.
 \end{definition}
 
+\begin{definition}
+    By a \emph{weighted performance averager}, we mean a function
+    $\Upsilon$ assigning real numbers to agents, such that there
+    are weights $\{w_\mu\}_{\mu\in W}$ such that for every agent
+    $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$.
+\end{definition}
+
+\begin{theorem}
+\label{averageperformancelemma}
+    For any weighted performance averager $\mu$, for any agents
+    $\pi$ and $\rho$, $\Upsilon(\pi\oplus\rho)\frac12(\Upsilon(\pi)+\Upsilon(\rho))$.
+\end{theorem}
+
+\begin{proof}
+    Follows from Theorem \ref{maintheorem}.
+\end{proof}
+
 The following class of agents are named after Janus, the Roman god of duality,
 who features two faces, one facing forward, one facing backward.
 
@@ -305,17 +322,103 @@ who features two faces, one facing forward, one facing backward.
     $\overline{\pi}=\pi$.
 \end{definition}
 
-% \begin{proposition}
-%     (Alternate characterization of Janus agents)
-%     An agent $\pi$ is a Janus agent if and only if
-%     there is some agent $\rho$ such that
-%     $\pi(a|s)=(\rho\oplus\overline\rho)(a|s)$
-%     whenever $\pi_*(s)\not=0$.
-% \end{proposition}
+\begin{definition}
+\label{equivdefn}
+    If $\pi$ and $\rho$ are agents, we say $\pi\equiv\rho$ if the
+    following conditions hold:
+    \begin{enumerate}
+        \item For every history $h$, $\pi_*(h)=0$ iff $\rho_*(h)=0$.
+        \item For every history $h$ ending with a percept,
+            for every action $a$, if $\pi_*(h)\not=0$,
+            then $\rho(a|h)=\pi(a|h)$.
+    \end{enumerate}
+\end{definition}
 
-% \begin{proof}
-%     ...
-% \end{proof}
+\begin{lemma}
+\label{equivrelationlemma}
+    The relation $\equiv$ of Definition \ref{equivdefn} is an equivalence
+    relation.
+\end{lemma}
+
+\begin{proof}
+    Straightforward.
+\end{proof}
+
+\begin{lemma}
+\label{piopluspilemma}
+    For any agent $\pi$, $\pi\equiv\pi\oplus\pi$.
+\end{lemma}
+
+\begin{proof}
+    We prove the two conditions of Definition \ref{equivdefn} by
+    induction on history $h$.
+ 
+    Case 1: $h$ contains no actions. Then $\pi_*(h)=(\pi\oplus\pi)_*(h)=1$, so
+    certainly $\pi_*(h)=0$ iff $\rho_*(h)=0$ (proving condition 1 of
+    Definition \ref{equivdefn}).
+    For condition 2, we check:
+    \begin{align*}
+        (\pi\oplus\pi)(a|h)
+            &= \frac{\pi_*(h\frown a) + \pi_*(h\frown a)}{\pi_*(h)+\pi_*(h)}\\
+            &= \frac{\pi_*(h)+\pi_*(h)}{\pi_*(h)+\pi_*(h)}\pi(a|h)\\
+            &= \pi(a|h),
+    \end{align*}
+    as desired.
+
+    Case 2: $h$ ends with an action, say $h=h_0\frown a_0$ where $h_0$ ends with
+        a percept.
+        By induction, we may assume (condition 1)
+        $\pi_*(h_0)=0$ iff $(\pi\oplus\pi)_*(h_0)=0$,
+        and (condition 2) if $\pi_*(h_0)\not=0$ then
+        $(\pi\oplus\pi)(a_0|h_0)=\pi(a_0|h_0)$.
+        If $\pi_*(h_0)=0$ (and hence $(\pi\oplus\pi)_*(h_0)=0$) then clearly
+        $\pi_*(h)=0$ and $(\pi\oplus\pi)_*(h)=0$. But assume $\pi_*(h_0)\not=0$.
+        Then by a similar calculation as in Case 1,
+        $(\pi\oplus\pi)(a_0|h_0)=\pi(a_0|h_0)$.
+        This implies $\pi_*(h)=0$ iff $(\pi\oplus\pi)_*(h)=0$, proving condition 1.
+        For condition 2 there is nothing to prove since $h$ does not end with a percept.
+
+    Case 3: $h$ ends with a percept, say $h=h_0\frown p$, and $h$ contains at least one action.
+        By induction, conditions 1 and 2 hold for $h_0$.
+        Since $\pi_*(h_0\frown p)=\pi_*(h_0)$ and
+        $(\pi\oplus\pi)_*(h_0\frown p)=(\pi\oplus\pi)_*(h_0)$,
+        condition 1 for $h$ follows.
+        For condition 2, let $a$ be any action and assume
+        $\pi_*(h)\not=0$. Then $(\pi\oplus\pi)(a|h)=\pi(a|h)$ by the
+        same calculation as in Case 1.
+\end{proof}
+
+\begin{proposition}
+    (Characterization of Janus agents)
+    For any agent $\pi$, the following are equivalent:
+    \begin{enumerate}
+        \item $\pi\equiv\rho$ for some Janus agent $\rho$.
+        \item $\pi\equiv\rho\oplus\overline{\rho}$ for some agent $\rho$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    ($\Rightarrow$)
+    Assume $\pi\equiv\rho$ for some Janus agent $\rho$.
+    Then $\rho=\overline{\rho}$, so $\rho\equiv \rho\oplus\overline{\rho}$ by
+    Lemma \ref{piopluspilemma}, thus, by Lemma \ref{equivrelationlemma},
+    $\pi\equiv\rho\oplus\overline{\rho}$.
+
+    ($\Leftarrow$)
+    Assume $\pi\equiv\rho\oplus\overline{\rho}$ for some agent $\rho$.
+    Clearly
+    \[
+        \overline{\rho\oplus\overline{\rho}}
+        =
+        \overline{\rho}\oplus\overline{\overline{\rho}}
+        =
+        \overline{\rho}\oplus\rho
+        =
+        \rho\oplus\overline{\rho},
+    \]
+    so $\rho\oplus\overline{\rho}$ is a Janus agent, proving that
+    $\pi$ is $\equiv$ some Janus agent.
+\end{proof}
 
 \begin{theorem}
     Suppose $\Upsilon$ is a weighted performance averager.
@@ -325,8 +428,13 @@ who features two faces, one facing forward, one facing backward.
 \end{theorem}
 
 \begin{proof}
-    ...
+    Let $\pi$ be any agent.
+    By assumption, $\Upsilon(\pi\oplus\overline{\pi})=0$.
+    Thus by Theorem \ref{averageperformancelemma},
+    $0=\frac12(\Upsilon(\pi)+\Upsilon(\overline{\pi})$,
+    so $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$.
 \end{proof}
+
 
 \section{Detectability of sets of agents}
 
@@ -439,19 +547,349 @@ make it clearer what exactly a Markov agent is.
     observation in $s$, so $\pi\oplus\rho$ is not Markov.
 \end{proof}
 
-Theorem \ref{markovcorollary} seems to cast doubt on Silver et al's
-informal conjecture \cite{silver2021reward}
-that the creation of strong
-enough RL agents is a direct pathway to Artificial General Intelligence
-(see \cite{RLvsRL} for some other thoughts of ours on this conjecture).
-It seems reasonable to expect that an AGI should easily be capable of performing
-the task commanded by the command: ``Please act in a Markov way.''
-Theorem \ref{markovcorollary} suggests that despite this task's apparent
-simplicity (in contrast with playing chess or Go, for example), there is no way
-to \emph{express} the task (or our desire for the AGI to perform it) using
-only the incentive structure of RL.
 
+\section{Genericness of non-deterministic agents}
 
+\begin{definition}
+\label{modifyagentatoneplace}
+    If $\pi$ is an agent, $h_0$ is a history ending in a percept,
+    and $m$ is a probability distribution on $\mathcal A$,
+    we write $\pi^{h_0\mapsto m}$ for the agent which is identical to $\pi$
+    except that it maps $h_0$ to $m$, in other words:
+    \[
+        \pi^{h\mapsto m}(a|h)
+        =
+        \begin{cases}
+            \pi(a|h) &\mbox{if $h\not=h_0$,}\\
+            m(a) &\mbox{if $h=h_0$.}
+        \end{cases}
+    \]
+\end{definition}
+
+\begin{lemma}
+\label{firsttechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    Suppose $h$ is a history such that $h_0$ is not an initial segment of $h$.
+    Then $\pi^{h_0\mapsto m}_*(h)=\pi_*(h)$.
+\end{lemma}
+
+\begin{proof}
+    By induction on $h$.
+\end{proof}
+
+\begin{lemma}
+\label{secondtechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    Suppose $h$ is a history and $a_0$ is an action and that $h_0\frown a_0$ is
+    an initial segment of $h$. Assume $\pi(a_0|h_0)\not=0$. Then
+    $\pi^{h_0\mapsto m}_*(h) = \frac{\pi_*(h)m(a_0)}{\pi(a_0|h_0)}$.
+\end{lemma}
+
+\begin{proof}
+    By induction on $h$.
+
+    Case 1: $h=h_0\frown a$. Then
+    \begin{align*}
+        \pi^{h_0\mapsto m}_*(h)
+        &= \pi^{h_0\mapsto m}_*(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \pi_*(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
+            &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+        &= \pi_*(h_0)m(a_0)
+            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
+        &= \pi_*(h_0)\pi(a_0|h_0)m(a_0)/\pi(a_0|h_0)
+            &\mbox{(Basic Algebra)}\\
+        &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
+            &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Case 2: $h=h_0\frown a_0\frown h_1\frown p$ for some history $h_1$
+        and some percept $p$. Then
+    \begin{align*}
+        \pi^{h_0\mapsto m}_*(h)
+        &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \pi_*(h_0\frown a_0\frown h_1)m(a_0)/\pi(a_0|h_0)
+            &\mbox{(Induction)}\\
+        &= \pi_*(h_0\frown a_0\frown h_1\frown p)m(a_0)/\pi(a_0|h_0)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
+    \end{align*}
+
+    Case 3: $h=h_0\frown a_0\frown h_1\frown a$ for some history $h_1$
+        and some action $a$. Then
+    \begin{align*}
+        \pi^{h_0\mapsto m}_*(h)
+        &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
+            \pi^{h_0\mapsto m}(a|h_0\frown a\frown h_1)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
+            \pi(a|h_0\frown a\frown h_1)
+            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
+        &= \pi_*(h_0\frown a_0\frown h_1)\pi(a|h_0\frown a\frown h_1)m(a_0)/\pi(a_0|h_0)
+            &\mbox{(Induction)}\\
+        &= \pi_*(h_0\frown a_0\frown h_1\frown a)m(a_0)/\pi(a_0|h_0)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
+    \end{align*}
+\end{proof}
+
+\begin{definition}
+\label{sumofdistros}
+    Suppose $m$ and $m_1,\ldots,m_n$ are probability distributions on $\mathcal A$
+    and $r_1,\ldots,r_n$ are nonnegative real numbers with
+    $r_1+\cdots+r_n=1$. By $r_1m_1+\cdots+r_nm_n$ we mean the probability distribution
+    on $\mathcal A$ defined by
+    \[
+        (r_1m_1+\cdots+r_nm_n)(a) = r_1m_1(a) + \cdots + r_nm_n(a).
+    \]
+\end{definition}
+
+\begin{lemma}
+    If $m$, $m_1,\ldots,m_n$, $r_1,\ldots,r_n$ are as in Definition \ref{sumofdistros}
+    then $r_1m_1+\cdots+r_nm_n$ really is a probability distribution on $\mathcal A$.
+\end{lemma}
+
+\begin{proof}
+    Clearly for every $a\in\mathcal A$,
+    $(r_1m_1+\cdots+r_nm_n)(a) = r_1m_1(a) + \cdots + r_nm_n(a)$ is a nonnegative
+    real number. It remains to show $\sum_{a\in\mathcal A}(r_1m_1+\cdots+r_nm_n)(a)=1$.
+    We compute:
+    \begin{align*}
+        &{} \sum_{a\in\mathcal A}(r_1m_1+\cdots+r_nm_n)(a)\\
+        &=
+        \sum_{a\in\mathcal A} r_1m_1(a) + \cdots + r_nm_n(a)
+            &\mbox{(Definition \ref{sumofdistros})}\\
+        &=
+        r_1\sum_{a\in\mathcal A} m_1(a) + \cdots + r_n\sum_{a\in\mathcal A}m_n(a)
+            &\mbox{(Basic Algebra)}\\
+        &= r_1 + \cdots + r_n
+            &\mbox{($m_1,\ldots,m_n$ are probability distr's)}\\
+        &= 1.
+            &\mbox{(By assumption)}
+    \end{align*}
+\end{proof}
+
+\begin{proposition}
+    Let $\Upsilon$ be any weighted performance averager, let $\pi$ be any agent,
+    let $h$ be any history ending in a percept.
+    Suppose $m_1,\ldots,m_n$ are probability distributions on $\mathcal A$
+    and $r_1,\ldots,r_n$ are nonnegative reals such that $r_1+\cdots+r_n=1$
+    and $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$.
+    Assume $\pi(a|h)\not=0$ for all $a\in\mathcal A$.
+    Then
+    \[
+        \Upsilon(\pi)
+        =
+        \Upsilon(r_1\pi^{h\mapsto m_1} \oplus \cdots \oplus r_n\pi^{h\mapsto m_n}).
+    \]
+\end{proposition}
+
+\begin{proof}
+    For brevity, write $\pi^i$ for $\pi^{h\mapsto m_i}$.
+
+    It suffices to show that for every well-behaved $\mu$ and every $n\in\mathbb N$,
+    \[
+        V^{\pi}_{\mu,n}
+        =
+        V^{r_1\pi^1 \oplus \cdots \oplus r_n\pi^n}_{\mu,n}.
+    \]
+    By Lemma \ref{basicprobabilitylemma}, it suffices to show that for every
+    well-behaved $\mu$ and every finite percept-action sequence $s$,
+    $
+    (\pi,\mu)_*(s)
+    =
+    (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n,\mu)_*(s)
+    $.
+    We will show even more. We will show that for every percept-action sequence
+    $s$, $\pi_*(s)=(r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(s)$.
+    We prove this by induction on $s$.
+
+    Case 1: $s=\langle\rangle$.
+    Then $\pi_*(s)=1
+    =(r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(s)$.
+
+    Case 2: $s=t\frown p$ for some percept $p$.
+    Then
+    \begin{align*}
+        \pi_*(s)
+            &= \pi_*(t\frown p)\\
+            &= \pi_*(t)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(t)\mu(p|t)
+                &\mbox{(Induction)}\\
+            &= (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(t\frown p)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(s).
+    \end{align*}
+
+    Case 3: $s=t\frown a$ for some action $a$.
+
+    Subcase 3.1: $\pi_*(t)=0$.
+    Then
+    \begin{align*}
+        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(s)\\
+            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t)
+            (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \pi_*(t)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                &\mbox{(Induction)}\\
+            &= 0,
+    \end{align*}
+    and similarly $\pi_*(s)=0$.
+
+    Subcase 3.2: $\pi_*(t)\not=0$, $t\not=h$, and
+    $t$ has initial segment $h\frown a_0$ for some action $a_0$.
+
+    It follows that $\pi(a_0|h)\not=0$ because otherwise clearly
+    we would have $\pi_*(t)=0$.
+
+    We would like to use Definition \ref{maindefn} to rewrite
+    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)$ but first we must
+    check that the resulting denominator does not vanish. We compute ($*$):
+    \begin{align*}
+        &{} r_1\pi^1_*(t) + \cdots + r_n\pi^n_*(t)\\
+            &= \frac{r_1\pi_*(t)m_1(a_0)}{\pi(a_0|h)}
+                + \cdots +
+                \frac{r_n\pi_*(t)m_n(a_0)}{\pi(a_0|h)}
+                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
+            &= \frac{\pi_*(t)}{\pi(a_0|h)}
+                (r_1m_1(a_0) + \cdots + r_nm_n(a_0))
+                    &\mbox{(Basic Algebra)}\\
+            &= \frac{\pi_*(t)}{\pi(a_0|h)}(r_1m_1+\cdots+r_nm_n)(a_0)
+                    &\mbox{(Definition \ref{sumofdistros})}\\
+            &= \frac{\pi_*(t)}{\pi(a_0|h)}\pi(a_0|h)
+                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
+            &= \pi_*(t)\not=0.
+                    &\mbox{(Basic Algebra)}
+    \end{align*}
+    Thus
+    \begin{align*}
+        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(s)\\
+            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t)
+                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \pi_*(t)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                    &\mbox{(Induction)}\\
+            &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
+                {r_1\pi^1_*(t)+\cdots+r_n\pi^n(t\frown a)}
+                    &\mbox{(Definition \ref{maindefn})}\\
+            &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
+                {\pi_*(t)}
+                    &\mbox{(By $*$)}\\
+            &= r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)
+                    &\mbox{(Basic Algebra)}\\
+            &= r_1\frac{\pi_*(t)m_1(a_0)}{\pi(a_0|h)}
+                +\cdots+r_n\frac{\pi_*(t)m_n(a_0)}{\pi(a_0|h)}
+                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
+            &= \frac{\pi_*(t)}{\pi(a_0|h)}(r_1m_1(a_0)+\cdots+r_nm_n(a_0))
+                    &\mbox{(Basic Algebra)}\\
+            &= \frac{\pi_*(t)}{\pi(a_0|h)}(r_1m_1+\cdots+r_nm_n)(a_0)
+                    &\mbox{(Definition \ref{sumofdistros})}\\
+            &= \frac{\pi_*(t)}{\pi(a_0|h)}\pi(a_0|h)
+                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
+            &= \pi_*(t),
+    \end{align*}
+    as desired.
+
+    Subcase 3.3: $\pi_*(t)\not=0$ and $t=h$.
+
+    We would like to use Definition \ref{maindefn} to rewrite
+    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)$ but first we must
+    check that the resulting denominator does not vanish.
+    Recall we are assuming $\pi(a'|h)\not=0$ for all $a'\in\mathcal A$,
+    so in particular $\pi(a|h)\not=0$.
+    Compute ($**$):
+    \begin{align*}
+        &{} r_1\pi^1_*(h)+\cdots+r_n\pi^n_*(h)\\
+            &= r_1\frac{\pi_*(h\frown a)m_1(a)}{\pi(a|h)}
+                +\cdots+r_n\frac{\pi_*(h\frown a)m_n(a)}{\pi(a|h)}
+                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
+            &= \frac{\pi_*(h\frown a)}{\pi(a|h)}(r_1m_1(a)+\cdots+r_nm_n(a))
+                    &\mbox{(Basic Algebra)}\\
+            &= \frac{\pi_*(h\frown a)}{\pi(a|h)}\pi(a|h)
+                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
+            &= \pi_*(h\frown a)\not=0.
+    \end{align*}
+    Thus
+    \begin{align*}
+        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(s)\\
+            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(h)
+                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \pi_*(h)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                    &\mbox{(Induction)}\\
+            &= \pi_*(h)\frac{r_1\pi_*^1(h\frown a)+\cdots+r_n\pi_*^n(h\frown a)}
+                {r_1\pi_*^1(h)+\cdots+r_n\pi_*^n(h)}
+                    &\mbox{(Definition \ref{maindefn})}\\
+            &= \pi_*(h)\frac{r_1\pi_*^1(h\frown a)+\cdots+r_n\pi_*^n(h\frown a)}
+                    {\pi_*(h\frown a)}
+                    &\mbox{(By $**$)}\\
+            &= \frac{\pi_*(h)}{\pi_*(h\frown a)}
+                \sum_{i=1}^n r_i\frac{\pi_*(h\frown a)m_i(a)}{\pi(a|h)}
+                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
+            &= \frac{\pi_*(h)}{\pi(a|h)}(r_1m_1(a)+\cdots+r_nm_n(a))
+                    &\mbox{(Basic Algebra)}\\
+            &= \frac{\pi_*(h)}{\pi(a|h)}\pi(a|h)
+                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
+            &= \pi_*(h),
+    \end{align*}
+    as desired.
+
+    Subcase 3.4: $\pi_*(t)\not=0$ and $h$ is not an initial segment of $t$.
+
+    We would like to use Definition \ref{maindefn} to rewrite
+    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)$ but first we must
+    check that the resulting denominator does not vanish.
+    Compute ($***$):
+    \begin{align*}
+        (r_1\pi^1_*(t)+\cdots+r_n\pi^n_*(t))
+            &= (r_1\pi_*(t)+\cdots+r_n\pi_*(t))
+                &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+            &= (r_1+\cdots+r_n)\pi_*(t)=\pi_*(t)\not=0.
+                &\mbox{($r_1+\cdots+r_n=1$)}
+    \end{align*}
+    Thus
+    \begin{align*}
+        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t\frown a)\\
+            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t)
+                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \pi_*(t)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                    &\mbox{(Induction)}\\
+            &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
+                {r_1\pi^1_*(t)+\cdots+r_n\pi^n_*(t)}
+                    &\mbox{(Definition \ref{maindefn})}\\
+            &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}{\pi_*(t)}
+                    &\mbox{(By $***$)}\\
+            &= r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)
+                    &\mbox{(Basic Algebra)}\\
+            &= r_1\pi_*(t\frown a)+\cdots+r_n\pi_*(t\frown a)
+                    &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+            &= \pi_*(t\frown a),
+                    &\mbox{($r_1+\cdots+r_n=1$)}
+    \end{align*}
+    as desired.
+\end{proof}
+
+\begin{theorem}
+    (Pointwise Genericness of Intelligence)
+    Let $\Upsilon$ be any weighted performance averager and let
+    $\pi$ be any agent.
+    For any history $h$ ending in a percept,
+    for any probability distributions $m_1,\ldots,m_n$ on $\mathcal A$,
+    for any nonnegative reals $r_1,\ldots,r_n$ with $r_1+\cdots+r_n=1$,
+    if $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$,
+    at least one of the following is true:
+    \begin{enumerate}
+        \item For each $i=1,\ldots,n$, $\Upsilon(\pi_{h\mapsto m_i})\geq \Upsilon(\pi)$.
+        \item For some $i=1,\ldots,n$, $\Upsilon(\pi_{h\mapsto m_i})>\Upsilon(\pi)$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    ...
+\end{proof}
 
 \bibliographystyle{alpha}
 \bibliography{main}
