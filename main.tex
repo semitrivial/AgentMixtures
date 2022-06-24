@@ -756,8 +756,6 @@ make it clearer what exactly a Markov agent is.
             &= \frac{\pi_*(t)}{\pi(a_0|h)}
                 (r_1m_1(a_0) + \cdots + r_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(t)}{\pi(a_0|h)}(r_1m_1+\cdots+r_nm_n)(a_0)
-                    &\mbox{(Definition \ref{sumofdistros})}\\
             &= \frac{\pi_*(t)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
             &= \pi_*(t)\not=0.
@@ -772,7 +770,7 @@ make it clearer what exactly a Markov agent is.
             &= \pi_*(t)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
                     &\mbox{(Induction)}\\
             &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
-                {r_1\pi^1_*(t)+\cdots+r_n\pi^n(t\frown a)}
+                {r_1\pi^1_*(t)+\cdots+r_n\pi^n_*(t)}
                     &\mbox{(Definition \ref{maindefn})}\\
             &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
                 {\pi_*(t)}
@@ -784,8 +782,6 @@ make it clearer what exactly a Markov agent is.
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
             &= \frac{\pi_*(t)}{\pi(a_0|h)}(r_1m_1(a_0)+\cdots+r_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(t)}{\pi(a_0|h)}(r_1m_1+\cdots+r_nm_n)(a_0)
-                    &\mbox{(Definition \ref{sumofdistros})}\\
             &= \frac{\pi_*(t)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
             &= \pi_*(t),
@@ -875,12 +871,13 @@ make it clearer what exactly a Markov agent is.
 \begin{theorem}
     (Pointwise Genericness of Intelligence)
     Let $\Upsilon$ be any weighted performance averager and let
-    $\pi$ be any agent.
-    For any history $h$ ending in a percept,
-    for any probability distributions $m_1,\ldots,m_n$ on $\mathcal A$,
+    $\pi$ be an agent.
+    Let $h$ be a history ending in a percept, and assume
+    $\pi(a|h)\not=0$ for all $a\in\mathcal A$.
+    For any probability distributions $m_1,\ldots,m_n$ on $\mathcal A$,
     for any nonnegative reals $r_1,\ldots,r_n$ with $r_1+\cdots+r_n=1$,
     if $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$,
-    at least one of the following is true:
+    then at least one of the following is true:
     \begin{enumerate}
         \item For each $i=1,\ldots,n$, $\Upsilon(\pi_{h\mapsto m_i})\geq \Upsilon(\pi)$.
         \item For some $i=1,\ldots,n$, $\Upsilon(\pi_{h\mapsto m_i})>\Upsilon(\pi)$.
@@ -888,7 +885,7 @@ make it clearer what exactly a Markov agent is.
 \end{theorem}
 
 \begin{proof}
-    ...
+    
 \end{proof}
 
 \bibliographystyle{alpha}
