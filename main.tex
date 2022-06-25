@@ -824,14 +824,14 @@ make it clearer what exactly a Markov agent is.
                     &\mbox{(Definition \ref{maindefn})}\\
             &= r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)
                     &\mbox{(By $**$)}\\
-            &= r_1\frac{\pi_*(t)m_1(a_0)}{\pi(a_0|h)}
-                +\cdots+r_n\frac{\pi_*(t)m_n(a_0)}{\pi(a_0|h)}
+            &= r_1\frac{\pi_*(t\frown a)m_1(a_0)}{\pi(a_0|h)}
+                +\cdots+r_n\frac{\pi_*(t\frown a)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(t)}{\pi(a_0|h)}(r_1m_1(a_0)+\cdots+r_nm_n(a_0))
+            &= \frac{\pi_*(t\frown a)}{\pi(a_0|h)}(r_1m_1(a_0)+\cdots+r_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(t)}{\pi(a_0|h)}\pi(a_0|h)
+            &= \frac{\pi_*(t\frown a)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
-            &= \pi_*(t),
+            &= \pi_*(t\frown a) = \pi_*(s),
     \end{align*}
     as desired.
 
