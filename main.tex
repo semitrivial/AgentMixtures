@@ -873,7 +873,7 @@ make it clearer what exactly a Markov agent is.
     For any probability distributions $m_1,\ldots,m_n$ on $\mathcal A$,
     for any nonnegative reals $r_1,\ldots,r_n$ with $r_1+\cdots+r_n=1$,
     if $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$,
-    then at least one of the following is true:
+    then one of the following is true:
     \begin{enumerate}
         \item For each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})=\Upsilon(\pi)$.
         \item For some $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})>\Upsilon(\pi)$.
@@ -903,7 +903,7 @@ any intelligent agent $\pi$, for any history $h$, if $\pi(\bullet|h)$ is not det
 then the intelligence of $\pi$ does not critically depend on the specific probabilities
 which $\pi(\bullet|h)$ assigns to different actions. For any decomposition
 $\pi(\bullet|h)=r_1m_1+\cdots+r_nm_n$ of $\pi(\bullet|h)$ into competing probability
-distributions $m$ (with $r_1+\cdots+r_m=1$), either $\pi^{h\mapsto m_i}$ is more intelligent
+distributions $m_i$ (with $r_1+\cdots+r_m=1$), either $\pi^{h\mapsto m_i}$ is more intelligent
 than $\pi$ for some $i$, or else every $\pi^{h\mapsto m_i}$ has the same intelligence as
 $\pi$. This is counter-intuitive because one might imagine that the specific probability
 distribution $\pi(\bullet|h)$ was carefully chosen and optimized to maximize the intelligence
@@ -957,6 +957,46 @@ experimentally in order to maximize $\pi$'s intelligence. We could imagine ourse
 saying: ``This particular value of $\pi(\bullet|h_0)$ is critical to $\pi$'s
 performance. Any other value would make $\pi$ sub-optimal.''
 Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
+
+\begin{corollary}
+\label{nondeterminismcorollary}
+    (Pointwise Unnecessariness of Non-Determinism)
+    Suppose $\Upsilon$ is a weighted performance averager, $\pi$ is an agent,
+    and $h_0$ is a percept-action history ending in a percept.
+    Let $a_1,\ldots,a_n$ enumerate $\{a\in\mathcal A\,:\,\pi(a|h_0)\not=0\}$.
+    For each $i=1,\ldots,n$, let $m_i$ be the
+    deterministic $\mathcal A$-probability distribution
+    \[
+        m_i(a) = \begin{cases}
+            1 &\mbox{if $a=a_i$,}\\
+            0 &\mbox{if $a\not=a_i$.}
+        \end{cases}
+    \]
+    Then one of the following is true:
+    \begin{enumerate}
+        \item
+        For each $i=1,\ldots,n$, $\Upsilon(\pi^{h_0\mapsto m_i})=\Upsilon(\pi)$.
+        \item
+        For some $i=1,\ldots,n$, $\Upsilon(\pi^{h_0\mapsto m_i})>\Upsilon(\pi)$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    By Theorem \ref{pointwisegenericnessthm} with
+    $r_i=\pi(a_i|h_0)$ for $i=1,\ldots,n$.
+\end{proof}
+
+Corollary \ref{nondeterminismcorollary} shows that for any individual
+history $h_0$, the intelligence of $\pi$ cannot crucially depend on $\pi(\bullet|h_0)$
+being non-deterministic. This is counter-intuitive because we could imagine saying:
+``In response to such-and-such history, it would be optimal for our agent
+to assume the environment is playing Paper-Rock-Scissors and therefore
+assign uniform probabilities of $1/3$ to each of Paper, Rock, and Scissors;
+certainly, it would be sub-optimal for our agent to instead assign probability $1$ to
+any of Paper, Rock, or Scissors.'' Corollary \ref{nondeterminismcorollary} shows
+that no such statement can be true.
+
+
 
 \bibliographystyle{alpha}
 \bibliography{main}
