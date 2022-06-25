@@ -570,12 +570,24 @@ make it clearer what exactly a Markov agent is.
 \label{firsttechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
     Suppose $h$ is a history such that
+    for every $a\in\mathcal A$,
     $h_0\frown a$ is not an initial segment of $h$.
     Then $\pi^{h_0\mapsto m}_*(h)=\pi_*(h)$.
 \end{lemma}
 
 \begin{proof}
     By induction on $h$.
+\end{proof}
+
+\begin{lemma}
+\label{thirdtechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    For any action $a\in\mathcal A$,
+    $\pi^{h_0\mapsto m}_*(h_0\frown a)=\pi_*(h_0)m(a)$.
+\end{lemma}
+
+\begin{proof}
+    Immediate by Definition \ref{pullbackdef} and Lemma \ref{firsttechlemmaforgenericity}.
 \end{proof}
 
 \begin{lemma}
@@ -678,7 +690,6 @@ make it clearer what exactly a Markov agent is.
     Suppose $m_1,\ldots,m_n$ are probability distributions on $\mathcal A$
     and $r_1,\ldots,r_n$ are nonnegative reals such that $r_1+\cdots+r_n=1$
     and $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$.
-    Assume $\pi(a|h)\not=0$ for all $a\in\mathcal A$.
     Then
     \[
         \Upsilon(\pi)
@@ -792,49 +803,43 @@ make it clearer what exactly a Markov agent is.
 
     Subcase 3.3: $\pi_*(t)\not=0$ and $t=h$.
 
-    We would like to use Definition \ref{maindefn} to rewrite
-    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)$ but first we must
-    check that the resulting denominator does not vanish.
-    Recall we are assuming $\pi(a'|h)\not=0$ for all $a'\in\mathcal A$,
-    so in particular $\pi(a|h)\not=0$.
+    We would like to use Definitino \ref{maindefn} to rewrite
+    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)$ but first we must check
+    that the resulting denominator does not vanish.
     Compute ($**$):
     \begin{align*}
         &{} r_1\pi^1_*(h)+\cdots+r_n\pi^n_*(h)\\
-            &= r_1\frac{\pi_*(h\frown a)m_1(a)}{\pi(a|h)}
-                +\cdots+r_n\frac{\pi_*(h\frown a)m_n(a)}{\pi(a|h)}
-                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(h\frown a)}{\pi(a|h)}(r_1m_1(a)+\cdots+r_nm_n(a))
-                    &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(h\frown a)}{\pi(a|h)}\pi(a|h)
-                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
-            &= \pi_*(h\frown a)\not=0.
+            &= r_1\pi_*(h)+\cdots+r_n\pi_*(h)
+                &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+            &= \pi_*(h)\not=0.
+                &\mbox{($r_1+\cdots+r_n=1$)}
     \end{align*}
-    Thus
+    Thus:
     \begin{align*}
-        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(s)\\
+        &{} & (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(h\frown a)\\
             &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(h)
-                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(h)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+            &= \pi_*(h)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)
                     &\mbox{(Induction)}\\
-            &= \pi_*(h)\frac{r_1\pi_*^1(h\frown a)+\cdots+r_n\pi_*^n(h\frown a)}
-                {r_1\pi_*^1(h)+\cdots+r_n\pi_*^n(h)}
+            &= \pi_*(h)
+                \frac
+                {r_1\pi^1_*(h\frown a)+\cdots+r_n\pi^n_*(h\frown a)}
+                {r_1\pi^1_*(h)+\cdots+r_n\pi^n_*(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= \pi_*(h)\frac{r_1\pi_*^1(h\frown a)+\cdots+r_n\pi_*^n(h\frown a)}
-                    {\pi_*(h\frown a)}
+            &= r_1\pi^1_*(h\frown a)+\cdots+r_n\pi^n_*(h\frown a)
                     &\mbox{(By $**$)}\\
-            &= \frac{\pi_*(h)}{\pi_*(h\frown a)}
-                \sum_{i=1}^n r_i\frac{\pi_*(h\frown a)m_i(a)}{\pi(a|h)}
-                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(h)}{\pi(a|h)}(r_1m_1(a)+\cdots+r_nm_n(a))
-                    &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(h)}{\pi(a|h)}\pi(a|h)
-                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
-            &= \pi_*(h),
+            &= r_1\pi_*(h)m_1(a)+\cdots+r_n\pi_*(h)m_n(a)
+                    &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
+            &= \pi_*(h)\pi(a|h)
+                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h))}\\
+            &= \pi_*(h\frown a),
+                    &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
     as desired.
 
-    Subcase 3.4: $\pi_*(t)\not=0$ and $h$ is not an initial segment of $t$.
+    Subcase 3.4: $\pi_*(t)\not=0$, $t\not=h$, and $t$ has no initial segment
+        of the form $h\frown a_0$.
 
     We would like to use Definition \ref{maindefn} to rewrite
     $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)$ but first we must
@@ -858,10 +863,8 @@ make it clearer what exactly a Markov agent is.
             &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
                 {r_1\pi^1_*(t)+\cdots+r_n\pi^n_*(t)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}{\pi_*(t)}
-                    &\mbox{(By $***$)}\\
             &= r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)
-                    &\mbox{(Basic Algebra)}\\
+                    &\mbox{(By $***$)}\\
             &= r_1\pi_*(t\frown a)+\cdots+r_n\pi_*(t\frown a)
                     &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
             &= \pi_*(t\frown a),
