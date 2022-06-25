@@ -569,7 +569,8 @@ make it clearer what exactly a Markov agent is.
 \begin{lemma}
 \label{firsttechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Suppose $h$ is a history such that $h_0$ is not an initial segment of $h$.
+    Suppose $h$ is a history such that
+    $h_0\frown a$ is not an initial segment of $h$.
     Then $\pi^{h_0\mapsto m}_*(h)=\pi_*(h)$.
 \end{lemma}
 
@@ -671,6 +672,7 @@ make it clearer what exactly a Markov agent is.
 \end{proof}
 
 \begin{proposition}
+\label{longproposition}
     Let $\Upsilon$ be any weighted performance averager, let $\pi$ be any agent,
     let $h$ be any history ending in a percept.
     Suppose $m_1,\ldots,m_n$ are probability distributions on $\mathcal A$
@@ -879,13 +881,26 @@ make it clearer what exactly a Markov agent is.
     if $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$,
     then at least one of the following is true:
     \begin{enumerate}
-        \item For each $i=1,\ldots,n$, $\Upsilon(\pi_{h\mapsto m_i})\geq \Upsilon(\pi)$.
-        \item For some $i=1,\ldots,n$, $\Upsilon(\pi_{h\mapsto m_i})>\Upsilon(\pi)$.
+        \item For each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})\geq \Upsilon(\pi)$.
+        \item For some $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})>\Upsilon(\pi)$.
     \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-    
+    If not, then for each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})<\Upsilon(\pi)$.
+    This implies
+    \begin{align*}
+        \Upsilon(\pi)
+            &= \Upsilon(r_1\pi^{h\mapsto m_1}\oplus\cdots\oplus r_n\pi^{h\mapsto m_n})
+                &\mbox{(Proposition \ref{longproposition})}\\
+            &= r_1\Upsilon(\pi^{h\mapsto m_1})+\cdots+r_n\Upsilon(\pi^{h\mapsto m_n})
+                &\mbox{(Theorem \ref{averageperformancelemma})}\\
+            &< r_1\Upsilon(\pi)+\cdots+r_n\Upsilon(\pi)
+                &\mbox{(Assumption)}\\
+            &= \Upsilon(\pi),
+                &\mbox{($r_1+\cdots+r_n=1$)}
+    \end{align*}
+    absurd.
 \end{proof}
 
 \bibliographystyle{alpha}
