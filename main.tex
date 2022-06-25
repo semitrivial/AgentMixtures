@@ -865,7 +865,8 @@ make it clearer what exactly a Markov agent is.
 \end{proof}
 
 \begin{theorem}
-    (Pointwise Genericness of Intelligence)
+\label{pointwisegenericnessthm}
+    (Pointwise Genericness of Non-Deterministic Intelligence)
     Let $\Upsilon$ be any weighted performance averager and let
     $\pi$ be an agent.
     Let $h$ be a history ending in a percept.
@@ -874,7 +875,7 @@ make it clearer what exactly a Markov agent is.
     if $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$,
     then at least one of the following is true:
     \begin{enumerate}
-        \item For each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})\geq \Upsilon(\pi)$.
+        \item For each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})=\Upsilon(\pi)$.
         \item For some $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})>\Upsilon(\pi)$.
     \end{enumerate}
 \end{theorem}
@@ -896,6 +897,66 @@ make it clearer what exactly a Markov agent is.
     \end{align*}
     absurd.
 \end{proof}
+
+Theorem \ref{pointwisegenericnessthm} is interesting because it implies that for
+any intelligent agent $\pi$, for any history $h$, if $\pi(\bullet|h)$ is not deterministic,
+then the intelligence of $\pi$ does not critically depend on the specific probabilities
+which $\pi(\bullet|h)$ assigns to different actions. For any decomposition
+$\pi(\bullet|h)=r_1m_1+\cdots+r_nm_n$ of $\pi(\bullet|h)$ into competing probability
+distributions $m$ (with $r_1+\cdots+r_m=1$), either $\pi^{h\mapsto m_i}$ is more intelligent
+than $\pi$ for some $i$, or else every $\pi^{h\mapsto m_i}$ has the same intelligence as
+$\pi$. This is counter-intuitive because one might imagine that the specific probability
+distribution $\pi(\bullet|h)$ was carefully chosen and optimized to maximize the intelligence
+of $\pi$.
+
+\begin{example}
+\label{genericnessexample}
+    Suppose $\pi$ is an agent and $h_0$ is some percept-action history ending in a
+    percept. Assume $\mathcal A=\{a_1,a_2,a_3\}$.
+    Suppose $\pi(a|h_0)=\frac13$ for every $a\in\mathcal A$.
+    Define probability distrutions $m_1,m_2,m_3$ on $\mathcal A$ by
+    \begin{align*}
+        m_1(a) &=
+        \begin{cases}
+            \frac16 &\mbox{if $a\in\{a_1,a_2\}$}\\
+            \frac23 &\mbox{if $a=a_3$}
+        \end{cases}\\
+        m_2(a) &=
+        \begin{cases}
+            \frac16 &\mbox{if $a\in\{a_1,a_3\}$}\\
+            \frac23 &\mbox{if $a=a_2$}
+        \end{cases}\\
+        m_3(a) &=
+        \begin{cases}
+            \frac16 &\mbox{if $a\in\{a_2,a_3\}$}\\
+            \frac23 &\mbox{if $a=a_1$}
+        \end{cases}
+    \end{align*}
+    Let $r_1=r_2=r_3=\frac13$. Then $r_1+r_2+r_3=1$ and
+    it is easy to check
+    $(r_1m_1+r_2m_2+r_3m_3)(a)=\frac13$ for every $a\in\mathcal A$,
+    i.e., $r_1m_1+r_2m_2+r_3m_3=\pi(\bullet|h_0)$.
+    By Theorem \ref{pointwisegenericnessthm},
+    for any weighted performance averager $\Upsilon$,
+    one of the following statements is true:
+    \begin{enumerate}
+        \item
+        For all $i=1,2,3$, $\pi$'s intelligence would not change if we
+        changed the value of $\pi(\bullet|h_0)$ to $m_i$. Or,
+        \item
+        For some $i=1,2,3$, $\pi$'s intelligence would increase if
+        we changed the value of $\pi(\bullet|h_0)$ to $m_i$.
+    \end{enumerate}
+\end{example}
+
+In Example \ref{genericnessexample}, Theorem \ref{pointwisegenericnessthm} shows
+that the intelligence of $\pi$ does not crucially depend on the specific value
+of $\pi(\bullet|h_0)$. This is counter-intuitive because, a priori, it seems
+plausible that the value of $\pi(\bullet|h_0)$ could have been determined
+experimentally in order to maximize $\pi$'s intelligence. We could imagine ourselves
+saying: ``This particular value of $\pi(\bullet|h_0)$ is critical to $\pi$'s
+performance. Any other value would make $\pi$ sub-optimal.''
+Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 
 \bibliographystyle{alpha}
 \bibliography{main}
