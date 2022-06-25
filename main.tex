@@ -880,7 +880,8 @@ make it clearer what exactly a Markov agent is.
 \end{theorem}
 
 \begin{proof}
-    If not, then for each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})<\Upsilon(\pi)$.
+    If not, then for each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})\leq\Upsilon(\pi)$,
+    and for some $i$, $\Upsilon(\pi^{h\mapsto m_i})<\Upsilon(\pi)$.
     This implies
     \begin{align*}
         \Upsilon(\pi)
