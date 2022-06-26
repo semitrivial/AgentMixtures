@@ -311,9 +311,8 @@ and lemmas.
         \item $\vec\pi_*(s)=(\pi^1_*(s),\ldots,\pi^n_*(s))$.
         \item $(\vec\pi,\mu)_*(s)=((\pi^1,\mu)_*(s),\ldots,(\pi^n,\mu)_*(s))$.
         \item $V^{\vec\pi}_{\mu,m}=(V^{\pi^1}_{\mu,m},\ldots,V^{\pi^n}_{\mu,m})$.
-        \item $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$
-            (provided each $V^{\pi^i}_\mu$ converges; if some $V^{\pi^i}_\mu$
-            diverges, then we say $V^{\vec\pi}_\mu$ diverges).
+        \item If each $V^{\pi^i}_\mu$ converges, we say $V^{\vec\pi}_\mu$
+            converges, and define $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$.
         \item $\Upsilon(\vec\pi)=(\Upsilon(\pi^1),\ldots,\Upsilon(\pi^n))$.
     \end{itemize}
     Recall that if $\vec u=(u_1,\ldots,u_n)$ and
@@ -336,12 +335,28 @@ Now we are ready to define mixture agents.
         (\vec w\cdot\vec\pi)(a|s)
         =
         \begin{cases}
-            \dfrac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot \vec\pi_*(s)}
-            &\mbox{if $\vec w\cdot \vec\pi_*(s)\not=0$,}\\
-            1/|\mathcal{A}|$ &\mbox{otherwise.}
+            \dfrac{\vec w\cdot (\vec\pi_*(s\frown a))}{\vec w\cdot (\vec\pi_*(s))}
+            &\mbox{if $\vec w\cdot (\vec\pi_*(s))\not=0$,}\\
+            1/|\mathcal{A}| &\mbox{otherwise}
         \end{cases}
     \]
+    (see Remark \ref{ambiguityremark} below).
 \end{definition}
+
+\begin{remark}
+\label{ambiguityremark}
+    Theorem \ref{maintheorem} below will allow us to unimbiguously
+    rewrite Definition \ref{maindefn} as
+    \[
+        (\vec w\cdot\vec\pi)(a|s)
+        =
+        \begin{cases}
+            \dfrac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot \vec\pi_*(s)}
+            &\mbox{if $\vec w\cdot \vec\pi_*(s)\not=0$,}\\
+            1/|\mathcal{A}| &\mbox{otherwise.}
+        \end{cases}
+    \]
+\end{remark}
 
 \begin{lemma}
     If $\vec\pi$ and $\vec w$ are as in Definition \ref{maindefn}
@@ -353,32 +368,32 @@ Now we are ready to define mixture agents.
     $\sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|s)=1$ for every
     $s\in(\mathcal P\mathcal A)^*\mathcal P$. Fix some such $s$.
 
-    Case 1: $\vec w\cdot \vec\pi_*(s)=0$. Then
+    Case 1: $\vec w\cdot (\vec\pi_*(s))=0$. Then
     each $(\vec w\cdot\vec\pi)(a|s)=1/|\mathcal A|$ so the
     claim is immediate.
 
-    Case 2: $\vec w\cdot \vec\pi_*(s)\not=0$. Then
+    Case 2: $\vec w\cdot (\vec\pi_*(s))\not=0$. Then
     \begin{align*}
         &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|s)\\
             &= \sum_{a\in\mathcal A}
-                \frac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot \vec\pi_*(s)}
+                \frac{\vec w\cdot (\vec\pi_*(s\frown a))}{\vec w\cdot (\vec\pi_*(s))}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
                 \frac
                 {w_1\pi^1_*(s)\pi^1(a|s)+\cdots+w_n\pi^n_*(s)\pi^n(a|s)}
-                {\vec w\cdot\vec\pi_*(s)}
+                {\vec w\cdot(\vec\pi_*(s))}
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \frac{
                 w_1\pi^1_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|s)$}\right)
                 +\cdots+
                 w_n\pi^n_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|s)$}\right)
                 }
-                {\vec w\cdot \vec\pi_*(s)}
+                {\vec w\cdot (\vec\pi_*(s))}
                 &\mbox{(Algebra)}\\
             &= \frac
                 {w_1\pi^1_*(s)\cdot 1 + \cdots + w_n\pi^n_*(s)\cdot1}
-                {\vec w\cdot \vec\pi_*(s)}
-                =\frac{\vec w\cdot \vec\pi_*(s)}{\vec w\cdot \vec\pi_*(s)}=1.
+                {\vec w\cdot (\vec\pi_*(s))}
+                =\frac{\vec w\cdot (\vec\pi_*(s))}{\vec w\cdot (\vec\pi_*(s))}=1.
                 &\mbox{($\pi^i$ are agents)}
     \end{align*}
 \end{proof}
@@ -393,10 +408,10 @@ Now we are ready to define mixture agents.
     \begin{enumerate}
         \item
         For any $s\in\mathcal H$,
-        $(\vec w\cdot \vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$.
+        $(\vec w\cdot\vec\pi)_*(s)=\vec w\cdot(\vec\pi_*(s))$.
         \item
         For any $s\in\mathcal H$,
-        $(\vec w\cdot\vec\pi)_*(s)=\vec w\cdot(\vec\pi_*(s))$.
+        $(\vec w\cdot \vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$.
         \item
         For any $m\in\mathbb N$,
         $V^{\vec w\cdot \vec\pi}_{\mu,m}=\vec w\cdot V^{\vec\pi}_{\mu,m}$.
@@ -417,86 +432,78 @@ Now we are ready to define mixture agents.
     (1) By induction on $s$.
 
     Case 1: $s=\langle\rangle$. Then
-    $(\vec w\cdot\vec\pi,\mu)_*(s)=1=w_1\cdot 1+\cdots+w_n\cdot 1
-    =\vec w\cdot (\vec\pi,\mu)_*(s)$.
+    $(\vec w\cdot\vec\pi)_*(s)=1=w_1\cdot 1+\cdots+w_n\cdot 1
+    =\vec w\cdot (\vec\pi_*(s))$.
 
     Case 2: $s=t\frown p$ for some percept $p$. Then
     \begin{align*}
-        (\vec w\cdot \vec\pi,\mu)_*(s)
-            &= \mu(p|t)(\vec w\cdot\vec\pi,\mu)_*(t)
+        (\vec w\cdot \vec\pi)_*(s)
+            &= (\vec w\cdot\vec\pi)_*(t)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \mu(p|t)\vec w\cdot(\vec\pi,\mu)_*(t)
+            &= \vec w\cdot(\vec\pi_*(t))
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\mu(p|t)(\vec\pi,\mu)_*(t))
-                &\mbox{(Vector Algebra)}\\
-            &= \vec w\cdot(\vec\pi,\mu)_*(t\frown p)
+            &= \vec w\cdot(\vec\pi_*(t\frown p))
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi,\mu)_*(s).
+            &= \vec w\cdot(\vec\pi_*(s)).
     \end{align*}
 
     Case 3: $s=t\frown a$ for some action $a$.
 
-    Subcase 3.1: $\vec w\cdot \vec\pi_*(t)=0$.
-        Since the $w_i$ are positive, this implies each
-        $\pi^i_*(t)=0$. So by Lemma \ref{factorizationlemma},
-        each $(\pi^i,\mu)_*(t)=0$.
-        Thus
+    Subcase 3.1: $(\vec w\cdot \vec\pi)_*(t)=0$.
+        By induction $\vec w\cdot(\vec\pi_*(t))=0$.
+        Since the $w_i$ are positive, this implies
+        each $\pi^i_*(t)=0$.
+        Thus each
         \begin{align*}
-            (\vec w\cdot\vec\pi,\mu)(t)
-                &= \vec w\cdot(\vec\pi,\mu)(t)
-                    &\mbox{(Induction)}\\
-                &= \vec w\cdot\vec 0=0.
-                    &\mbox{(Each $(\pi^i,\mu)_*(t)=0$)}\\
+            w_i\pi^i_*(t\frown a)
+                &= w_i\pi^i_*(t)\pi^i(a|t)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= 0w_i\pi^i(a|t)=0,
         \end{align*}
-        Thus by Definition \ref{pullbackdef},
-        $(\vec w\cdot\vec\pi,\mu)(t\frown a)=0(\vec w\cdot\vec\pi)(a|t)=0$.
-        Likewise since each $(\pi^i,\mu)_*(t)=0$, Definition \ref{pullbackdef}
-        says each $(\pi^i,\mu)_*(t\frown a)=0\pi^i(a|t)=0$.
-        So $\vec w\cdot(\vec\pi,\mu)_*(t\frown a)=\vec w\cdot\vec 0=0$.
-        So $(\vec w\cdot\vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$
-        as desired.
+        i.e., $\vec w\cdot(\vec\pi_*(t\frown a))=0$.
+        And
+        \begin{align*}
+            (\vec w\cdot\vec\pi)_*(t\frown a)
+                &= (\vec w\cdot\vec\pi)_*(t)(\vec w\cdot\vec\pi)(a|t)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= 0(\vec w\cdot\vec\pi)(a|t) = 0,
+        \end{align*}
+        so $(\vec w\cdot\vec\pi)_*(s)=\vec w\cdot(\vec \pi_*(s))=0$.
 
-    Subcase 3.2: $\vec w\cdot \vec\pi_*(t)\not=0$. Then
+    Subcase 3.2: $\vec w\cdot (\vec\pi_*(t))\not=0$. Then
     \begin{align*}
-        (\vec w\cdot\vec\pi,\mu)_*(s)
-            &= (\vec w\cdot\vec\pi,\mu)_*(t)(\vec w\cdot\vec\pi)(a|t)
+        (\vec w\cdot\vec\pi)_*(s)
+            &= (\vec w\cdot\vec\pi)_*(t)(\vec w\cdot\vec\pi)(a|t)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi,\mu)_*(t)
+            &= (\vec w\cdot\vec\pi)_*(t)
                 \frac
-                {\vec w\cdot\vec\pi_*(t\frown a)}
-                {\vec w\cdot\vec\pi_*(t)}
+                {\vec w\cdot(\vec\pi_*(t\frown a))}
+                {\vec w\cdot(\vec\pi_*(t))}
                 &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot (\vec\pi,\mu)_*(t)
+            &= \vec w\cdot(\vec\pi_*(t))
                 \frac
-                {\vec w\cdot\vec\pi_*(t\frown a)}
-                {\vec w\cdot\vec\pi_*(t)}
+                {\vec w\cdot(\vec\pi_*(t\frown a))}
+                {\vec w\cdot(\vec\pi_*(t))}
                 &\mbox{(Induction)}\\
-            &= \mu_*(t)\vec w\cdot \vec\pi_*(t)
-                \frac
-                {\vec w\cdot\vec\pi_*(t\frown a)}
-                {\vec w\cdot\vec\pi_*(t)}
-                &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= \mu_*(t)\vec w\cdot\vec\pi_*(t\frown a)
+            &= \vec w\cdot(\vec\pi_*(t\frown a))
                 &\mbox{(Basic Algebra)}\\
-            &= \mu_*(t\frown a)\vec w\cdot\vec\pi_*(t\frown a)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi,\mu)_*(t\frown a)
-                &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= \vec w\cdot(\vec\pi,\mu)_*(s),
+            &= \vec w\cdot(\vec\pi_*(s)).
     \end{align*}
     as desired.
 
-    (2) Let $\mu'$ be an environment such that $\mu'_*(s)=1$.
-        By Lemma \ref{factorizationlemma},
-        $(\vec w\cdot\vec\pi)_*(s)=(\vec w\cdot\vec\pi,\mu')_*(s)$
-        and $\vec\pi_*(s)=(\vec\pi,\mu')_*(s)$. The claim now follows by (1).
+    (2) Follows from (1) and Lemma \ref{factorizationlemma}.
 
-    (3) Follows from (1) by Lemma \ref{basicprobabilitylemma}.
+    (3) Follows from (2) and Lemma \ref{basicprobabilitylemma}.
 
     (4) Immediate from (3).
 
     (5) Immediate from (4).
 \end{proof}
+
+By part 1 of Theorem \ref{maintheorem},
+we may unambiguously write $\vec w\cdot \vec\pi_*(s)$
+for either $(\vec w\cdot\vec\pi)_*(s)$ or $\vec w\cdot(\vec\pi_*(s))$.
+We will freely do so for the remainder of the paper.
 
 \section{Duality and Janus agents:
 Strengthening and formalizing a result of Alexander and Hutter}
