@@ -79,19 +79,20 @@ with $\mu$. But this is all quite informal, as the RL
 framework does not actually provide any mechanism for such an initial
 coin-flip.
 
-More generally, given agents $\pi^1,\ldots,\pi^n$ and positive reals
-$w_1,\ldots,w_n$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
+More generally, given agents $\vec{\pi}=(\pi^1,\ldots,\pi^n)$ and positive reals
+$\vec{w}=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
 who, at the start of each agent-environment interaction, randomly transforms
-into $\pi^1$ (with probability $r_1$) or into $\pi^2$ (with probability $r_2$),
+into $\pi^1$ (with probability $w_1$) or into $\pi^2$ (with probability $w_2$),
 etc. If each $\pi^i$ would get total expected reward $r_i$ from an environment
 $\mu$, intuitively $\sigma$ should get total expected reward
-$w_1r_1+\cdots+w_nr_n$ from that environment. But again, the RL
+$\vec{w}\cdot \vec{r}=w_1r_1+\cdots+w_nr_n$ from that environment.
+But again, the RL
 framework has no mechanism for such an agent $\sigma$. We will define
-an agent $w_1\pi^1\oplus\cdots \oplus w_n\pi^n$, called a \emph{mixture agent},
+an agent $\vec{w}\cdot\vec{\pi}$, called a \emph{mixture agent},
 within the constraints
-of the RL framework, and prove that its total expected reward in any environment
-is the desired $\{w_i\}$-weighted average of the total expected
-rewards of $\pi^1,\ldots,\pi^n$ in that environment.
+of the RL framework, and prove that ``the expected total reward of the
+weighted mixture is the weighted average of the expected total rewards''.
+We will then use this mixture operation to prove a number of interesting results.
 
 \section{Preliminaries}
 
@@ -302,87 +303,111 @@ and lemmas.
     Basic probability theory.
 \end{proof}
 
+\begin{definition}
+    If $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents, $\mu$ is an environment,
+    and $s\in\mathcal H$, then we define:
+    \begin{itemize}
+        \item $\vec\pi_*(s)=(\pi^1_*(s),\ldots,\pi^n_*(s))$.
+        \item $(\vec\pi,\mu)_*(s)=((\pi^1,\mu)_*(s),\ldots,(\pi^n,\mu)_*(s))$.
+    \end{itemize}
+    Recall that if $\vec u=(u_1,\ldots,u_n)$ and
+    $\vec v=(v_1,\ldots,v_n)$ are any two equal-length
+    vectors of real numbers, then their \emph{inner product}
+    (or \emph{dot product}) is defined to be
+    $\vec u\cdot \vec v=u_1v_1+\cdots+u_nv_n$.
+\end{definition}
+
 Now we are ready to define mixture agents.
 
 \begin{definition}
 \label{maindefn}
     (Mixture agents)
-    Suppose $\pi^1,\ldots,\pi^n$ are agents and $w_1,\ldots,w_n$ are positive
-    real numbers with $w_1+\cdots+w_n=1$.
-    Define the \emph{mixture agent} $w_1\pi^1\oplus\cdots\oplus w_n\pi^n$
-    as follows. For every $s\in(\mathcal P\mathcal A)^*\mathcal P$:
-    \begin{itemize}
-        \item
-        If $w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)\not=0$ then
-        \[
-            (w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)
-            =
-            \frac
-            {w_1\pi^1_*(s\frown a)+\cdots+w_n\pi^n_*(s\frown a)}
-            {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}.
-        \]
-        \item
-        Otherwise, $(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)=1/|\mathcal{A}|$.
-    \end{itemize}
+    Suppose $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
+    are positive real numbers with $w_1+\cdots+w_n=1$.
+    Define the \emph{mixture agent}
+    $\vec w\cdot\vec\pi$ by:
+    \[
+        (\vec w\cdot\vec\pi)(a|s)
+        =
+        \begin{cases}
+            \dfrac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot \vec\pi_*(s)}
+            &\mbox{if $\vec w\cdot \vec\pi_*(s)\not=0$,}\\
+            1/|\mathcal{A}|$ &\mbox{otherwise.}
+        \end{cases}
+    \]
 \end{definition}
 
 \begin{lemma}
-    If $\pi^1,\ldots,\pi^n$ and $w_1,\ldots,w_n$ are as in Definition \ref{maindefn}
-    then $w_1\pi^1\oplus\cdots\oplus w_n\pi^n$ really is an agent.
+    If $\vec\pi$ and $\vec w$ are as in Definition \ref{maindefn}
+    then $\vec w\cdot\vec\pi$ really is an agent.
 \end{lemma}
 
 \begin{proof}
     We must show
-    $\sum_{a\in\mathcal A}(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)=1$ for every
+    $\sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|s)=1$ for every
     $s\in(\mathcal P\mathcal A)^*\mathcal P$. Fix some such $s$.
 
-    Case 1: $w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)=0$. Then
-    each $(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)=1/|\mathcal A|$ so the
+    Case 1: $\vec w\cdot \vec\pi_*(s)=0$. Then
+    each $(\vec w\cdot\vec\pi)(a|s)=1/|\mathcal A|$ so the
     claim is immediate.
 
-    Case 2: $w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)\not=0$. Then
+    Case 2: $\vec w\cdot \vec\pi_*(s)\not=0$. Then
     \begin{align*}
-        &{} \sum_{a\in\mathcal A}(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)\\
+        &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|s)\\
             &= \sum_{a\in\mathcal A}
-                \frac
-                {w_1\pi^1_*(s\frown a)+\cdots+w_n\pi^n_*(s\frown a)}
-                {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}
+                \frac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot \vec\pi_*(s)}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
                 \frac
                 {w_1\pi^1_*(s)\pi^1(a|s)+\cdots+w_n\pi^n_*(s)\pi^n(a|s)}
-                {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}
+                {\vec w\cdot\vec\pi_*(s)}
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \frac{
                 w_1\pi^1_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|s)$}\right)
                 +\cdots+
                 w_n\pi^n_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|s)$}\right)
                 }
-                {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}
+                {\vec w\cdot \vec\pi_*(s)}
                 &\mbox{(Algebra)}\\
             &= \frac
                 {w_1\pi^1_*(s)\cdot 1 + \cdots + w_n\pi^n_*(s)\cdot1}
-                {w_1\pi^1_*(s)+\dots+w_n\pi^n_*(s)}=1.
+                {\vec w\cdot \vec\pi_*(s)}
+                =\frac{\vec w\cdot \vec\pi_*(s)}{\vec w\cdot \vec\pi_*(s)}=1.
                 &\mbox{($\pi^i$ are agents)}
     \end{align*}
 \end{proof}
 
 \begin{theorem}
 \label{maintheorem}
-    For all agents $\pi$ and $\rho$, for every environment $\mu$,
-    if $V^\pi_\mu$ and $V^\rho_\mu$ converge, then
+    (``The expected reward of a weighted mixture is the weighted
+    average of the expected rewards'')
+    For all agents $\vec\pi=(\pi^1,\ldots,\pi^n)$ and positive reals
+    $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, for every
+    environment $\mu$,
+    if $V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu$ all converge, then
     \[
-        V^{\pi\oplus\rho}_\mu = \frac12(V^\pi_\mu+V^\rho_\mu).
+        V^{\vec w\cdot\vec\pi}_\mu
+        =
+        w_1V^{\pi^1}_\mu + \cdots + w_nV^{\pi^n}_\mu.
     \]
 \end{theorem}
 
 \begin{proof}
     It suffices to show that for every $n\in\mathbb N$,
-    $V^{\pi\oplus\rho}_{\mu,n}=\frac12(V^\pi_{\mu,n}+V^\rho_{\mu,n})$.
-    Let $n\in\mathbb N$. Let $S_n$ be the set of all length-$n$ percept-action
-    sequences, and for each $s\in S_n$, let $r(s)$ be the sum of rewards in $s$.
+    $
+    V^{\vec w\cdot\vec\pi}_{\mu,n}
+    =
+    w_1V^{\pi^1}_{\mu,n}+\cdots+w_nV^{\pi^n}_{\mu,n})
+    $.
+    Let $n\in\mathbb N$. Let $S_n$ be the set of all length-$2(n+1)$ percept-action
+    sequences.
     By Lemma \ref{basicprobabilitylemma}, it suffices to show that
-    $(\pi\oplus\rho,\mu)_*(s)=\frac12((\pi,\mu)_*(s)+(\rho,\mu)_*(s))$ for each
+    $
+    (\vec w\cdot\vec\pi,\mu)_*(s)
+    =
+    w_1(\pi^1,\mu)_*(s)+\cdots+w_n(\pi^n,\mu)_*(s)
+    $
+    for each
     $s\in S_n$. Fix $s\in S_n$.
 
     Case 1: $s=\langle\rangle$. Then
