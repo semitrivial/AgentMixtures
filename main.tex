@@ -509,28 +509,54 @@ We will freely do so for the remainder of the paper.
 Strengthening and formalizing a result of Alexander and Hutter}
 
 \begin{definition}
-    (Duality) Define $\overline s$, $\overline \pi$, $\overline \mu$
-    as in Reward-Punishment Symmetric Universal Intelligence.
+(Dual Agents and Dual Environments)
+\begin{enumerate}
+    \item
+    For each $s\in\mathcal H$, let $\overline s$ be the sequence obtained
+    by replacing every percept $(o,r)$ in $s$ by $(o,-r)$ (in other words:
+    replacing every reward $r$ in $s$ by $-r$).
+    \item
+    Suppose $\pi$ is an agent.
+    We define a new agent $\overline \pi$, the \emph{dual} of $\pi$,
+    as follows:
+    for each $s\in (\mathcal P\mathcal A)^*\mathcal P$,
+    for each action $a\in\mathcal A$,
+    \[\overline\pi(a|s)=\pi(a|\overline s).\]
+    \item
+    Suppose $\mu$ is an environment.
+    We define a new environment $\overline\mu$, the \emph{dual} of $\mu$,
+    as follows:
+    for each $s\in (\mathcal P\mathcal A)^*$,
+    for each $(o,r)\in\mathcal P$,
+    \[\overline\mu(o,r|s)=\mu(o,-r|\overline s).\]
+\end{enumerate}
 \end{definition}
 
-The following class of agents are named after Janus, the Roman god of duality,
-who features two faces, one facing forward, one facing backward.
+The following class of agents are named after Janus, the mythological
+Roman god of duality. In the myth, Janus has two faces, one facing
+forward, the other facing backward. Thus in some sense, flipping Janus
+around by $180^\circ$ would not change him.
 
 \begin{definition}
     (Janus agents)
-    By a \emph{Janus agent}, we mean an agent $\pi$ such that
+    A \emph{Janus agent} is an agent $\pi$ such that
     $\overline{\pi}=\pi$.
 \end{definition}
+
+We will use Janus agents to strengthen and formalize an informal result
+from \cite{alexander2021reward}.
+But first, we will use mixture agents to characterize
+Janus agents (up to equivalence modulo a certain natural equivalence relation).
 
 \begin{definition}
 \label{equivdefn}
     If $\pi$ and $\rho$ are agents, we say $\pi\equiv\rho$ if the
     following conditions hold:
     \begin{enumerate}
-        \item For every history $h$, $\pi_*(h)=0$ iff $\rho_*(h)=0$.
-        \item For every history $h$ ending with a percept,
-            for every action $a$, if $\pi_*(h)\not=0$,
-            then $\rho(a|h)=\pi(a|h)$.
+        \item For all $s\in\mathcal H$, $\pi_*(s)=0$ iff $\rho_*(s)=0$.
+        \item For all $s\in(\mathcal P\mathcal A)^*\mathcal P$,
+            if $\pi_*(s)\not=0$ then for all $a\in\mathcal A$,
+            $\pi(a|h)=\rho(a|h)$.
     \end{enumerate}
 \end{definition}
 
@@ -546,46 +572,79 @@ who features two faces, one facing forward, one facing backward.
 
 \begin{lemma}
 \label{piopluspilemma}
-    For any agent $\pi$, $\pi\equiv\pi\oplus\pi$.
+    For every agent $\pi$, $\pi\equiv(\frac12,\frac12)\cdot(\pi,\pi)$.
 \end{lemma}
 
 \begin{proof}
-    We prove the two conditions of Definition \ref{equivdefn} by
-    induction on history $h$.
+    Let $\vec w=(\frac12,\frac12)$, $\vec\pi=(\pi,\pi)$.
+    We prove conditions 1 and 2 of Definition \ref{equivdefn}
+    simultaneously by induction on $s$.
  
-    Case 1: $h$ contains no actions. Then $\pi_*(h)=(\pi\oplus\pi)_*(h)=1$, so
-    certainly $\pi_*(h)=0$ iff $\rho_*(h)=0$ (proving condition 1 of
+    Case 1: $s=\langle\rangle$. Then
+    $\pi_*(s)=\vec w\cdot\vec\pi_*(s)=1$, so
+    vacuously $\pi_*(s)=0$ iff $\vec w\cdot\vec\pi_*(s)=0$
+    (proving condition 1 of
     Definition \ref{equivdefn}).
-    For condition 2, we check:
-    \begin{align*}
-        (\pi\oplus\pi)(a|h)
-            &= \frac{\pi_*(h\frown a) + \pi_*(h\frown a)}{\pi_*(h)+\pi_*(h)}\\
-            &= \frac{\pi_*(h)+\pi_*(h)}{\pi_*(h)+\pi_*(h)}\pi(a|h)\\
-            &= \pi(a|h),
-    \end{align*}
-    as desired.
+    For condition 2, there is nothing to check, since
+    $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
 
-    Case 2: $h$ ends with an action, say $h=h_0\frown a_0$ where $h_0$ ends with
-        a percept.
+    Case 2: $s$ ends with an action, say $s=s_0\frown a_0$ where
+        $s_0\in(\mathcal P\mathcal A)^*\mathcal P$.
+        For condition 2, there is nothing to prove, since
+        $s\not\in(\mathcal P\mathcal A)^*\mathcal P$.
+        For condition 1, we consider two cases.
+
+        Subcase 2.1: $\pi_*(s_0)=0$.
         By induction, we may assume (condition 1)
-        $\pi_*(h_0)=0$ iff $(\pi\oplus\pi)_*(h_0)=0$,
-        and (condition 2) if $\pi_*(h_0)\not=0$ then
-        $(\pi\oplus\pi)(a_0|h_0)=\pi(a_0|h_0)$.
-        If $\pi_*(h_0)=0$ (and hence $(\pi\oplus\pi)_*(h_0)=0$) then clearly
-        $\pi_*(h)=0$ and $(\pi\oplus\pi)_*(h)=0$. But assume $\pi_*(h_0)\not=0$.
-        Then by a similar calculation as in Case 1,
-        $(\pi\oplus\pi)(a_0|h_0)=\pi(a_0|h_0)$.
-        This implies $\pi_*(h)=0$ iff $(\pi\oplus\pi)_*(h)=0$, proving condition 1.
-        For condition 2 there is nothing to prove since $h$ does not end with a percept.
+        $\vec w\cdot\vec\pi_*(s_0)=0$.
+        By Definition \ref{pullbackdef},
+        $\pi_*(s)=0\pi(a_0|s_0)=0$
+        and $(\vec w\cdot\vec\pi)(s)=0(\vec w\cdot\vec\pi)(a_0|s_0)=0$.
+        So $\pi_*(s)=0$ iff $(\vec w\cdot\vec\pi)_*(s)=0$.
 
-    Case 3: $h$ ends with a percept, say $h=h_0\frown p$, and $h$ contains at least one action.
-        By induction, conditions 1 and 2 hold for $h_0$.
-        Since $\pi_*(h_0\frown p)=\pi_*(h_0)$ and
-        $(\pi\oplus\pi)_*(h_0\frown p)=(\pi\oplus\pi)_*(h_0)$,
-        condition 1 for $h$ follows.
-        For condition 2, let $a$ be any action and assume
-        $\pi_*(h)\not=0$. Then $(\pi\oplus\pi)(a|h)=\pi(a|h)$ by the
-        same calculation as in Case 1.
+        Subcase 2.2: $\pi_*(s_0)\not=0$.
+        Then
+        \begin{align*}
+            (\vec w\cdot \vec\pi)_*(s)
+                &= \vec w\cdot\vec\pi_*(s)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+                &= (\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi_*(s),\pi_*(s))
+                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
+                &= \pi_*(s)
+                    &\mbox{(Vector Algebra)}\\
+                &= \pi_*(s_0)\pi(a_0|s_0)\\
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= \pi_*(s).
+        \end{align*}
+        Since $\pi_*(s_0)\not=0$, and since $\mathbb R$ has the zero-product property,
+        it follows that
+        $(\vec w\cdot\vec\pi)_*(s)=0$ iff $\pi_*(s)=0$ iff $\pi(a_0|s_0)=0$.
+
+    Case 3: $s$ ends with a percept, say
+        $s=s_0\frown p$ where $s_0\in (\mathcal P\mathcal A)^*$.
+        By induction, conditions 1 and 2 hold for $s_0$.
+        By Definition \ref{pullbackdef},
+        $\pi_*(s)=\pi_*(s_0)$ and $(\vec w\cdot\vec\pi)_*(s)=(\vec w\cdot\vec\pi)_*(s)$,
+        so condition 1 for $s$ follows.
+
+        For condition 2,
+        assume $\pi_*(s)\not=0$ and let $a$ be any action.
+        By choice of $\vec w$ and $\vec\pi$,
+        $\vec w\cdot\vec\pi_*(s)=\frac12\pi_*(s)+\frac12\pi_*(s)=\pi_*(s)$.
+        So, since $\pi_*(s)\not=0$, $\vec w\cdot\vec\pi_*(s)\not=0$.
+        Thus
+        \begin{align*}
+            (\vec w\cdot\vec\pi)(a|s)
+                &= \frac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot\vec\pi_*(s)}
+                    &\mbox{(Definition \ref{maindefn})}\\
+                &= \frac{\frac12\pi_*(s\frown a)+\frac12\pi_*(s\frown a)}
+                    {\frac12\pi_*(s)+\frac12\pi_*(s)}
+                    &\mbox{(Choice of $\vec w$ and $\vec\pi$)}\\
+                &= \frac{\frac12\pi_*(s)+\frac12\pi_*(s)}{\frac12\pi_*(s)+\frac12\pi_*(s)}
+                    \pi(a|s)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= \pi(a|s).
+        \end{align*}
 \end{proof}
 
 \begin{proposition}
