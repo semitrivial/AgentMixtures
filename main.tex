@@ -1008,7 +1008,7 @@ clear.
     Let $\mu$ be an environment such that in every agent-environment interaction:
     \begin{enumerate}
         \item If the agent always takes action $a_0$, then the agent gets total reward $-1$.
-        \item If the agent initially takes action $a_0$ exactly $k$ times in a row and
+        \item If the agent initially takes action $a_0$ exactly $k$ times and
             then takes a different action, then the agent either
             gets total reward $1$ (with probability $1-2^{-k}$)
             or total reward $0$ (with probability $2^{-k}$)---so in expected
@@ -1018,11 +1018,14 @@ clear.
     $\overline\mu$ has weight $1$, and such that for every
     environment $\nu\not\in\{\mu,\overline{\mu}\}$, $\nu$ and $\overline{\nu}$ have
     equal weight.
+    Choose these weights so that $V^\pi_\mu$ is absolutely convergent for every $\pi$.
     By Corollary 6 of \cite{alexander2021reward}, for any Janus agent $\pi$ and
     any environment $\nu$, $V^\pi_{\overline\nu}=-V^\pi_{\nu}$, thus for any Janus agent $\pi$,
     in the sum $\Upsilon(\pi)$, for any environment $\nu\not\in\{\mu,\overline{\mu}\}$,
     the contributions from $\nu$ and $\overline\nu$ are $V^\pi_{\nu}$ and $-V^\pi_{\nu}$,
-    respectively, and so cancel each other. Thus for any Janus agent $\pi$,
+    respectively, and so cancel each other
+    (terms of the infinite series can be rearranged due to absolute convergence).
+    Thus for any Janus agent $\pi$,
     $\Upsilon(\pi)$ consists solely of the contributions from $\mu$ and $\overline\mu$,
     i.e.,
     \[
