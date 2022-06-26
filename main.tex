@@ -29,8 +29,9 @@ Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
 \maketitle
 
 \begin{abstract}
-    We define a weighted mixture of several
-    reinforcement learning agents, which yields a mixture agent with the
+    We introduce a weighted mixture operation on
+    reinforcement learning agents. The mixture of several weighted agents is
+    an agent with the
     following property: the expected total reward the mixture agent
     gets in any environment is the corresponding weighted average
     of the expected total rewards the original agents get in that
@@ -45,7 +46,7 @@ Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
 
 \section{Introduction}
 
-In reinforcement learning, an agent $\pi$ interacts with an environment $\mu$.
+In reinforcement learning (RL), an agent $\pi$ interacts with an environment $\mu$.
 The agent and the environment take turns.
 \begin{itemize}
 \item
@@ -74,20 +75,22 @@ it is not repeatedly flipped every turn. Intuitively, it seems like the
 expected total reward in the agent-environment interaction
 when $\sigma$ interacts with $\mu$, should be the average
 of the corresponding expected total rewards when $\pi$ or $\rho$ interact
-with $\mu$. But this is all quite informal, as the reinforcement learning
+with $\mu$. But this is all quite informal, as the RL
 framework does not actually provide any mechanism for such an initial
 coin-flip.
 
-We will show that there is a way to combine $\pi$ and $\rho$ into a new
-agent $\pi\oplus\rho$, within the formal framework, such that the expected
-total reward when $\pi\oplus\rho$ interacts with $\mu$ is the average of the
-expected total rewards when $\pi$ or $\rho$ interact with $\mu$.
-Thus, at least up to expected total reward, $\pi\oplus\rho$ has the exact
-same performance as the above informal coin-flipping agent.
-
-The structure of this paper is as follows.
-
-...
+More generally, given agents $\pi_1,\ldots,\pi_n$ and positive reals
+$w_1,\ldots,w_n$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
+who, at the start of each agent-environment interaction, randomly transforms
+into $\pi_1$ (with probability $r_1$) or into $\pi_2$ (with probability $r_2$),
+etc. If each $\pi_i$ would get total expected reward $r_i$ from an environment
+$\mu$, intuitively $\sigma$ should get total expected reward
+$w_1r_1+\cdots+w_nr_n$ from that environment. But again, the RL
+framework has no mechanism for such an agent $\sigma$. We will define
+an agent $w_1\pi_1\oplus\cdots \oplus w_n\pi_n$ within the constraints
+of the RL framework, and prove that its total expected reward in any environment
+is the desired $\{w_i\}$-weighted average of the total expected
+rewards of $\pi_1,\ldots,\pi_n$ in that environment.
 
 \section{Preliminaries}
 
