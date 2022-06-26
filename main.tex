@@ -327,33 +327,43 @@ Now we are ready to define mixture agents.
 \end{definition}
 
 \begin{lemma}
-    If $\pi$ and $\rho$ are agents then $\pi\oplus\rho$ really is an agent.
+    If $\pi^1,\ldots,\pi^n$ and $w_1,\ldots,w_n$ are as in Definition \ref{maindefn}
+    then $w_1\pi^1\oplus\cdots\oplus w_n\pi^n$ really is an agent.
 \end{lemma}
 
 \begin{proof}
-    We must show $\sum_{a\in\mathcal A}(\pi\oplus\rho)(a|s)=1$ for every
-    percept-action sequence $s$ ending in a percept. Fix some such $s$.
+    We must show
+    $\sum_{a\in\mathcal A}(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)=1$ for every
+    $s\in(\mathcal P\mathcal A)^*\mathcal P$. Fix some such $s$.
 
-    Case 1: $\pi_*(s)=\rho_*(s)=0$. Then by definition each
-    $(\pi\oplus\rho)(a|s)=1/|\mathcal A|$ so the claim is immediate.
+    Case 1: $w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)=0$. Then
+    each $(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)=1/|\mathcal A|$ so the
+    claim is immediate.
 
-    Case 2: $\pi_*(s)+\rho_*(s)>0$. Then
+    Case 2: $w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)\not=0$. Then
     \begin{align*}
-        \sum_{a\in\mathcal A}(\pi\oplus\rho)(a|s)
+        &{} \sum_{a\in\mathcal A}(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)\\
             &= \sum_{a\in\mathcal A}
-                \frac{\pi_*(s\frown a)+\rho_*(s\frown a)}{\pi_*(s)+\rho_*(s)}
+                \frac
+                {w_1\pi^1_*(s\frown a)+\cdots+w_n\pi^n_*(s\frown a)}
+                {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
-                \frac{\pi_*(s)\pi(a|s)+\rho_*(s)\rho(a|s)}{\pi_*(s)+\rho_*(s)}
+                \frac
+                {w_1\pi^1_*(s)\pi^1(a|s)+\cdots+w_n\pi^n_*(s)\pi^n(a|s)}
+                {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \frac{
-                \pi_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi(a|s)$}\right)
-                +
-                \rho_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\rho(a|s)$}\right)
-                }{\pi_*(s)+\rho_*(s)}
+                w_1\pi^1_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|s)$}\right)
+                +\cdots+
+                w_n\pi^n_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|s)$}\right)
+                }
+                {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}
                 &\mbox{(Algebra)}\\
-            &= \frac{\pi_*(s)+\rho_*(s)}{\pi_*(s)+\rho_*(s)}=1.
-                &\mbox{($\pi$, $\rho$ are agents)}
+            &= \frac
+                {w_1\pi^1_*(s)\cdot 1 + \cdots + w_n\pi^n_*(s)\cdot1}
+                {w_1\pi^1_*(s)+\dots+w_n\pi^n_*(s)}=1.
+                &\mbox{($\pi^i$ are agents)}
     \end{align*}
 \end{proof}
 
