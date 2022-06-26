@@ -305,12 +305,16 @@ and lemmas.
 
 \begin{definition}
     If $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents, $\mu$ is an environment,
-    $s\in\mathcal H$, and $m\in\mathbb N$, then we define:
+    $s\in\mathcal H$, $m\in\mathbb N$, and $\Upsilon$ is a weighted
+    performance averager, then we define:
     \begin{itemize}
         \item $\vec\pi_*(s)=(\pi^1_*(s),\ldots,\pi^n_*(s))$.
         \item $(\vec\pi,\mu)_*(s)=((\pi^1,\mu)_*(s),\ldots,(\pi^n,\mu)_*(s))$.
-        \item $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$.
         \item $V^{\vec\pi}_{\mu,m}=(V^{\pi^1}_{\mu,m},\ldots,V^{\pi^n}_{\mu,m})$.
+        \item $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$
+            (provided each $V^{\pi^i}_\mu$ converges; if some $V^{\pi^i}_\mu$
+            diverges, then we say $V^{\vec\pi}_\mu$ diverges).
+        \item $\Upsilon(\vec\pi)=(\Upsilon(\pi^1),\ldots,\Upsilon(\pi^n))$.
     \end{itemize}
     Recall that if $\vec u=(u_1,\ldots,u_n)$ and
     $\vec v=(v_1,\ldots,v_n)$ are any two equal-length
@@ -381,27 +385,36 @@ Now we are ready to define mixture agents.
 
 \begin{theorem}
 \label{maintheorem}
-    (``The expected reward of a weighted mixture is the weighted
-    average of the expected rewards'')
-    For all agents $\vec\pi=(\pi^1,\ldots,\pi^n)$ and positive reals
-    $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, for every
-    environment $\mu$,
-    if $V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu$ all converge, then
-    \[
-        V^{\vec w\cdot\vec\pi}_\mu
-        =
-        \vec w\cdot V^{\vec\pi}_\mu.
-    \]
+    (Commutativity of $\vec w$)
+    Let $\vec\pi=(\pi^1,\ldots,\pi^n)$ be agents.
+    Let $\vec w=(w_1,\ldots,w_n)$ be positive reals with
+    $w_1+\cdots+w_n=1$. Let $\mu$ be any environment.
+    Then:
+    \begin{enumerate}
+        \item
+        For any $s\in\mathcal H$,
+        $(\vec w\cdot \vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$.
+        \item
+        For any $s\in\mathcal H$,
+        $(\vec w\cdot\vec\pi)_*(s)=\vec w\cdot(\vec\pi_*(s))$.
+        \item
+        For any $m\in\mathbb N$,
+        $V^{\vec w\cdot \vec\pi}_{\mu,m}=\vec w\cdot V^{\vec\pi}_{\mu,m}$.
+        \item
+        (``The expected reward of a weighted mixture is the weighted
+        average of the expected rewards'')
+        If $V^{\vec\pi}_\mu$ converges, then $V^{\vec w\cdot\vec\pi}_\mu$
+        converges and $V^{\vec w\cdot\vec\pi}_\mu=\vec w\cdot V^{\vec\pi}_\mu$.
+        \item
+        (``The intelligence of a weighted mixture is the weighted average
+        of the intelligences'')
+        For any weighted performance averager $\Upsilon$,
+        $\Upsilon(\vec w\cdot\vec\pi)=\vec w\cdot\Upsilon(\vec\pi)$.
+    \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-    It suffices to show that for every $m\in\mathbb N$,
-    $V^{\vec w\cdot\vec\pi}_{\mu,m}=\vec w\cdot V^{\vec\pi}_{\mu,m}$.
-    Let $m\in\mathbb N$. Let $S_m$ be the set of all length-$2(m+1)$ percept-action
-    sequences.
-    By Lemma \ref{basicprobabilitylemma}, it suffices to show that
-    $(\vec w\cdot\vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$
-    for each $s\in S_m$. Fix $s\in S_m$.
+    (1) By induction on $s$.
 
     Case 1: $s=\langle\rangle$. Then
     $(\vec w\cdot\vec\pi,\mu)_*(s)=1=w_1\cdot 1+\cdots+w_n\cdot 1
@@ -409,67 +422,80 @@ Now we are ready to define mixture agents.
 
     Case 2: $s=t\frown p$ for some percept $p$. Then
     \begin{align*}
-        (\pi\oplus\rho,\mu)_*(s) &= (\pi\oplus\rho,\mu)_*(t\frown p)\\
-            &= (\pi\oplus\rho,\mu)_*(t)\mu(p|t)
+        (\vec w\cdot \vec\pi,\mu)_*(s)
+            &= \mu(p|t)(\vec w\cdot\vec\pi,\mu)_*(t)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= ((\pi,\mu)_*(t)+(\rho,\mu)_*(t))\mu(p|t)/2
+            &= \mu(p|t)\vec w\cdot(\vec\pi,\mu)_*(t)
                 &\mbox{(Induction)}\\
-            &= ((\pi,\mu)_*(t)\mu(p|t) + (\rho,\mu)_*(t)\mu(p|t))/2
-                &\mbox{(Algebra)}\\
-            &= ((\pi,\mu)_*(t\frown p) + (\rho,\mu)_*(t\frown p))/2
+            &= \vec w\cdot(\mu(p|t)(\vec\pi,\mu)_*(t))
+                &\mbox{(Vector Algebra)}\\
+            &= \vec w\cdot(\vec\pi,\mu)_*(t\frown p)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= ((\pi,\mu)_*(s) + (\rho,\mu)_*(s))/2,
+            &= \vec w\cdot(\vec\pi,\mu)_*(s).
     \end{align*}
-    as desired.
 
     Case 3: $s=t\frown a$ for some action $a$.
 
-    Subcase 3.1: $\pi_*(t)=\rho_*(t)=0$.
-        By Lemma \ref{factorizationlemma}, $(\pi,\mu)_*(t)=(\rho,\mu)_*(t)=0$.
-        So by induction, $(\pi\oplus\rho,\mu)_*(t)=\frac12(0+0)=0$.
-        By Definition \ref{pullbackdef},
-        \[
-            (\pi,\mu)_*(s)=(\pi,\mu)_*(t\frown a)=(\pi,\mu)_*(t)\pi(a|t)=0\pi(a|t)=0,
-        \]
-        and similarly $(\rho,\mu)_*(s)=0$ and $(\pi\oplus\rho,\mu)_*(s)=0$.
-        Thus $(\pi\oplus\rho,\mu)_*(s)=\frac12((\pi,\mu)_*(s)+(\rho,\mu)_*(s))$
+    Subcase 3.1: $\vec w\cdot \vec\pi_*(t)=0$.
+        Since the $w_i$ are positive, this implies each
+        $\pi^i_*(t)=0$. So by Lemma \ref{factorizationlemma},
+        each $(\pi^i,\mu)_*(t)=0$.
+        Thus
+        \begin{align*}
+            (\vec w\cdot\vec\pi,\mu)(t)
+                &= \vec w\cdot(\vec\pi,\mu)(t)
+                    &\mbox{(Induction)}\\
+                &= \vec w\cdot\vec 0=0.
+                    &\mbox{(Each $(\pi^i,\mu)_*(t)=0$)}\\
+        \end{align*}
+        Thus by Definition \ref{pullbackdef},
+        $(\vec w\cdot\vec\pi,\mu)(t\frown a)=0(\vec w\cdot\vec\pi)(a|t)=0$.
+        Likewise since each $(\pi^i,\mu)_*(t)=0$, Definition \ref{pullbackdef}
+        says each $(\pi^i,\mu)_*(t\frown a)=0\pi^i(a|t)=0$.
+        So $\vec w\cdot(\vec\pi,\mu)_*(t\frown a)=\vec w\cdot\vec 0=0$.
+        So $(\vec w\cdot\vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$
         as desired.
 
-    Subcase 3.2: $\pi_*(t)+\rho_*(t)>0$. Then
+    Subcase 3.2: $\vec w\cdot \vec\pi_*(t)\not=0$. Then
     \begin{align*}
-        (\pi\oplus\rho,\mu)_*(s) &= (\pi\oplus\rho,\mu)_*(t\frown a)\\
-            &= (\pi\oplus\rho,\mu)_*(t)(\pi\oplus\rho)(a|t)
+        (\vec w\cdot\vec\pi,\mu)_*(s)
+            &= (\vec w\cdot\vec\pi,\mu)_*(t)(\vec w\cdot\vec\pi)(a|t)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\pi\oplus\rho,\mu)_*(t)\frac{\pi_*(t\frown a)+\rho_*(t\frown a)}
-                {\pi_*(t)+\rho_*(t)}
+            &= (\vec w\cdot\vec\pi,\mu)_*(t)
+                \frac
+                {\vec w\cdot\vec\pi_*(t\frown a)}
+                {\vec w\cdot\vec\pi_*(t)}
                 &\mbox{(Definition \ref{maindefn})}\\
-            &= (\pi\oplus\rho,\mu)_*(t)\frac{\pi_*(t)\pi(a|t)+\rho_*(t)\rho(a|t)}
-                {\pi_*(t)+\rho_*(t)}
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \frac{(\pi,\mu)_*(t)+(\rho,\mu)_*(t)}2
-                \frac{\pi_*(t)\pi(a|t)+\rho_*(t)\rho(a|t)}{\pi_*(t)+\rho_*(t)}
+            &= \vec w\cdot (\vec\pi,\mu)_*(t)
+                \frac
+                {\vec w\cdot\vec\pi_*(t\frown a)}
+                {\vec w\cdot\vec\pi_*(t)}
                 &\mbox{(Induction)}\\
-            &= \frac{(\pi_*(t)+\rho_*(t))\mu_*(t)}2
-                \frac{\pi_*(t)\pi(a|t)+\rho_*(t)\rho(a|t)}{\pi_*(t)+\rho_*(t)}
+            &= \mu_*(t)\vec w\cdot \vec\pi_*(t)
+                \frac
+                {\vec w\cdot\vec\pi_*(t\frown a)}
+                {\vec w\cdot\vec\pi_*(t)}
                 &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= (\pi_*(t)\mu_*(t)\pi(a|t) + \rho_*(t)\mu_*(t)\rho(a|t))/2
-                &\mbox{(Algebra)}\\
-            &= ((\pi,\mu)_*(t)\pi(a|t) + (\rho,\mu)_*(t)\rho(a|t))/2
+            &= \mu_*(t)\vec w\cdot\vec\pi_*(t\frown a)
+                &\mbox{(Basic Algebra)}\\
+            &= \mu_*(t\frown a)\vec w\cdot\vec\pi_*(t\frown a)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \vec w\cdot(\vec\pi,\mu)_*(t\frown a)
                 &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= ((\pi,\mu)_*(t\frown a) + (\rho,\mu)_*(t\frown a))/2,
-                &\mbox{(Definition \ref{pullbackdef})}
+            &= \vec w\cdot(\vec\pi,\mu)_*(s),
     \end{align*}
     as desired.
-\end{proof}
 
-\begin{corollary}
-\label{averageperformancelemma}
-    For any weighted performance averager $\mu$, for any agents
-    $\pi$ and $\rho$, $\Upsilon(\pi\oplus\rho)\frac12(\Upsilon(\pi)+\Upsilon(\rho))$.
-\end{corollary}
+    (2) Let $\mu'$ be an environment such that $\mu'_*(s)=1$.
+        By Lemma \ref{factorizationlemma},
+        $(\vec w\cdot\vec\pi)_*(s)=(\vec w\cdot\vec\pi,\mu')_*(s)$
+        and $\vec\pi_*(s)=(\vec\pi,\mu')_*(s)$. The claim now follows by (1).
 
-\begin{proof}
-    Follows from Theorem \ref{maintheorem}.
+    (3) Follows from (1) by Lemma \ref{basicprobabilitylemma}.
+
+    (4) Immediate from (3).
+
+    (5) Immediate from (4).
 \end{proof}
 
 \section{Duality and Janus agents:
@@ -597,7 +623,7 @@ who features two faces, one facing forward, one facing backward.
 \begin{proof}
     Let $\pi$ be any agent.
     By assumption, $\Upsilon(\pi\oplus\overline{\pi})=0$.
-    Thus by Corollary \ref{averageperformancelemma},
+    Thus by Theorem \ref{maintheorem},
     $0=\frac12(\Upsilon(\pi)+\Upsilon(\overline{\pi})$,
     so $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$.
 \end{proof}
@@ -987,7 +1013,7 @@ who features two faces, one facing forward, one facing backward.
             &= \Upsilon(r_1\pi^{h\mapsto m_1}\oplus\cdots\oplus r_n\pi^{h\mapsto m_n})
                 &\mbox{(Proposition \ref{longproposition})}\\
             &= r_1\Upsilon(\pi^{h\mapsto m_1})+\cdots+r_n\Upsilon(\pi^{h\mapsto m_n})
-                &\mbox{(Corollary \ref{averageperformancelemma})}\\
+                &\mbox{(Theorem \ref{maintheorem})}\\
             &< r_1\Upsilon(\pi)+\cdots+r_n\Upsilon(\pi)
                 &\mbox{(Assumption)}\\
             &= \Upsilon(\pi),
@@ -1102,6 +1128,7 @@ many points without decreasing $\pi$'s intelligence. The following example makes
 clear.
 
 \begin{example}
+    (Intelligence Discontinuity)
     Fix distinct actions $a_0,a_1\in\mathcal A$.
     Let $\mu$ be an environment such that in every agent-environment interaction:
     \begin{enumerate}
