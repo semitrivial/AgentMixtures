@@ -996,7 +996,68 @@ certainly, it would be sub-optimal for our agent to instead assign probability $
 any of Paper, Rock, or Scissors.'' Corollary \ref{nondeterminismcorollary} shows
 that no such statement can be true.
 
+The ``pointwise'' nature of Corollary \ref{nondeterminismcorollary}
+is essential: by applying the corollary repeatedly, one can remove non-determinism
+from $\pi$ at any finite number of points without ever decreasing $\pi$'s intelligence,
+but one cannot conclude from this that non-determinism can be removed at infinitely
+many points without decreasing $\pi$'s intelligence. The following example makes this
+clear.
 
+\begin{example}
+    Fix distinct actions $a_0,a_1\in\mathcal A$.
+    Let $\mu$ be an environment such that in every agent-environment interaction:
+    \begin{enumerate}
+        \item If the agent always takes action $a_0$, then the agent gets total reward $-1$.
+        \item If the agent initially takes action $a_0$ exactly $k$ times in a row and
+            then takes a different action, then the agent either
+            gets total reward $1$ (with probability $1-2^{-k}$)
+            or total reward $0$ (with probability $2^{-k}$)---so in expected
+            value, the agent gets total reward $1-2^{-k}$.
+    \end{enumerate}
+    Let $\Upsilon$ be a weighted performance averager in which $\mu$ has weight $2$,
+    $\overline\mu$ has weight $1$, and such that for every
+    environment $\nu\not\in\{\mu,\overline{\mu}\}$, $\nu$ and $\overline{\nu}$ have
+    equal weight.
+    By Corollary 6 of \cite{alexander2021reward}, for any Janus agent $\pi$ and
+    any environment $\nu$, $V^\pi_{\overline\nu}=-V^\pi_{\nu}$, thus for any Janus agent $\pi$,
+    in the sum $\Upsilon(\pi)$, for any environment $\nu\not\in\{\mu,\overline{\mu}\}$,
+    the contributions from $\nu$ and $\overline\nu$ are $V^\pi_{\nu}$ and $-V^\pi_{\nu}$,
+    respectively, and so cancel each other. Thus for any Janus agent $\pi$,
+    $\Upsilon(\pi)$ consists solely of the contributions from $\mu$ and $\overline\mu$,
+    i.e.,
+    \[
+        \Upsilon(\pi)=2V^\pi_\mu+1V^\pi_{\overline\mu}
+        =2V^\pi_\mu-1V^\pi_{\mu}=V^\pi_\mu.
+    \]
+    For every $k\in\mathbb N$, let $\pi_k$ be the agent which ignores the environment,
+    blindly taking action $a_0$ exactly $k$ times, and then forever thereafter,
+    randomly taking action $a_0$ with probability $1/2$ or action $a_1$ with probability
+    $1/2$.
+    For every $k$,
+    \begin{align*}
+        V^{\pi_k}_\mu
+            &= (1-2^{-(k+0)})\cdot \mbox{$\frac12$}
+                +(1-2^{-(k+1)})\cdot\mbox{$\frac14$} + \cdots
+                    &\mbox{(Basic probability)}\\
+            &= 1-2^{-k},
+                    &\mbox{(Geometric series)}
+    \end{align*}
+    so $\Upsilon(\pi_k)=1-2^{-k}$ (as $\pi_k$ is a Janus agent).
+    Thus:
+    \begin{enumerate}
+        \item For each $k$, transforming $\pi_k$ into $\pi_{k+1}$
+            (by changing finitely many $50\%$-probability-$a_0$
+            actions into $100\%$-probability-$a_0$ actions)
+            \emph{increases} intelligence.
+        \item However, if we start this process with $\pi_0$ and
+            repeat it to infinity, even though each individual step
+            \emph{increases} intelligence, we finally end up with
+            the completely deterministic
+            Janus agent $\pi_{\infty}$ who always takes action $a_0$ and who is
+            \emph{less} intelligent than all $\pi_k$'s:
+            $\Upsilon(\pi_{\infty})=V^{\pi_\infty}_\mu=-1$.
+    \end{enumerate}
+\end{example}
 
 \bibliographystyle{alpha}
 \bibliography{main}
