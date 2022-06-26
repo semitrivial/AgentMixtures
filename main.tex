@@ -87,14 +87,117 @@ etc. If each $\pi_i$ would get total expected reward $r_i$ from an environment
 $\mu$, intuitively $\sigma$ should get total expected reward
 $w_1r_1+\cdots+w_nr_n$ from that environment. But again, the RL
 framework has no mechanism for such an agent $\sigma$. We will define
-an agent $w_1\pi_1\oplus\cdots \oplus w_n\pi_n$ within the constraints
+an agent $w_1\pi_1\oplus\cdots \oplus w_n\pi_n$, called a \emph{mixture agent},
+within the constraints
 of the RL framework, and prove that its total expected reward in any environment
 is the desired $\{w_i\}$-weighted average of the total expected
 rewards of $\pi_1,\ldots,\pi_n$ in that environment.
 
 \section{Preliminaries}
 
-(Define RL)
+In defining agent and environment below, we attempt to follow
+Legg and Hutter \cite{legg2007universal} as closely as possible,
+except that we permit environments to output rewards from $\mathbb Q \cap [-1,1]$
+rather than just $\mathbb Q\cap [0,1]$ (and, accordingly, we modify which well-behaved
+environments to restrict our attention to).
+
+Throughout the paper, we implicitly
+fix a finite set $\mathcal A$ of \emph{actions},
+a finite set $\mathcal O$ of \emph{observations},
+and a finite set $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards}
+(so each reward is a rational number between $-1$ and $1$ inclusive),
+with $|\mathcal A|>0$,
+$|\mathcal O|>0$, $|\mathcal R|>0$.
+We assume that $\mathcal R$ has the following property:
+whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
+also contains $-r$.
+We assume $\mathcal A$, $\mathcal O$, and $\mathcal R$ are mutually disjoint
+(i.e., no reward is an action, no reward is an observation, and no action is an
+observation).
+By $\langle\rangle$ we mean the empty sequence.
+By $\mathcal P$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
+pairs); elements of $\mathcal P$ are called \emph{percepts}.
+
+\begin{definition}
+\label{omnibusdefn}
+    (Agents, environments, etc.)
+    \begin{enumerate}
+        \item
+        By $(\mathcal P\mathcal A)^*$ we mean the set of
+        all finite sequences starting with a percept, ending with an action,
+        and following the pattern ``percept, action, ...''.
+        We include $\langle\rangle$ in this set.
+        \item
+        By $(\mathcal P\mathcal A)^* \mathcal P$
+        we mean the set of all sequences of the form $s\frown p$ where
+        $s\in (\mathcal P\mathcal A)^*$, $p\in\mathcal P$
+        ($\frown$ denotes concatenation).
+        \item
+        By an \emph{agent}, we mean a function $\pi$
+        with domain $(\mathcal P\mathcal A)^* \mathcal P$,
+        which assigns to every sequence
+        $s\in (\mathcal P\mathcal A)^* \mathcal P$ a
+        $\mathbb Q$-valued probability measure,
+        written $\pi(\bullet|s)$, on $\mathcal A$.
+        For every such $s$ and every $a\in\mathcal A$,
+        we write $\pi(a|s)$ for $(\pi(\bullet|s))(a)$.
+        Intuitively, $\pi(a|s)$ is the probability that agent $\pi$
+        will take action $a$ in response to history $s$.
+        \item
+        By an \emph{environment}, we mean a function $\mu$
+        with domain $(\mathcal P\mathcal A)^*$,
+        which assigns to every
+        $s\in (\mathcal P\mathcal A)^*$
+        a $\mathbb Q$-valued probability measure,
+        written $\mu(\bullet|s)$,
+        on $\mathcal P$.
+        For every such $s$ and every $(o,r)\in\mathcal P$,
+        we write $\mu(o,r|s)$ for $(\mu(\bullet|s))(o,r)$.
+        Intuitively, $\mu(o,r|s)$ is the probability that environment
+        $\mu$ will issue percept $(o,r)$ (observation $o$ and reward $r$)
+        to the agent in response to history $s$.
+        \item
+        If $\pi$ is an agent, $\mu$ is an environment, and $n\in\mathbb N$,
+        we write $V^\pi_{\mu,n}$ for the expected value of the sum of
+        the rewards which would occur in the sequence
+        $(p_0,a_0,\ldots,p_n,a_n)$ randomly generated as follows:
+        \begin{enumerate}
+            \item $p_0\in \mathcal P$ is chosen randomly based
+            on the probability measure $\mu(\bullet|\langle\rangle)$.
+            \item $a_0\in\mathcal A$ is chosen randomly based on the probability
+            measure $\pi(\bullet|p_0)$.
+            \item
+            For each $i>0$,
+            $p_i\in\mathcal P$ is chosen randomly based on
+            the probability measure
+            $\mu(\bullet|p_0,a_0,\ldots,p_{i-1},a_{i-1})$.
+            \item
+            For each $i>0$,
+            $a_i\in\mathcal A$ is chosen randomly based on the probability measure
+            $\pi(\bullet|p_0,a_0,\ldots,p_{i-1},a_{i-1},p_i)$.
+        \end{enumerate}
+        \item
+        If $\pi$ is an agent and $\mu$ is an environment,
+        let $V^\pi_\mu=\lim_{n\to\infty}V^{\pi}_{\mu,n}$.
+        Intuitively, $V^\pi_\mu$ is the expected total reward which $\pi$ would extract
+        from $\mu$.
+    \end{enumerate}
+\end{definition}
+
+Note that it is possible for $V^\pi_\mu$ to be undefined.
+For example, if $\mu$ is an environment which always issues
+reward $(-1)^n$ in response to the agent's $n$th action,
+then $V^\pi_\mu$ is undefined for every agent $\pi$.
+This would not be the case if rewards were required to be $\geq 0$,
+so this is one way in which allowing
+punishments complicates the resulting theory.
+
+\begin{definition}
+    An environment $\mu$ is \emph{well-behaved} if $\mu$ is computable and the following
+    condition holds: for every agent $\pi$, $V^\pi_\mu$ exists and
+    $-1\leq V^\pi_\mu\leq 1$.
+\end{definition}
+
 
 \section{The $\oplus$ operator}
 
