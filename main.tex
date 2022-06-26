@@ -305,10 +305,12 @@ and lemmas.
 
 \begin{definition}
     If $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents, $\mu$ is an environment,
-    and $s\in\mathcal H$, then we define:
+    $s\in\mathcal H$, and $m\in\mathbb N$, then we define:
     \begin{itemize}
         \item $\vec\pi_*(s)=(\pi^1_*(s),\ldots,\pi^n_*(s))$.
         \item $(\vec\pi,\mu)_*(s)=((\pi^1,\mu)_*(s),\ldots,(\pi^n,\mu)_*(s))$.
+        \item $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$.
+        \item $V^{\vec\pi}_{\mu,m}=(V^{\pi^1}_{\mu,m},\ldots,V^{\pi^n}_{\mu,m})$.
     \end{itemize}
     Recall that if $\vec u=(u_1,\ldots,u_n)$ and
     $\vec v=(v_1,\ldots,v_n)$ are any two equal-length
@@ -388,30 +390,22 @@ Now we are ready to define mixture agents.
     \[
         V^{\vec w\cdot\vec\pi}_\mu
         =
-        w_1V^{\pi^1}_\mu + \cdots + w_nV^{\pi^n}_\mu.
+        \vec w\cdot V^{\vec\pi}_\mu.
     \]
 \end{theorem}
 
 \begin{proof}
-    It suffices to show that for every $n\in\mathbb N$,
-    $
-    V^{\vec w\cdot\vec\pi}_{\mu,n}
-    =
-    w_1V^{\pi^1}_{\mu,n}+\cdots+w_nV^{\pi^n}_{\mu,n})
-    $.
-    Let $n\in\mathbb N$. Let $S_n$ be the set of all length-$2(n+1)$ percept-action
+    It suffices to show that for every $m\in\mathbb N$,
+    $V^{\vec w\cdot\vec\pi}_{\mu,m}=\vec w\cdot V^{\vec\pi}_{\mu,m}$.
+    Let $m\in\mathbb N$. Let $S_m$ be the set of all length-$2(m+1)$ percept-action
     sequences.
     By Lemma \ref{basicprobabilitylemma}, it suffices to show that
-    $
-    (\vec w\cdot\vec\pi,\mu)_*(s)
-    =
-    w_1(\pi^1,\mu)_*(s)+\cdots+w_n(\pi^n,\mu)_*(s)
-    $
-    for each
-    $s\in S_n$. Fix $s\in S_n$.
+    $(\vec w\cdot\vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$
+    for each $s\in S_m$. Fix $s\in S_m$.
 
     Case 1: $s=\langle\rangle$. Then
-    $(\pi\oplus\rho,\mu)_*(s)=1=\frac12(1+1)=\frac12((\pi,\mu)_*(s)+(\rho,\mu)_*(s))$.
+    $(\vec w\cdot\vec\pi,\mu)_*(s)=1=w_1\cdot 1+\cdots+w_n\cdot 1
+    =\vec w\cdot (\vec\pi,\mu)_*(s)$.
 
     Case 2: $s=t\frown p$ for some percept $p$. Then
     \begin{align*}
