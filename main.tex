@@ -17,8 +17,8 @@
 
 \begin{document}
 
-\title{Environments cannot detect Markov agents}
-\titlerunning{Environments cannot detect Markov agents}
+\title{Agent mixtures and the genericness of non-deterministic intelligence}
+\titlerunning{Agent mixtures and genericness}
 \author{Samuel Allen
 Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
 
@@ -29,19 +29,18 @@ Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
 \maketitle
 
 \begin{abstract}
-    We introduce a method for combining two reinforcement learning agents
-    (equivalently: two decision theoretical agents) into a new agent
-    with the property that the expected total reward the new agent gets in
-    each environment is the average of the expected total rewards the
-    two original agents get in that environment. Using this, we formalize
-    and strengthen an informal result of Alexander and Hutter, and
-    we prove a surprising additional result. Call an agent ``Markov''
-    if that agent ignores all training data. We show that no environment can
-    reward agents for being Markov. More precisely: if an environment
-    gives positive expected total reward to every Markov agent, then it
-    must give positive expected total reward to some non-Markov agent.
-    We informally argue that this result casts doubt on an informal
-    conjecture of Silver et al.
+    We define a weighted mixture of several
+    reinforcement learning agents, which yields a mixture agent with the
+    following property: the expected total reward the mixture agent
+    gets in any environment is the corresponding weighted average
+    of the expected total rewards the original agents get in that
+    environment. We use mixture agents to formalize and
+    strengthen an informal result of Alexander and Hutter. We also use mixture
+    agents to prove additional results, including a surprising result,
+    which we call the genericness of non-deterministic intelligence. Loosely:
+    any particular non-deterministic action an agent takes
+    can have its probabilities modified without making the agent less
+    intelligent.
 \end{abstract}
 
 \section{Introduction}
@@ -476,75 +475,6 @@ who features two faces, one facing forward, one facing backward.
     \ref{maintheorem}.
     So by choice of $\mu$, $\pi\oplus\rho\in \Pi$.
     A similar argument shows that $\Pi^c$ is closed under $\oplus$.
-\end{proof}
-
-\begin{definition}
-    An agent $\pi$ is \emph{Markov} if
-    $\pi(a|s)$ only depends on the most recent observation in $s$.
-\end{definition}
-
-We will not use the following Lemma, but we state it in order to
-make it clearer what exactly a Markov agent is.
-
-\begin{lemma}
-    By a \emph{policy} we mean a function $f$ which takes a single observation
-    $o\in\mathcal O$ as input, and outputs a probability distribution
-    $a\mapsto f(a|o)$ on $\mathcal A$.
-    For each policy $f$, let $\hat f$, the \emph{agent defined by $f$},
-    be the agent defined as follows:
-    for every $s$ with most recent observation $o$,
-    $\hat f(a|s)=f(a|o)$.
-    Then:
-    The set of Markov agents is exactly $\{\hat f\,:\,\mbox{$f$ is a policy}\}$.
-\end{lemma}
-
-\begin{proof}
-    Straightforward.
-\end{proof}
-
-\begin{theorem}
-\label{markovcorollary}
-    The set of Markov agents is not detectable.
-\end{theorem}
-
-\begin{proof}
-    Let $\Pi$ be the set of Markov agents.
-    By Theorem \ref{closuretheorem}, it suffices to show $\Pi$ is not
-    closed under $\oplus$.
-    Since $|\mathcal A|>1$, we may choose two distinct $a_1,a_2\in\mathcal A$.
-    Define agents $\pi,\rho$ by
-    \begin{align*}
-        \pi(a|s)
-        &=
-        \begin{cases}
-            .9 & \mbox{if $a=a_1$,}\\
-            .1 & \mbox{if $a=a_2$,}\\
-            0 & \mbox{otherwise;}
-        \end{cases}\\
-        \rho(a|s)
-        &=
-        \begin{cases}
-            .1 & \mbox{if $a=a_1$,}\\
-            .9 & \mbox{if $a=a_2$,}\\
-            0 & \mbox{otherwise.}
-        \end{cases}
-    \end{align*}
-    Let $p$ be any percept,
-    let $s_1=\langle p\rangle$, and let $s_2=\langle p,a_1,p\rangle$.
-    Then
-    \[
-        (\pi\oplus\rho)(a_1|s_1)
-        = \frac{\pi_*(s_1\frown a_1) + \rho_*(s_1\frown a_1)}{\pi_*(s_1)+\rho_*(s_1)}
-        = \frac{0.9 + 0.1}{1+1} = \frac12
-    \]
-    and
-    \[
-        (\pi\oplus\rho)(a_1|s_2)
-        = \frac{\pi_*(s_2\frown a_1) + \rho_*(s_2\frown a_1)}{\pi_*(s_2)+\rho_*(s_2)}
-        = \frac{0.9\cdot 0.9 + 0.1\cdot 0.1}{0.9+0.1}=\frac{82}{100}\not=\frac12.
-    \]
-    So $(\pi\oplus\rho)(a|s)$ depends on more than just the most recent
-    observation in $s$, so $\pi\oplus\rho$ is not Markov.
 \end{proof}
 
 
