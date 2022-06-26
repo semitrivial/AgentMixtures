@@ -79,19 +79,19 @@ with $\mu$. But this is all quite informal, as the RL
 framework does not actually provide any mechanism for such an initial
 coin-flip.
 
-More generally, given agents $\pi_1,\ldots,\pi_n$ and positive reals
+More generally, given agents $\pi^1,\ldots,\pi^n$ and positive reals
 $w_1,\ldots,w_n$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
 who, at the start of each agent-environment interaction, randomly transforms
-into $\pi_1$ (with probability $r_1$) or into $\pi_2$ (with probability $r_2$),
-etc. If each $\pi_i$ would get total expected reward $r_i$ from an environment
+into $\pi^1$ (with probability $r_1$) or into $\pi^2$ (with probability $r_2$),
+etc. If each $\pi^i$ would get total expected reward $r_i$ from an environment
 $\mu$, intuitively $\sigma$ should get total expected reward
 $w_1r_1+\cdots+w_nr_n$ from that environment. But again, the RL
 framework has no mechanism for such an agent $\sigma$. We will define
-an agent $w_1\pi_1\oplus\cdots \oplus w_n\pi_n$, called a \emph{mixture agent},
+an agent $w_1\pi^1\oplus\cdots \oplus w_n\pi^n$, called a \emph{mixture agent},
 within the constraints
 of the RL framework, and prove that its total expected reward in any environment
 is the desired $\{w_i\}$-weighted average of the total expected
-rewards of $\pi_1,\ldots,\pi_n$ in that environment.
+rewards of $\pi^1,\ldots,\pi^n$ in that environment.
 
 \section{Preliminaries}
 
@@ -153,6 +153,8 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         on $\mathcal P$.
         For every such $s$ and every $(o,r)\in\mathcal P$,
         we write $\mu(o,r|s)$ for $(\mu(\bullet|s))(o,r)$.
+        If $p=(o,r)$ then we may also write $\mu(p|s)$ for
+        $(\mu(\bullet|s))(o,r)$.
         Intuitively, $\mu(o,r|s)$ is the probability that environment
         $\mu$ will issue percept $(o,r)$ (observation $o$ and reward $r$)
         to the agent in response to history $s$.
@@ -195,58 +197,83 @@ punishments complicates the resulting theory.
 \begin{definition}
     An environment $\mu$ is \emph{well-behaved} if $\mu$ is computable and the following
     condition holds: for every agent $\pi$, $V^\pi_\mu$ exists and
-    $-1\leq V^\pi_\mu\leq 1$.
+    $-1\leq V^\pi_\mu\leq 1$. Let $W$ be the set of all well-behaved environments.
 \end{definition}
 
+\begin{definition}
+\label{performanceaveragerdefn}
+    By a \emph{weighted performance averager}, we mean a function
+    $\Upsilon$ assigning real numbers to agents, such that there
+    are weights $\{w_\mu\}_{\mu\in W}$ such that for every agent
+    $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$
+    (and such that this infinite sum is absolutely convergent
+    for every agent $\pi$).
+\end{definition}
 
-\section{The $\oplus$ operator}
+The prototypical weighted performance averager is the Legg-Hutter intelligence
+measure $\Upsilon$, where each well-behaved $\mu$ is given weight $2^{-K(\mu)}$
+where $K$ denotes Kolmogorov complexity (dependent on a background universal
+Turing machine) \cite{legg2007universal}.
+
+\section{Mixture agents}
+
+Before defining mixture agents, we need to start with some preliminary definitions
+and lemmas.
+
+\begin{definition}
+    By $\mathcal H$ we mean
+    $((\mathcal P\mathcal A)^*)\cup((\mathcal P\mathcal A)^*\mathcal P)$.
+    We refer to elements of $\mathcal H$ as \emph{histories} (a history
+    may terminate with either a percept or an action).
+\end{definition}
 
 \begin{definition}
 \label{pullbackdef}
-    Suppose $s$ is a finite sequence of alternating percepts and actions.
-    Let $\pi$ be an agent. Let $\mu$ be an environment.
+    Let $\pi$ be an agent. Let $\mu$ be an environment. Let $s\in\mathcal H$.
     \begin{enumerate}
         \item
         The \emph{probability of $s$ according to $\pi$}, written
-        $\pi_*(s)$, is the probability that when $\pi$ and $\mu$ interact,
-        the interaction begins with $s$, given that all
-        percepts are as in $s$. Formally we define $\pi_*(s)$ by induction:
-        \begin{enumerate}
+        $\pi_*(s)$, is defined by induction as follows.
+        \begin{itemize}
             \item
-            If $s$ contains no action, then $\pi_*(s)=1$.
+            If $s=\langle\rangle$ then $\pi_*(s)=1$.
             \item
-            If $s=t\frown a$ (where $a$ is an action) or $s=t\frown a\frown p$
-            (where $a$ is an action and $p$ is a percept),
-            then $\pi_*(s)=\pi_*(t)\pi(a|t)$.
-        \end{enumerate}
+            If $s=t\frown p$ for some $p\in\mathcal P$ then $\pi_*(s)=\pi_*(t)$.
+            \item
+            If $s=t\frown a$ for some $a\in\mathcal A$ then $\pi_*(s)=\pi_*(t)\pi(a|t)$.
+        \end{itemize}
+        Informally, $\pi_*(s)$ is the conditional probability that when $\pi$
+        and $\mu$ interact, the interaction begins with $s$, assuming
+        that $\mu$ produces the percepts in $s$.
         \item
         The \emph{probability of $s$ according to $\mu$}, written
-        $\mu_*(s)$, is the probability that when $\pi$ and $\mu$ interact,
-        the interaction begins with $s$, given that all
-        actions are as in $s$. Formally we define $\mu_*(s)$ by induction:
-        \begin{enumerate}
+        $\mu_*(s)$, is defined by induction as follows.
+        \begin{itemize}
             \item
-            If $s$ has length $0$, then $\mu_*(s)=1$.
+            If $s=\langle\rangle$ then $\mu_*(s)=1$.
             \item
-            If $s=t\frown p$ (where $p$ is a percept) or $s=t\frown p\frown a$
-            (where $a$ is an action and $p$ is a percept),
-            then $\mu_*(s)=\mu_*(t)\mu(p|t)$.
-        \end{enumerate}
+            If $s=t\frown p$ for some $p\in\mathcal P$ then $\mu_*(s)=\mu_*(t)\mu(p|t)$.
+            \item
+            If $s=t\frown a$ for some $a\in\mathcal A$ then $\mu_*(s)=\mu_*(t)$.
+        \end{itemize}
+        Informally, $\mu_*(s)$ is the conditional probability that when $\pi$
+        and $\mu$ interact, the interaction begins with $s$, assuming
+        that $\pi$ produces the actions in $s$.
         \item
         The \emph{probability of $s$ according to $\pi$ and $\mu$},
-        written $(\pi,\mu)_*(s)$, is the probability that when $\pi$ and
-        $\mu$ interact, the interactin begins with $s$.
-        Formally, we define $(\pi,\mu)_*(s)$ by induction:
-        \begin{enumerate}
+        written $(\pi,\mu)_*(s)$, is defined by induction as follows.
+        \begin{itemize}
             \item
-            If $s$ has length $0$, then $(\pi,\mu)_*(s)=1$.
+            If $s=\langle\rangle$ then $(\pi,\mu)_*(s)=1$.
             \item
-            If $s=t\frown p$ (where $p$ is a percept),
-            then $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\mu(p|t)$.
+            If $s=t\frown p$ for some $p\in\mathcal P$ then
+            $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\mu(p|t)$.
             \item
-            If $s=t\frown a$ (where $a$ is an action),
-            then $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\pi(a|t)$.
-        \end{enumerate}
+            If $s=t\frown a$ for some $a\in\mathcal A$ then
+            $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\pi(a|t)$.
+        \end{itemize}
+        Informally, $(\pi,\mu)_*(s)$ is the probability that when $\pi$ and $\mu$
+        interact, the interaction begins with $s$.
     \end{enumerate}
 \end{definition}
 
@@ -265,25 +292,38 @@ punishments complicates the resulting theory.
 \begin{lemma}
 \label{basicprobabilitylemma}
     $V^\pi_{\mu,n}=\sum_{s\in S_n}(\pi,\mu)_*(s)r(s),$
-    where $S_n$ is the set of all length-$n$ initial
-    percept-action sequences and $r(s)$ is the total reward in $s$.
+    where $S_n$ is the set of all $s\in\mathcal H$
+    of length $2(n+1)$ (i.e., all $s\in\mathcal H$ of the form
+    $(p_0,a_0,\ldots,p_n,a_n)$ as in Part 5 of Definition \ref{omnibusdefn}),
+    and $r(s)$ is the total reward in $s$.
 \end{lemma}
 
 \begin{proof}
     Basic probability theory.
 \end{proof}
 
+Now we are ready to define mixture agents.
+
 \begin{definition}
 \label{maindefn}
-    Assume $\pi$ and $\rho$ are agents.
-    Define the new agent $\pi\oplus\rho$ by
-    \[
-        (\pi\oplus\rho)(a|s)
-        =
-        \frac{\pi_*(s\frown a) + \rho_*(s\frown a)}{\pi_*(s)+\rho_*(s)}
-    \]
-    provided $\pi_*(s)+\rho_*(s)>0$; otherwise,
-    let $(\pi\oplus\rho)(a|s)=1/|\mathcal{A}|$.
+    (Mixture agents)
+    Suppose $\pi^1,\ldots,\pi^n$ are agents and $w_1,\ldots,w_n$ are positive
+    real numbers with $w_1+\cdots+w_n=1$.
+    Define the \emph{mixture agent} $w_1\pi^1\oplus\cdots\oplus w_n\pi^n$
+    as follows. For every $s\in(\mathcal P\mathcal A)^*\mathcal P$:
+    \begin{itemize}
+        \item
+        If $w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)\not=0$ then
+        \[
+            (w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)
+            =
+            \frac
+            {w_1\pi^1_*(s\frown a)+\cdots+w_n\pi^n_*(s\frown a)}
+            {w_1\pi^1_*(s)+\cdots+w_n\pi^n_*(s)}.
+        \]
+        \item
+        Otherwise, $(w_1\pi^1\oplus\cdots\oplus w_n\pi^n)(a|s)=1/|\mathcal{A}|$.
+    \end{itemize}
 \end{definition}
 
 \begin{lemma}
@@ -393,6 +433,16 @@ punishments complicates the resulting theory.
     as desired.
 \end{proof}
 
+\begin{corollary}
+\label{averageperformancelemma}
+    For any weighted performance averager $\mu$, for any agents
+    $\pi$ and $\rho$, $\Upsilon(\pi\oplus\rho)\frac12(\Upsilon(\pi)+\Upsilon(\rho))$.
+\end{corollary}
+
+\begin{proof}
+    Follows from Theorem \ref{maintheorem}.
+\end{proof}
+
 \section{Duality and Janus agents:
 Strengthening and formalizing a result of Alexander and Hutter}
 
@@ -400,23 +450,6 @@ Strengthening and formalizing a result of Alexander and Hutter}
     (Duality) Define $\overline s$, $\overline \pi$, $\overline \mu$
     as in Reward-Punishment Symmetric Universal Intelligence.
 \end{definition}
-
-\begin{definition}
-    By a \emph{weighted performance averager}, we mean a function
-    $\Upsilon$ assigning real numbers to agents, such that there
-    are weights $\{w_\mu\}_{\mu\in W}$ such that for every agent
-    $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$.
-\end{definition}
-
-\begin{theorem}
-\label{averageperformancelemma}
-    For any weighted performance averager $\mu$, for any agents
-    $\pi$ and $\rho$, $\Upsilon(\pi\oplus\rho)\frac12(\Upsilon(\pi)+\Upsilon(\rho))$.
-\end{theorem}
-
-\begin{proof}
-    Follows from Theorem \ref{maintheorem}.
-\end{proof}
 
 The following class of agents are named after Janus, the Roman god of duality,
 who features two faces, one facing forward, one facing backward.
@@ -535,7 +568,7 @@ who features two faces, one facing forward, one facing backward.
 \begin{proof}
     Let $\pi$ be any agent.
     By assumption, $\Upsilon(\pi\oplus\overline{\pi})=0$.
-    Thus by Theorem \ref{averageperformancelemma},
+    Thus by Corollary \ref{averageperformancelemma},
     $0=\frac12(\Upsilon(\pi)+\Upsilon(\overline{\pi})$,
     so $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$.
 \end{proof}
@@ -925,7 +958,7 @@ who features two faces, one facing forward, one facing backward.
             &= \Upsilon(r_1\pi^{h\mapsto m_1}\oplus\cdots\oplus r_n\pi^{h\mapsto m_n})
                 &\mbox{(Proposition \ref{longproposition})}\\
             &= r_1\Upsilon(\pi^{h\mapsto m_1})+\cdots+r_n\Upsilon(\pi^{h\mapsto m_n})
-                &\mbox{(Theorem \ref{averageperformancelemma})}\\
+                &\mbox{(Corollary \ref{averageperformancelemma})}\\
             &< r_1\Upsilon(\pi)+\cdots+r_n\Upsilon(\pi)
                 &\mbox{(Assumption)}\\
             &= \Upsilon(\pi),
@@ -1054,14 +1087,14 @@ clear.
     $\overline\mu$ has weight $1$, and such that for every
     environment $\nu\not\in\{\mu,\overline{\mu}\}$, $\nu$ and $\overline{\nu}$ have
     equal weight.
-    Choose these weights so that $\Upsilon(\pi)$ is absolutely convergent for every $\pi$.
     By Corollary 6 of \cite{alexander2021reward}, for any Janus agent $\pi$ and
     any environment $\nu$, $V^\pi_{\overline\nu}=-V^\pi_{\nu}$, thus for any Janus agent $\pi$,
     in the sum $\Upsilon(\pi)$, for any environment $\nu\not\in\{\mu,\overline{\mu}\}$,
     the contributions from $\nu$ and $\overline\nu$ are equal-weight multiples of
     $V^\pi_{\nu}$ and $-V^\pi_{\nu}$,
     respectively, and so cancel each other
-    (terms of the infinite series can be rearranged due to absolute convergence).
+    (terms of the infinite series can be regrouped due the absolute convergence
+    in Definition \ref{performanceaveragerdefn}).
     Thus for any Janus agent $\pi$,
     $\Upsilon(\pi)$ consists solely of the contributions from $\mu$ and $\overline\mu$,
     i.e.,
