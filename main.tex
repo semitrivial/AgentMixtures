@@ -509,6 +509,7 @@ We will freely do so for the remainder of the paper.
 Strengthening and formalizing a result of Alexander and Hutter}
 
 \begin{definition}
+\label{dualagentsdefn}
 (Dual Agents and Dual Environments)
 \begin{enumerate}
     \item
@@ -531,6 +532,26 @@ Strengthening and formalizing a result of Alexander and Hutter}
     \[\overline\mu(o,r|s)=\mu(o,-r|\overline s).\]
 \end{enumerate}
 \end{definition}
+
+\begin{lemma}
+\label{doublenegationlemma}
+    If $x$ is any agent, environment, or element of $\mathcal H$,
+    then $\overline{\overline x}=x$.
+\end{lemma}
+
+\begin{proof}
+    Follow from the fact that $--r=r$ for all real $r$.
+\end{proof}
+
+\begin{lemma}
+\label{asteriskcommuteswithoverlinelemma}
+    For any agent $\pi$ and any $h\in(\mathcal P\mathcal A)^*\mathcal P$,
+    $\pi_*(\overline h)=\overline{\pi}_*(h)$.
+\end{lemma}
+
+\begin{proof}
+    By induction.
+\end{proof}
 
 The following class of agents are named after Janus, the mythological
 Roman god of duality. In the myth, Janus has two faces, one facing
@@ -649,35 +670,64 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 \end{proof}
 
 \begin{proposition}
-    (Characterization of Janus agents)
+    (Characterization of Janus agents modulo $\equiv$)
     For any agent $\pi$, the following are equivalent:
     \begin{enumerate}
         \item $\pi\equiv\rho$ for some Janus agent $\rho$.
-        \item $\pi\equiv\rho\oplus\overline{\rho}$ for some agent $\rho$.
+        \item $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$
+            for some agent $\rho$.
     \end{enumerate}
 \end{proposition}
 
 \begin{proof}
     ($\Rightarrow$)
     Assume $\pi\equiv\rho$ for some Janus agent $\rho$.
-    Then $\rho=\overline{\rho}$, so $\rho\equiv \rho\oplus\overline{\rho}$ by
+    Then $\rho=\overline{\rho}$, so
+    $\rho\equiv (\frac12,\frac12)\cdot(\rho,\overline{\rho})$ by
     Lemma \ref{piopluspilemma}, thus, by Lemma \ref{equivrelationlemma},
-    $\pi\equiv\rho\oplus\overline{\rho}$.
+    $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$.
 
     ($\Leftarrow$)
-    Assume $\pi\equiv\rho\oplus\overline{\rho}$ for some agent $\rho$.
-    Clearly
-    \[
-        \overline{\rho\oplus\overline{\rho}}
-        =
-        \overline{\rho}\oplus\overline{\overline{\rho}}
-        =
-        \overline{\rho}\oplus\rho
-        =
-        \rho\oplus\overline{\rho},
-    \]
-    so $\rho\oplus\overline{\rho}$ is a Janus agent, proving that
-    $\pi$ is $\equiv$ some Janus agent.
+    Assume $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ for some agent $\rho$.
+    We need only show $(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ is a Janus agent,
+    i.e., that
+    $(\frac12,\frac12)\cdot(\rho,\overline{\rho})
+    =\overline{(\frac12,\frac12)\cdot(\rho,\overline{\rho})}$.
+    For any $h\in(\mathcal P\mathcal A)^*(\mathcal P)$ and $a\in\mathcal A$,
+    we claim
+    $\overline{(\frac12,\frac12)\cdot(\rho,\overline{\rho})}(a|h)
+    =((\frac12,\frac12)\cdot(\rho,\overline{\rho}))(a|h)$.
+    If $(\frac12,\frac12)\cdot(\rho,\overline\rho)_*(h)=0$
+    then it follows by Lemmas \ref{doublenegationlemma} and
+    \ref{asteriskcommuteswithoverlinelemma} that
+    $\overline{(\frac12,\frac12)\cdot(\rho,\overline\rho)}_*(h)=0$,
+    so by Definition \ref{maindefn},
+    $\overline{(\frac12,\frac12)\cdot(\rho,\overline{\rho})}(a|h)
+    =((\frac12,\frac12)\cdot(\rho,\overline{\rho}))(a|h)=1/|\mathcal A|$.
+    But assume $(\frac12,\frac12)\cdot(\rho,\overline\rho)_*(h)\not=0$.
+    Then:
+    \begin{align*}
+        \overline{(\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\rho,\overline{\rho})}(a|h)
+        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\rho,\overline{\rho}))(a|\overline h)
+            &\mbox{(Definition \ref{dualagentsdefn})}\\
+        &= \frac
+            {\frac12\rho_*(\overline h\frown a)+\frac12\overline\rho_*(\overline h\frown a)}
+            {\frac12\rho_*(\overline h)+\frac12\overline\rho_*(\overline h)}
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= \frac
+            {\frac12\rho_*(\overline{h\frown a})+\frac12\overline\rho_*(\overline{h\frown a})}
+            {\frac12\rho_*(\overline h)+\frac12\overline\rho_*(\overline h)}
+            &\mbox{(Clearly $\overline h\frown a=\overline{h\frown a}$)}\\
+        &= \frac
+            {\frac12\overline\rho_*(h\frown a)+\frac12\overline{\overline\rho}_*(h\frown a)}
+            {\frac12\overline\rho_*(h)+\frac12\overline{\overline\rho}_*(h)}
+            &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
+        &= ((\mbox{$\frac12$},\mbox{$\frac12$})
+            \cdot(\overline{\overline\rho},\overline\rho))(a|h)
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\rho,\overline\rho))(a|h).
+            &\mbox{(Lemma \ref{doublenegationlemma})}
+    \end{align*}
 \end{proof}
 
 \begin{theorem}
