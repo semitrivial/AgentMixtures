@@ -820,12 +820,12 @@ In this section, we give another application of mixture agents.
 
 \begin{definition}
 \label{modifyagentatoneplace}
-    If $\pi$ is an agent, $h_0$ is a history ending in a percept,
+    If $\pi$ is an agent, $h_0\in(\mathcal P\mathcal A)^*\mathcal P$,
     and $m$ is a probability distribution on $\mathcal A$,
     we write $\pi^{h_0\mapsto m}$ for the agent which is identical to $\pi$
     except that it maps $h_0$ to $m$, in other words:
     \[
-        \pi^{h\mapsto m}(a|h)
+        \pi^{h_0\mapsto m}(a|h)
         =
         \begin{cases}
             \pi(a|h) &\mbox{if $h\not=h_0$,}\\
@@ -837,7 +837,7 @@ In this section, we give another application of mixture agents.
 \begin{lemma}
 \label{firsttechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Suppose $h$ is a history such that
+    Let $h\in\mathcal H$ be such that
     for every $a\in\mathcal A$,
     $h_0\frown a$ is not an initial segment of $h$.
     Then $\pi^{h_0\mapsto m}_*(h)=\pi_*(h)$.
@@ -850,7 +850,7 @@ In this section, we give another application of mixture agents.
 \begin{lemma}
 \label{thirdtechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    For any action $a\in\mathcal A$,
+    For any $a\in\mathcal A$,
     $\pi^{h_0\mapsto m}_*(h_0\frown a)=\pi_*(h_0)m(a)$.
 \end{lemma}
 
@@ -861,7 +861,7 @@ In this section, we give another application of mixture agents.
 \begin{lemma}
 \label{secondtechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Suppose $h$ is a history and $a_0$ is an action and that $h_0\frown a_0$ is
+    Assume $h\in\mathcal H$, $a_0\in\mathcal A$, and $h_0\frown a_0$ is
     an initial segment of $h$. Assume $\pi(a_0|h_0)\not=0$. Then
     $\pi^{h_0\mapsto m}_*(h) = \frac{\pi_*(h)m(a_0)}{\pi(a_0|h_0)}$.
 \end{lemma}
@@ -869,7 +869,7 @@ In this section, we give another application of mixture agents.
 \begin{proof}
     By induction on $h$.
 
-    Case 1: $h=h_0\frown a$. Then
+    Case 1: $h=h_0\frown a_0$. Then
     \begin{align*}
         \pi^{h_0\mapsto m}_*(h)
         &= \pi^{h_0\mapsto m}_*(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
@@ -884,8 +884,8 @@ In this section, we give another application of mixture agents.
             &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
-    Case 2: $h=h_0\frown a_0\frown h_1\frown p$ for some history $h_1$
-        and some percept $p$. Then
+    Case 2: $h=h_0\frown a_0\frown h_1\frown p$ for some $h_1\in\mathcal H$
+        and $p\in\mathcal P$. Then
     \begin{align*}
         \pi^{h_0\mapsto m}_*(h)
         &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
@@ -897,8 +897,8 @@ In this section, we give another application of mixture agents.
         &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
     \end{align*}
 
-    Case 3: $h=h_0\frown a_0\frown h_1\frown a$ for some history $h_1$
-        and some action $a$. Then
+    Case 3: $h=h_0\frown a_0\frown h_1\frown a$ for some $h_1\in\mathcal H$ and
+        $a\in\mathcal A$. Then
     \begin{align*}
         \pi^{h_0\mapsto m}_*(h)
         &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
@@ -917,37 +917,36 @@ In this section, we give another application of mixture agents.
 
 \begin{definition}
 \label{sumofdistros}
-    Suppose $m$ and $m_1,\ldots,m_n$ are probability distributions on $\mathcal A$
-    and $r_1,\ldots,r_n$ are nonnegative real numbers with
-    $r_1+\cdots+r_n=1$. By $r_1m_1+\cdots+r_nm_n$ we mean the probability distribution
+    Suppose $\vec m=(m_1,\ldots,m_n)$ are probability distributions on $\mathcal A$
+    and $\vec w=(w_1,\ldots,w_n)$ are positive reals with
+    $w_1+\cdots+w_n=1$. By $\vec w\cdot\vec m$ we mean the probability distribution
     on $\mathcal A$ defined by
     \[
-        (r_1m_1+\cdots+r_nm_n)(a) = r_1m_1(a) + \cdots + r_nm_n(a).
+        (\vec w\cdot\vec m)(a) = w_1m_1(a) + \cdots + w_nm_n(a).
     \]
 \end{definition}
 
 \begin{lemma}
-    If $m$, $m_1,\ldots,m_n$, $r_1,\ldots,r_n$ are as in Definition \ref{sumofdistros}
-    then $r_1m_1+\cdots+r_nm_n$ really is a probability distribution on $\mathcal A$.
+    If $\vec m$, $\vec w$ are as in Definition \ref{sumofdistros}
+    then $\vec w\cdot\vec m$ really is a probability distribution on $\mathcal A$.
 \end{lemma}
 
 \begin{proof}
     Clearly for every $a\in\mathcal A$,
-    $(r_1m_1+\cdots+r_nm_n)(a) = r_1m_1(a) + \cdots + r_nm_n(a)$ is a nonnegative
-    real number. It remains to show $\sum_{a\in\mathcal A}(r_1m_1+\cdots+r_nm_n)(a)=1$.
+    $(\vec w\cdot\vec m)(a) = w_1m_1(a) + \cdots + w_nm_n(a)$ is a nonnegative
+    real. It remains to show $\sum_{a\in\mathcal A}(\vec w\cdot\vec m)(a)=1$.
     We compute:
     \begin{align*}
-        &{} \sum_{a\in\mathcal A}(r_1m_1+\cdots+r_nm_n)(a)\\
+        &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec m)(a)\\
         &=
-        \sum_{a\in\mathcal A} r_1m_1(a) + \cdots + r_nm_n(a)
+        \sum_{a\in\mathcal A} w_1m_1(a) + \cdots + w_nm_n(a)
             &\mbox{(Definition \ref{sumofdistros})}\\
         &=
-        r_1\sum_{a\in\mathcal A} m_1(a) + \cdots + r_n\sum_{a\in\mathcal A}m_n(a)
+        w_1\sum_{a\in\mathcal A} m_1(a) + \cdots + w_n\sum_{a\in\mathcal A}m_n(a)
             &\mbox{(Basic Algebra)}\\
-        &= r_1 + \cdots + r_n
+        &= w_1 + \cdots + w_n
             &\mbox{($m_1,\ldots,m_n$ are probability distr's)}\\
         &= 1.
-            &\mbox{(By assumption)}
     \end{align*}
 \end{proof}
 
