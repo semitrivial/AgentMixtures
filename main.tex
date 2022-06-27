@@ -669,6 +669,50 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         \end{align*}
 \end{proof}
 
+\begin{lemma}
+\label{reflectionmakesjanuslemma}
+    For any agent $\pi$,
+    $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is a Janus agent.
+\end{lemma}
+
+\begin{proof}
+    For any $h\in(\mathcal P\mathcal A)^*(\mathcal P)$ and $a\in\mathcal A$,
+    we claim
+    $\overline{(\frac12,\frac12)\cdot(\pi,\overline{\pi})}(a|h)
+    =((\frac12,\frac12)\cdot(\pi,\overline{\pi}))(a|h)$.
+    If $(\frac12,\frac12)\cdot(\pi,\overline\pi)_*(h)=0$
+    then it follows by Lemmas \ref{doublenegationlemma} and
+    \ref{asteriskcommuteswithoverlinelemma} that
+    $\overline{(\frac12,\frac12)\cdot(\pi,\overline\pi)}_*(h)=0$,
+    so by Definition \ref{maindefn},
+    $\overline{(\frac12,\frac12)\cdot(\pi,\overline{\pi})}(a|h)
+    =((\frac12,\frac12)\cdot(\pi,\overline{\pi}))(a|h)=1/|\mathcal A|$.
+    But assume $(\frac12,\frac12)\cdot(\pi,\overline\pi)_*(h)\not=0$.
+    Then:
+    \begin{align*}
+        \overline{(\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi,\overline{\pi})}(a|h)
+        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi,\overline{\pi}))(a|\overline h)
+            &\mbox{(Definition \ref{dualagentsdefn})}\\
+        &= \frac
+            {\frac12\pi_*(\overline h\frown a)+\frac12\overline\pi_*(\overline h\frown a)}
+            {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= \frac
+            {\frac12\pi_*(\overline{h\frown a})+\frac12\overline\pi_*(\overline{h\frown a})}
+            {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
+            &\mbox{(Clearly $\overline h\frown a=\overline{h\frown a}$)}\\
+        &= \frac
+            {\frac12\overline\pi_*(h\frown a)+\frac12\overline{\overline\pi}_*(h\frown a)}
+            {\frac12\overline\pi_*(h)+\frac12\overline{\overline\pi}_*(h)}
+            &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
+        &= ((\mbox{$\frac12$},\mbox{$\frac12$})
+            \cdot(\overline{\overline\pi},\overline\pi))(a|h)
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi,\overline\pi))(a|h).
+            &\mbox{(Lemma \ref{doublenegationlemma})}
+    \end{align*}
+\end{proof}
+
 \begin{proposition}
     (Characterization of Janus agents modulo $\equiv$)
     For any agent $\pi$, the following are equivalent:
@@ -689,46 +733,12 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 
     ($\Leftarrow$)
     Assume $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ for some agent $\rho$.
-    We need only show $(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ is a Janus agent,
-    i.e., that
-    $(\frac12,\frac12)\cdot(\rho,\overline{\rho})
-    =\overline{(\frac12,\frac12)\cdot(\rho,\overline{\rho})}$.
-    For any $h\in(\mathcal P\mathcal A)^*(\mathcal P)$ and $a\in\mathcal A$,
-    we claim
-    $\overline{(\frac12,\frac12)\cdot(\rho,\overline{\rho})}(a|h)
-    =((\frac12,\frac12)\cdot(\rho,\overline{\rho}))(a|h)$.
-    If $(\frac12,\frac12)\cdot(\rho,\overline\rho)_*(h)=0$
-    then it follows by Lemmas \ref{doublenegationlemma} and
-    \ref{asteriskcommuteswithoverlinelemma} that
-    $\overline{(\frac12,\frac12)\cdot(\rho,\overline\rho)}_*(h)=0$,
-    so by Definition \ref{maindefn},
-    $\overline{(\frac12,\frac12)\cdot(\rho,\overline{\rho})}(a|h)
-    =((\frac12,\frac12)\cdot(\rho,\overline{\rho}))(a|h)=1/|\mathcal A|$.
-    But assume $(\frac12,\frac12)\cdot(\rho,\overline\rho)_*(h)\not=0$.
-    Then:
-    \begin{align*}
-        \overline{(\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\rho,\overline{\rho})}(a|h)
-        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\rho,\overline{\rho}))(a|\overline h)
-            &\mbox{(Definition \ref{dualagentsdefn})}\\
-        &= \frac
-            {\frac12\rho_*(\overline h\frown a)+\frac12\overline\rho_*(\overline h\frown a)}
-            {\frac12\rho_*(\overline h)+\frac12\overline\rho_*(\overline h)}
-            &\mbox{(Definition \ref{maindefn})}\\
-        &= \frac
-            {\frac12\rho_*(\overline{h\frown a})+\frac12\overline\rho_*(\overline{h\frown a})}
-            {\frac12\rho_*(\overline h)+\frac12\overline\rho_*(\overline h)}
-            &\mbox{(Clearly $\overline h\frown a=\overline{h\frown a}$)}\\
-        &= \frac
-            {\frac12\overline\rho_*(h\frown a)+\frac12\overline{\overline\rho}_*(h\frown a)}
-            {\frac12\overline\rho_*(h)+\frac12\overline{\overline\rho}_*(h)}
-            &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
-        &= ((\mbox{$\frac12$},\mbox{$\frac12$})
-            \cdot(\overline{\overline\rho},\overline\rho))(a|h)
-            &\mbox{(Definition \ref{maindefn})}\\
-        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\rho,\overline\rho))(a|h).
-            &\mbox{(Lemma \ref{doublenegationlemma})}
-    \end{align*}
+    By Lemma \ref{reflectionmakesjanuslemma},
+    $(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ is a Janus agent, so we are done.
 \end{proof}
+
+The following theorem formalizes and strengthens an informal result
+from \cite{alexander2021reward}.
 
 \begin{theorem}
     Suppose $\Upsilon$ is a weighted performance averager.
@@ -739,10 +749,16 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 
 \begin{proof}
     Let $\pi$ be any agent.
-    By assumption, $\Upsilon(\pi\oplus\overline{\pi})=0$.
+    By Lemma \ref{reflectionmakesjanuslemma},
+    $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is a Janus agent.
+    So by assumption,
+    $\Upsilon((\frac12,\frac12)\cdot(\pi,\overline\pi))=0$.
     Thus by Theorem \ref{maintheorem},
-    $0=\frac12(\Upsilon(\pi)+\Upsilon(\overline{\pi})$,
-    so $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$.
+    \[
+        (\mbox{$\frac12$},\mbox{$\frac12$})\cdot\Upsilon((\pi,\overline\pi))
+        =\mbox{$\frac12$}\Upsilon(\pi)+\mbox{$\frac12$}\Upsilon(\overline\pi)=0.
+    \]
+    So $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$.
 \end{proof}
 
 
