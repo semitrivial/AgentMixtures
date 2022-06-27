@@ -572,30 +572,32 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 
 \begin{lemma}
 \label{piopluspilemma}
-    For every agent $\pi$, $\pi\equiv(\frac12,\frac12)\cdot(\pi,\pi)$.
+    Let $\vec w=(w_1,\ldots,w_n)$ be positive reals,
+    $w_1+\cdots+w_n=1$. For every agent $\pi$,
+    $\pi\equiv\vec w\cdot (\pi,\ldots,\pi)$ (where
+    $(\pi,\ldots,\pi)$ has length $n$).
 \end{lemma}
 
 \begin{proof}
-    Let $\vec w=(\frac12,\frac12)$, $\vec\pi=(\pi,\pi)$.
+    Write $\vec\pi$ for $(\pi,\ldots,\pi)$.
     We prove conditions 1 and 2 of Definition \ref{equivdefn}
     simultaneously by induction on $s$.
  
     Case 1: $s=\langle\rangle$. Then
     $\pi_*(s)=\vec w\cdot\vec\pi_*(s)=1$, so
     vacuously $\pi_*(s)=0$ iff $\vec w\cdot\vec\pi_*(s)=0$
-    (proving condition 1 of
-    Definition \ref{equivdefn}).
+    (proving condition 1).
     For condition 2, there is nothing to check, since
     $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
 
-    Case 2: $s$ ends with an action, say $s=s_0\frown a_0$ where
-        $s_0\in(\mathcal P\mathcal A)^*\mathcal P$.
+    Case 2: $s=s_0\frown a_0$ for some
+        $s_0\in(\mathcal P\mathcal A)^*\mathcal P$, $a_0\in\mathcal A$.
         For condition 2, there is nothing to prove, since
         $s\not\in(\mathcal P\mathcal A)^*\mathcal P$.
         For condition 1, we consider two cases.
 
         Subcase 2.1: $\pi_*(s_0)=0$.
-        By induction, we may assume (condition 1)
+        By induction, condition 1 holds for $s_0$, so
         $\vec w\cdot\vec\pi_*(s_0)=0$.
         By Definition \ref{pullbackdef},
         $\pi_*(s)=0\pi(a_0|s_0)=0$
@@ -608,10 +610,10 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
             (\vec w\cdot \vec\pi)_*(s)
                 &= \vec w\cdot\vec\pi_*(s)
                     &\mbox{(Theorem \ref{maintheorem})}\\
-                &= (\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi_*(s),\pi_*(s))
+                &= (w_1\pi_*(s)+\cdots+w_n\pi_*(s))
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
                 &= \pi_*(s)
-                    &\mbox{(Vector Algebra)}\\
+                    &\mbox{($w_1+\cdots+w_n=1$)}\\
                 &= \pi_*(s_0)\pi(a_0|s_0).
                     &\mbox{(Definition \ref{pullbackdef})}
         \end{align*}
@@ -619,8 +621,8 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         it follows that
         $(\vec w\cdot\vec\pi)_*(s)=0$ iff $\pi_*(s)=0$ iff $\pi(a_0|s_0)=0$.
 
-    Case 3: $s$ ends with a percept, say
-        $s=s_0\frown p$ where $s_0\in (\mathcal P\mathcal A)^*$.
+    Case 3: $s=s_0\frown p$ for some $s_0\in (\mathcal P\mathcal A)^*$,
+        $p\in\mathcal P$.
         By induction, conditions 1 and 2 hold for $s_0$.
         By Definition \ref{pullbackdef},
         $\pi_*(s)=\pi_*(s_0)$ and $(\vec w\cdot\vec\pi)_*(s)=(\vec w\cdot\vec\pi)_*(s_0)$,
@@ -629,17 +631,17 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         For condition 2,
         assume $\pi_*(s)\not=0$ and let $a$ be any action.
         By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot\vec\pi_*(s)=\frac12\pi_*(s)+\frac12\pi_*(s)=\pi_*(s)$.
+        $\vec w\cdot\vec\pi_*(s)=w_1\pi_*(s)+\cdots+w_n\pi_*(s)=\pi_*(s)$.
         So, since $\pi_*(s)\not=0$, $\vec w\cdot\vec\pi_*(s)\not=0$.
         Thus
         \begin{align*}
             (\vec w\cdot\vec\pi)(a|s)
                 &= \frac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot\vec\pi_*(s)}
                     &\mbox{(Definition \ref{maindefn})}\\
-                &= \frac{\frac12\pi_*(s\frown a)+\frac12\pi_*(s\frown a)}
-                    {\frac12\pi_*(s)+\frac12\pi_*(s)}
-                    &\mbox{(Choice of $\vec w$ and $\vec\pi$)}\\
-                &= \frac{\frac12\pi_*(s)+\frac12\pi_*(s)}{\frac12\pi_*(s)+\frac12\pi_*(s)}
+                &= \frac{w_1\pi_*(s\frown a)+\cdots+w_n\pi_*(s\frown a)}
+                    {w_1\pi_*(s)+\cdots+w_n\pi_*(s)}
+                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
+                &= \frac{w_1\pi_*(s)+\cdots+w_n\pi_*(s)}{w_1\pi_*(s)+\cdots+w_n\pi_*(s)}
                     \pi(a|s)
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= \pi(a|s).
