@@ -764,6 +764,8 @@ from \cite{alexander2021reward}.
 
 \section{Detectability of sets of agents}
 
+In this section, we give another application of mixture agents.
+
 \begin{definition}
 \label{incentivizabilitydefn}
     A set $\Pi$ of agents is \emph{detectable} if there exists
@@ -772,22 +774,25 @@ from \cite{alexander2021reward}.
         \item
         $V^\pi_\mu$ exists.
         \item
-        $V^\pi_\mu>0$ if $\pi\in\Pi$.
-        \item
-        $V^\pi_\mu\leq 0$ if $\pi\not\in\Pi$.
+        $V^\pi_\mu>0$ iff $\pi\in\Pi$.
     \end{enumerate}
 \end{definition}
 
 \begin{definition}
-    A set $\Pi$ is \emph{closed under $\oplus$} if the following
-    condition holds: whenever $\pi\in\Pi$ and $\rho\in\Pi$,
-    then $\pi\oplus\rho\in\Pi$.
+\label{mixtureclosuredef}
+    A set $\Pi$ is \emph{closed under mixtures} if the following
+    condition holds: for all positive reals $\vec w=(w_1,\ldots,w_n)$
+    with $w_1+\cdots+w_n=1$,
+    for all agents $\vec\pi=(\pi^1,\ldots,\pi^n)$,
+    if $\pi^i\in \Pi$ for every $i=1,\ldots,n$, then
+    $\vec w\cdot\vec\pi\in\Pi$.
 \end{definition}
 
 \begin{theorem}
 \label{closuretheorem}
+    (Necessary Conditition for Detectability)
     Let $\Pi$ be any set of agents.
-    If $\Pi$ is detectable, then $\Pi$ is closed under $\oplus$, and so
+    If $\Pi$ is detectable, then $\Pi$ is closed under mixtures, and so
     is its complement $\Pi^c$.
 \end{theorem}
 
@@ -795,13 +800,19 @@ from \cite{alexander2021reward}.
     Assume $\Pi$ is detectable.
     Let $\mu$ be as in
     Definition \ref{incentivizabilitydefn}.
-    To see $\Pi$ is closed under $\oplus$, let $\pi,\rho\in\Pi$.
-    Then $V^\pi_\mu>0$ and $V^\rho_\mu>0$, thus
-    $V^{\pi\oplus\rho}_\mu>0$ since
-    $V^{\pi\oplus\rho}_\mu=\frac12(V^\pi_\mu+V^\rho_\mu)$ by Theorem
-    \ref{maintheorem}.
-    So by choice of $\mu$, $\pi\oplus\rho\in \Pi$.
-    A similar argument shows that $\Pi^c$ is closed under $\oplus$.
+    To see $\Pi$ is closed under mixtures, let $\vec w$, $\vec\pi=(\pi^1,\ldots,\pi^n)$ be
+    as in Definition \ref{mixtureclosuredef}.
+    Assume $\pi^i\in\Pi$ for all $i=1,\ldots,n$.
+    By choice of $\mu$, $V^{\pi^i}_\mu>0$ for all $i=1,\ldots,n$.
+    Thus
+    \begin{align*}
+        V^{\vec w\cdot\vec\pi}_\mu
+            &= \vec w\cdot V^{\vec\pi}_\mu
+                &\mbox{(Theorem \ref{maintheorem})}\\
+            &> w_1\cdot 0 + \cdots + w_n\cdot 0 = 0,
+    \end{align*}
+    so by choice of $\mu$, $\vec w\cdot \vec\pi\in \Pi$.
+    A similar argument shows that $\Pi^c$ is closed under mixtures.
 \end{proof}
 
 
