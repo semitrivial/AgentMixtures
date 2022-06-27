@@ -950,57 +950,58 @@ In this section, we give another application of mixture agents.
     \end{align*}
 \end{proof}
 
+\begin{definition}
+    For any agent $\pi$, for any $h\in(\mathcal P\mathcal A)^*\mathcal P$,
+    for any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
+    let $\pi^{h\mapsto \vec m}=(\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n})$.
+\end{definition}
+
 \begin{proposition}
 \label{longproposition}
     Let $\Upsilon$ be any weighted performance averager, let $\pi$ be any agent,
-    let $h$ be any history ending in a percept.
-    Suppose $m_1,\ldots,m_n$ are probability distributions on $\mathcal A$
-    and $r_1,\ldots,r_n$ are nonnegative reals such that $r_1+\cdots+r_n=1$
-    and $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$.
-    Then
-    \[
+    and let $h\in(\mathcal P\mathcal A)^*\mathcal P$.
+    Suppose $\vec m$ and $\vec w$ are as in Definition \ref{sumofdistros}.
+    If $\vec w\cdot\vec m = \pi(\bullet|h)$, then
+    $
         \Upsilon(\pi)
         =
-        \Upsilon(r_1\pi^{h\mapsto m_1} \oplus \cdots \oplus r_n\pi^{h\mapsto m_n}).
-    \]
+        \Upsilon(\vec w\cdot \pi^{h\mapsto \vec m}).
+    $
 \end{proposition}
 
 \begin{proof}
-    For brevity, write $\pi^i$ for $\pi^{h\mapsto m_i}$.
-
-    It suffices to show that for every well-behaved $\mu$ and every $n\in\mathbb N$,
+    For brevity, write $\vec\pi$ for $\pi^{h\mapsto \vec m}$. It suffices to
+    show that for every well-behaved $\mu$ and every $n\in\mathbb N$,
     \[
         V^{\pi}_{\mu,n}
         =
-        V^{r_1\pi^1 \oplus \cdots \oplus r_n\pi^n}_{\mu,n}.
+        V^{\vec w\cdot \vec\pi}_{\mu,n}.
     \]
     By Lemma \ref{basicprobabilitylemma}, it suffices to show that for every
-    well-behaved $\mu$ and every finite percept-action sequence $s$,
+    well-behaved $\mu$ and every $s\in\mathcal H$,
     $
     (\pi,\mu)_*(s)
     =
-    (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n,\mu)_*(s)
+    (\vec w\cdot\vec\pi,\mu)_*(s)
     $.
-    We will show even more. We will show that for every percept-action sequence
-    $s$, $\pi_*(s)=(r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(s)$.
+    We will show even more. We will show that for every $s\in\mathcal H$,
+    $\pi_*(s)=(\vec w\cdot\vec\pi)_*(s)$.
     We prove this by induction on $s$.
 
     Case 1: $s=\langle\rangle$.
     Then $\pi_*(s)=1
-    =(r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(s)$.
+    =(\vec w\cdot\vec\pi)_*(s)$.
 
     Case 2: $s=t\frown p$ for some percept $p$.
     Then
     \begin{align*}
         \pi_*(s)
-            &= \pi_*(t\frown p)\\
             &= \pi_*(t)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(t)\mu(p|t)
+            &= (\vec w\cdot\vec\pi)_*(t)
                 &\mbox{(Induction)}\\
-            &= (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(t\frown p)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (r_1\pi^1 \oplus \cdots \oplus r_n\pi^n)_*(s).
+            &= (\vec w\cdot\vec\pi)_*(s).
+                &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
     Case 3: $s=t\frown a$ for some action $a$.
@@ -1008,11 +1009,11 @@ In this section, we give another application of mixture agents.
     Subcase 3.1: $\pi_*(t)=0$.
     Then
     \begin{align*}
-        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(s)\\
-            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t)
-            (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+        (\vec w\cdot\vec\pi)_*(s)
+            &= (\vec w\cdot\vec\pi)_*(t)
+            (\vec w\cdot\vec\pi)(a|t)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(t)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+            &= \pi_*(t)(\vec w\cdot\vec\pi)(a|t)
                 &\mbox{(Induction)}\\
             &= 0,
     \end{align*}
@@ -1021,35 +1022,35 @@ In this section, we give another application of mixture agents.
     Subcase 3.2: $\pi_*(t)\not=0$ and $t=h$.
 
     We would like to use Definition \ref{maindefn} to rewrite
-    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)$ but first we must check
-    that the resulting denominator does not vanish.
+    $(\vec w\cdot\vec\pi)(a|h)$ but first we must check
+    that the appropriate denominator does not vanish.
     Compute ($*$):
     \begin{align*}
-        &{} r_1\pi^1_*(h)+\cdots+r_n\pi^n_*(h)\\
-            &= r_1\pi_*(h)+\cdots+r_n\pi_*(h)
+        \vec w\cdot\vec\pi_*(h)
+            &= w_1\pi_*(h)+\cdots+w_n\pi_*(h)
                 &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
             &= \pi_*(h)\not=0.
-                &\mbox{($r_1+\cdots+r_n=1$)}
+                &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
     Thus:
     \begin{align*}
-        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(h\frown a)\\
-            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(h)
-                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)
+        (\vec w\cdot\vec\pi)_*(h\frown a)
+            &= (\vec w\cdot\vec\pi)_*(h)
+                (\vec w\cdot\vec\pi)(a|h)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(h)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)
+            &= \pi_*(h)(\vec w\cdot\vec\pi)(a|h)
                     &\mbox{(Induction)}\\
             &= \pi_*(h)
                 \frac
-                {r_1\pi^1_*(h\frown a)+\cdots+r_n\pi^n_*(h\frown a)}
-                {r_1\pi^1_*(h)+\cdots+r_n\pi^n_*(h)}
+                {\vec w\cdot\vec\pi_*(h\frown a)}
+                {\vec w\cdot\vec\pi_*(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= r_1\pi^1_*(h\frown a)+\cdots+r_n\pi^n_*(h\frown a)
+            &= \vec w\cdot\vec\pi_*(h\frown a)
                     &\mbox{(By $*$)}\\
-            &= r_1\pi_*(h)m_1(a)+\cdots+r_n\pi_*(h)m_n(a)
+            &= w_1\pi_*(h)m_1(a)+\cdots+w_n\pi_*(h)m_n(a)
                     &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
             &= \pi_*(h)\pi(a|h)
-                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
+                    &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
             &= \pi_*(h\frown a),
                     &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
@@ -1062,42 +1063,42 @@ In this section, we give another application of mixture agents.
     we would have $\pi_*(t)=0$.
 
     We would like to use Definition \ref{maindefn} to rewrite
-    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)$ but first we must
-    check that the resulting denominator does not vanish. We compute ($**$):
+    $(\vec w\cdot\vec\pi)(a|t)$ but first we must
+    check that the appropriate denominator does not vanish. We compute ($**$):
     \begin{align*}
-        &{} r_1\pi^1_*(t) + \cdots + r_n\pi^n_*(t)\\
-            &= \frac{r_1\pi_*(t)m_1(a_0)}{\pi(a_0|h)}
+        \vec w\cdot\vec\pi_*(t)
+            &= \frac{w_1\pi_*(t)m_1(a_0)}{\pi(a_0|h)}
                 + \cdots +
-                \frac{r_n\pi_*(t)m_n(a_0)}{\pi(a_0|h)}
+                \frac{w_n\pi_*(t)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
             &= \frac{\pi_*(t)}{\pi(a_0|h)}
-                (r_1m_1(a_0) + \cdots + r_nm_n(a_0))
+                (w_1m_1(a_0) + \cdots + w_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
             &= \frac{\pi_*(t)}{\pi(a_0|h)}\pi(a_0|h)
-                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
+                    &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
             &= \pi_*(t)\not=0.
                     &\mbox{(Basic Algebra)}
     \end{align*}
     Thus
     \begin{align*}
-        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(s)\\
-            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t)
-                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+        (\vec w\cdot\vec\pi)_*(s)
+            &= (\vec w\cdot\vec\pi)_*(t)
+                (\vec w\cdot\vec\pi)(a|t)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(t)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+            &= \pi_*(t)(\vec w\cdot\vec\pi)(a|t)
                     &\mbox{(Induction)}\\
-            &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
-                {r_1\pi^1_*(t)+\cdots+r_n\pi^n_*(t)}
+            &= \pi_*(t)\frac{\vec w\cdot\vec\pi_*(t\frown a)}
+                {\vec w\cdot\vec\pi_*(t)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)
+            &= \vec w\cdot\vec\pi_*(t\frown a)
                     &\mbox{(By $**$)}\\
-            &= r_1\frac{\pi_*(t\frown a)m_1(a_0)}{\pi(a_0|h)}
-                +\cdots+r_n\frac{\pi_*(t\frown a)m_n(a_0)}{\pi(a_0|h)}
+            &= w_1\frac{\pi_*(t\frown a)m_1(a_0)}{\pi(a_0|h)}
+                +\cdots+w_n\frac{\pi_*(t\frown a)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(t\frown a)}{\pi(a_0|h)}(r_1m_1(a_0)+\cdots+r_nm_n(a_0))
+            &= \frac{\pi_*(t\frown a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
             &= \frac{\pi_*(t\frown a)}{\pi(a_0|h)}\pi(a_0|h)
-                    &\mbox{($r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$)}\\
+                    &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
             &= \pi_*(t\frown a) = \pi_*(s),
     \end{align*}
     as desired.
@@ -1106,24 +1107,22 @@ In this section, we give another application of mixture agents.
         of the form $h\frown a_0$.
 
     We would like to use Definition \ref{maindefn} to rewrite
-    $(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|h)$ but first we must
-    check that the resulting denominator does not vanish:
-    by the same reasoning as in Subcase 3.2, we have
-    ($*$) $(r_1\pi^1_*(t)+\cdots+r_n\pi^n_*(t))=\pi_*(t)\not=0$.
+    $(\vec w\cdot\vec\pi)(a|h)$ but first we must
+    check that the appropriate denominator does not vanish:
+    by induction, we have
+    ($***$) $\vec w\cdot\vec\pi_*(t)=\pi_*(t)\not=0$.
     Thus
     \begin{align*}
-        &{} (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t\frown a)\\
-            &= (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)_*(t)
-                (r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
+        (\vec w\cdot\vec\pi)_*(t\frown a)
+            &= (\vec w\cdot\vec\pi)_*(t)
+                (\vec w\cdot\vec\pi)(a|t)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(t)(r_1\pi^1\oplus\cdots\oplus r_n\pi^n)(a|t)
-                    &\mbox{(Induction)}\\
-            &= \pi_*(t)\frac{r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)}
-                {r_1\pi^1_*(t)+\cdots+r_n\pi^n_*(t)}
+            &= (\vec w\cdot\vec\pi)_*(t)\frac{\vec w\cdot\vec\pi_*(t\frown a)}
+                {\vec w\cdot\vec\pi_*(t)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= r_1\pi^1_*(t\frown a)+\cdots+r_n\pi^n(t\frown a)
-                    &\mbox{(By $*$)}\\
-            &= r_1\pi_*(t\frown a)+\cdots+r_n\pi_*(t\frown a)
+            &= \vec w\cdot\vec\pi_*(t\frown a)
+                    &\mbox{(By $***$)}\\
+            &= w_1\pi_*(t\frown a)+\cdots+w_n\pi_*(t\frown a)
                     &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
             &= \pi_*(t\frown a),
                     &\mbox{($r_1+\cdots+r_n=1$)}
@@ -1137,9 +1136,9 @@ In this section, we give another application of mixture agents.
     Let $\Upsilon$ be any weighted performance averager and let
     $\pi$ be an agent.
     Let $h$ be a history ending in a percept.
-    For any probability distributions $m_1,\ldots,m_n$ on $\mathcal A$,
-    for any nonnegative reals $r_1,\ldots,r_n$ with $r_1+\cdots+r_n=1$,
-    if $r_1m_1+\cdots+r_nm_n=\pi(\bullet|h)$,
+    For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
+    for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
+    if $\vec w\cdot\vec m=\pi(\bullet|h)$,
     then one of the following is true:
     \begin{enumerate}
         \item For each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})=\Upsilon(\pi)$.
@@ -1153,14 +1152,14 @@ In this section, we give another application of mixture agents.
     This implies
     \begin{align*}
         \Upsilon(\pi)
-            &= \Upsilon(r_1\pi^{h\mapsto m_1}\oplus\cdots\oplus r_n\pi^{h\mapsto m_n})
+            &= \Upsilon(\vec w\cdot\pi^{h\mapsto\vec m})
                 &\mbox{(Proposition \ref{longproposition})}\\
-            &= r_1\Upsilon(\pi^{h\mapsto m_1})+\cdots+r_n\Upsilon(\pi^{h\mapsto m_n})
+            &= \vec w\cdot\Upsilon(\pi^{h\mapsto\vec m})
                 &\mbox{(Theorem \ref{maintheorem})}\\
-            &< r_1\Upsilon(\pi)+\cdots+r_n\Upsilon(\pi)
+            &< w_1\Upsilon(\pi)+\cdots+w_n\Upsilon(\pi)
                 &\mbox{(Assumption)}\\
             &= \Upsilon(\pi),
-                &\mbox{($r_1+\cdots+r_n=1$)}
+                &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
     absurd.
 \end{proof}
@@ -1169,8 +1168,9 @@ Theorem \ref{pointwisegenericnessthm} is interesting because it implies that for
 any intelligent agent $\pi$, for any history $h$, if $\pi(\bullet|h)$ is not deterministic,
 then the intelligence of $\pi$ does not critically depend on the specific probabilities
 which $\pi(\bullet|h)$ assigns to different actions. For any decomposition
-$\pi(\bullet|h)=r_1m_1+\cdots+r_nm_n$ of $\pi(\bullet|h)$ into competing probability
-distributions $m_i$ (with $r_1+\cdots+r_m=1$), either $\pi^{h\mapsto m_i}$ is more intelligent
+$\pi(\bullet|h)=\vec w\cdot\vec m$ of $\pi(\bullet|h)$ into competing probability
+distributions $\vec m$
+(with $w_1+\cdots+w_m=1$), either $\pi^{h\mapsto m_i}$ is more intelligent
 than $\pi$ for some $i$, or else every $\pi^{h\mapsto m_i}$ has the same intelligence as
 $\pi$. This is counter-intuitive because one might imagine that the specific probability
 distribution $\pi(\bullet|h)$ was carefully chosen and optimized to maximize the intelligence
@@ -1178,10 +1178,10 @@ of $\pi$.
 
 \begin{example}
 \label{genericnessexample}
-    Suppose $\pi$ is an agent and $h_0$ is some percept-action history ending in a
-    percept. Assume $\mathcal A=\{a_1,a_2,a_3\}$.
+    Suppose $\pi$ is an agent and $h_0\in(\mathcal P\mathcal A)^*\mathcal P$.
+    Assume $\mathcal A=\{a_1,a_2,a_3\}$.
     Suppose $\pi(a|h_0)=\frac13$ for every $a\in\mathcal A$.
-    Define probability distributions $m_1,m_2,m_3$ on $\mathcal A$ by
+    Define probability distributions $\vec m=(m_1,m_2,m_3)$ on $\mathcal A$ by
     \begin{align*}
         m_1(a) &=
         \begin{cases}
@@ -1199,10 +1199,10 @@ of $\pi$.
             \frac23 &\mbox{if $a=a_1$}
         \end{cases}
     \end{align*}
-    Let $r_1=r_2=r_3=\frac13$. Then $r_1+r_2+r_3=1$ and
+    Let $\vec w=(w_1,w_2,w_3)=(\frac13,\frac13,\frac13)$. Then $w_1+w_2+w_3=1$ and
     it is easy to check
-    $(r_1m_1+r_2m_2+r_3m_3)(a)=\frac13$ for every $a\in\mathcal A$,
-    i.e., $r_1m_1+r_2m_2+r_3m_3=\pi(\bullet|h_0)$.
+    $(\vec w\cdot\vec m)(a)=\frac13$ for every $a\in\mathcal A$,
+    i.e., $\vec w\cdot\vec m=\pi(\bullet|h_0)$.
     By Theorem \ref{pointwisegenericnessthm},
     for any weighted performance averager $\Upsilon$,
     one of the following statements is true:
@@ -1229,7 +1229,7 @@ Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 \label{nondeterminismcorollary}
     (Pointwise Unnecessariness of Non-Determinism)
     Suppose $\Upsilon$ is a weighted performance averager, $\pi$ is an agent,
-    and $h_0$ is a percept-action history ending in a percept.
+    and $h_0\in(\mathcal P\mathcal A)^*\mathcal P$.
     Let $a_1,\ldots,a_n$ enumerate $\{a\in\mathcal A\,:\,\pi(a|h_0)\not=0\}$.
     For each $i=1,\ldots,n$, let $m_i$ be the
     deterministic $\mathcal A$-probability distribution
@@ -1250,7 +1250,8 @@ Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 
 \begin{proof}
     By Theorem \ref{pointwisegenericnessthm} with
-    $r_i=\pi(a_i|h_0)$ for $i=1,\ldots,n$.
+    $\vec m=(m_1,\ldots,m_n)$ and $\vec w=(w_1,\ldots,w_n)$ where each
+    $w_i=\pi(a_i|h_0)$.
 \end{proof}
 
 Corollary \ref{nondeterminismcorollary} shows that for any individual
