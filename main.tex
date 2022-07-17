@@ -875,6 +875,9 @@ In this section, we give another application of mixture agents.
     \]
 \end{definition}
 
+The following three lemmas are technical lemmas needed to prove
+some interesting results.
+
 \begin{lemma}
 \label{firsttechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
@@ -997,6 +1000,15 @@ In this section, we give another application of mixture agents.
     let $\pi^{h\mapsto \vec m}=(\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n})$.
 \end{definition}
 
+The following proposition shows that
+for any particular history $h$ and agent $\pi$,
+for any decomposition of $\pi(\bullet|h)$ into a weighted mixture
+of probability distributions $m_1,\ldots,m_n$,
+$\pi$ has the same intelligence (as measured by any weighted performance
+averager) as the weighted mixture of the corresponding $n$ agents
+$\pi^{h\mapsto m_1},\ldots,\pi^{m\mapsto m_n}$
+obtained from $\pi$ by changing $\pi(\bullet|h)$ to $m_i$.
+
 \begin{proposition}
 \label{longproposition}
     Let $\Upsilon$ be any weighted performance averager, let $\pi$ be any agent,
@@ -1012,26 +1024,26 @@ In this section, we give another application of mixture agents.
 
 \begin{proof}
     For brevity, write $\vec\pi$ for $\pi^{h\mapsto \vec m}$. It suffices to
-    show that for every well-behaved $\mu$ and every $n\in\mathbb N$,
+    show that for every well-behaved $\mu$ and every $t\in\mathbb N$,
     \[
-        V^{\pi}_{\mu,n}
+        V^{\pi}_{\mu,t}
         =
-        V^{\vec w\cdot \vec\pi}_{\mu,n}.
+        V^{\vec w\cdot \vec\pi}_{\mu,t}.
     \]
     By Lemma \ref{basicprobabilitylemma}, it suffices to show that for every
-    well-behaved $\mu$ and every $s\in\mathcal H$,
+    well-behaved $\mu$ and every $g\in\mathcal H$,
     $
-    (\pi,\mu)_*(s)
+    (\pi,\mu)_*(g)
     =
-    (\vec w\cdot\vec\pi,\mu)_*(s)
+    (\vec w\cdot\vec\pi,\mu)_*(g)
     $.
-    We will show even more. We will show that for every $s\in\mathcal H$,
-    $\pi_*(s)=(\vec w\cdot\vec\pi)_*(s)$.
-    We prove this by induction on $s$.
+    We will show even more. We will show that for every $g\in\mathcal H$,
+    $\pi_*(g)=(\vec w\cdot\vec\pi)_*(g)$.
+    We prove this by induction on $g$.
 
-    Case 1: $s=\langle\rangle$.
-    Then $\pi_*(s)=1
-    =(\vec w\cdot\vec\pi)_*(s)$.
+    Case 1: $g=\langle\rangle$.
+    Then $\pi_*(g)=1
+    =(\vec w\cdot\vec\pi)_*(g)$.
 
     Case 2: $s=t\frown p$ for some percept $p$.
     Then
