@@ -129,7 +129,7 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         starting with a percept, ending with an action,
         and following the pattern ``percept, action, ...''.
         We also include $\langle\rangle$ in $(\mathcal P\mathcal A)^*$.
-        So elements of $(\mathcal P\mathcal A)^*$ of length at least $4$ have the
+        Nonempty elements of $(\mathcal P\mathcal A)^*$ have the
         form $x_1y_1\ldots x_ty_t$ where each $x_i$ is a percept and
         each $y_i$ is an action.
         \item
@@ -137,9 +137,10 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         we mean the set of all sequences of the form $s\frown p$ where
         $s\in (\mathcal P\mathcal A)^*$, $p\in\mathcal P$
         ($\frown$ denotes concatenation).
-        So elements of $(\mathcal P\mathcal A)^* \mathcal P$
-        of length at least $5$ have the form
-        $x_1y_1\ldots x_{t-1}y_{t-1}x_t$.
+        Elements of $(\mathcal P\mathcal A)^* \mathcal P$
+        of length $>1$ have the form
+        $x_1y_1\ldots x_{t-1}y_{t-1}x_t$
+        (each $x_i$ a percept, each $y_i$ an action).
         \item
         By an \emph{agent}, we mean a function $\pi$
         with domain $(\mathcal P\mathcal A)^* \mathcal P$,
@@ -170,21 +171,22 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         If $\pi$ is an agent, $\mu$ is an environment, and $t\in\mathbb N$,
         we write $V^\pi_{\mu,t}$ for the expected value of the sum of
         the rewards which would occur in the sequence
-        $(p_0,a_0,\ldots,p_t,a_t)$ randomly generated as follows:
+        $x_1y_1\ldots x_{t+1}y_{t+1}$
+        randomly generated as follows:
         \begin{enumerate}
-            \item $p_0\in \mathcal P$ is chosen randomly based
+            \item $x_1\in \mathcal P$ is chosen randomly based
             on the probability measure $\mu(\bullet|\langle\rangle)$.
-            \item $a_0\in\mathcal A$ is chosen randomly based on the probability
-            measure $\pi(\bullet|p_0)$.
+            \item $y_1\in\mathcal A$ is chosen randomly based on the probability
+            measure $\pi(\bullet|x_1)$.
             \item
-            For each $i>0$,
-            $p_i\in\mathcal P$ is chosen randomly based on
+            For each $i>1$,
+            $x_i\in\mathcal P$ is chosen randomly based on
             the probability measure
-            $\mu(\bullet|p_0,a_0,\ldots,p_{i-1},a_{i-1})$.
+            $\mu(\bullet|x_1y_1\ldots x_{i-1}y_{i-1})$.
             \item
-            For each $i>0$,
-            $a_i\in\mathcal A$ is chosen randomly based on the probability measure
-            $\pi(\bullet|p_0,a_0,\ldots,p_{i-1},a_{i-1},p_i)$.
+            For each $i>1$,
+            $y_i\in\mathcal A$ is chosen randomly based on the probability measure
+            $\pi(\bullet|x_1y_1\ldots x_{i-1}y_{i-1}x_i)$.
         \end{enumerate}
         \item
         If $\pi$ is an agent and $\mu$ is an environment,
@@ -231,7 +233,7 @@ and lemmas.
 \begin{definition}
     By $\mathcal H$ we mean
     $((\mathcal P\mathcal A)^*)\cup((\mathcal P\mathcal A)^*\mathcal P)$.
-    We refer to elements of $\mathcal H$ as \emph{histories} (a history
+    We refer to elements $h$ of $\mathcal H$ as \emph{histories} (a history
     may terminate with either a percept or an action).
 \end{definition}
 
@@ -245,14 +247,15 @@ and lemmas.
             \item
             If $h=\langle\rangle$ then $\pi_*(h)=1$.
             \item
-            If $h=h_0\frown p$ for some $p\in\mathcal P$ then $\pi_*(h)=\pi_*(h_0)$.
+            If $h=g\frown p$ for some $p\in\mathcal P$ then $\pi_*(h)=\pi_*(g)$.
             \item
-            If $h=h_0\frown a$ for some $a\in\mathcal A$ then $\pi_*(h)=\pi_*(h_0)\pi(a|h_0)$.
+            If $h=g\frown a$ for some $a\in\mathcal A$ then $\pi_*(h)=\pi_*(g)\pi(a|g)$.
         \end{itemize}
         The intended intuition is that $\pi_*(h)$ can be thought of as the
         conditional probability that when $\pi$
         and any environment
-        $\mu$ interact, the interaction will begin with $h$, \emph{assuming}
+        $\mu$ interact, the interaction will begin with initial segment
+        $h$, \emph{assuming}
         that $\mu$ produces the percepts in $h$.
         \item
         For every environment $\mu$, for every $h\in\mathcal H$, we define a real number
@@ -261,13 +264,13 @@ and lemmas.
             \item
             If $h=\langle\rangle$ then $\mu_*(h)=1$.
             \item
-            If $h=h_0\frown p$ for some $p\in\mathcal P$ then $\mu_*(h)=\mu_*(h_0)\mu(p|h_0)$.
+            If $h=g\frown p$ for some $p\in\mathcal P$ then $\mu_*(h)=\mu_*(g)\mu(p|g)$.
             \item
-            If $s=h_0\frown a$ for some $a\in\mathcal A$ then $\mu_*(h)=\mu_*(h_0)$.
+            If $s=g\frown a$ for some $a\in\mathcal A$ then $\mu_*(h)=\mu_*(g)$.
         \end{itemize}
         The intended intuition is that $\mu_*(h)$ can be thought of as the
         conditional probability that when any agent $\pi$ and $\mu$ interact,
-        the interaction will begin with $h$, \emph{assuming} that
+        the interaction will begin with initial segment $h$, \emph{assuming} that
         $\pi$ produces the actions in $h$.
         \item
         For every agent $\pi$, environment $\mu$, and $h\in\mathcal H$, we define a
@@ -276,15 +279,15 @@ and lemmas.
             \item
             If $h=\langle\rangle$ then $(\pi,\mu)_*(h)=1$.
             \item
-            If $h=h_0\frown p$ for some $p\in\mathcal P$ then
-            $(\pi,\mu)_*(h)=(\pi,\mu)_*(h_0)\mu(p|h_0)$.
+            If $h=g\frown p$ for some $p\in\mathcal P$ then
+            $(\pi,\mu)_*(h)=(\pi,\mu)_*(g)\mu(p|g)$.
             \item
-            If $h=h_0\frown a$ for some $a\in\mathcal A$ then
-            $(\pi,\mu)_*(h)=(\pi,\mu)_*(h_0)\pi(a|h_0)$.
+            If $h=g\frown a$ for some $a\in\mathcal A$ then
+            $(\pi,\mu)_*(h)=(\pi,\mu)_*(g)\pi(a|g)$.
         \end{itemize}
         The intended intuition is that $(\pi,\mu)_*(h)$ can be thought of as
         the probability that when $\pi$ and $\mu$ interact, the interaction
-        will begin with $h$.
+        will begin with initial segment $h$.
     \end{enumerate}
 \end{definition}
 
@@ -304,31 +307,32 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
 
     Case 1: $h=\langle\rangle$. Then the lemma is trivial.
 
-    Case 2: $h=h_0\frown p$ for some $p\in\mathcal P$.
+    Case 2: $h=g\frown p$ for some $p\in\mathcal P$.
         Then
         \begin{align*}
             (\pi,\mu)_*(h)
-                &= (\pi,\mu)_*(h_0)\mu(p|h_0)
+                &= (\pi,\mu)_*(g)\mu(p|g)
                     &\mbox{(Definition \ref{pullbackdef} part 3)}\\
-                &= \pi_*(h_0)\mu_*(h_0)\mu(p|h_0)
+                &= \pi_*(g)\mu_*(g)\mu(p|g)
                     &\mbox{(Induction)}
-                &= \pi_*(h)\mu_*(h_0)\mu(p|h_0)
+                &= \pi_*(h)\mu_*(g)\mu(p|g)
                     &\mbox{(Definition \ref{pullbackdef} part 1)}\\
                 &= \pi_*(h)\mu_*(h).
                     &\mbox{(Definition \ref{pullbackdef} part 2)}
         \end{align*}
 
-    Case 3: $h=h_0\frown p$ for some $p\in\mathcal P$.
+    Case 3: $h=g\frown p$ for some $p\in\mathcal P$.
         Similar to Case 2.
 \end{proof}
 
 \begin{lemma}
 \label{basicprobabilitylemma}
-    $V^\pi_{\mu,n}=\sum_{s\in S_n}(\pi,\mu)_*(s)r(s),$
-    where $S_n$ is the set of all $s\in\mathcal H$
-    of length $2(n+1)$ (i.e., all $s\in\mathcal H$ of the form
-    $(p_0,a_0,\ldots,p_n,a_n)$ as in Part 5 of Definition \ref{omnibusdefn}),
-    and $r(s)$ is the total reward in $s$.
+    $V^\pi_{\mu,t}=\sum_{h\in H_t}(\pi,\mu)_*(h)r(h),$
+    where $H_t$ is the set of all $h\in\mathcal H$
+    of length $2(t+1)$ (i.e., all $h\in\mathcal H$ of the form
+    $x_1y_1\ldots x_{t+1}y_{t+1}$)
+    as in Part 5 of Definition \ref{omnibusdefn}),
+    and $r(h)$ is the total reward in $h$.
 \end{lemma}
 
 \begin{proof}
@@ -337,12 +341,12 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
 
 \begin{definition}
     If $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents, $\mu$ is an environment,
-    $s\in\mathcal H$, $m\in\mathbb N$, and $\Upsilon$ is a weighted
+    $h\in\mathcal H$, $t\in\mathbb N$, and $\Upsilon$ is a weighted
     performance averager, then we define:
     \begin{itemize}
-        \item $\vec\pi_*(s)=(\pi^1_*(s),\ldots,\pi^n_*(s))$.
-        \item $(\vec\pi,\mu)_*(s)=((\pi^1,\mu)_*(s),\ldots,(\pi^n,\mu)_*(s))$.
-        \item $V^{\vec\pi}_{\mu,m}=(V^{\pi^1}_{\mu,m},\ldots,V^{\pi^n}_{\mu,m})$.
+        \item $\vec\pi_*(h)=(\pi^1_*(h),\ldots,\pi^n_*(h))$.
+        \item $(\vec\pi,\mu)_*(h)=((\pi^1,\mu)_*(h),\ldots,(\pi^n,\mu)_*(h))$.
+        \item $V^{\vec\pi}_{\mu,t}=(V^{\pi^1}_{\mu,t},\ldots,V^{\pi^n}_{\mu,t})$.
         \item If each $V^{\pi^i}_\mu$ converges, we say $V^{\vec\pi}_\mu$
             converges, and define $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$.
         \item $\Upsilon(\vec\pi)=(\Upsilon(\pi^1),\ldots,\Upsilon(\pi^n))$.
@@ -361,33 +365,37 @@ Now we are ready to define mixture agents.
     (Mixture agents)
     Suppose $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
     are positive real numbers with $w_1+\cdots+w_n=1$.
-    Define the \emph{mixture agent}
-    $\vec w\cdot\vec\pi$ by:
+    Define the \emph{mixture agent} as follows: for all
+    $h\in (\mathcal P\mathcal A)^*\mathcal P$, let
     \[
-        (\vec w\cdot\vec\pi)(a|s)
+        (\vec w\cdot\vec\pi)(a|h)
         =
         \begin{cases}
-            \dfrac{\vec w\cdot (\vec\pi_*(s\frown a))}{\vec w\cdot (\vec\pi_*(s))}
-            &\mbox{if $\vec w\cdot (\vec\pi_*(s))\not=0$,}\\
+            \dfrac{\vec w\cdot \vec\pi_*(h\frown a)}{\vec w\cdot \vec\pi_*(h)}
+            &\mbox{if $\vec w\cdot \vec\pi_*(h)\not=0$,}\\
             1/|\mathcal{A}| &\mbox{otherwise}
         \end{cases}
     \]
-    (see Remark \ref{ambiguityremark} below).
+    where
+    $\vec w\cdot \vec\pi_*(h)$ denotes $\vec w\cdot (\vec\pi_*(h))$
+    and
+    $\vec w\cdot\vec\pi_*(h\frown a)$ denotes
+    $\vec w\cdot(\vec\pi_*(h\frown a))$.
 \end{definition}
 
 \begin{remark}
 \label{ambiguityremark}
-    Theorem \ref{maintheorem} below will allow us to unimbiguously
-    rewrite Definition \ref{maindefn} as
-    \[
-        (\vec w\cdot\vec\pi)(a|s)
-        =
-        \begin{cases}
-            \dfrac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot \vec\pi_*(s)}
-            &\mbox{if $\vec w\cdot \vec\pi_*(s)\not=0$,}\\
-            1/|\mathcal{A}| &\mbox{otherwise.}
-        \end{cases}
-    \]
+    In Definition \ref{maindefn},
+    the expression $\vec w\cdot \vec\pi_*(h)$ would have been inherently
+    ambiguous if we had not specified that it denotes
+    the vector dot-product $\vec w\cdot (\vec\pi_*(h))$.
+    For, otherwise, it could just as well denote
+    $(\vec w\cdot \vec\pi)_*(h)$. Similar for the expression
+    $\vec w\cdot \vec\pi_*(h\frown a)$.
+    In Theorem \ref{maintheorem} below, we will see that in fact
+    the two readings end up being equivalent
+    (but the latter reading would not have been appropriate
+    in Definition \ref{maindefn} as it would make the definition circular).
 \end{remark}
 
 \begin{lemma}
@@ -396,36 +404,37 @@ Now we are ready to define mixture agents.
 \end{lemma}
 
 \begin{proof}
-    We must show
-    $\sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|s)=1$ for every
-    $s\in(\mathcal P\mathcal A)^*\mathcal P$. Fix some such $s$.
+    Let $h\in(\mathcal P\mathcal A)^*\mathcal P$.
+    Clearly $(\vec w\cdot\vec\pi)(a|h)\geq 0$ for all $a\in\mathcal A$.
+    It remains to show
+    $\sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)=1$.
 
-    Case 1: $\vec w\cdot (\vec\pi_*(s))=0$. Then
-    each $(\vec w\cdot\vec\pi)(a|s)=1/|\mathcal A|$ so the
+    Case 1: $\vec w\cdot (\vec\pi_*(h))=0$. Then
+    each $(\vec w\cdot\vec\pi)(a|h)=1/|\mathcal A|$ so the
     claim is immediate.
 
-    Case 2: $\vec w\cdot (\vec\pi_*(s))\not=0$. Then
+    Case 2: $\vec w\cdot (\vec\pi_*(h))\not=0$. Then
     \begin{align*}
-        &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|s)\\
+        &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)\\
             &= \sum_{a\in\mathcal A}
-                \frac{\vec w\cdot (\vec\pi_*(s\frown a))}{\vec w\cdot (\vec\pi_*(s))}
+                \frac{\vec w\cdot (\vec\pi_*(h\frown a))}{\vec w\cdot (\vec\pi_*(h))}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
                 \frac
-                {w_1\pi^1_*(s)\pi^1(a|s)+\cdots+w_n\pi^n_*(s)\pi^n(a|s)}
-                {\vec w\cdot(\vec\pi_*(s))}
+                {w_1\pi^1_*(h)\pi^1(a|h)+\cdots+w_n\pi^n_*(h)\pi^n(a|h)}
+                {\vec w\cdot(\vec\pi_*(h))}
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \frac{
-                w_1\pi^1_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|s)$}\right)
+                w_1\pi^1_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|h)$}\right)
                 +\cdots+
-                w_n\pi^n_*(s)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|s)$}\right)
+                w_n\pi^n_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|h)$}\right)
                 }
-                {\vec w\cdot (\vec\pi_*(s))}
+                {\vec w\cdot (\vec\pi_*(h))}
                 &\mbox{(Algebra)}\\
             &= \frac
-                {w_1\pi^1_*(s)\cdot 1 + \cdots + w_n\pi^n_*(s)\cdot1}
-                {\vec w\cdot (\vec\pi_*(s))}
-                =\frac{\vec w\cdot (\vec\pi_*(s))}{\vec w\cdot (\vec\pi_*(s))}=1.
+                {w_1\pi^1_*(h)\cdot 1 + \cdots + w_n\pi^n_*(h)\cdot1}
+                {\vec w\cdot (\vec\pi_*(h))}
+                =\frac{\vec w\cdot (\vec\pi_*(h))}{\vec w\cdot (\vec\pi_*(h))}=1.
                 &\mbox{($\pi^i$ are agents)}
     \end{align*}
 \end{proof}
@@ -439,14 +448,14 @@ Now we are ready to define mixture agents.
     Then:
     \begin{enumerate}
         \item
-        For any $s\in\mathcal H$,
-        $(\vec w\cdot\vec\pi)_*(s)=\vec w\cdot(\vec\pi_*(s))$.
+        For any $h\in\mathcal H$,
+        $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot(\vec\pi_*(h))$.
         \item
-        For any $s\in\mathcal H$,
-        $(\vec w\cdot \vec\pi,\mu)_*(s)=\vec w\cdot(\vec\pi,\mu)_*(s)$.
+        For any $h\in\mathcal H$,
+        $(\vec w\cdot \vec\pi,\mu)_*(h)=\vec w\cdot(\vec\pi,\mu)_*(h)$.
         \item
-        For any $m\in\mathbb N$,
-        $V^{\vec w\cdot \vec\pi}_{\mu,m}=\vec w\cdot V^{\vec\pi}_{\mu,m}$.
+        For any $t\in\mathbb N$,
+        $V^{\vec w\cdot \vec\pi}_{\mu,t}=\vec w\cdot V^{\vec\pi}_{\mu,t}$.
         \item
         (``The expected reward of a weighted mixture is the weighted
         average of the expected rewards'')
@@ -461,65 +470,65 @@ Now we are ready to define mixture agents.
 \end{theorem}
 
 \begin{proof}
-    (1) By induction on $s$.
+    (1) By induction on $h$.
 
-    Case 1: $s=\langle\rangle$. Then
-    $(\vec w\cdot\vec\pi)_*(s)=1=w_1\cdot 1+\cdots+w_n\cdot 1
-    =\vec w\cdot (\vec\pi_*(s))$.
+    Case 1: $h=\langle\rangle$. Then
+    $(\vec w\cdot\vec\pi)_*(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
+    =\vec w\cdot (\vec\pi_*(h))$.
 
-    Case 2: $s=t\frown p$ for some percept $p$. Then
+    Case 2: $h=g\frown p$ for some $p\in\mathcal P$. Then
     \begin{align*}
-        (\vec w\cdot \vec\pi)_*(s)
-            &= (\vec w\cdot\vec\pi)_*(t)
+        (\vec w\cdot \vec\pi)_*(h)
+            &= (\vec w\cdot\vec\pi)_*(g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi_*(t))
+            &= \vec w\cdot(\vec\pi_*(g))
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(t\frown p))
+            &= \vec w\cdot(\vec\pi_*(g\frown p))
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi_*(s)).
+            &= \vec w\cdot(\vec\pi_*(h)).
     \end{align*}
 
-    Case 3: $s=t\frown a$ for some action $a$.
+    Case 3: $h=g\frown a$ for some $a\in\mathcal A$.
 
-    Subcase 3.1: $(\vec w\cdot \vec\pi)_*(t)=0$.
-        By induction $\vec w\cdot(\vec\pi_*(t))=0$.
+    Subcase 3.1: $(\vec w\cdot \vec\pi)_*(g)=0$.
+        By induction $\vec w\cdot(\vec\pi_*(g))=0$.
         Since the $w_i$ are positive, this implies
-        each $\pi^i_*(t)=0$.
+        each $\pi^i_*(g)=0$.
         Thus each
         \begin{align*}
-            w_i\pi^i_*(t\frown a)
-                &= w_i\pi^i_*(t)\pi^i(a|t)
+            w_i\pi^i_*(g\frown a)
+                &= w_i\pi^i_*(g)\pi^i(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-                &= 0w_i\pi^i(a|t)=0,
+                &= 0w_i\pi^i(a|g)=0,
         \end{align*}
-        i.e., $\vec w\cdot(\vec\pi_*(t\frown a))=0$.
+        i.e., $\vec w\cdot(\vec\pi_*(g\frown a))=0$.
         And
         \begin{align*}
-            (\vec w\cdot\vec\pi)_*(t\frown a)
-                &= (\vec w\cdot\vec\pi)_*(t)(\vec w\cdot\vec\pi)(a|t)
+            (\vec w\cdot\vec\pi)_*(g\frown a)
+                &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-                &= 0(\vec w\cdot\vec\pi)(a|t) = 0,
+                &= 0(\vec w\cdot\vec\pi)(a|g) = 0,
         \end{align*}
-        so $(\vec w\cdot\vec\pi)_*(s)=\vec w\cdot(\vec \pi_*(s))=0$.
+        so $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot(\vec \pi_*(h))=0$.
 
-    Subcase 3.2: $\vec w\cdot (\vec\pi_*(t))\not=0$. Then
+    Subcase 3.2: $\vec w\cdot (\vec\pi_*(g))\not=0$. Then
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(s)
-            &= (\vec w\cdot\vec\pi)_*(t)(\vec w\cdot\vec\pi)(a|t)
+        (\vec w\cdot\vec\pi)_*(h)
+            &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(t)
+            &= (\vec w\cdot\vec\pi)_*(g)
                 \frac
-                {\vec w\cdot(\vec\pi_*(t\frown a))}
-                {\vec w\cdot(\vec\pi_*(t))}
+                {\vec w\cdot(\vec\pi_*(g\frown a))}
+                {\vec w\cdot(\vec\pi_*(g))}
                 &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot(\vec\pi_*(t))
+            &= \vec w\cdot(\vec\pi_*(g))
                 \frac
-                {\vec w\cdot(\vec\pi_*(t\frown a))}
-                {\vec w\cdot(\vec\pi_*(t))}
+                {\vec w\cdot(\vec\pi_*(g\frown a))}
+                {\vec w\cdot(\vec\pi_*(g))}
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(t\frown a))
+            &= \vec w\cdot(\vec\pi_*(g\frown a))
                 &\mbox{(Basic Algebra)}\\
-            &= \vec w\cdot(\vec\pi_*(s)).
+            &= \vec w\cdot(\vec\pi_*(h)).
     \end{align*}
     as desired.
 
@@ -533,8 +542,8 @@ Now we are ready to define mixture agents.
 \end{proof}
 
 By part 1 of Theorem \ref{maintheorem},
-we may unambiguously write $\vec w\cdot \vec\pi_*(s)$
-for either $(\vec w\cdot\vec\pi)_*(s)$ or $\vec w\cdot(\vec\pi_*(s))$.
+we may unambiguously write $\vec w\cdot \vec\pi_*(h)$
+for either $(\vec w\cdot\vec\pi)_*(h)$ or $\vec w\cdot(\vec\pi_*(h))$.
 We will freely do so for the remainder of the paper.
 
 \section{Duality and Janus agents:
@@ -545,23 +554,23 @@ Strengthening and formalizing a result of Alexander and Hutter}
 (Dual Agents and Dual Environments)
 \begin{enumerate}
     \item
-    For each $s\in\mathcal H$, let $\overline s$ be the sequence obtained
-    by replacing every percept $(o,r)$ in $s$ by $(o,-r)$ (in other words:
-    replacing every reward $r$ in $s$ by $-r$).
+    For each $h\in\mathcal H$, let $\overline h$ be the sequence obtained
+    by replacing every percept $(o,r)$ in $h$ by $(o,-r)$ (in other words:
+    replacing every reward $r$ in $h$ by $-r$).
     \item
     Suppose $\pi$ is an agent.
     We define a new agent $\overline \pi$, the \emph{dual} of $\pi$,
     as follows:
-    for each $s\in (\mathcal P\mathcal A)^*\mathcal P$,
+    for each $h\in (\mathcal P\mathcal A)^*\mathcal P$,
     for each action $a\in\mathcal A$,
-    \[\overline\pi(a|s)=\pi(a|\overline s).\]
+    \[\overline\pi(a|h)=\pi(a|\overline h).\]
     \item
     Suppose $\mu$ is an environment.
     We define a new environment $\overline\mu$, the \emph{dual} of $\mu$,
     as follows:
-    for each $s\in (\mathcal P\mathcal A)^*$,
+    for each $h\in (\mathcal P\mathcal A)^*$,
     for each $(o,r)\in\mathcal P$,
-    \[\overline\mu(o,r|s)=\mu(o,-r|\overline s).\]
+    \[\overline\mu(o,r|h)=\mu(o,-r|\overline h).\]
 \end{enumerate}
 \end{definition}
 
@@ -572,7 +581,7 @@ Strengthening and formalizing a result of Alexander and Hutter}
 \end{lemma}
 
 \begin{proof}
-    Follow from the fact that $--r=r$ for all real $r$.
+    By the fact that $--r=r$ for all real $r$.
 \end{proof}
 
 \begin{lemma}
@@ -582,10 +591,10 @@ Strengthening and formalizing a result of Alexander and Hutter}
 \end{lemma}
 
 \begin{proof}
-    By induction.
+    By induction on $h$.
 \end{proof}
 
-The following class of agents are named after Janus, the mythological
+The following class of agents is named after Janus, the mythological
 Roman god of duality. In the myth, Janus has two faces, one facing
 forward, the other facing backward. Thus in some sense, flipping Janus
 around by $180^\circ$ would not change him.
@@ -606,10 +615,10 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     If $\pi$ and $\rho$ are agents, we say $\pi\equiv\rho$ if the
     following conditions hold:
     \begin{enumerate}
-        \item For all $s\in\mathcal H$, $\pi_*(s)=0$ iff $\rho_*(s)=0$.
-        \item For all $s\in(\mathcal P\mathcal A)^*\mathcal P$,
-            if $\pi_*(s)\not=0$ then for all $a\in\mathcal A$,
-            $\pi(a|s)=\rho(a|s)$.
+        \item For all $h\in\mathcal H$, $\pi_*(h)=0$ iff $\rho_*(h)=0$.
+        \item For all $h\in(\mathcal P\mathcal A)^*\mathcal P$,
+            if $\pi_*(h)\not=0$ then for all $a\in\mathcal A$,
+            $\pi(a|h)=\rho(a|h)$.
     \end{enumerate}
 \end{definition}
 
@@ -634,70 +643,70 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 \begin{proof}
     Write $\vec\pi$ for $(\pi,\ldots,\pi)$.
     We prove conditions 1 and 2 of Definition \ref{equivdefn}
-    simultaneously by induction on $s$.
+    simultaneously by induction on $h$.
  
-    Case 1: $s=\langle\rangle$. Then
-    $\pi_*(s)=\vec w\cdot\vec\pi_*(s)=1$, so
-    vacuously $\pi_*(s)=0$ iff $\vec w\cdot\vec\pi_*(s)=0$
+    Case 1: $h=\langle\rangle$. Then
+    $\pi_*(h)=\vec w\cdot\vec\pi_*(h)=1\not=0$, so
+    vacuously $\pi_*(h)=0$ iff $\vec w\cdot\vec\pi_*(h)=0$
     (proving condition 1).
     For condition 2, there is nothing to check, since
     $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
 
-    Case 2: $s=s_0\frown a_0$ for some
-        $s_0\in(\mathcal P\mathcal A)^*\mathcal P$, $a_0\in\mathcal A$.
+    Case 2: $h=h_0\frown a_0$ for some
+        $h_0\in(\mathcal P\mathcal A)^*\mathcal P$, $a_0\in\mathcal A$.
         For condition 2, there is nothing to prove, since
-        $s\not\in(\mathcal P\mathcal A)^*\mathcal P$.
+        $h\not\in(\mathcal P\mathcal A)^*\mathcal P$.
         For condition 1, we consider two cases.
 
-        Subcase 2.1: $\pi_*(s_0)=0$.
-        By induction, condition 1 holds for $s_0$, so
-        $\vec w\cdot\vec\pi_*(s_0)=0$.
+        Subcase 2.1: $\pi_*(h_0)=0$.
+        By induction, condition 1 holds for $h_0$, so
+        $\vec w\cdot\vec\pi_*(h_0)=0$.
         By Definition \ref{pullbackdef},
-        $\pi_*(s)=0\pi(a_0|s_0)=0$
-        and $(\vec w\cdot\vec\pi)(s)=0(\vec w\cdot\vec\pi)(a_0|s_0)=0$.
-        So $\pi_*(s)=0$ iff $(\vec w\cdot\vec\pi)_*(s)=0$.
+        $\pi_*(h)=0\pi(a_0|h_0)=0$
+        and $(\vec w\cdot\vec\pi)_*(h)=0(\vec w\cdot\vec\pi)(a_0|h_0)=0$.
+        So $\pi_*(h)=0$ iff $(\vec w\cdot\vec\pi)_*(h)=0$.
 
-        Subcase 2.2: $\pi_*(s_0)\not=0$.
+        Subcase 2.2: $\pi_*(h_0)\not=0$.
         Then
         \begin{align*}
-            (\vec w\cdot \vec\pi)_*(s)
-                &= \vec w\cdot\vec\pi_*(s)
+            (\vec w\cdot \vec\pi)_*(h)
+                &= \vec w\cdot(\vec\pi_*(h))
                     &\mbox{(Theorem \ref{maintheorem})}\\
-                &= (w_1\pi_*(s)+\cdots+w_n\pi_*(s))
+                &= (w_1\pi_*(h)+\cdots+w_n\pi_*(h))
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \pi_*(s)
+                &= \pi_*(h)
                     &\mbox{($w_1+\cdots+w_n=1$)}\\
-                &= \pi_*(s_0)\pi(a_0|s_0).
+                &= \pi_*(h_0)\pi(a_0|h_0).
                     &\mbox{(Definition \ref{pullbackdef})}
         \end{align*}
-        Since $\pi_*(s_0)\not=0$, and since $\mathbb R$ has the zero-product property,
+        Since $\pi_*(h_0)\not=0$, and since $\mathbb R$ has the zero-product property,
         it follows that
-        $(\vec w\cdot\vec\pi)_*(s)=0$ iff $\pi_*(s)=0$ iff $\pi(a_0|s_0)=0$.
+        $(\vec w\cdot\vec\pi)_*(h)=0$ iff $\pi_*(h)=0$ iff $\pi(a_0|h_0)=0$.
 
-    Case 3: $s=s_0\frown p$ for some $s_0\in (\mathcal P\mathcal A)^*$,
+    Case 3: $h=h_0\frown p$ for some $h_0\in (\mathcal P\mathcal A)^*$,
         $p\in\mathcal P$.
-        By induction, conditions 1 and 2 hold for $s_0$.
+        By induction, conditions 1 and 2 hold for $h_0$.
         By Definition \ref{pullbackdef},
-        $\pi_*(s)=\pi_*(s_0)$ and $(\vec w\cdot\vec\pi)_*(s)=(\vec w\cdot\vec\pi)_*(s_0)$,
-        so condition 1 for $s$ follows.
+        $\pi_*(h)=\pi_*(h_0)$ and $(\vec w\cdot\vec\pi)_*(h)=(\vec w\cdot\vec\pi)_*(h_0)$,
+        so condition 1 for $h$ follows.
 
         For condition 2,
-        assume $\pi_*(s)\not=0$ and let $a$ be any action.
+        assume $\pi_*(h)\not=0$ and let $a\in\mathcal A$.
         By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot\vec\pi_*(s)=w_1\pi_*(s)+\cdots+w_n\pi_*(s)=\pi_*(s)$.
-        So, since $\pi_*(s)\not=0$, $\vec w\cdot\vec\pi_*(s)\not=0$.
+        $\vec w\cdot\vec\pi_*(s)=w_1\pi_*(h)+\cdots+w_n\pi_*(h)=\pi_*(h)$.
+        So, since $\pi_*(h)\not=0$, $\vec w\cdot\vec\pi_*(h)\not=0$.
         Thus
         \begin{align*}
-            (\vec w\cdot\vec\pi)(a|s)
-                &= \frac{\vec w\cdot \vec\pi_*(s\frown a)}{\vec w\cdot\vec\pi_*(s)}
+            (\vec w\cdot\vec\pi)(a|h)
+                &= \frac{\vec w\cdot \vec\pi_*(h\frown a)}{\vec w\cdot\vec\pi_*(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
-                &= \frac{w_1\pi_*(s\frown a)+\cdots+w_n\pi_*(s\frown a)}
-                    {w_1\pi_*(s)+\cdots+w_n\pi_*(s)}
+                &= \frac{w_1\pi_*(h\frown a)+\cdots+w_n\pi_*(h\frown a)}
+                    {w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \frac{w_1\pi_*(s)+\cdots+w_n\pi_*(s)}{w_1\pi_*(s)+\cdots+w_n\pi_*(s)}
-                    \pi(a|s)
+                &= \frac{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
+                    \pi(a|h)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-                &= \pi(a|s).
+                &= \pi(a|h).
         \end{align*}
 \end{proof}
 
