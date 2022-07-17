@@ -125,45 +125,52 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
     \begin{enumerate}
         \item
         By $(\mathcal P\mathcal A)^*$ we mean the set of
-        all finite sequences starting with a percept, ending with an action,
+        all finite sequences
+        starting with a percept, ending with an action,
         and following the pattern ``percept, action, ...''.
-        We include $\langle\rangle$ in this set.
+        We also include $\langle\rangle$ in $(\mathcal P\mathcal A)^*$.
+        So elements of $(\mathcal P\mathcal A)^*$ of length at least $4$ have the
+        form $x_1y_1\ldots x_ty_t$ where each $x_i$ is a percept and
+        each $y_i$ is an action.
         \item
         By $(\mathcal P\mathcal A)^* \mathcal P$
         we mean the set of all sequences of the form $s\frown p$ where
         $s\in (\mathcal P\mathcal A)^*$, $p\in\mathcal P$
         ($\frown$ denotes concatenation).
+        So elements of $(\mathcal P\mathcal A)^* \mathcal P$
+        of length at least $5$ have the form
+        $x_1y_1\ldots x_{t-1}y_{t-1}x_t$.
         \item
         By an \emph{agent}, we mean a function $\pi$
         with domain $(\mathcal P\mathcal A)^* \mathcal P$,
         which assigns to every sequence
-        $s\in (\mathcal P\mathcal A)^* \mathcal P$ a
+        $h\in (\mathcal P\mathcal A)^* \mathcal P$ a
         $\mathbb Q$-valued probability measure,
-        written $\pi(\bullet|s)$, on $\mathcal A$.
-        For every such $s$ and every $a\in\mathcal A$,
-        we write $\pi(a|s)$ for $(\pi(\bullet|s))(a)$.
-        Intuitively, $\pi(a|s)$ is the probability that agent $\pi$
-        will take action $a$ in response to history $s$.
+        written $\pi(\bullet|h)$, on $\mathcal A$.
+        For every such $h$ and every $a\in\mathcal A$,
+        we write $\pi(a|h)$ for $(\pi(\bullet|h))(a)$.
+        Intuitively, $\pi(a|h)$ is the probability that agent $\pi$
+        will take action $a$ in response to history $h$.
         \item
         By an \emph{environment}, we mean a function $\mu$
         with domain $(\mathcal P\mathcal A)^*$,
         which assigns to every
-        $s\in (\mathcal P\mathcal A)^*$
+        $h\in (\mathcal P\mathcal A)^*$
         a $\mathbb Q$-valued probability measure,
-        written $\mu(\bullet|s)$,
+        written $\mu(\bullet|h)$,
         on $\mathcal P$.
         For every such $s$ and every $(o,r)\in\mathcal P$,
-        we write $\mu(o,r|s)$ for $(\mu(\bullet|s))(o,r)$.
-        If $p=(o,r)$ then we may also write $\mu(p|s)$ for
-        $(\mu(\bullet|s))(o,r)$.
-        Intuitively, $\mu(o,r|s)$ is the probability that environment
+        we write $\mu(o,r|h)$ for $(\mu(\bullet|h))(o,r)$.
+        If $p=(o,r)$ then we may also write $\mu(p|h)$ for
+        $(\mu(\bullet|h))(o,r)$.
+        Intuitively, $\mu(o,r|h)$ is the probability that environment
         $\mu$ will issue percept $(o,r)$ (observation $o$ and reward $r$)
-        to the agent in response to history $s$.
+        to the agent in response to history $h$.
         \item
-        If $\pi$ is an agent, $\mu$ is an environment, and $n\in\mathbb N$,
-        we write $V^\pi_{\mu,n}$ for the expected value of the sum of
+        If $\pi$ is an agent, $\mu$ is an environment, and $t\in\mathbb N$,
+        we write $V^\pi_{\mu,t}$ for the expected value of the sum of
         the rewards which would occur in the sequence
-        $(p_0,a_0,\ldots,p_n,a_n)$ randomly generated as follows:
+        $(p_0,a_0,\ldots,p_t,a_t)$ randomly generated as follows:
         \begin{enumerate}
             \item $p_0\in \mathcal P$ is chosen randomly based
             on the probability measure $\mu(\bullet|\langle\rangle)$.
@@ -181,7 +188,7 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         \end{enumerate}
         \item
         If $\pi$ is an agent and $\mu$ is an environment,
-        let $V^\pi_\mu=\lim_{n\to\infty}V^{\pi}_{\mu,n}$.
+        let $V^\pi_\mu=\lim_{t\to\infty}V^{\pi}_{\mu,t}$.
         Intuitively, $V^\pi_\mu$ is the expected total reward which $\pi$ would extract
         from $\mu$.
     \end{enumerate}
@@ -189,7 +196,7 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
 
 Note that it is possible for $V^\pi_\mu$ to be undefined.
 For example, if $\mu$ is an environment which always issues
-reward $(-1)^n$ in response to the agent's $n$th action,
+reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
 then $V^\pi_\mu$ is undefined for every agent $\pi$.
 This would not be the case if rewards were required to be $\geq 0$,
 so this is one way in which allowing
@@ -230,53 +237,59 @@ and lemmas.
 
 \begin{definition}
 \label{pullbackdef}
-    Let $\pi$ be an agent. Let $\mu$ be an environment. Let $s\in\mathcal H$.
     \begin{enumerate}
         \item
-        The \emph{probability of $s$ according to $\pi$}, written
-        $\pi_*(s)$, is defined by induction as follows.
+        For every agent $\pi$, for every $h\in\mathcal H$, we define a real number
+        $\pi_*(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $s=\langle\rangle$ then $\pi_*(s)=1$.
+            If $h=\langle\rangle$ then $\pi_*(h)=1$.
             \item
-            If $s=t\frown p$ for some $p\in\mathcal P$ then $\pi_*(s)=\pi_*(t)$.
+            If $h=h_0\frown p$ for some $p\in\mathcal P$ then $\pi_*(h)=\pi_*(h_0)$.
             \item
-            If $s=t\frown a$ for some $a\in\mathcal A$ then $\pi_*(s)=\pi_*(t)\pi(a|t)$.
+            If $h=h_0\frown a$ for some $a\in\mathcal A$ then $\pi_*(h)=\pi_*(h_0)\pi(a|h_0)$.
         \end{itemize}
-        Informally, $\pi_*(s)$ is the conditional probability that when $\pi$
-        and $\mu$ interact, the interaction begins with $s$, assuming
-        that $\mu$ produces the percepts in $s$.
+        The intended intuition is that $\pi_*(h)$ can be thought of as the
+        conditional probability that when $\pi$
+        and any environment
+        $\mu$ interact, the interaction will begin with $h$, \emph{assuming}
+        that $\mu$ produces the percepts in $h$.
         \item
-        The \emph{probability of $s$ according to $\mu$}, written
-        $\mu_*(s)$, is defined by induction as follows.
+        For every environment $\mu$, for every $h\in\mathcal H$, we define a real number
+        $\mu_*(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $s=\langle\rangle$ then $\mu_*(s)=1$.
+            If $h=\langle\rangle$ then $\mu_*(h)=1$.
             \item
-            If $s=t\frown p$ for some $p\in\mathcal P$ then $\mu_*(s)=\mu_*(t)\mu(p|t)$.
+            If $h=h_0\frown p$ for some $p\in\mathcal P$ then $\mu_*(h)=\mu_*(h_0)\mu(p|h_0)$.
             \item
-            If $s=t\frown a$ for some $a\in\mathcal A$ then $\mu_*(s)=\mu_*(t)$.
+            If $s=h_0\frown a$ for some $a\in\mathcal A$ then $\mu_*(h)=\mu_*(h_0)$.
         \end{itemize}
-        Informally, $\mu_*(s)$ is the conditional probability that when $\pi$
-        and $\mu$ interact, the interaction begins with $s$, assuming
-        that $\pi$ produces the actions in $s$.
+        The intended intuition is that $\mu_*(h)$ can be thought of as the
+        conditional probability that when any agent $\pi$ and $\mu$ interact,
+        the interaction will begin with $h$, \emph{assuming} that
+        $\pi$ produces the actions in $h$.
         \item
-        The \emph{probability of $s$ according to $\pi$ and $\mu$},
-        written $(\pi,\mu)_*(s)$, is defined by induction as follows.
+        For every agent $\pi$, environment $\mu$, and $h\in\mathcal H$, we define a
+        real number $(\pi,\mu)_*(h)\in[0,1]$ by induction as follows.
         \begin{itemize}
             \item
-            If $s=\langle\rangle$ then $(\pi,\mu)_*(s)=1$.
+            If $h=\langle\rangle$ then $(\pi,\mu)_*(h)=1$.
             \item
-            If $s=t\frown p$ for some $p\in\mathcal P$ then
-            $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\mu(p|t)$.
+            If $h=h_0\frown p$ for some $p\in\mathcal P$ then
+            $(\pi,\mu)_*(h)=(\pi,\mu)_*(h_0)\mu(p|h_0)$.
             \item
-            If $s=t\frown a$ for some $a\in\mathcal A$ then
-            $(\pi,\mu)_*(s)=(\pi,\mu)_*(t)\pi(a|t)$.
+            If $h=h_0\frown a$ for some $a\in\mathcal A$ then
+            $(\pi,\mu)_*(h)=(\pi,\mu)_*(h_0)\pi(a|h_0)$.
         \end{itemize}
-        Informally, $(\pi,\mu)_*(s)$ is the probability that when $\pi$ and $\mu$
-        interact, the interaction begins with $s$.
+        The intended intuition is that $(\pi,\mu)_*(h)$ can be thought of as
+        the probability that when $\pi$ and $\mu$ interact, the interaction
+        will begin with $h$.
     \end{enumerate}
 \end{definition}
+
+Some authors, such as \cite{hutter2009discrete}, would write $P(h)$ or a variation thereof
+for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
 
 \begin{lemma}
 \label{factorizationlemma}
@@ -577,7 +590,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         \item For all $s\in\mathcal H$, $\pi_*(s)=0$ iff $\rho_*(s)=0$.
         \item For all $s\in(\mathcal P\mathcal A)^*\mathcal P$,
             if $\pi_*(s)\not=0$ then for all $a\in\mathcal A$,
-            $\pi(a|h)=\rho(a|h)$.
+            $\pi(a|s)=\rho(a|s)$.
     \end{enumerate}
 \end{definition}
 
