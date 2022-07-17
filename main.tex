@@ -293,14 +293,22 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
 
 \begin{lemma}
 \label{factorizationlemma}
-    For all $s$, $\pi$, $\mu$ as in Definition \ref{pullbackdef},
+    For all $h$, $\pi$, $\mu$ as in Definition \ref{pullbackdef},
     \[
-        (\pi,\mu)_*(s) = \pi_*(s)\mu_*(s).
+        (\pi,\mu)_*(h) = \pi_*(h)\mu_*(h).
     \]
 \end{lemma}
 
 \begin{proof}
-    By induction.
+    By induction on $h$.
+
+    Case 1: $h=\langle\rangle$. Then the lemma is trivial.
+
+    Case 2: $h=h_0\frown a$ for some $a\in\mathcal A$.
+        The lemma follows by parts 1 and 3 of Definition \ref{pullbackdef}.
+
+    Case 3: $h=h_0\frown p$ for some $p\in\mathcal P$.
+        The lemma follows by parts 2 and 3 of Definition \ref{pullbackdef}.
 \end{proof}
 
 \begin{lemma}
