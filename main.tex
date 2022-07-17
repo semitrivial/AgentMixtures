@@ -304,11 +304,22 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
 
     Case 1: $h=\langle\rangle$. Then the lemma is trivial.
 
-    Case 2: $h=h_0\frown a$ for some $a\in\mathcal A$.
-        The lemma follows by parts 1 and 3 of Definition \ref{pullbackdef}.
+    Case 2: $h=h_0\frown p$ for some $p\in\mathcal P$.
+        Then
+        \begin{align*}
+            (\pi,\mu)_*(h)
+                &= (\pi,\mu)_*(h_0)\mu(p|h_0)
+                    &\mbox{(Definition \ref{pullbackdef} part 3)}\\
+                &= \pi_*(h_0)\mu_*(h_0)\mu(p|h_0)
+                    &\mbox{(Induction)}
+                &= \pi_*(h)\mu_*(h_0)\mu(p|h_0)
+                    &\mbox{(Definition \ref{pullbackdef} part 1)}\\
+                &= \pi_*(h)\mu_*(h).
+                    &\mbox{(Definition \ref{pullbackdef} part 2)}
+        \end{align*}
 
     Case 3: $h=h_0\frown p$ for some $p\in\mathcal P$.
-        The lemma follows by parts 2 and 3 of Definition \ref{pullbackdef}.
+        Similar to Case 2.
 \end{proof}
 
 \begin{lemma}
