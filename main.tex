@@ -1006,8 +1006,7 @@ for any decomposition of $\pi(\bullet|h)$ into a weighted mixture
 of probability distributions $m_1,\ldots,m_n$,
 $\pi$ has the same intelligence (as measured by any weighted performance
 averager) as the weighted mixture of the corresponding $n$ agents
-$\pi^{h\mapsto m_1},\ldots,\pi^{m\mapsto m_n}$
-obtained from $\pi$ by changing $\pi(\bullet|h)$ to $m_i$.
+$\pi^{h\mapsto \vec m}$.
 
 \begin{proposition}
 \label{longproposition}
@@ -1045,34 +1044,34 @@ obtained from $\pi$ by changing $\pi(\bullet|h)$ to $m_i$.
     Then $\pi_*(g)=1
     =(\vec w\cdot\vec\pi)_*(g)$.
 
-    Case 2: $s=t\frown p$ for some percept $p$.
+    Case 2: $g=f\frown p$ for some $p\in\mathcal P$.
     Then
     \begin{align*}
-        \pi_*(s)
-            &= \pi_*(t)
+        \pi_*(g)
+            &= \pi_*(f)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(t)
+            &= (\vec w\cdot\vec\pi)_*(f)
                 &\mbox{(Induction)}\\
-            &= (\vec w\cdot\vec\pi)_*(s).
+            &= (\vec w\cdot\vec\pi)_*(g).
                 &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
-    Case 3: $s=t\frown a$ for some action $a$.
+    Case 3: $g=f\frown a$ for some $a\in\mathcal A$.
 
-    Subcase 3.1: $\pi_*(t)=0$.
+    Subcase 3.1: $\pi_*(f)=0$.
     Then
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(s)
-            &= (\vec w\cdot\vec\pi)_*(t)
-            (\vec w\cdot\vec\pi)(a|t)
+        (\vec w\cdot\vec\pi)_*(g)
+            &= (\vec w\cdot\vec\pi)_*(f)
+            (\vec w\cdot\vec\pi)(a|f)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(t)(\vec w\cdot\vec\pi)(a|t)
+            &= \pi_*(f)(\vec w\cdot\vec\pi)(a|f)
                 &\mbox{(Induction)}\\
             &= 0,
     \end{align*}
-    and similarly $\pi_*(s)=0$.
+    and similarly $\pi_*(g)=0$.
 
-    Subcase 3.2: $\pi_*(t)\not=0$ and $t=h$.
+    Subcase 3.2: $\pi_*(f)\not=0$ and $f=h$.
 
     We would like to use Definition \ref{maindefn} to rewrite
     $(\vec w\cdot\vec\pi)(a|h)$ but first we must check
@@ -1109,76 +1108,76 @@ obtained from $\pi$ by changing $\pi(\bullet|h)$ to $m_i$.
     \end{align*}
     as desired.
 
-    Subcase 3.3: $\pi_*(t)\not=0$, $t\not=h$, and
-    $t$ has initial segment $h\frown a_0$ for some action $a_0$.
+    Subcase 3.3: $\pi_*(f)\not=0$, $f\not=h$, and
+    $f$ has initial segment $h\frown a_0$ for some action $a_0$.
 
     It follows that $\pi(a_0|h)\not=0$ because otherwise clearly
-    we would have $\pi_*(t)=0$.
+    we would have $\pi_*(f)=0$.
 
     We would like to use Definition \ref{maindefn} to rewrite
-    $(\vec w\cdot\vec\pi)(a|t)$ but first we must
+    $(\vec w\cdot\vec\pi)(a|f)$ but first we must
     check that the appropriate denominator does not vanish. We compute ($**$):
     \begin{align*}
-        \vec w\cdot\vec\pi_*(t)
-            &= \frac{w_1\pi_*(t)m_1(a_0)}{\pi(a_0|h)}
+        \vec w\cdot\vec\pi_*(f)
+            &= \frac{w_1\pi_*(f)m_1(a_0)}{\pi(a_0|h)}
                 + \cdots +
-                \frac{w_n\pi_*(t)m_n(a_0)}{\pi(a_0|h)}
+                \frac{w_n\pi_*(f)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(t)}{\pi(a_0|h)}
+            &= \frac{\pi_*(f)}{\pi(a_0|h)}
                 (w_1m_1(a_0) + \cdots + w_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(t)}{\pi(a_0|h)}\pi(a_0|h)
+            &= \frac{\pi_*(f)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
-            &= \pi_*(t)\not=0.
+            &= \pi_*(f)\not=0.
                     &\mbox{(Basic Algebra)}
     \end{align*}
     Thus
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(s)
-            &= (\vec w\cdot\vec\pi)_*(t)
-                (\vec w\cdot\vec\pi)(a|t)
+        (\vec w\cdot\vec\pi)_*(g)
+            &= (\vec w\cdot\vec\pi)_*(f)
+                (\vec w\cdot\vec\pi)(a|f)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(t)(\vec w\cdot\vec\pi)(a|t)
+            &= \pi_*(f)(\vec w\cdot\vec\pi)(a|f)
                     &\mbox{(Induction)}\\
-            &= \pi_*(t)\frac{\vec w\cdot\vec\pi_*(t\frown a)}
-                {\vec w\cdot\vec\pi_*(t)}
+            &= \pi_*(f)\frac{\vec w\cdot\vec\pi_*(f\frown a)}
+                {\vec w\cdot\vec\pi_*(f)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot\vec\pi_*(t\frown a)
+            &= \vec w\cdot\vec\pi_*(f\frown a)
                     &\mbox{(By $**$)}\\
-            &= w_1\frac{\pi_*(t\frown a)m_1(a_0)}{\pi(a_0|h)}
-                +\cdots+w_n\frac{\pi_*(t\frown a)m_n(a_0)}{\pi(a_0|h)}
+            &= w_1\frac{\pi_*(f\frown a)m_1(a_0)}{\pi(a_0|h)}
+                +\cdots+w_n\frac{\pi_*(f\frown a)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(t\frown a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
+            &= \frac{\pi_*(f\frown a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(t\frown a)}{\pi(a_0|h)}\pi(a_0|h)
+            &= \frac{\pi_*(f\frown a)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
-            &= \pi_*(t\frown a) = \pi_*(s),
+            &= \pi_*(f\frown a) = \pi_*(g),
     \end{align*}
     as desired.
 
-    Subcase 3.4: $\pi_*(t)\not=0$, $t\not=h$, and $t$ has no initial segment
+    Subcase 3.4: $\pi_*(f)\not=0$, $f\not=h$, and $f$ has no initial segment
         of the form $h\frown a_0$.
 
     We would like to use Definition \ref{maindefn} to rewrite
-    $(\vec w\cdot\vec\pi)(a|h)$ but first we must
+    $(\vec w\cdot\vec\pi)(a|f)$ but first we must
     check that the appropriate denominator does not vanish:
     by induction, we have
-    ($***$) $\vec w\cdot\vec\pi_*(t)=\pi_*(t)\not=0$.
+    $\vec w\cdot\vec\pi_*(f)=\pi_*(f)\not=0$.
     Thus
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(t\frown a)
-            &= (\vec w\cdot\vec\pi)_*(t)
-                (\vec w\cdot\vec\pi)(a|t)
+        (\vec w\cdot\vec\pi)_*(f\frown a)
+            &= (\vec w\cdot\vec\pi)_*(f)
+                (\vec w\cdot\vec\pi)(a|f)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(t)\frac{\vec w\cdot\vec\pi_*(t\frown a)}
-                {\vec w\cdot\vec\pi_*(t)}
+            &= (\vec w\cdot\vec\pi)_*(f)\frac{\vec w\cdot\vec\pi_*(f\frown a)}
+                {\vec w\cdot\vec\pi_*(f)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot\vec\pi_*(t\frown a)
-                    &\mbox{(By $***$)}\\
-            &= w_1\pi_*(t\frown a)+\cdots+w_n\pi_*(t\frown a)
+            &= \vec w\cdot\vec\pi_*(f\frown a)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+            &= w_1\pi_*(f\frown a)+\cdots+w_n\pi_*(f\frown a)
                     &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-            &= \pi_*(t\frown a),
-                    &\mbox{($r_1+\cdots+r_n=1$)}
+            &= \pi_*(f\frown a),
+                    &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
     as desired.
 \end{proof}
