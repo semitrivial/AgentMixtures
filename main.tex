@@ -134,9 +134,9 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         each $y_i$ is an action.
         \item
         By $(\mathcal P\mathcal A)^* \mathcal P$
-        we mean the set of all sequences of the form $s\frown p$ where
+        we mean the set of all sequences of the form $s\circ p$ where
         $s\in (\mathcal P\mathcal A)^*$, $p\in\mathcal P$
-        ($\frown$ denotes concatenation).
+        ($\circ$ denotes concatenation).
         Elements of $(\mathcal P\mathcal A)^* \mathcal P$
         of length $>1$ have the form
         $x_1y_1\ldots x_{t-1}y_{t-1}x_t$
@@ -247,9 +247,9 @@ and lemmas.
             \item
             If $h=\langle\rangle$ then $\pi_*(h)=1$.
             \item
-            If $h=g\frown p$ for some $p\in\mathcal P$ then $\pi_*(h)=\pi_*(g)$.
+            If $h=g\circ p$ for some $p\in\mathcal P$ then $\pi_*(h)=\pi_*(g)$.
             \item
-            If $h=g\frown a$ for some $a\in\mathcal A$ then $\pi_*(h)=\pi_*(g)\pi(a|g)$.
+            If $h=g\circ a$ for some $a\in\mathcal A$ then $\pi_*(h)=\pi_*(g)\pi(a|g)$.
         \end{itemize}
         The intended intuition is that $\pi_*(h)$ can be thought of as the
         conditional probability that when $\pi$
@@ -265,9 +265,9 @@ and lemmas.
             \item
             If $h=\langle\rangle$ then $\mu_*(h)=1$.
             \item
-            If $h=g\frown p$ for some $p\in\mathcal P$ then $\mu_*(h)=\mu_*(g)\mu(p|g)$.
+            If $h=g\circ p$ for some $p\in\mathcal P$ then $\mu_*(h)=\mu_*(g)\mu(p|g)$.
             \item
-            If $s=g\frown a$ for some $a\in\mathcal A$ then $\mu_*(h)=\mu_*(g)$.
+            If $s=g\circ a$ for some $a\in\mathcal A$ then $\mu_*(h)=\mu_*(g)$.
         \end{itemize}
         The intended intuition is that $\mu_*(h)$ can be thought of as the
         conditional probability that when any agent $\pi$ and $\mu$ interact,
@@ -281,10 +281,10 @@ and lemmas.
             \item
             If $h=\langle\rangle$ then $(\pi,\mu)_*(h)=1$.
             \item
-            If $h=g\frown p$ for some $p\in\mathcal P$ then
+            If $h=g\circ p$ for some $p\in\mathcal P$ then
             $(\pi,\mu)_*(h)=(\pi,\mu)_*(g)\mu(p|g)$.
             \item
-            If $h=g\frown a$ for some $a\in\mathcal A$ then
+            If $h=g\circ a$ for some $a\in\mathcal A$ then
             $(\pi,\mu)_*(h)=(\pi,\mu)_*(g)\pi(a|g)$.
         \end{itemize}
         The intended intuition is that $(\pi,\mu)_*(h)$ can be thought of as
@@ -309,7 +309,7 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
 
     Case 1: $h=\langle\rangle$. Then the lemma is trivial.
 
-    Case 2: $h=g\frown p$ for some $p\in\mathcal P$.
+    Case 2: $h=g\circ p$ for some $p\in\mathcal P$.
         Then
         \begin{align*}
             (\pi,\mu)_*(h)
@@ -323,7 +323,7 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
                     &\mbox{(Definition \ref{pullbackdef} part 2)}
         \end{align*}
 
-    Case 3: $h=g\frown p$ for some $p\in\mathcal P$.
+    Case 3: $h=g\circ a$ for some $a\in\mathcal A$.
         Similar to Case 2.
 \end{proof}
 
@@ -373,7 +373,7 @@ Now we are ready to define mixture agents.
         (\vec w\cdot\vec\pi)(a|h)
         =
         \begin{cases}
-            \dfrac{\vec w\cdot \vec\pi_*(h\frown a)}{\vec w\cdot \vec\pi_*(h)}
+            \dfrac{\vec w\cdot \vec\pi_*(h\circ a)}{\vec w\cdot \vec\pi_*(h)}
             &\mbox{if $\vec w\cdot \vec\pi_*(h)\not=0$,}\\
             1/|\mathcal{A}| &\mbox{otherwise}
         \end{cases}
@@ -381,8 +381,8 @@ Now we are ready to define mixture agents.
     where
     $\vec w\cdot \vec\pi_*(h)$ denotes $\vec w\cdot (\vec\pi_*(h))$
     and
-    $\vec w\cdot\vec\pi_*(h\frown a)$ denotes
-    $\vec w\cdot(\vec\pi_*(h\frown a))$.
+    $\vec w\cdot\vec\pi_*(h\circ a)$ denotes
+    $\vec w\cdot(\vec\pi_*(h\circ a))$.
 \end{definition}
 
 \begin{remark}
@@ -393,7 +393,7 @@ Now we are ready to define mixture agents.
     the vector dot-product $\vec w\cdot (\vec\pi_*(h))$.
     For, otherwise, it could just as well denote
     $(\vec w\cdot \vec\pi)_*(h)$. Similar for the expression
-    $\vec w\cdot \vec\pi_*(h\frown a)$.
+    $\vec w\cdot \vec\pi_*(h\circ a)$.
     In Theorem \ref{maintheorem} below, we will see that in fact
     the two readings end up being equivalent
     (but the latter reading would not have been appropriate
@@ -419,7 +419,7 @@ Now we are ready to define mixture agents.
     \begin{align*}
         &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)\\
             &= \sum_{a\in\mathcal A}
-                \frac{\vec w\cdot (\vec\pi_*(h\frown a))}{\vec w\cdot (\vec\pi_*(h))}
+                \frac{\vec w\cdot (\vec\pi_*(h\circ a))}{\vec w\cdot (\vec\pi_*(h))}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
                 \frac
@@ -478,19 +478,19 @@ Now we are ready to define mixture agents.
     $(\vec w\cdot\vec\pi)_*(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
     =\vec w\cdot (\vec\pi_*(h))$.
 
-    Case 2: $h=g\frown p$ for some $p\in\mathcal P$. Then
+    Case 2: $h=g\circ p$ for some $p\in\mathcal P$. Then
     \begin{align*}
         (\vec w\cdot \vec\pi)_*(h)
             &= (\vec w\cdot\vec\pi)_*(g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \vec w\cdot(\vec\pi_*(g))
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(g\frown p))
+            &= \vec w\cdot(\vec\pi_*(g\circ p))
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \vec w\cdot(\vec\pi_*(h)).
     \end{align*}
 
-    Case 3: $h=g\frown a$ for some $a\in\mathcal A$.
+    Case 3: $h=g\circ a$ for some $a\in\mathcal A$.
 
     Subcase 3.1: $(\vec w\cdot \vec\pi)_*(g)=0$.
         By induction $\vec w\cdot(\vec\pi_*(g))=0$.
@@ -498,15 +498,15 @@ Now we are ready to define mixture agents.
         each $\pi^i_*(g)=0$.
         Thus each
         \begin{align*}
-            w_i\pi^i_*(g\frown a)
+            w_i\pi^i_*(g\circ a)
                 &= w_i\pi^i_*(g)\pi^i(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= 0w_i\pi^i(a|g)=0,
         \end{align*}
-        i.e., $\vec w\cdot(\vec\pi_*(g\frown a))=0$.
+        i.e., $\vec w\cdot(\vec\pi_*(g\circ a))=0$.
         And
         \begin{align*}
-            (\vec w\cdot\vec\pi)_*(g\frown a)
+            (\vec w\cdot\vec\pi)_*(g\circ a)
                 &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= 0(\vec w\cdot\vec\pi)(a|g) = 0,
@@ -520,15 +520,15 @@ Now we are ready to define mixture agents.
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= (\vec w\cdot\vec\pi)_*(g)
                 \frac
-                {\vec w\cdot(\vec\pi_*(g\frown a))}
+                {\vec w\cdot(\vec\pi_*(g\circ a))}
                 {\vec w\cdot(\vec\pi_*(g))}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \vec w\cdot(\vec\pi_*(g))
                 \frac
-                {\vec w\cdot(\vec\pi_*(g\frown a))}
+                {\vec w\cdot(\vec\pi_*(g\circ a))}
                 {\vec w\cdot(\vec\pi_*(g))}
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(g\frown a))
+            &= \vec w\cdot(\vec\pi_*(g\circ a))
                 &\mbox{(Basic Algebra)}\\
             &= \vec w\cdot(\vec\pi_*(h)).
     \end{align*}
@@ -654,7 +654,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     For condition 2, there is nothing to check, since
     $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
 
-    Case 2: $h=h_0\frown a_0$ for some
+    Case 2: $h=h_0\circ a_0$ for some
         $h_0\in(\mathcal P\mathcal A)^*\mathcal P$, $a_0\in\mathcal A$.
         For condition 2, there is nothing to prove, since
         $h\not\in(\mathcal P\mathcal A)^*\mathcal P$.
@@ -685,7 +685,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         it follows that
         $(\vec w\cdot\vec\pi)_*(h)=0$ iff $\pi_*(h)=0$ iff $\pi(a_0|h_0)=0$.
 
-    Case 3: $h=h_0\frown p$ for some $h_0\in (\mathcal P\mathcal A)^*$,
+    Case 3: $h=h_0\circ p$ for some $h_0\in (\mathcal P\mathcal A)^*$,
         $p\in\mathcal P$.
         By induction, conditions 1 and 2 hold for $h_0$.
         By Definition \ref{pullbackdef},
@@ -700,9 +700,9 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         Thus
         \begin{align*}
             (\vec w\cdot\vec\pi)(a|h)
-                &= \frac{\vec w\cdot \vec\pi_*(h\frown a)}{\vec w\cdot\vec\pi_*(h)}
+                &= \frac{\vec w\cdot \vec\pi_*(h\circ a)}{\vec w\cdot\vec\pi_*(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
-                &= \frac{w_1\pi_*(h\frown a)+\cdots+w_n\pi_*(h\frown a)}
+                &= \frac{w_1\pi_*(h\circ a)+\cdots+w_n\pi_*(h\circ a)}
                     {w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
                 &= \frac{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
@@ -737,15 +737,15 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi,\overline{\pi}))(a|\overline h)
             &\mbox{(Definition \ref{dualagentsdefn})}\\
         &= \frac
-            {\frac12\pi_*(\overline h\frown a)+\frac12\overline\pi_*(\overline h\frown a)}
+            {\frac12\pi_*(\overline h\circ a)+\frac12\overline\pi_*(\overline h\circ a)}
             {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
             &\mbox{(Definition \ref{maindefn})}\\
         &= \frac
-            {\frac12\pi_*(\overline{h\frown a})+\frac12\overline\pi_*(\overline{h\frown a})}
+            {\frac12\pi_*(\overline{h\circ a})+\frac12\overline\pi_*(\overline{h\circ a})}
             {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
-            &\mbox{(Clearly $\overline h\frown a=\overline{h\frown a}$)}\\
+            &\mbox{(Clearly $\overline h\circ a=\overline{h\circ a}$)}\\
         &= \frac
-            {\frac12\overline\pi_*(h\frown a)+\frac12\overline{\overline\pi}_*(h\frown a)}
+            {\frac12\overline\pi_*(h\circ a)+\frac12\overline{\overline\pi}_*(h\circ a)}
             {\frac12\overline\pi_*(h)+\frac12\overline{\overline\pi}_*(h)}
             &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
         &= ((\mbox{$\frac12$},\mbox{$\frac12$})
@@ -885,7 +885,7 @@ some interesting results.
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
     Let $h\in\mathcal H$ be such that
     for every $a\in\mathcal A$,
-    $h_0\frown a$ is not an initial segment of $h$.
+    $h_0\circ a$ is not an initial segment of $h$.
     Then $\pi^{h_0\mapsto m}_*(h)=\pi_*(h)$.
 \end{lemma}
 
@@ -897,7 +897,7 @@ some interesting results.
 \label{thirdtechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
     For any $a\in\mathcal A$,
-    $\pi^{h_0\mapsto m}_*(h_0\frown a)=\pi_*(h_0)m(a)$.
+    $\pi^{h_0\mapsto m}_*(h_0\circ a)=\pi_*(h_0)m(a)$.
 \end{lemma}
 
 \begin{proof}
@@ -907,7 +907,7 @@ some interesting results.
 \begin{lemma}
 \label{secondtechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Assume $h\in\mathcal H$, $a_0\in\mathcal A$, and $h_0\frown a_0$ is
+    Assume $h\in\mathcal H$, $a_0\in\mathcal A$, and $h_0\circ a_0$ is
     an initial segment of $h$. Assume $\pi(a_0|h_0)\not=0$. Then
     $\pi^{h_0\mapsto m}_*(h) = \frac{\pi_*(h)m(a_0)}{\pi(a_0|h_0)}$.
 \end{lemma}
@@ -915,7 +915,7 @@ some interesting results.
 \begin{proof}
     By induction on $h$.
 
-    Case 1: $h=h_0\frown a_0$. Then
+    Case 1: $h=h_0\circ a_0$. Then
     \begin{align*}
         \pi^{h_0\mapsto m}_*(h)
         &= \pi^{h_0\mapsto m}_*(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
@@ -930,32 +930,32 @@ some interesting results.
             &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
-    Case 2: $h=h_0\frown a_0\frown h_1\frown p$ for some $h_1\in\mathcal H$
+    Case 2: $h=h_0\circ a_0\circ h_1\circ p$ for some $h_1\in\mathcal H$
         and $p\in\mathcal P$. Then
     \begin{align*}
         \pi^{h_0\mapsto m}_*(h)
-        &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
+        &= \pi^{h_0\mapsto m}_*(h_0\circ a_0\circ h_1)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= \pi_*(h_0\frown a_0\frown h_1)m(a_0)/\pi(a_0|h_0)
+        &= \pi_*(h_0\circ a_0\circ h_1)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Induction)}\\
-        &= \pi_*(h_0\frown a_0\frown h_1\frown p)m(a_0)/\pi(a_0|h_0)
+        &= \pi_*(h_0\circ a_0\circ h_1\circ p)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Definition \ref{pullbackdef})}\\
         &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
     \end{align*}
 
-    Case 3: $h=h_0\frown a_0\frown h_1\frown a$ for some $h_1\in\mathcal H$ and
+    Case 3: $h=h_0\circ a_0\circ h_1\circ a$ for some $h_1\in\mathcal H$ and
         $a\in\mathcal A$. Then
     \begin{align*}
         \pi^{h_0\mapsto m}_*(h)
-        &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
-            \pi^{h_0\mapsto m}(a|h_0\frown a\frown h_1)
+        &= \pi^{h_0\mapsto m}_*(h_0\circ a_0\circ h_1)
+            \pi^{h_0\mapsto m}(a|h_0\circ a\circ h_1)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= \pi^{h_0\mapsto m}_*(h_0\frown a_0\frown h_1)
-            \pi(a|h_0\frown a\frown h_1)
+        &= \pi^{h_0\mapsto m}_*(h_0\circ a_0\circ h_1)
+            \pi(a|h_0\circ a\circ h_1)
             &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= \pi_*(h_0\frown a_0\frown h_1)\pi(a|h_0\frown a\frown h_1)m(a_0)/\pi(a_0|h_0)
+        &= \pi_*(h_0\circ a_0\circ h_1)\pi(a|h_0\circ a\circ h_1)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Induction)}\\
-        &= \pi_*(h_0\frown a_0\frown h_1\frown a)m(a_0)/\pi(a_0|h_0)
+        &= \pi_*(h_0\circ a_0\circ h_1\circ a)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Definition \ref{pullbackdef})}\\
         &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
     \end{align*}
@@ -1046,7 +1046,7 @@ $\pi^{h\mapsto \vec m}$.
     Then $\pi_*(g)=1
     =(\vec w\cdot\vec\pi)_*(g)$.
 
-    Case 2: $g=f\frown p$ for some $p\in\mathcal P$.
+    Case 2: $g=f\circ p$ for some $p\in\mathcal P$.
     Then
     \begin{align*}
         \pi_*(g)
@@ -1058,7 +1058,7 @@ $\pi^{h\mapsto \vec m}$.
                 &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
-    Case 3: $g=f\frown a$ for some $a\in\mathcal A$.
+    Case 3: $g=f\circ a$ for some $a\in\mathcal A$.
 
     Subcase 3.1: $\pi_*(f)=0$.
     Then
@@ -1088,7 +1088,7 @@ $\pi^{h\mapsto \vec m}$.
     \end{align*}
     Thus:
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(h\frown a)
+        (\vec w\cdot\vec\pi)_*(h\circ a)
             &= (\vec w\cdot\vec\pi)_*(h)
                 (\vec w\cdot\vec\pi)(a|h)
                     &\mbox{(Definition \ref{pullbackdef})}\\
@@ -1096,22 +1096,22 @@ $\pi^{h\mapsto \vec m}$.
                     &\mbox{(Induction)}\\
             &= \pi_*(h)
                 \frac
-                {\vec w\cdot\vec\pi_*(h\frown a)}
+                {\vec w\cdot\vec\pi_*(h\circ a)}
                 {\vec w\cdot\vec\pi_*(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot\vec\pi_*(h\frown a)
+            &= \vec w\cdot\vec\pi_*(h\circ a)
                     &\mbox{(By $*$)}\\
             &= w_1\pi_*(h)m_1(a)+\cdots+w_n\pi_*(h)m_n(a)
                     &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
             &= \pi_*(h)\pi(a|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
-            &= \pi_*(h\frown a),
+            &= \pi_*(h\circ a),
                     &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
     as desired.
 
     Subcase 3.3: $\pi_*(f)\not=0$, $f\not=h$, and
-    $f$ has initial segment $h\frown a_0$ for some action $a_0$.
+    $f$ has initial segment $h\circ a_0$ for some action $a_0$.
 
     It follows that $\pi(a_0|h)\not=0$ because otherwise clearly
     we would have $\pi_*(f)=0$.
@@ -1141,24 +1141,24 @@ $\pi^{h\mapsto \vec m}$.
                     &\mbox{(Definition \ref{pullbackdef})}\\
             &= \pi_*(f)(\vec w\cdot\vec\pi)(a|f)
                     &\mbox{(Induction)}\\
-            &= \pi_*(f)\frac{\vec w\cdot\vec\pi_*(f\frown a)}
+            &= \pi_*(f)\frac{\vec w\cdot\vec\pi_*(f\circ a)}
                 {\vec w\cdot\vec\pi_*(f)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot\vec\pi_*(f\frown a)
+            &= \vec w\cdot\vec\pi_*(f\circ a)
                     &\mbox{(By $**$)}\\
-            &= w_1\frac{\pi_*(f\frown a)m_1(a_0)}{\pi(a_0|h)}
-                +\cdots+w_n\frac{\pi_*(f\frown a)m_n(a_0)}{\pi(a_0|h)}
+            &= w_1\frac{\pi_*(f\circ a)m_1(a_0)}{\pi(a_0|h)}
+                +\cdots+w_n\frac{\pi_*(f\circ a)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(f\frown a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
+            &= \frac{\pi_*(f\circ a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(f\frown a)}{\pi(a_0|h)}\pi(a_0|h)
+            &= \frac{\pi_*(f\circ a)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
-            &= \pi_*(f\frown a) = \pi_*(g),
+            &= \pi_*(f\circ a) = \pi_*(g),
     \end{align*}
     as desired.
 
     Subcase 3.4: $\pi_*(f)\not=0$, $f\not=h$, and $f$ has no initial segment
-        of the form $h\frown a_0$.
+        of the form $h\circ a_0$.
 
     We would like to use Definition \ref{maindefn} to rewrite
     $(\vec w\cdot\vec\pi)(a|f)$ but first we must
@@ -1167,18 +1167,18 @@ $\pi^{h\mapsto \vec m}$.
     $\vec w\cdot\vec\pi_*(f)=\pi_*(f)\not=0$.
     Thus
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(f\frown a)
+        (\vec w\cdot\vec\pi)_*(f\circ a)
             &= (\vec w\cdot\vec\pi)_*(f)
                 (\vec w\cdot\vec\pi)(a|f)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(f)\frac{\vec w\cdot\vec\pi_*(f\frown a)}
+            &= (\vec w\cdot\vec\pi)_*(f)\frac{\vec w\cdot\vec\pi_*(f\circ a)}
                 {\vec w\cdot\vec\pi_*(f)}
                     &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot\vec\pi_*(f\frown a)
+            &= \vec w\cdot\vec\pi_*(f\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1\pi_*(f\frown a)+\cdots+w_n\pi_*(f\frown a)
+            &= w_1\pi_*(f\circ a)+\cdots+w_n\pi_*(f\circ a)
                     &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-            &= \pi_*(f\frown a),
+            &= \pi_*(f\circ a),
                     &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
     as desired.
