@@ -257,6 +257,7 @@ and lemmas.
         $\mu$ interact, the interaction will begin with initial segment
         $h$, \emph{assuming}
         that $\mu$ produces the percepts in $h$.
+        But note that $\pi_*$ is \emph{not} necessarily a probability distribution.
         \item
         For every environment $\mu$, for every $h\in\mathcal H$, we define a real number
         $\mu_*(h)\in[0,1]$ as follows.
@@ -272,6 +273,7 @@ and lemmas.
         conditional probability that when any agent $\pi$ and $\mu$ interact,
         the interaction will begin with initial segment $h$, \emph{assuming} that
         $\pi$ produces the actions in $h$.
+        But note that $\mu_*$ is \emph{not} necessarily a probability distribution.
         \item
         For every agent $\pi$, environment $\mu$, and $h\in\mathcal H$, we define a
         real number $(\pi,\mu)_*(h)\in[0,1]$ by induction as follows.
@@ -314,7 +316,7 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
                 &= (\pi,\mu)_*(g)\mu(p|g)
                     &\mbox{(Definition \ref{pullbackdef} part 3)}\\
                 &= \pi_*(g)\mu_*(g)\mu(p|g)
-                    &\mbox{(Induction)}
+                    &\mbox{(Induction)}\\
                 &= \pi_*(h)\mu_*(g)\mu(p|g)
                     &\mbox{(Definition \ref{pullbackdef} part 1)}\\
                 &= \pi_*(h)\mu_*(h).
@@ -327,12 +329,12 @@ for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
 
 \begin{lemma}
 \label{basicprobabilitylemma}
-    $V^\pi_{\mu,t}=\sum_{h\in H_t}(\pi,\mu)_*(h)r(h),$
+    $V^\pi_{\mu,t}=\sum_{h\in H_t}(\pi,\mu)_*(h)R(h),$
     where $H_t$ is the set of all $h\in\mathcal H$
     of length $2(t+1)$ (i.e., all $h\in\mathcal H$ of the form
     $x_1y_1\ldots x_{t+1}y_{t+1}$)
     as in Part 5 of Definition \ref{omnibusdefn}),
-    and $r(h)$ is the total reward in $h$.
+    and $R(h)$ is the total reward in $h$.
 \end{lemma}
 
 \begin{proof}
