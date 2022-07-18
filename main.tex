@@ -1,30 +1,34 @@
-\documentclass[runningheads]{llncs}
+\documentclass{article}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{mathrsfs}
+\usepackage{amsthm}
 % \smartqed  % flush right qed marks, e.g. at end of proof
 % \usepackage{graphicx}
-
-\newcommand{\myclaim}[1]{\textbf{Claim #1:}}
-\def\myulcorner{\mathord{\ulcorner}}
-\def\myurcorner{\mathord{\urcorner}}
-\def\HD{\textsc{HD}}
-\def\R{\mathbb{R}}
-\def\N{\mathbb{N}}
 %\newtheorem{definition}[definition]{Definition}
 
 % \pagenumbering{gobble}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{definition}[theorem]{Definition}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
 
 \begin{document}
 
 \title{Agent mixtures and the genericness of non-deterministic intelligence}
-\titlerunning{Agent mixtures and genericness}
-\author{Samuel Allen
-Alexander\inst{1}\orcidID{0000-0002-7930-110X}}
+% \titlerunning{Agent mixtures and genericness}
+\author{Samuel Allen Alexander \& Len Du \& Marcus Hutter}
 
-\institute{The U.S.\ Securities and Exchange Commission
-\email{samuelallenalexander@gmail.com}
-\url{https://philpeople.org/profiles/samuel-alexander/publications}}
+% \institute{The U.S.\ Securities and Exchange Commission
+% \email{samuelallenalexander@gmail.com}
+% \url{https://philpeople.org/profiles/samuel-alexander/publications}}
 
 \maketitle
 
