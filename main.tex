@@ -41,7 +41,7 @@
     of the expected total rewards the original agents get in that
     environment. We use mixture agents to formalize and
     strengthen an informal result of Alexander and Hutter. We also use mixture
-    agents to prove additional results, including a surprising result,
+    agents to prove additional results, including a surprising result
     which we call the genericness of non-deterministic intelligence. Loosely:
     any particular non-deterministic action an agent takes
     can have its probabilities modified without making the agent less
@@ -83,7 +83,8 @@ with $\mu$. But this is all quite informal, as the RL
 framework does not actually provide any mechanism for such an initial
 coin-flip.
 
-More generally, given agents $\vec{\pi}=(\pi^1,\ldots,\pi^n)$ and positive reals
+More generally, given agents $\vec{\pi}=(\pi^1,\ldots,\pi^n)$ and positive real
+numbers
 $\vec{w}=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
 who, at the start of each agent-environment interaction, randomly transforms
 into $\pi^1$ (with probability $w_1$) or into $\pi^2$ (with probability $w_2$),
@@ -204,9 +205,6 @@ Note that it is possible for $V^\pi_\mu$ to be undefined.
 For example, if $\mu$ is an environment which always issues
 reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
 then $V^\pi_\mu$ is undefined for every agent $\pi$.
-This would not be the case if rewards were required to be $\geq 0$,
-so this is one way in which allowing
-punishments complicates the resulting theory.
 
 \begin{definition}
     An environment $\mu$ is \emph{well-behaved} if $\mu$ is computable and the following
@@ -371,7 +369,7 @@ Now we are ready to define mixture agents.
     (Mixture agents)
     Suppose $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
     are positive real numbers with $w_1+\cdots+w_n=1$.
-    Define the \emph{mixture agent} as follows: for all
+    Define the \emph{mixture agent} $\vec w\cdot\vec\pi$ as follows: for all
     $h\in (\mathcal P\mathcal A)^*\mathcal P$, let
     \[
         (\vec w\cdot\vec\pi)(a|h)
@@ -699,7 +697,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         For condition 2,
         assume $\pi_*(h)\not=0$ and let $a\in\mathcal A$.
         By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot\vec\pi_*(s)=w_1\pi_*(h)+\cdots+w_n\pi_*(h)=\pi_*(h)$.
+        $\vec w\cdot\vec\pi_*(h)=w_1\pi_*(h)+\cdots+w_n\pi_*(h)=\pi_*(h)$.
         So, since $\pi_*(h)\not=0$, $\vec w\cdot\vec\pi_*(h)\not=0$.
         Thus
         \begin{align*}
@@ -723,7 +721,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 \end{lemma}
 
 \begin{proof}
-    For any $h\in(\mathcal P\mathcal A)^*(\mathcal P)$ and $a\in\mathcal A$,
+    For any $h\in(\mathcal P\mathcal A)^*\mathcal P$ and $a\in\mathcal A$,
     we claim
     $\overline{(\frac12,\frac12)\cdot(\pi,\overline{\pi})}(a|h)
     =((\frac12,\frac12)\cdot(\pi,\overline{\pi}))(a|h)$.
