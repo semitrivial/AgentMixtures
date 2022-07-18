@@ -1028,11 +1028,11 @@ $\pi^{h\mapsto \vec m}$.
 \begin{proof}
     For brevity, write $\vec\pi$ for $\pi^{h\mapsto \vec m}$. It suffices to
     show that for every well-behaved $\mu$ and every $t\in\mathbb N$,
-    \[
+    $
         V^{\pi}_{\mu,t}
         =
         V^{\vec w\cdot \vec\pi}_{\mu,t}.
-    \]
+    $
     By Lemma \ref{basicprobabilitylemma}, it suffices to show that for every
     well-behaved $\mu$ and every $g\in\mathcal H$,
     $
@@ -1040,7 +1040,7 @@ $\pi^{h\mapsto \vec m}$.
     =
     (\vec w\cdot\vec\pi,\mu)_*(g)
     $.
-    By Lemma \ref{factorizationlemma}, it in turn suffices
+    By Lemma \ref{factorizationlemma}, it suffices
     to show that for every $g\in\mathcal H$,
     $\pi_*(g)=(\vec w\cdot\vec\pi)_*(g)$.
     We prove this by induction on $g$.
@@ -1072,66 +1072,32 @@ $\pi^{h\mapsto \vec m}$.
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \pi_*(f)(\vec w\cdot\vec\pi)(a|f)
                 &\mbox{(Induction)}\\
-            &= 0,
+            &= 0.
     \end{align*}
-    and similarly $\pi_*(g)=0$.
+    Similarly, $\pi_*(g)=0$. So $(\vec w\cdot\vec\pi)_*(g)=\pi_*(g)$.
 
-    Subcase 3.2: $\pi_*(f)\not=0$ and $f=h$.
-
-    We would like to use Definition \ref{maindefn} to rewrite
-    $(\vec w\cdot\vec\pi)(a|h)$ but first we must check
-    that the appropriate denominator does not vanish.
-    Compute ($*$):
+    Subcase 3.2: $\pi_*(f)\not=0$ and $f=h$. Then:
     \begin{align*}
-        \vec w\cdot\vec\pi_*(h)
-            &= w_1\pi_*(h)+\cdots+w_n\pi_*(h)
-                &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-            &= \pi_*(h)\not=0.
-                &\mbox{($w_1+\cdots+w_n=1$)}
-    \end{align*}
-    Thus:
-    \begin{align*}
-        (\vec w\cdot\vec\pi)_*(h\circ a)
-            &= (\vec w\cdot\vec\pi)_*(h)
-                (\vec w\cdot\vec\pi)(a|h)
-                    &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(h)(\vec w\cdot\vec\pi)(a|h)
-                    &\mbox{(Induction)}\\
-            &= \pi_*(h)
-                \frac
-                {\vec w\cdot\vec\pi_*(h\circ a)}
-                {\vec w\cdot\vec\pi_*(h)}
-                    &\mbox{(Definition \ref{maindefn})}\\
+        (\vec w\cdot\vec\pi)_*(g)
+            &= (\vec w\cdot\vec\pi)_*(h\circ a)\\
             &= \vec w\cdot\vec\pi_*(h\circ a)
-                    &\mbox{(By $*$)}\\
+                    &\mbox{(Theorem \ref{maintheorem})}\\
             &= w_1\pi_*(h)m_1(a)+\cdots+w_n\pi_*(h)m_n(a)
                     &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
             &= \pi_*(h)\pi(a|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
-            &= \pi_*(h\circ a),
+            &= \pi_*(h\circ a) = \pi_*(g).
                     &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
-    as desired.
 
     Subcase 3.3: $\pi_*(f)\not=0$, $f\not=h$, and
-    $f$ has initial segment $h\circ a_0$ for some action $a_0$.
+    $f$ has an initial segment $h\circ a_0$ ($a_0\in\mathcal A$).
 
-    It follows that $\pi(a_0|h)\not=0$ because otherwise
-    we would have $\pi_*(f)=0$.
-
-    We would like to use Definition \ref{maindefn} to rewrite
-    $(\vec w\cdot\vec\pi)(a|f)$ but first we must
-    check that the appropriate denominator does not vanish:
-    by induction, $\vec w\cdot \vec\pi_*(f)=(\vec w\cdot \vec\pi)_*(f)=\pi_*(f)\not=0$.
-    Thus
+    Then $\pi(a_0|h)\not=0$, lest
+    we would have $\pi_*(f)=0$. Thus:
     \begin{align*}
         (\vec w\cdot\vec\pi)_*(g)
-            &= (\vec w\cdot\vec\pi)_*(f)
-                (\vec w\cdot\vec\pi)(a|f)
-                    &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(f)\frac{\vec w\cdot\vec\pi_*(f\circ a)}
-                {\vec w\cdot\vec\pi_*(f)}
-                    &\mbox{(Definition \ref{maindefn})}\\
+            &= (\vec w\cdot \vec\pi)_*(f\circ a)\\
             &= \vec w\cdot\vec\pi_*(f\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
             &= w_1\frac{\pi_*(f\circ a)m_1(a_0)}{\pi(a_0|h)}
@@ -1141,32 +1107,19 @@ $\pi^{h\mapsto \vec m}$.
                     &\mbox{(Basic Algebra)}\\
             &= \frac{\pi_*(f\circ a)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
-            &= \pi_*(f\circ a) = \pi_*(g),
+            &= \pi_*(f\circ a) = \pi_*(g).
     \end{align*}
-    as desired.
 
     Subcase 3.4: $\pi_*(f)\not=0$, $f\not=h$, and $f$ has no initial segment
-        of the form $h\circ a_0$.
-
-    We would like to use Definition \ref{maindefn} to rewrite
-    $(\vec w\cdot\vec\pi)(a|f)$ but first we must
-    check that the appropriate denominator does not vanish:
-    by induction, we have
-    $\vec w\cdot\vec\pi_*(f)=\pi_*(f)\not=0$.
-    Thus
+        of the form $h\circ a_0$. Then:
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(f\circ a)
-            &= (\vec w\cdot\vec\pi)_*(f)
-                (\vec w\cdot\vec\pi)(a|f)
-                    &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(f)\frac{\vec w\cdot\vec\pi_*(f\circ a)}
-                {\vec w\cdot\vec\pi_*(f)}
-                    &\mbox{(Definition \ref{maindefn})}\\
+        (\vec w\cdot\vec\pi)_*(g)
+            &= (\vec w\cdot\vec\pi)_*(f\circ a)\\
             &= \vec w\cdot\vec\pi_*(f\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
             &= w_1\pi_*(f\circ a)+\cdots+w_n\pi_*(f\circ a)
                     &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-            &= \pi_*(f\circ a),
+            &= \pi_*(f\circ a) = \pi_*(g),
                     &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
     as desired.
