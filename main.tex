@@ -768,22 +768,23 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 \end{lemma}
 
 \begin{proof}
+    Let $\vec w=(\frac12,\frac12)$.
     For any $h\in(\mathcal P\mathcal A)^*\mathcal P$ and $a\in\mathcal A$,
     we claim
-    $\overline{(\frac12,\frac12)\cdot(\pi,\overline{\pi})}(a|h)
-    =((\frac12,\frac12)\cdot(\pi,\overline{\pi}))(a|h)$.
-    If $(\frac12,\frac12)\cdot(\pi,\overline\pi)_*(h)=0$
+    $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
+    =(\vec w\cdot(\pi,\overline{\pi}))(a|h)$.
+    If $\vec w\cdot(\pi,\overline\pi)_*(h)=0$
     then it follows by Lemmas \ref{doublenegationlemma} and
     \ref{asteriskcommuteswithoverlinelemma} that
-    $\overline{(\frac12,\frac12)\cdot(\pi,\overline\pi)}_*(h)=0$,
+    $\overline{\vec w\cdot(\pi,\overline\pi)}_*(h)=0$,
     so by Definition \ref{maindefn},
-    $\overline{(\frac12,\frac12)\cdot(\pi,\overline{\pi})}(a|h)
-    =((\frac12,\frac12)\cdot(\pi,\overline{\pi}))(a|h)=1/|\mathcal A|$.
-    But assume $(\frac12,\frac12)\cdot(\pi,\overline\pi)_*(h)\not=0$.
+    $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
+    =(\vec w\cdot(\pi,\overline{\pi}))(a|h)=1/|\mathcal A|$.
+    But assume $\vec w\cdot(\pi,\overline\pi)_*(h)\not=0$.
     Then:
     \begin{align*}
-        \overline{(\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi,\overline{\pi})}(a|h)
-        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi,\overline{\pi}))(a|\overline h)
+        \overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
+        &= (\vec w\cdot(\pi,\overline{\pi}))(a|\overline h)
             &\mbox{(Definition \ref{dualagentsdefn})}\\
         &= \frac
             {\frac12\pi_*(\overline h\circ a)+\frac12\overline\pi_*(\overline h\circ a)}
@@ -797,10 +798,9 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
             {\frac12\overline\pi_*(h\circ a)+\frac12\overline{\overline\pi}_*(h\circ a)}
             {\frac12\overline\pi_*(h)+\frac12\overline{\overline\pi}_*(h)}
             &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
-        &= ((\mbox{$\frac12$},\mbox{$\frac12$})
-            \cdot(\overline{\overline\pi},\overline\pi))(a|h)
+        &= (\vec w\cdot(\overline{\overline\pi},\overline\pi))(a|h)
             &\mbox{(Definition \ref{maindefn})}\\
-        &= ((\mbox{$\frac12$},\mbox{$\frac12$})\cdot(\pi,\overline\pi))(a|h).
+        &= (\vec w\cdot(\pi,\overline\pi))(a|h).
             &\mbox{(Lemma \ref{doublenegationlemma})}
     \end{align*}
 \end{proof}
