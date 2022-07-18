@@ -1207,7 +1207,7 @@ $\pi^{h\mapsto \vec m}$.
 
 Theorem \ref{pointwisegenericnessthm} is interesting because it implies that for
 any intelligent agent $\pi$, for any history $h$, if $\pi(\bullet|h)$ is not deterministic,
-then the intelligence of $\pi$ does not critically depend on the specific probabilities
+then the optimality of $\pi$ does not critically depend on the specific probabilities
 which $\pi(\bullet|h)$ assigns to different actions. For any decomposition
 $\pi(\bullet|h)=\vec w\cdot\vec m$ of $\pi(\bullet|h)$ into competing probability
 distributions $\vec m$
@@ -1258,13 +1258,14 @@ of $\pi$.
 \end{example}
 
 In Example \ref{genericnessexample}, Theorem \ref{pointwisegenericnessthm} shows
-that the intelligence of $\pi$ does not crucially depend on the specific values
+that the optimality of $\pi$ cannot crucially depend on the specific values
 $\pi(a_1|h_0)=\pi(a_2|h_0)=\pi(a_3|h_0)=\frac13$ of $\pi$.
 This is counter-intuitive because, a priori, it seems
-plausible that these values could have been determined
-experimentally in order to maximize $\pi$'s intelligence. We could imagine ourselves
-saying: ``This particular value of $\pi(a_1|h_0)$ is critical to $\pi$'s
-performance. Any other value would make $\pi$ sub-optimal.''
+plausible that these values could have been chosen
+in order to maximize $\pi$'s intelligence. We could imagine ourselves
+saying: ``These particular values $\pi(a_1|h_0)=\pi(a_2|h_0)=\pi(a_3|h_0)=\frac13$ are
+critical to $\pi$'s
+performance. Any other values would make $\pi$ sub-optimal.''
 Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 
 \begin{corollary}
@@ -1297,7 +1298,7 @@ Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 \end{proof}
 
 Corollary \ref{nondeterminismcorollary} shows that for any individual
-history $h_0$, the intelligence of $\pi$ cannot crucially depend on $\pi(\bullet|h_0)$
+history $h_0$, the optimality of $\pi$ cannot crucially depend on $\pi(\bullet|h_0)$
 being non-deterministic. This is counter-intuitive because we could imagine saying:
 ``In response to such-and-such history, it would be optimal for our agent
 to assume the environment is playing Paper-Rock-Scissors and therefore
@@ -1369,7 +1370,7 @@ clear.
             \emph{increases} intelligence, we finally end up with
             the completely deterministic
             Janus agent $\pi_{\infty}$ who always takes action $a_0$ and who is
-            \emph{less} intelligent than all $\pi_k$'s:
+            \emph{less} intelligent than each $\pi_k$:
             $\Upsilon(\pi_{\infty})=V^{\pi_\infty}_\mu=-1$.
     \end{enumerate}
 \end{example}
