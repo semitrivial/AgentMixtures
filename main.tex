@@ -1187,7 +1187,7 @@ $\pi^{h\mapsto \vec m}$.
     (Pointwise Genericness of Non-Deterministic Intelligence)
     Let $\Upsilon$ be any weighted performance averager and let
     $\pi$ be an agent.
-    Let $h$ be a history ending in a percept.
+    Let $h\in (\mathcal P\mathcal A)^*\mathcal P$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
     if $\vec w\cdot\vec m=\pi(\bullet|h)$,
@@ -1269,11 +1269,12 @@ of $\pi$.
 \end{example}
 
 In Example \ref{genericnessexample}, Theorem \ref{pointwisegenericnessthm} shows
-that the intelligence of $\pi$ does not crucially depend on the specific value
-of $\pi(\bullet|h_0)$. This is counter-intuitive because, a priori, it seems
-plausible that the value of $\pi(\bullet|h_0)$ could have been determined
+that the intelligence of $\pi$ does not crucially depend on the specific values
+$\pi(a_1|h_0)=\pi(a_2|h_0)=\pi(a_3|h_0)=\frac13$ of $\pi$.
+This is counter-intuitive because, a priori, it seems
+plausible that these values could have been determined
 experimentally in order to maximize $\pi$'s intelligence. We could imagine ourselves
-saying: ``This particular value of $\pi(\bullet|h_0)$ is critical to $\pi$'s
+saying: ``This particular value of $\pi(a_1|h_0)$ is critical to $\pi$'s
 performance. Any other value would make $\pi$ sub-optimal.''
 Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 
