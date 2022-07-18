@@ -232,7 +232,7 @@ then $V^\pi_\mu$ is undefined for every agent $\pi$.
 
 \begin{definition}
 \label{performanceaveragerdefn}
-    By a \emph{weighted performance averager}, we mean a function
+    By a \emph{weighted intelligence measure}, we mean a function
     $\Upsilon$ assigning real numbers to agents, such that there
     are weights $\{w_\mu\}_{\mu\in W}$ such that for every agent
     $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$
@@ -240,7 +240,7 @@ then $V^\pi_\mu$ is undefined for every agent $\pi$.
     for every agent $\pi$).
 \end{definition}
 
-The prototypical weighted performance averager is the Legg-Hutter intelligence
+The prototypical weighted intelligence measure is the Legg-Hutter intelligence
 measure $\Upsilon$, where each well-behaved $\mu$ is given weight $2^{-K(\mu)}$
 where $K$ denotes Kolmogorov complexity (dependent on a background universal
 Turing machine) \cite{legg2007universal}.
@@ -376,7 +376,7 @@ to proofs by induction.
 \begin{definition}
     If $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents, $\mu$ is an environment,
     $h\in\mathcal H$, $t\in\mathbb N$, and $\Upsilon$ is a weighted
-    performance averager, then we define:
+    intelligence measure, then we define:
     \begin{itemize}
         \item $\vec\pi_*(h)=(\pi^1_*(h),\ldots,\pi^n_*(h))$.
         \item $(\vec\pi,\mu)_*(h)=((\pi^1,\mu)_*(h),\ldots,(\pi^n,\mu)_*(h))$.
@@ -508,7 +508,7 @@ Now we are ready to define mixture agents.
         \item
         (``The intelligence of a weighted mixture is the weighted average
         of the intelligences'')
-        For any weighted performance averager $\Upsilon$,
+        For any weighted intelligence measure $\Upsilon$,
         $\Upsilon(\vec w\cdot\vec\pi)=\vec w\cdot\Upsilon(\vec\pi)$.
     \end{enumerate}
 \end{theorem}
@@ -833,7 +833,7 @@ The following theorem formalizes and strengthens an informal result
 from \cite{alexander2021reward}.
 
 \begin{theorem}
-    Suppose $\Upsilon$ is a weighted performance averager.
+    Suppose $\Upsilon$ is a weighted intelligence measure.
     If $\Upsilon(\pi)=0$ for every Janus agent $\pi$,
     then $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$
     for every agent $\pi$.
@@ -1060,7 +1060,7 @@ $\pi^{h\mapsto \vec m}$.
 
 \begin{proposition}
 \label{longproposition}
-    Let $\Upsilon$ be any weighted performance averager, let $\pi$ be any agent,
+    Let $\Upsilon$ be any weighted intelligence measure, let $\pi$ be any agent,
     and let $h\in(\mathcal P\mathcal A)^*\mathcal P$.
     Suppose $\vec m$ and $\vec w$ are as in Definition \ref{sumofdistros}.
     If $\vec w\cdot\vec m = \pi(\bullet|h)$, then
@@ -1174,7 +1174,7 @@ $\pi^{h\mapsto \vec m}$.
 \begin{theorem}
 \label{pointwisegenericnessthm}
     (Pointwise Genericness of Non-Deterministic Intelligence)
-    Let $\Upsilon$ be any weighted performance averager and let
+    Let $\Upsilon$ be any weighted intelligence measure and let
     $\pi$ be an agent.
     Let $h\in (\mathcal P\mathcal A)^*\mathcal P$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
@@ -1245,7 +1245,7 @@ of $\pi$.
     $(\vec w\cdot\vec m)(a)=\frac13$ for every $a\in\mathcal A$,
     i.e., $\vec w\cdot\vec m=\pi(\bullet|h_0)$.
     By Theorem \ref{pointwisegenericnessthm},
-    for any weighted performance averager $\Upsilon$,
+    for any weighted intelligence measure $\Upsilon$,
     one of the following statements is true:
     \begin{enumerate}
         \item
@@ -1270,7 +1270,7 @@ Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 \begin{corollary}
 \label{nondeterminismcorollary}
     (Pointwise Unnecessariness of Non-Determinism)
-    Suppose $\Upsilon$ is a weighted performance averager, $\pi$ is an agent,
+    Suppose $\Upsilon$ is a weighted intelligence measure, $\pi$ is an agent,
     and $h_0\in(\mathcal P\mathcal A)^*\mathcal P$.
     Let $a_1,\ldots,a_n$ enumerate $\{a\in\mathcal A\,:\,\pi(a|h_0)\not=0\}$.
     For each $i=1,\ldots,n$, let $m_i$ be the
@@ -1325,7 +1325,7 @@ clear.
             or total reward $0$ (with probability $2^{-k}$)---so in expected
             value, the agent gets total reward $1-2^{-k}$.
     \end{enumerate}
-    Let $\Upsilon$ be a weighted performance averager in which $\mu$ has weight $2$,
+    Let $\Upsilon$ be a weighted intelligence measure in which $\mu$ has weight $2$,
     $\overline\mu$ has weight $1$, and such that for every
     environment $\nu\not\in\{\mu,\overline{\mu}\}$, $\nu$ and $\overline{\nu}$ have
     equal weight.
