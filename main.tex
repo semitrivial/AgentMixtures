@@ -259,7 +259,7 @@ and lemmas.
         $\mu$ interact, the interaction will begin with initial segment
         $h$, \emph{assuming}
         that $\mu$ produces the percepts in $h$.
-        But note that $\pi_*$ is \emph{not} necessarily a probability distribution.
+        But note that $\pi_*$ is \emph{not} a probability distribution.
         \item
         For every environment $\mu$, for every $h\in\mathcal H$, we define a real number
         $\mu_*(h)\in[0,1]$ as follows.
@@ -275,7 +275,7 @@ and lemmas.
         conditional probability that when any agent $\pi$ and $\mu$ interact,
         the interaction will begin with initial segment $h$, \emph{assuming} that
         $\pi$ produces the actions in $h$.
-        But note that $\mu_*$ is \emph{not} necessarily a probability distribution.
+        But note that $\mu_*$ is \emph{not} a probability distribution.
         \item
         For every agent $\pi$, environment $\mu$, and $h\in\mathcal H$, we define a
         real number $(\pi,\mu)_*(h)\in[0,1]$ by induction as follows.
@@ -291,7 +291,8 @@ and lemmas.
         \end{itemize}
         The intended intuition is that $(\pi,\mu)_*(h)$ can be thought of as
         the probability that when $\pi$ and $\mu$ interact, the interaction
-        will begin with initial segment $h$.
+        will begin with initial segment $h$. But note that
+        $(\pi,\mu)_*$ is \emph{not} a probability distribution.
     \end{enumerate}
 \end{definition}
 
@@ -1006,10 +1007,9 @@ some interesting results.
 
 The following proposition shows that
 for any particular history $h$ and agent $\pi$,
-for any decomposition of $\pi(\bullet|h)$ into a weighted mixture
+for any decomposition of $\pi(\bullet|h)$ into a weighted sum
 of probability distributions $m_1,\ldots,m_n$,
-$\pi$ has the same intelligence (as measured by any weighted performance
-averager) as the weighted mixture of the corresponding $n$ agents
+$\pi$ has the same intelligence as the weighted mixture of the corresponding $n$ agents
 $\pi^{h\mapsto \vec m}$.
 
 \begin{proposition}
@@ -1040,7 +1040,8 @@ $\pi^{h\mapsto \vec m}$.
     =
     (\vec w\cdot\vec\pi,\mu)_*(g)
     $.
-    We will show even more. We will show that for every $g\in\mathcal H$,
+    By Lemma \ref{factorizationlemma}, it in turn suffices
+    to show that for every $g\in\mathcal H$,
     $\pi_*(g)=(\vec w\cdot\vec\pi)_*(g)$.
     We prove this by induction on $g$.
 
@@ -1115,39 +1116,24 @@ $\pi^{h\mapsto \vec m}$.
     Subcase 3.3: $\pi_*(f)\not=0$, $f\not=h$, and
     $f$ has initial segment $h\circ a_0$ for some action $a_0$.
 
-    It follows that $\pi(a_0|h)\not=0$ because otherwise clearly
+    It follows that $\pi(a_0|h)\not=0$ because otherwise
     we would have $\pi_*(f)=0$.
 
     We would like to use Definition \ref{maindefn} to rewrite
     $(\vec w\cdot\vec\pi)(a|f)$ but first we must
-    check that the appropriate denominator does not vanish. We compute ($**$):
-    \begin{align*}
-        \vec w\cdot\vec\pi_*(f)
-            &= \frac{w_1\pi_*(f)m_1(a_0)}{\pi(a_0|h)}
-                + \cdots +
-                \frac{w_n\pi_*(f)m_n(a_0)}{\pi(a_0|h)}
-                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(f)}{\pi(a_0|h)}
-                (w_1m_1(a_0) + \cdots + w_nm_n(a_0))
-                    &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(f)}{\pi(a_0|h)}\pi(a_0|h)
-                    &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
-            &= \pi_*(f)\not=0.
-                    &\mbox{(Basic Algebra)}
-    \end{align*}
+    check that the appropriate denominator does not vanish:
+    by induction, $\vec w\cdot \vec\pi_*(f)=(\vec w\cdot \vec\pi)_*(f)=\pi_*(f)\not=0$.
     Thus
     \begin{align*}
         (\vec w\cdot\vec\pi)_*(g)
             &= (\vec w\cdot\vec\pi)_*(f)
                 (\vec w\cdot\vec\pi)(a|f)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(f)(\vec w\cdot\vec\pi)(a|f)
-                    &\mbox{(Induction)}\\
-            &= \pi_*(f)\frac{\vec w\cdot\vec\pi_*(f\circ a)}
+            &= (\vec w\cdot\vec\pi)_*(f)\frac{\vec w\cdot\vec\pi_*(f\circ a)}
                 {\vec w\cdot\vec\pi_*(f)}
                     &\mbox{(Definition \ref{maindefn})}\\
             &= \vec w\cdot\vec\pi_*(f\circ a)
-                    &\mbox{(By $**$)}\\
+                    &\mbox{(Theorem \ref{maintheorem})}\\
             &= w_1\frac{\pi_*(f\circ a)m_1(a_0)}{\pi(a_0|h)}
                 +\cdots+w_n\frac{\pi_*(f\circ a)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
