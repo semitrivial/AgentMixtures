@@ -31,7 +31,7 @@ def CoinFlip(A1,A2):
 
         def train(self, o_prev, action, reward, o_next, done):
             a1_distro = self.worker1.act(o_prev)
-            a2_distro = self.worker2.act(o_next)
+            a2_distro = self.worker2.act(o_prev)
             self.a1_prob *= a1_distro[action]
             self.a2_prob *= a2_distro[action]
             self.worker1.train(o_prev, action, reward, o_next, done)
