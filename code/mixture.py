@@ -3,45 +3,44 @@ import gym
 
 action_space = [0,1]
 
-def CoinFlip(A1,A2):
+def Mix(mixees, weights):
+    assert len(mixees) == len(weights)
+    assert all([w>0 for w in weights])
+    assert sum(weights)==1
+    I = range(len(weights))
+
     class Mixture:
         def __init__(self):
-            self.worker1 = A1()
-            self.worker2 = A2()
-            self.a1_prob = 1
-            self.a2_prob = 1
+            self.workers = [mixee() for mixee in mixees]
+            self.probs = [1 for mixee in mixees]
 
         def act(self, obs):
-            if self.a1_prob + self.a2_prob == 0:
-                return 1.0/len(action_space)
+            if sum(self.probs) == 0:
+                return {a: 1.0/len(action_space) for a in action_space}
 
-            denominator = self.a1_prob + self.a2_prob
-
-            a1_distro = self.worker1.act(obs)
-            a2_distro = self.worker2.act(obs)
+            denominator = sum([weights[i]*self.probs[i] for i in I])
+            distros = [self.workers[i].act(obs) for i in I]
 
             distro = {}
             for action in action_space:
-                summand1 = self.a1_prob*a1_distro[action]
-                summand2 = self.a2_prob*a2_distro[action]
-                numerator = summand1+summand2
-                distro[action] = float(numerator)/float(denominator)
+                proposals = [distros[i][action] for i in I]
+                summands = [weights[i]*proposals[i]*self.probs[i] for i in I]
+                numerator = float(sum(summands))
+                distro[action] = numerator/denominator
 
             return distro
 
-        def train(self, o_prev, action, reward, o_next, done):
-            a1_distro = self.worker1.act(o_prev)
-            a2_distro = self.worker2.act(o_prev)
-            self.a1_prob *= a1_distro[action]
-            self.a2_prob *= a2_distro[action]
-            self.worker1.train(o_prev, action, reward, o_next, done)
-            self.worker2.train(o_prev, action, reward, o_next, done)
+        def train(self, o_prev, action, *args):
+            for i in I:
+                distro = self.workers[i].act(o_prev)
+                self.probs[i] *= distro[action]
+                self.workers[i].train(o_prev, action, *args)
 
     return Mixture
 
 
 class Q_learner:
-  def __init__(self, epsilon=0.1, learning_rate=0.1, gamma=0.9):
+  def __init__(self, epsilon, learning_rate, gamma):
     self.epsilon = epsilon
     self.learning_rate = learning_rate
     self.gamma = gamma
@@ -82,6 +81,7 @@ class Mixee1:
     def train(self, *args):
         self.worker.train(*args)
 
+
 class Mixee2:
     def __init__(self):
         self.worker = Q_learner(epsilon=0.01, learning_rate=0.2, gamma=0.75)
@@ -89,6 +89,7 @@ class Mixee2:
         return self.worker.act(obs)
     def train(self, *args):
         self.worker.train(*args)
+
 
 class CartPole_LowRes:
     def __init__(self):
@@ -102,6 +103,7 @@ class CartPole_LowRes:
         obs = self.reduce_resolution(obs)
         return obs, reward, done, misc_info
 
+
 def sample(distro):
     r = random()
     action_space_copy = action_space.copy()
@@ -111,6 +113,7 @@ def sample(distro):
             return a
         r -= distro[a]
     return action_space_copy[-1]
+
 
 def agent_env_interaction(agent_class, env_class, nsteps):
     step = 0
@@ -133,6 +136,7 @@ def agent_env_interaction(agent_class, env_class, nsteps):
 
     return total_reward
 
+
 print("Testing Mixee1 in CartPole_LowRes")
 total_rewards_mixee1 = []
 for _ in range(10000):
@@ -140,6 +144,7 @@ for _ in range(10000):
     total_rewards_mixee1.append(r)
 result1 = sum(total_rewards_mixee1)/len(total_rewards_mixee1)
 print(f"Avg total reward: {result1}")
+
 
 print("Testing Mixee2 in CartPole_LowRes")
 total_rewards_mixee2 = []
@@ -149,15 +154,18 @@ for _ in range(10000):
 result2 = sum(total_rewards_mixee2)/len(total_rewards_mixee2)
 print(f"Avg total reward: {result2}")
 
-coinflip = CoinFlip(Mixee1, Mixee2)
 
-print("Testing CoinFlip in CartPole_LowRes")
-total_rewards_coinflip = []
+mixture = Mix([Mixee1, Mixee2], [0.5, 0.5])
+
+
+print("Testing mixture in CartPole_LowRes")
+total_rewards_mixture = []
 for _ in range(10000):
-    r = agent_env_interaction(coinflip, CartPole_LowRes, 1000)
-    total_rewards_coinflip.append(r)
-result3 = sum(total_rewards_coinflip)/len(total_rewards_coinflip)
+    r = agent_env_interaction(mixture, CartPole_LowRes, 1000)
+    total_rewards_mixture.append(r)
+result3 = sum(total_rewards_mixture)/len(total_rewards_mixture)
 print(f"Avg total reward: {result3}")
+
 
 avged_mixees = (result1+result2)/2
 print(f"Avg of mixees: {avged_mixees} vs. Mixture's avg: {result3}")
