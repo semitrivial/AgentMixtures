@@ -38,7 +38,7 @@ for k in sb3.__dict__:
                 viable1.append((k,pol,env))
                 dist_array_duck.setdefault(k,{})
                 dist_array_duck[k].setdefault(pol,{})
-                dist_array_duck[k][pol][env] = array
+                dist_array_duck[k][pol][env] = array.tolist()
             except:
                 print('failed with',k)
                 pass
