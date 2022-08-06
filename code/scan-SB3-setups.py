@@ -19,6 +19,7 @@ import subprocess
 all_policies = subprocess.check_output("grep -ho '[a-zA-Z]*Policy' -r stable_baselines3 --include \*.py | sort | uniq",shell=True).decode().split('\n')
 viable = []
 viable1 = []
+dist_array_duck = {}
 for k in sb3.__dict__:
     for pol in all_policies:
         for env in all_envs:
@@ -32,12 +33,17 @@ for k in sb3.__dict__:
                 dist = model.policy.get_distribution(model.policy.obs_to_tensor(obs)[0])
                 print('dist:',dist);
                 viable.append((k,pol,env))
-                print(dist.distribution.probs.detach().cpu().numpy())
+                array = dist.distribution.probs.detach().cpu().numpy()
+                print(array)
                 viable1.append((k,pol,env))
+                dist_array_duck.setdefault(k,{})
+                dist_array_duck[k].setdefault(pol,{})
+                dist_array_duck[k][pol][env] = array
             except:
-                #print('failed with',k)
+                print('failed with',k)
                 pass
 
 import json
-json.dump(viable,'viable-triples.json')
-json.dump(viable1,'viable1-triples.json')
+for k in ['viable','viable1','dist_array_duck']:
+    with open(k+'.json','w') as f:
+        json.dump(globals()[k],f)
