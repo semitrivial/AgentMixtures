@@ -54,6 +54,7 @@ class Fake_learner:
   def __init__(self,sb3_trained):
       self.model = sb3_trained;
   def act(self, obs):
+      # Is this `obs` compatible?
       dist = self.model.policy.get_distribution(self.model.policy.obs_to_tensor(obs)[0])
       return dist.distribution.probs.detach().cpu().numpy().squeeze()
   def train():
