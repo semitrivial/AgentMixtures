@@ -74,3 +74,15 @@ for k in sb3.__dict__:
 import json
 json.dump(viable,'viable-triples.json')
 json.dump(viable1,'viable1-triples.json')
+
+for env in all_envs:
+    try:
+        print(env, sb3.TD3('MlpPolicy', env))
+    except:
+        pass
+
+
+
+model = sb3.SAC('MlpPolicy', 'Pendulum-v1').learn(20)
+model.policy.actor.action_dist
+model.policy.actor.action_dist.distribution

@@ -194,5 +194,6 @@ for I in range(10000):
 
     avged_mixees = (result1+result2)/2
     #print(f"#{I}, Avg of mixees: {avged_mixees} vs. Mixture's avg: {result3}")
-    print(f"#{I:6}: {result1:9.2f} {result2:9.2f} {avged_mixees:9.2f} vs {result3:9.2f}") 
+    #diff = 
+    print(f"#{I:6}: {result1:9.2f} {result2:9.2f}; {avged_mixees:9.2f} - {result3:9.2f} = {avged_mixees - result3:9.2f}") 
 
