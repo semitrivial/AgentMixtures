@@ -15,6 +15,7 @@ in mkShell {
         gym
         #cython
         numpy
+        tensorflowWithoutCuda
         pytorchWithoutCuda
         # pytorchWithCuda
         # For saving models
