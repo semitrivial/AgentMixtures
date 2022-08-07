@@ -11,8 +11,8 @@ in mkShell {
     #cudatoolkit
     #unstable.python39Packages.pytorchWithCuda
     #unstable.cudatoolkit_11_6
-    #(unstable.python39.withPackages (ps: with ps; [
-    (python37.withPackages (ps: with ps; [
+    (unstable.python39.withPackages (ps: with ps; [
+    #(python37.withPackages (ps: with ps; [
         gym
         #cython
         numpy

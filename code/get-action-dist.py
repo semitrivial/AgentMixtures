@@ -86,3 +86,48 @@ for env in all_envs:
 model = sb3.SAC('MlpPolicy', 'Pendulum-v1').learn(20)
 model.policy.actor.action_dist
 model.policy.actor.action_dist.distribution
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import gym
+from stable_baselines3 import PPO
+env = gym.make("CartPole-v1")
+model = sb3.DQN("MlpPolicy", "CartPole-v1").learn(100)
+
+def DQN_action_probability(self, observation, state=None, mask=None, actions=None, logp=False):
+    observation = np.array(observation)
+    vectorized_env = True #self._is_vectorized_observation(observation, self.observation_space)
+    observation = observation.reshape((-1,) + self.observation_space.shape)
+    actions_proba = self.proba_step(observation, state, mask)
+    if actions is not None:  # comparing the action distribution, to given actions
+        actions = np.array([actions])
+        assert isinstance(self.action_space, gym.spaces.Discrete)
+        actions = actions.reshape((-1,))
+        assert observation.shape[0] == actions.shape[0], "Error: batch sizes differ for actions and observations."
+        actions_proba = actions_proba[np.arange(actions.shape[0]), actions]
+        # normalize action proba shape
+        actions_proba = actions_proba.reshape((-1, 1))
+        if logp:
+            actions_proba = np.log(actions_proba)
+    if not vectorized_env:
+        if state is not None:
+            raise ValueError("Error: The environment must be vectorized when using recurrent policies.")
+        actions_proba = actions_proba[0]
+    return actions_proba
+
+obs = env.reset()
+DQN_action_probability(model,obs)
