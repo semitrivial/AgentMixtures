@@ -11,11 +11,13 @@ in mkShell {
     #cudatoolkit
     #unstable.python39Packages.pytorchWithCuda
     #unstable.cudatoolkit_11_6
-    (unstable.python39.withPackages (ps: with ps; [
+    #(unstable.python39.withPackages (ps: with ps; [
+    (python37.withPackages (ps: with ps; [
         gym
         #cython
         numpy
-        tensorflowWithoutCuda opencv4 tensorflow-probability #patch stable_baselines to remove tensorflow.contrib
+        #opencv4 #for stable_baselines
+        #tensorflowWithoutCuda #tensorflow-probability #patch stable_baselines to remove tensorflow.contrib
         #baselines
         pytorchWithoutCuda
         # pytorchWithCuda
@@ -42,8 +44,9 @@ in mkShell {
         #utils
         #pybullet
         #pygame_sdl2
+        pip
     ]))
   ];
-  PYTHONPATH="";
+  PYTHONPATH="./python-root";
   LD_LIBRARY_PATH="";
 }
