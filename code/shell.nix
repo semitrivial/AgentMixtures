@@ -15,7 +15,8 @@ in mkShell {
         gym
         #cython
         numpy
-        tensorflowWithoutCuda
+        tensorflowWithoutCuda opencv4 tensorflow-probability #patch stable_baselines to remove tensorflow.contrib
+        #baselines
         pytorchWithoutCuda
         # pytorchWithCuda
         # For saving models
