@@ -12,9 +12,13 @@ in mkShell {
     #unstable.python39Packages.pytorchWithCuda
     #unstable.cudatoolkit_11_6
     (unstable.python39.withPackages (ps: with ps; [
+    #(python37.withPackages (ps: with ps; [
         gym
         #cython
         numpy
+        #opencv4 #for stable_baselines
+        #tensorflowWithoutCuda #tensorflow-probability #patch stable_baselines to remove tensorflow.contrib
+        #baselines
         pytorchWithoutCuda
         # pytorchWithCuda
         # For saving models
@@ -40,8 +44,9 @@ in mkShell {
         #utils
         #pybullet
         #pygame_sdl2
+        pip
     ]))
   ];
-  PYTHONPATH="";
+  PYTHONPATH="./python-root";
   LD_LIBRARY_PATH="";
 }
