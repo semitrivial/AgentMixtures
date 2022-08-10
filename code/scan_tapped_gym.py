@@ -68,5 +68,5 @@ for k in sb3.__dict__:
                     model.learn(2)
                     print("#############################################")
                 except Exception as e:
-                    print('FAIL',k,pol,e)
+                    print('FAIL',k,pol,env0,e)
                     pass
