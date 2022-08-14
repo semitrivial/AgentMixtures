@@ -51,3 +51,5 @@ experiment 2 (much slower, still running):
 #   105:    661.59    800.24    730.92 vs    710.47
 #   106:    661.88    800.66    731.27 vs    710.09
 #   107:    662.16    800.57    731.37 vs    711.96
+
+nix-shell --run 'python3.9 scan_tapped_gym.py' | tee scan_tapped_gym-1.log | uniq -c > scan_tapped_gym_dedup-1.log
