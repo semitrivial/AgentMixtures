@@ -44,9 +44,26 @@ in mkShell {
         #utils
         #pybullet
         #pygame_sdl2
+        pyopengl
+        glfw
         pip
+        absl-py
     ]))
   ];
-  PYTHONPATH="./python-root";
+  PYTHONPATH="";
+  #PYTHONPATH="./python-root";
+  #PIP_TARGET="./python-root";
+  #PYTHONUSERBASE="./python-root";
+  #PYTHONUSERSITE="./python-root";
   LD_LIBRARY_PATH="";
+
+  #virtual env does not work either - pulls numpy and so on
+  #shellHook="
+  #  python3.9 -m venv python-venv
+  #  source python-venv/bin/activate
+  #";
+
+
+  #nix-shell --run 'pip install mujoco --no-cache-dir -t python-root'
+  # fails because it check dependencies in PIP_TARGET
 }
