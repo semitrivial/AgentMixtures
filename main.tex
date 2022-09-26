@@ -5,7 +5,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%AISTATS header%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[twoside]{article}
-%\usepackage{AISTATS2023PaperPack/aistats2023}
+\usepackage{AISTATS2023PaperPack/aistats2023}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% not for COLT %%%%%%%%%%%%%%%
@@ -16,16 +16,17 @@
 % \smartqed  % flush right qed marks, e.g. at end of proof
 % \usepackage{graphicx}
 %\newtheorem{definition}[definition]{Definition}
+%
 % \pagenumbering{gobble}
- \newtheorem{theorem}{Theorem}
- \newtheorem{definition}[theorem]{Definition}
- \newtheorem{remark}[theorem]{Remark}
- \newtheorem{lemma}[theorem]{Lemma}
- \newtheorem{example}[theorem]{Example}
- \newtheorem{proposition}[theorem]{Proposition}
- \newtheorem{corollary}[theorem]{Corollary}
- \newtheorem{definition}[theorem]{Definition}
- \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -34,7 +35,12 @@
 
 \begin{document}
 
-\title{Agent mixtures and the genericness of non-deterministic intelligence}
+%\twocolumn[
+%\aistatstitle{Instructions for Paper Submissions to AISTATS 2023}
+%\aistatsauthor{ Author 1 \And Author 2 \And  Author 3 }
+%\aistatsaddress{ Institution 1 \And  Institution 2 \And Institution 3 } ]
+
+ \title{Agent mixtures and the genericness of non-deterministic intelligence}
 % \titlerunning{Agent mixtures and genericness}
 \author{Samuel Allen Alexander \& Len Du \& Marcus Hutter}
 
@@ -1386,7 +1392,7 @@ clear.
     \end{enumerate}
 \end{example}
 
-%\bibliographystyle{alpha}
+\bibliographystyle{alpha} % Not for COLT
 \bibliography{main}
 
 \appendix
