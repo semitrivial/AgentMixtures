@@ -170,9 +170,9 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         which assigns to every sequence
         $h\in (\mathcal P\mathcal A)^* \mathcal P$ a
         $\mathbb Q$-valued probability measure,
-        written $\pi(\bullet|h)$, on $\mathcal A$.
+        written $\pi(\cdot|h)$, on $\mathcal A$.
         For every such $h$ and every $a\in\mathcal A$,
-        we write $\pi(a|h)$ for $(\pi(\bullet|h))(a)$.
+        we write $\pi(a|h)$ for $(\pi(\cdot|h))(a)$.
         Intuitively, $\pi(a|h)$ is the probability that agent $\pi$
         will take action $a$ in response to history $h$.
         \item
@@ -181,12 +181,12 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         which assigns to every
         $h\in (\mathcal P\mathcal A)^*$
         a $\mathbb Q$-valued probability measure,
-        written $\mu(\bullet|h)$,
+        written $\mu(\cdot|h)$,
         on $\mathcal P$.
         For every such $s$ and every $(o,r)\in\mathcal P$,
-        we write $\mu(o,r|h)$ for $(\mu(\bullet|h))(o,r)$.
+        we write $\mu(o,r|h)$ for $(\mu(\cdot|h))(o,r)$.
         If $p=(o,r)$ then we may also write $\mu(p|h)$ for
-        $(\mu(\bullet|h))(o,r)$.
+        $(\mu(\cdot|h))(o,r)$.
         Intuitively, $\mu(o,r|h)$ is the probability that environment
         $\mu$ will issue percept $(o,r)$ (observation $o$ and reward $r$)
         to the agent in response to history $h$.
@@ -198,18 +198,18 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         randomly generated as follows:
         \begin{enumerate}
             \item $x_1\in \mathcal P$ is chosen randomly based
-            on the probability measure $\mu(\bullet|\langle\rangle)$.
+            on the probability measure $\mu(\cdot|\langle\rangle)$.
             \item $y_1\in\mathcal A$ is chosen randomly based on the probability
-            measure $\pi(\bullet|x_1)$.
+            measure $\pi(\cdot|x_1)$.
             \item
             For each $i>1$,
             $x_i\in\mathcal P$ is chosen randomly based on
             the probability measure
-            $\mu(\bullet|x_1y_1\ldots x_{i-1}y_{i-1})$.
+            $\mu(\cdot|x_1y_1\ldots x_{i-1}y_{i-1})$.
             \item
             For each $i>1$,
             $y_i\in\mathcal A$ is chosen randomly based on the probability measure
-            $\pi(\bullet|x_1y_1\ldots x_{i-1}y_{i-1}x_i)$.
+            $\pi(\cdot|x_1y_1\ldots x_{i-1}y_{i-1}x_i)$.
         \end{enumerate}
         \item
         If $\pi$ is an agent and $\mu$ is an environment,
@@ -227,11 +227,11 @@ then $V^\pi_\mu$ is undefined for every agent $\pi$.
 \begin{remark}
 \label{impossibleremark}
     Note that in Definition \ref{omnibusdefn} part 3, we require,
-    e.g., $\pi(\bullet|x_1y_1x_2)$ to be defined even if
+    e.g., $\pi(\cdot|x_1y_1x_2)$ to be defined even if
     $\pi(y_1|x_1)=0$, in which case in Definition \ref{omnibusdefn} part 5,
     there would be zero probability that the randomly-generated initial
     sequence would begin with this particular $x_1y_1x_2$
-    (so that $\pi(\bullet|x_1y_1x_2)$ contributes nothing to
+    (so that $\pi(\cdot|x_1y_1x_2)$ contributes nothing to
     $V^\pi_{\mu,t}$ and thus nothing to $V^\pi_\mu$).
     Intuitively, an agent must choose actions even in response to
     a history that is ``impossible'' for that agent (impossible because the history
@@ -1070,7 +1070,7 @@ some interesting results.
 
 The following proposition shows that
 for any particular history $h$ and agent $\pi$,
-for any decomposition of $\pi(\bullet|h)$ into a weighted sum
+for any decomposition of $\pi(\cdot|h)$ into a weighted sum
 of probability distributions $m_1,\ldots,m_n$,
 $\pi$ has the same intelligence as the weighted mixture of the corresponding $n$ agents
 $\pi^{h\mapsto \vec m}$.
@@ -1080,7 +1080,7 @@ $\pi^{h\mapsto \vec m}$.
     Let $\Upsilon$ be any weighted intelligence measure, let $\pi$ be any agent,
     and let $h\in(\mathcal P\mathcal A)^*\mathcal P$.
     Suppose $\vec m$ and $\vec w$ are as in Definition \ref{sumofdistros}.
-    If $\vec w\cdot\vec m = \pi(\bullet|h)$, then
+    If $\vec w\cdot\vec m = \pi(\cdot|h)$, then
     $
         \Upsilon(\pi)
         =
@@ -1148,7 +1148,7 @@ $\pi^{h\mapsto \vec m}$.
             &= w_1\pi_*(h)m_1(a)+\cdots+w_n\pi_*(h)m_n(a)
                     &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
             &= \pi_*(h)\pi(a|h)
-                    &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
+                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
             &= \pi_*(h\circ a) = \pi_*(g).
                     &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
@@ -1169,7 +1169,7 @@ $\pi^{h\mapsto \vec m}$.
             &= \frac{\pi_*(f\circ a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
             &= \frac{\pi_*(f\circ a)}{\pi(a_0|h)}\pi(a_0|h)
-                    &\mbox{($\vec w\cdot\vec m=\pi(\bullet|h)$)}\\
+                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
             &= \pi_*(f\circ a) = \pi_*(g).
     \end{align*}
 
@@ -1196,7 +1196,7 @@ $\pi^{h\mapsto \vec m}$.
     Let $h\in (\mathcal P\mathcal A)^*\mathcal P$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
-    if $\vec w\cdot\vec m=\pi(\bullet|h)$,
+    if $\vec w\cdot\vec m=\pi(\cdot|h)$,
     then one of the following is true:
     \begin{enumerate}
         \item For each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})=\Upsilon(\pi)$.
@@ -1223,15 +1223,15 @@ $\pi^{h\mapsto \vec m}$.
 \end{proof}
 
 Theorem \ref{pointwisegenericnessthm} is interesting because it implies that for
-any intelligent agent $\pi$, for any history $h$, if $\pi(\bullet|h)$ is not deterministic,
+any intelligent agent $\pi$, for any history $h$, if $\pi(\cdot|h)$ is not deterministic,
 then the optimality of $\pi$ does not critically depend on the specific probabilities
-which $\pi(\bullet|h)$ assigns to different actions. For any decomposition
-$\pi(\bullet|h)=\vec w\cdot\vec m$ of $\pi(\bullet|h)$ into competing probability
+which $\pi(\cdot|h)$ assigns to different actions. For any decomposition
+$\pi(\cdot|h)=\vec w\cdot\vec m$ of $\pi(\cdot|h)$ into competing probability
 distributions $\vec m$
 (with $w_1+\cdots+w_n=1$), either $\pi^{h\mapsto m_i}$ is more intelligent
 than $\pi$ for some $i$, or else every $\pi^{h\mapsto m_i}$ has the same intelligence as
 $\pi$. This is counter-intuitive because one might imagine that the specific probability
-distribution $\pi(\bullet|h)$ was carefully chosen and optimized to maximize the intelligence
+distribution $\pi(\cdot|h)$ was carefully chosen and optimized to maximize the intelligence
 of $\pi$.
 
 \begin{example}
@@ -1260,17 +1260,17 @@ of $\pi$.
     Let $\vec w=(w_1,w_2,w_3)=(\frac13,\frac13,\frac13)$. Then $w_1+w_2+w_3=1$ and
     it is easy to check
     $(\vec w\cdot\vec m)(a)=\frac13$ for every $a\in\mathcal A$,
-    i.e., $\vec w\cdot\vec m=\pi(\bullet|h_0)$.
+    i.e., $\vec w\cdot\vec m=\pi(\cdot|h_0)$.
     By Theorem \ref{pointwisegenericnessthm},
     for any weighted intelligence measure $\Upsilon$,
     one of the following statements is true:
     \begin{enumerate}
         \item
         For all $i=1,2,3$, $\pi$'s intelligence would not change if we
-        changed the value of $\pi(\bullet|h_0)$ to $m_i$. Or,
+        changed the value of $\pi(\cdot|h_0)$ to $m_i$. Or,
         \item
         For some $i=1,2,3$, $\pi$'s intelligence would increase if
-        we changed the value of $\pi(\bullet|h_0)$ to $m_i$.
+        we changed the value of $\pi(\cdot|h_0)$ to $m_i$.
     \end{enumerate}
 \end{example}
 
@@ -1315,7 +1315,7 @@ Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 \end{proof}
 
 Corollary \ref{nondeterminismcorollary} shows that for any individual
-history $h_0$, the optimality of $\pi$ cannot crucially depend on $\pi(\bullet|h_0)$
+history $h_0$, the optimality of $\pi$ cannot crucially depend on $\pi(\cdot|h_0)$
 being non-deterministic. This is counter-intuitive because we could imagine saying:
 ``In response to such-and-such history, it would be optimal for our agent
 to assume the environment is such-and-such environment where it is optimal to
