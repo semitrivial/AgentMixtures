@@ -396,7 +396,7 @@ to proofs by induction.
     $h\in\mathcal H$, $t\in\mathbb N$, and $\Upsilon$ is a weighted
     intelligence measure, then we define:
     \begin{itemize}
-        \item $\vec\pi_*(h)=(\pi^1_*(h),\ldots,\pi^n_*(h))$.
+        \item ${P^{\vec\pi}}(h)=(\pi^1_*(h),\ldots,\pi^n_*(h))$.
         \item $(\vec\pi,\mu)_*(h)=((\pi^1,\mu)_*(h),\ldots,(\pi^n,\mu)_*(h))$.
         \item $V^{\vec\pi}_{\mu,t}=(V^{\pi^1}_{\mu,t},\ldots,V^{\pi^n}_{\mu,t})$.
         \item If each $V^{\pi^i}_\mu$ converges, we say $V^{\vec\pi}_\mu$
@@ -423,35 +423,18 @@ Now we are ready to define mixture agents.
         (\vec w\cdot\vec\pi)(a|h)
         =
         \begin{cases}
-            \dfrac{\vec w\cdot \vec\pi_*(h\circ a)}{\vec w\cdot \vec\pi_*(h)}
-            &\mbox{if $\vec w\cdot \vec\pi_*(h)\not=0$,}\\
-            1/|\mathcal{A}| &\mbox{otherwise}
+            \dfrac{\vec w\cdot {P^{\vec\pi}}(h\circ a)}{\vec w\cdot {P^{\vec\pi}}(h)}
+            &\mbox{if $\vec w\cdot {P^{\vec\pi}}(h)\not=0$,}\\
+            1/|\mathcal{A}| &\mbox{otherwise.}
         \end{cases}
     \]
-    where
-    $\vec w\cdot\vec\pi_*(h)$ denotes $\vec w\cdot(\vec\pi_*(h))$ and
-    $\vec w\cdot\vec\pi_*(h\circ a)$ denotes
-    $\vec w\cdot(\vec\pi_*(h\circ a))$.
 \end{definition}
-
-\begin{remark}
-\label{ambiguityremark}
-    In Definition \ref{maindefn},
-    the expression $\vec w\cdot \vec\pi_*(h)$ would have been inherently
-    ambiguous if we had not specified that it denotes
-    the vector dot-product $\vec w\cdot (\vec\pi_*(h))$.
-    For, otherwise, it could just as well denote
-    $(\vec w\cdot \vec\pi)_*(h)$.
-    Likewise for $\vec w\cdot \vec\pi_*(h\circ a)$.
-    In Theorem \ref{maintheorem} below, we will see that in fact
-    there is no ambiguity: $\vec w\cdot(\vec\pi_*(h))=(\vec w\cdot \vec\pi)_*(h)$.
-\end{remark}
 
 \begin{remark}
     Definition \ref{maindefn} is complicated by Remark \ref{impossibleremark},
     which forces us to include the case
     $(\vec w\cdot\vec\pi)(a|h)=1/|\mathcal A|$ when
-    $\vec w\cdot \vec\pi_*(h)=0$: we are obligated to specify how
+    $\vec w\cdot {P^{\vec\pi}}(h)=0$: we are obligated to specify how
     $\vec w\cdot\vec\pi$ chooses actions even in response to histories that
     are ``impossible'' for $\vec w\cdot\vec\pi$ (histories which involve
     $\vec w\cdot\vec\pi$ having taken actions which $\vec w\cdot\vec\pi$
@@ -471,32 +454,32 @@ Now we are ready to define mixture agents.
     It remains to show
     $\sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)=1$.
 
-    Case 1: $\vec w\cdot (\vec\pi_*(h))=0$. Then
+    Case 1: $\vec w\cdot {P^{\vec\pi}}(h)=0$. Then
     each $(\vec w\cdot\vec\pi)(a|h)=1/|\mathcal A|$ so the
     claim is immediate.
 
-    Case 2: $\vec w\cdot (\vec\pi_*(h))\not=0$. Then
+    Case 2: $\vec w\cdot {P^{\vec\pi}}(h)\not=0$. Then
     \begin{align*}
         &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)\\
             &= \sum_{a\in\mathcal A}
-                \frac{\vec w\cdot (\vec\pi_*(h\circ a))}{\vec w\cdot (\vec\pi_*(h))}
+                \frac{\vec w\cdot {P^{\vec\pi}}(h\circ a)}{\vec w\cdot {P^{\vec\pi}}(h)}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
                 \frac
                 {w_1\pi^1_*(h)\pi^1(a|h)+\cdots+w_n\pi^n_*(h)\pi^n(a|h)}
-                {\vec w\cdot(\vec\pi_*(h))}
+                {\vec w\cdot({P^{\vec\pi}}(h))}
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \frac{
                 w_1\pi^1_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|h)$}\right)
                 +\cdots+
                 w_n\pi^n_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|h)$}\right)
                 }
-                {\vec w\cdot (\vec\pi_*(h))}
+                {\vec w\cdot ({P^{\vec\pi}}(h))}
                 &\mbox{(Algebra)}\\
             &= \frac
                 {w_1\pi^1_*(h)\cdot 1 + \cdots + w_n\pi^n_*(h)\cdot1}
-                {\vec w\cdot (\vec\pi_*(h))}
-                =\frac{\vec w\cdot (\vec\pi_*(h))}{\vec w\cdot (\vec\pi_*(h))}=1.
+                {\vec w\cdot ({P^{\vec\pi}}(h))}
+                =\frac{\vec w\cdot ({P^{\vec\pi}}(h))}{\vec w\cdot ({P^{\vec\pi}}(h))}=1.
                 &\mbox{($\pi^i$ are agents)}
     \end{align*}
 \end{proof}
@@ -511,7 +494,7 @@ Now we are ready to define mixture agents.
     \begin{enumerate}
         \item
         For any $h\in\mathcal H$,
-        $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot(\vec\pi_*(h))$.
+        $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot({P^{\vec\pi}}(h))$.
         \item
         For any $h\in\mathcal H$,
         $(\vec w\cdot \vec\pi,\mu)_*(h)=\vec w\cdot(\vec\pi,\mu)_*(h)$.
@@ -536,24 +519,24 @@ Now we are ready to define mixture agents.
 
     Case 1: $h=\langle\rangle$. Then
     $(\vec w\cdot\vec\pi)_*(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
-    =\vec w\cdot (\vec\pi_*(h))$.
+    =\vec w\cdot ({P^{\vec\pi}}(h))$.
 
     Case 2: $h=g\circ p$ for some $p\in\mathcal P$. Then
     \begin{align*}
         (\vec w\cdot \vec\pi)_*(h)
             &= (\vec w\cdot\vec\pi)_*(g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi_*(g))
+            &= \vec w\cdot({P^{\vec\pi}}(g))
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(g\circ p))
+            &= \vec w\cdot({P^{\vec\pi}}(g\circ p))
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi_*(h)).
+            &= \vec w\cdot({P^{\vec\pi}}(h)).
     \end{align*}
 
     Case 3: $h=g\circ a$ for some $a\in\mathcal A$.
 
     Subcase 3.1: $(\vec w\cdot \vec\pi)_*(g)=0$.
-        By induction $\vec w\cdot(\vec\pi_*(g))=0$.
+        By induction $\vec w\cdot({P^{\vec\pi}}(g))=0$.
         Since the $w_i$ are positive, this implies
         each $\pi^i_*(g)=0$.
         Thus each
@@ -563,7 +546,7 @@ Now we are ready to define mixture agents.
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= 0w_i\pi^i(a|g)=0,
         \end{align*}
-        i.e., $\vec w\cdot(\vec\pi_*(g\circ a))=0$.
+        i.e., $\vec w\cdot({P^{\vec\pi}}(g\circ a))=0$.
         And
         \begin{align*}
             (\vec w\cdot\vec\pi)_*(g\circ a)
@@ -573,24 +556,24 @@ Now we are ready to define mixture agents.
         \end{align*}
         so $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot(\vec \pi_*(h))=0$.
 
-    Subcase 3.2: $\vec w\cdot (\vec\pi_*(g))\not=0$. Then
+    Subcase 3.2: $\vec w\cdot ({P^{\vec\pi}}(g))\not=0$. Then
     \begin{align*}
         (\vec w\cdot\vec\pi)_*(h)
             &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= (\vec w\cdot\vec\pi)_*(g)
                 \frac
-                {\vec w\cdot(\vec\pi_*(g\circ a))}
-                {\vec w\cdot(\vec\pi_*(g))}
+                {\vec w\cdot({P^{\vec\pi}}(g\circ a))}
+                {\vec w\cdot({P^{\vec\pi}}(g))}
                 &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot(\vec\pi_*(g))
+            &= \vec w\cdot({P^{\vec\pi}}(g))
                 \frac
-                {\vec w\cdot(\vec\pi_*(g\circ a))}
-                {\vec w\cdot(\vec\pi_*(g))}
+                {\vec w\cdot({P^{\vec\pi}}(g\circ a))}
+                {\vec w\cdot({P^{\vec\pi}}(g))}
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(g\circ a))
+            &= \vec w\cdot({P^{\vec\pi}}(g\circ a))
                 &\mbox{(Basic Algebra)}\\
-            &= \vec w\cdot(\vec\pi_*(h)).
+            &= \vec w\cdot({P^{\vec\pi}}(h)).
     \end{align*}
 
     (2) Follows from (1) and Lemma \ref{factorizationlemma}.
@@ -603,8 +586,8 @@ Now we are ready to define mixture agents.
 \end{proof}
 
 By part 1 of Theorem \ref{maintheorem},
-we may unambiguously write $\vec w\cdot \vec\pi_*(h)$
-for either $(\vec w\cdot\vec\pi)_*(h)$ or $\vec w\cdot(\vec\pi_*(h))$.
+we may unambiguously write $\vec w\cdot {P^{\vec\pi}}(h)$
+for either $(\vec w\cdot\vec\pi)_*(h)$ or $\vec w\cdot({P^{\vec\pi}}(h))$.
 We will freely do so for the remainder of the paper.
 
 \section{Duality and Janus agents:
@@ -714,8 +697,8 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     simultaneously by induction on $h$.
  
     Case 1: $h=\langle\rangle$. Then
-    $\pi_*(h)=\vec w\cdot\vec\pi_*(h)=1\not=0$, so
-    vacuously $\pi_*(h)=0$ iff $\vec w\cdot\vec\pi_*(h)=0$
+    $\pi_*(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
+    vacuously $\pi_*(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
     (proving condition 1).
     For condition 2, there is nothing to check, since
     $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
@@ -728,7 +711,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 
         Subcase 2.1: $\pi_*(h_0)=0$.
         By induction, condition 1 holds for $h_0$, so
-        $\vec w\cdot\vec\pi_*(h_0)=0$.
+        $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
         By Definition \ref{pullbackdef},
         $\pi_*(h)=0\pi(a_0|h_0)=0$
         and $(\vec w\cdot\vec\pi)_*(h)=0(\vec w\cdot\vec\pi)(a_0|h_0)=0$.
@@ -738,7 +721,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         Then
         \begin{align*}
             (\vec w\cdot \vec\pi)_*(h)
-                &= \vec w\cdot(\vec\pi_*(h))
+                &= \vec w\cdot({P^{\vec\pi}}(h))
                     &\mbox{(Theorem \ref{maintheorem})}\\
                 &= (w_1\pi_*(h)+\cdots+w_n\pi_*(h))
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
@@ -761,12 +744,12 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         For condition 2,
         assume $\pi_*(h)\not=0$ and let $a\in\mathcal A$.
         By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot\vec\pi_*(h)=w_1\pi_*(h)+\cdots+w_n\pi_*(h)=\pi_*(h)$.
-        So, since $\pi_*(h)\not=0$, $\vec w\cdot\vec\pi_*(h)\not=0$.
+        $\vec w\cdot{P^{\vec\pi}}(h)=w_1\pi_*(h)+\cdots+w_n\pi_*(h)=\pi_*(h)$.
+        So, since $\pi_*(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
         Thus
         \begin{align*}
             (\vec w\cdot\vec\pi)(a|h)
-                &= \frac{\vec w\cdot \vec\pi_*(h\circ a)}{\vec w\cdot\vec\pi_*(h)}
+                &= \frac{\vec w\cdot {P^{\vec\pi}}(h\circ a)}{\vec w\cdot{P^{\vec\pi}}(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
                 &= \frac{w_1\pi_*(h\circ a)+\cdots+w_n\pi_*(h\circ a)}
                     {w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
@@ -1143,7 +1126,7 @@ $\pi^{h\mapsto \vec m}$.
     \begin{align*}
         (\vec w\cdot\vec\pi)_*(g)
             &= (\vec w\cdot\vec\pi)_*(h\circ a)\\
-            &= \vec w\cdot\vec\pi_*(h\circ a)
+            &= \vec w\cdot{P^{\vec\pi}}(h\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
             &= w_1\pi_*(h)m_1(a)+\cdots+w_n\pi_*(h)m_n(a)
                     &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
@@ -1161,7 +1144,7 @@ $\pi^{h\mapsto \vec m}$.
     \begin{align*}
         (\vec w\cdot\vec\pi)_*(g)
             &= (\vec w\cdot \vec\pi)_*(f\circ a)\\
-            &= \vec w\cdot\vec\pi_*(f\circ a)
+            &= \vec w\cdot{P^{\vec\pi}}(f\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
             &= w_1\frac{\pi_*(f\circ a)m_1(a_0)}{\pi(a_0|h)}
                 +\cdots+w_n\frac{\pi_*(f\circ a)m_n(a_0)}{\pi(a_0|h)}
@@ -1178,7 +1161,7 @@ $\pi^{h\mapsto \vec m}$.
     \begin{align*}
         (\vec w\cdot\vec\pi)_*(g)
             &= (\vec w\cdot\vec\pi)_*(f\circ a)\\
-            &= \vec w\cdot\vec\pi_*(f\circ a)
+            &= \vec w\cdot{P^{\vec\pi}}(f\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
             &= w_1\pi_*(f\circ a)+\cdots+w_n\pi_*(f\circ a)
                     &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
