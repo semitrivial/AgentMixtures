@@ -259,9 +259,13 @@ then $V^\pi_\mu$ is undefined for every agent $\pi$.
 \end{definition}
 
 The prototypical weighted intelligence measure is the Legg-Hutter intelligence
-measure $\Upsilon$, where each well-behaved $\mu$ is given weight $2^{-K(\mu)}$
-where $K$ denotes Kolmogorov complexity (dependent on a background universal
-Turing machine) \cite{legg2007universal}.
+measure $\Upsilon$ introduced in \cite{legg2007universal},
+where each well-behaved $\mu$ is
+weighed using the universal prior \cite{li2008introduction}, i.e.,
+given weight $2^{-K(\mu)}$
+where $K$ denotes Kolmogorov complexity. This depends on a background universal
+Turing machine, the choice of which is highly nontrivial
+\cite{leike2015bad}.
 
 \section{Mixture agents}
 
