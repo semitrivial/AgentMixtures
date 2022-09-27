@@ -101,12 +101,12 @@ with $\mu$. But this is all quite informal, as the RL
 framework does not actually provide any mechanism for such an initial
 coin-flip.
 
-More generally, given agents $\vec{\pi}=(\pi^1,\ldots,\pi^n)$ and positive real
+More generally, given agents $\vec{\pi}=(\pi_1,\ldots,\pi_n)$ and positive real
 numbers
 $\vec{w}=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
 who, at the start of each agent-environment interaction, randomly transforms
-into $\pi^1$ (with probability $w_1$) or into $\pi^2$ (with probability $w_2$),
-etc. If each $\pi^i$ would get total expected reward $r_i$ from an environment
+into $\pi_1$ (with probability $w_1$) or into $\pi_2$ (with probability $w_2$),
+etc. If each $\pi_i$ would get total expected reward $r_i$ from an environment
 $\mu$, intuitively $\sigma$ should get total expected reward
 $\vec{w}\cdot \vec{r}=w_1r_1+\cdots+w_nr_n$ from that environment.
 But again, the RL
@@ -556,24 +556,24 @@ Now we are ready to define mixture agents.
         \end{align*}
         so $P^{\vec w\cdot\vec\pi}(h)=\vec w\cdot P^{\vec\pi}(h)=0$.
 
-    Subcase 3.2: $\vec w\cdot ({P^{\vec\pi}}(g))\not=0$. Then
+    Subcase 3.2: ${P^{\vec w\cdot\vec\pi}}(g)\not=0$. Then
     \begin{align*}
         P^{\vec w\cdot\vec\pi}(h)
             &= P^{\vec w\cdot\vec\pi}(g)(\vec w\cdot\vec\pi)(a|g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= P^{\vec w\cdot\vec\pi}(g)
                 \frac
-                {\vec w\cdot({P^{\vec\pi}}(g\circ a))}
-                {\vec w\cdot({P^{\vec\pi}}(g))}
+                {\vec w\cdot {P^{\vec\pi}}(g\circ a)}
+                {\vec w\cdot {P^{\vec\pi}}(g)}
                 &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot({P^{\vec\pi}}(g))
+            &= \vec w\cdot {P^{\vec\pi}}(g)
                 \frac
-                {\vec w\cdot({P^{\vec\pi}}(g\circ a))}
-                {\vec w\cdot({P^{\vec\pi}}(g))}
+                {\vec w\cdot {P^{\vec\pi}}(g\circ a)}
+                {\vec w\cdot {P^{\vec\pi}}(g)}
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot({P^{\vec\pi}}(g\circ a))
+            &= \vec w\cdot {P^{\vec\pi}}(g\circ a)
                 &\mbox{(Basic Algebra)}\\
-            &= \vec w\cdot({P^{\vec\pi}}(h)).
+            &= \vec w\cdot {P^{\vec\pi}}(h).
     \end{align*}
 
     (2) Follows from (1) and Lemma \ref{factorizationlemma}.
@@ -716,9 +716,9 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         Then
         \begin{align*}
             P^{\vec w\cdot \vec\pi}(h)
-                &= \vec w\cdot({P^{\vec\pi}}(h))
+                &= \vec w\cdot{P^{\vec\pi}}(h)
                     &\mbox{(Theorem \ref{maintheorem})}\\
-                &= (w_1 P^\pi(h)+\cdots+w_n P^\pi(h))
+                &= w_1 P^\pi(h)+\cdots+w_n P^\pi(h)
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
                 &= P^\pi(h)
                     &\mbox{($w_1+\cdots+w_n=1$)}\\
@@ -740,7 +740,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         For condition 2,
         assume $P^\pi(h)\not=0$ and let $a\in\mathcal A$.
         By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^pi(h)=P^\pi(h)$.
+        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^\pi(h)=P^\pi(h)$.
         So, since $P^\pi(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
         Thus
         \begin{align*}
@@ -769,14 +769,25 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     we claim
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(a|h)$.
-    If $P^{\vec w\cdot(\pi,\overline\pi)}(h)=0$
-    then it follows by Lemmas \ref{doublenegationlemma} and
-    \ref{asteriskcommuteswithoverlinelemma} that
-    $P^{\overline{\vec w\cdot(\pi,\overline\pi)}}(h)=0$,
-    so by Definition \ref{maindefn},
+    Noting that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\frac12P^\pi(h)+\frac12P^{\overline\pi}(h)$
+    and
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)
+    =\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)$,
+    Lemmas \ref{doublenegationlemma} and \ref{asteriskcommuteswithoverlinelemma}
+    imply that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)$.
+    So if
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)=0$
+    then $\vec w\cdot P^{(\pi,\overline{\pi})}(h)=0$
+    and it follows from
+    Definition \ref{maindefn}
+    and Lemma \ref{asteriskcommuteswithoverlinelemma} that
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(a|h)=1/|\mathcal A|$.
-    But assume $P^{\vec w\cdot(\pi,\overline\pi)}(h)\not=0$.
+    But assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
     Then:
     \begin{align*}
         \overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
