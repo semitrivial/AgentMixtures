@@ -392,16 +392,16 @@ to proofs by induction.
 \end{proof}
 
 \begin{definition}
-    If $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents, $\mu$ is an environment,
+    If $\vec\pi=(\pi_1,\ldots,\pi_n)$ are agents, $\mu$ is an environment,
     $h\in\mathcal H$, $t\in\mathbb N$, and $\Upsilon$ is a weighted
     intelligence measure, then we define:
     \begin{itemize}
-        \item ${P^{\vec\pi}}(h)=(\pi^1_*(h),\ldots,\pi^n_*(h))$.
-        \item $(\vec\pi,\mu)_*(h)=((\pi^1,\mu)_*(h),\ldots,(\pi^n,\mu)_*(h))$.
-        \item $V^{\vec\pi}_{\mu,t}=(V^{\pi^1}_{\mu,t},\ldots,V^{\pi^n}_{\mu,t})$.
-        \item If each $V^{\pi^i}_\mu$ converges, we say $V^{\vec\pi}_\mu$
-            converges, and define $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$.
-        \item $\Upsilon(\vec\pi)=(\Upsilon(\pi^1),\ldots,\Upsilon(\pi^n))$.
+        \item ${P^{\vec\pi}}(h)=(P^{\pi_1}(h),\ldots,P^{\pi_n}(h))$.
+        \item $P^{\vec\pi}_\mu(h)=(P^{\pi_1}_\mu(h),\ldots,P^{\pi_n}_\mu(h))$.
+        \item $V^{\vec\pi}_{\mu,t}=(V^{\pi_1}_{\mu,t},\ldots,V^{\pi_n}_{\mu,t})$.
+        \item If each $V^{\pi_i}_\mu$ converges, we say $V^{\vec\pi}_\mu$
+            converges, and define $V^{\vec\pi}_\mu=(V^{\pi_1}_\mu,\ldots,V^{\pi_n}_\mu)$.
+        \item $\Upsilon(\vec\pi)=(\Upsilon(\pi_1),\ldots,\Upsilon(\pi_n))$.
     \end{itemize}
     Recall that if $\vec u=(u_1,\ldots,u_n)$ and
     $\vec v=(v_1,\ldots,v_n)$ are any two equal-length
@@ -415,7 +415,7 @@ Now we are ready to define mixture agents.
 \begin{definition}
 \label{maindefn}
     (Mixture agents)
-    Suppose $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
+    Suppose $\vec\pi=(\pi_1,\ldots,\pi_n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
     are positive real numbers with $w_1+\cdots+w_n=1$.
     Define the \emph{mixture agent} $\vec w\cdot\vec\pi$ as follows: for all
     $h\in (\mathcal P\mathcal A)^*\mathcal P$, let
@@ -466,38 +466,38 @@ Now we are ready to define mixture agents.
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
                 \frac
-                {w_1\pi^1_*(h)\pi^1(a|h)+\cdots+w_n\pi^n_*(h)\pi^n(a|h)}
-                {\vec w\cdot({P^{\vec\pi}}(h))}
+                {w_1 P^{\pi_1}(h)\pi_1(a|h)+\cdots+w_n P^{\pi_n}(h)\pi_n(a|h)}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \frac{
-                w_1\pi^1_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|h)$}\right)
+                w_1 P^{\pi_1}(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi_1(a|h)$}\right)
                 +\cdots+
-                w_n\pi^n_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|h)$}\right)
+                w_n P^{\pi_n}(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi_n(a|h)$}\right)
                 }
-                {\vec w\cdot ({P^{\vec\pi}}(h))}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
                 &\mbox{(Algebra)}\\
             &= \frac
-                {w_1\pi^1_*(h)\cdot 1 + \cdots + w_n\pi^n_*(h)\cdot1}
-                {\vec w\cdot ({P^{\vec\pi}}(h))}
-                =\frac{\vec w\cdot ({P^{\vec\pi}}(h))}{\vec w\cdot ({P^{\vec\pi}}(h))}=1.
-                &\mbox{($\pi^i$ are agents)}
+                {w_1 P^{\pi_1}(h)\cdot 1 + \cdots + w_n P^{\pi_n}(h)\cdot1}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                =\frac{\vec w\cdot {P^{\vec\pi}}(h)}{\vec w\cdot {P^{\vec\pi}}(h)}=1.
+                &\mbox{($\pi_i$ are agents)}
     \end{align*}
 \end{proof}
 
 \begin{theorem}
 \label{maintheorem}
     (Commutativity of $\vec w$)
-    Let $\vec\pi=(\pi^1,\ldots,\pi^n)$ be agents.
+    Let $\vec\pi=(\pi_1,\ldots,\pi_n)$ be agents.
     Let $\vec w=(w_1,\ldots,w_n)$ be positive reals with
     $w_1+\cdots+w_n=1$. Let $\mu$ be any environment.
     Then:
     \begin{enumerate}
         \item
         For any $h\in\mathcal H$,
-        $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot({P^{\vec\pi}}(h))$.
+        $P^{\vec w\cdot \vec\pi}(h)=\vec w\cdot {P^{\vec\pi}}(h)$.
         \item
         For any $h\in\mathcal H$,
-        $(\vec w\cdot \vec\pi,\mu)_*(h)=\vec w\cdot(\vec\pi,\mu)_*(h)$.
+        $P^{\vec w\cdot \vec\pi}_\mu(h)=\vec w \cdot P^{\vec\pi}_\mu(h)$.
         \item
         For any $t\in\mathbb N$,
         $V^{\vec w\cdot \vec\pi}_{\mu,t}=\vec w\cdot V^{\vec\pi}_{\mu,t}$.
@@ -518,13 +518,13 @@ Now we are ready to define mixture agents.
     (1) By induction on $h$.
 
     Case 1: $h=\langle\rangle$. Then
-    $(\vec w\cdot\vec\pi)_*(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
+    $P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
     =\vec w\cdot ({P^{\vec\pi}}(h))$.
 
     Case 2: $h=g\circ p$ for some $p\in\mathcal P$. Then
     \begin{align*}
-        (\vec w\cdot \vec\pi)_*(h)
-            &= (\vec w\cdot\vec\pi)_*(g)
+        P^{\vec w\cdot\vec\pi}(h)
+            &= P^{\vec w\cdot\vec\pi}(g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \vec w\cdot({P^{\vec\pi}}(g))
                 &\mbox{(Induction)}\\
@@ -535,33 +535,33 @@ Now we are ready to define mixture agents.
 
     Case 3: $h=g\circ a$ for some $a\in\mathcal A$.
 
-    Subcase 3.1: $(\vec w\cdot \vec\pi)_*(g)=0$.
+    Subcase 3.1: $P^{\vec w\cdot\vec\pi}(g)=0$.
         By induction $\vec w\cdot({P^{\vec\pi}}(g))=0$.
         Since the $w_i$ are positive, this implies
-        each $\pi^i_*(g)=0$.
+        each $P^{\pi_i}(g)=0$.
         Thus each
         \begin{align*}
-            w_i\pi^i_*(g\circ a)
-                &= w_i\pi^i_*(g)\pi^i(a|g)
+            w_i P^{\pi_i}(g\circ a)
+                &= w_i P^{\pi_i}(g)\pi_i(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-                &= 0w_i\pi^i(a|g)=0,
+                &= 0w_i\pi_i(a|g)=0,
         \end{align*}
         i.e., $\vec w\cdot({P^{\vec\pi}}(g\circ a))=0$.
         And
         \begin{align*}
-            (\vec w\cdot\vec\pi)_*(g\circ a)
-                &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
+            P^{\vec w\cdot\vec\pi}(g\circ a)
+                &= P^{\vec w\cdot\vec\pi}(g)(\vec w\cdot\vec\pi)(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= 0(\vec w\cdot\vec\pi)(a|g) = 0,
         \end{align*}
-        so $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot(\vec \pi_*(h))=0$.
+        so $P^{\vec w\cdot\vec\pi}(h)=\vec w\cdot P^{\vec\pi}(h)=0$.
 
     Subcase 3.2: $\vec w\cdot ({P^{\vec\pi}}(g))\not=0$. Then
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(h)
-            &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
+        P^{\vec w\cdot\vec\pi}(h)
+            &= P^{\vec w\cdot\vec\pi}(g)(\vec w\cdot\vec\pi)(a|g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(g)
+            &= P^{\vec w\cdot\vec\pi}(g)
                 \frac
                 {\vec w\cdot({P^{\vec\pi}}(g\circ a))}
                 {\vec w\cdot({P^{\vec\pi}}(g))}
