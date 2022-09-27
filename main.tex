@@ -1188,6 +1188,16 @@ $\pi^{h\mapsto \vec m}$.
     as desired.
 \end{proof}
 
+\begin{definition}
+    Suppose $\pi$ and $\pi_1,\ldots,\pi_n$ are agents and $\Upsilon$ is a
+    weighted intelligence measure. We say that $\pi$ \emph{strictly Pareto dominates}
+    $\pi_1,\ldots,\pi_n$ (as measured by $\Upsilon$) if the following conditions hold:
+    \begin{enumerate}
+        \item $\Upsilon(\pi)\geq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$.
+        \item $\Upsilon(\pi)>\Upsilon(\pi_i)$ for some $i=1,\ldots,n$.
+    \end{enumerate}
+\end{definition}
+
 \begin{theorem}
 \label{pointwisegenericnessthm}
     (Pointwise Genericness of Non-Deterministic Intelligence)
@@ -1197,16 +1207,14 @@ $\pi^{h\mapsto \vec m}$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
     if $\vec w\cdot\vec m=\pi(\cdot|h)$,
-    then one of the following is true:
-    \begin{enumerate}
-        \item For each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})=\Upsilon(\pi)$.
-        \item For some $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})>\Upsilon(\pi)$.
-    \end{enumerate}
+    then $\pi$ does not strictly Pareto dominate
+    $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    (as measured by $\Upsilon$).
 \end{theorem}
 
 \begin{proof}
-    If not, then for each $i=1,\ldots,n$, $\Upsilon(\pi^{h\mapsto m_i})\leq\Upsilon(\pi)$,
-    and for some $i$, $\Upsilon(\pi^{h\mapsto m_i})<\Upsilon(\pi)$.
+    Assume $\pi$ strictly Pareto dominates $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    (as measured by $\Upsilon$).
     This implies
     \begin{align*}
         \Upsilon(\pi)
@@ -1263,15 +1271,9 @@ of $\pi$.
     i.e., $\vec w\cdot\vec m=\pi(\cdot|h_0)$.
     By Theorem \ref{pointwisegenericnessthm},
     for any weighted intelligence measure $\Upsilon$,
-    one of the following statements is true:
-    \begin{enumerate}
-        \item
-        For all $i=1,2,3$, $\pi$'s intelligence would not change if we
-        changed the value of $\pi(\cdot|h_0)$ to $m_i$. Or,
-        \item
-        For some $i=1,2,3$, $\pi$'s intelligence would increase if
-        we changed the value of $\pi(\cdot|h_0)$ to $m_i$.
-    \end{enumerate}
+    $\pi$ does not strictly Pareto dominate (as measured by $\Upsilon$)
+    the set of agents obtained by changing the value of $\pi(\cdot|h_0)$ to $m_i$
+    ($i=1,\ldots,n$).
 \end{example}
 
 In Example \ref{genericnessexample}, Theorem \ref{pointwisegenericnessthm} shows
@@ -1299,13 +1301,9 @@ Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
             0 &\mbox{if $a\not=a_i$.}
         \end{cases}
     \]
-    Then one of the following is true:
-    \begin{enumerate}
-        \item
-        For each $i=1,\ldots,n$, $\Upsilon(\pi^{h_0\mapsto m_i})=\Upsilon(\pi)$.
-        \item
-        For some $i=1,\ldots,n$, $\Upsilon(\pi^{h_0\mapsto m_i})>\Upsilon(\pi)$.
-    \end{enumerate}
+    Then $\pi$ does not strictly Pareto dominate
+    $\pi^{h_0\mapsto m_0},\ldots,\pi^{h_0\mapsto m_n}$
+    (as measured by $\Upsilon$).
 \end{corollary}
 
 \begin{proof}
