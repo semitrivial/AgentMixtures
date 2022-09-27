@@ -585,11 +585,6 @@ Now we are ready to define mixture agents.
     (5) Immediate from (4).
 \end{proof}
 
-By part 1 of Theorem \ref{maintheorem},
-we may unambiguously write $\vec w\cdot {P^{\vec\pi}}(h)$
-for either $(\vec w\cdot\vec\pi)_*(h)$ or $\vec w\cdot({P^{\vec\pi}}(h))$.
-We will freely do so for the remainder of the paper.
-
 \section{Duality and Janus agents:
 Strengthening and formalizing a result of Alexander and Hutter}
 
@@ -631,7 +626,7 @@ Strengthening and formalizing a result of Alexander and Hutter}
 \begin{lemma}
 \label{asteriskcommuteswithoverlinelemma}
     For any agent $\pi$ and any $h\in(\mathcal P\mathcal A)^*\mathcal P$,
-    $\pi_*(\overline h)=\overline{\pi}_*(h)$.
+    $P^\pi(\overline h)=P^{\overline{\pi}}(h)$.
 \end{lemma}
 
 \begin{proof}
@@ -659,9 +654,9 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     If $\pi$ and $\rho$ are agents, we say $\pi\equiv\rho$ if the
     following conditions hold:
     \begin{enumerate}
-        \item For all $h\in\mathcal H$, $\pi_*(h)=0$ iff $\rho_*(h)=0$.
+        \item For all $h\in\mathcal H$, $P^\pi(h)=0$ iff $P^\rho(h)=0$.
         \item For all $h\in(\mathcal P\mathcal A)^*\mathcal P$,
-            if $\pi_*(h)\not=0$ then for all $a\in\mathcal A$,
+            if $P^\pi(h)\not=0$ then for all $a\in\mathcal A$,
             $\pi(a|h)=\rho(a|h)$.
     \end{enumerate}
 \end{definition}
@@ -697,8 +692,8 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     simultaneously by induction on $h$.
  
     Case 1: $h=\langle\rangle$. Then
-    $\pi_*(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
-    vacuously $\pi_*(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
+    $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
+    vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
     (proving condition 1).
     For condition 2, there is nothing to check, since
     $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
@@ -709,52 +704,53 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         $h\not\in(\mathcal P\mathcal A)^*\mathcal P$.
         For condition 1, we consider two cases.
 
-        Subcase 2.1: $\pi_*(h_0)=0$.
+        Subcase 2.1: $P^\pi(h_0)=0$.
         By induction, condition 1 holds for $h_0$, so
         $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
         By Definition \ref{pullbackdef},
-        $\pi_*(h)=0\pi(a_0|h_0)=0$
-        and $(\vec w\cdot\vec\pi)_*(h)=0(\vec w\cdot\vec\pi)(a_0|h_0)=0$.
-        So $\pi_*(h)=0$ iff $(\vec w\cdot\vec\pi)_*(h)=0$.
+        $P^\pi(h)=0\pi(a_0|h_0)=0$
+        and $P^{\vec w\cdot\vec\pi}(h)=0(\vec w\cdot\vec\pi)(a_0|h_0)=0$.
+        So $P^\pi(h)=0$ iff $P^{\vec w\cdot\vec\pi}(h)=0$.
 
-        Subcase 2.2: $\pi_*(h_0)\not=0$.
+        Subcase 2.2: $P^\pi(h_0)\not=0$.
         Then
         \begin{align*}
-            (\vec w\cdot \vec\pi)_*(h)
+            P^{\vec w\cdot \vec\pi}(h)
                 &= \vec w\cdot({P^{\vec\pi}}(h))
                     &\mbox{(Theorem \ref{maintheorem})}\\
-                &= (w_1\pi_*(h)+\cdots+w_n\pi_*(h))
+                &= (w_1 P^\pi(h)+\cdots+w_n P^\pi(h))
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \pi_*(h)
+                &= P^\pi(h)
                     &\mbox{($w_1+\cdots+w_n=1$)}\\
-                &= \pi_*(h_0)\pi(a_0|h_0).
+                &= P^\pi(h_0)\pi(a_0|h_0).
                     &\mbox{(Definition \ref{pullbackdef})}
         \end{align*}
-        Since $\pi_*(h_0)\not=0$, and since $\mathbb R$ has the zero-product property,
+        Since $P^\pi(h_0)\not=0$, and since $\mathbb R$ has the zero-product property,
         it follows that
-        $(\vec w\cdot\vec\pi)_*(h)=0$ iff $\pi_*(h)=0$ iff $\pi(a_0|h_0)=0$.
+        $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(a_0|h_0)=0$.
 
     Case 3: $h=h_0\circ p$ for some $h_0\in (\mathcal P\mathcal A)^*$,
         $p\in\mathcal P$.
         By induction, conditions 1 and 2 hold for $h_0$.
         By Definition \ref{pullbackdef},
-        $\pi_*(h)=\pi_*(h_0)$ and $(\vec w\cdot\vec\pi)_*(h)=(\vec w\cdot\vec\pi)_*(h_0)$,
+        $P^\pi(h)=P^\pi(h_0)$ and
+        $P^{\vec w\cdot\vec\pi}(h)=P^{\vec w\cdot\vec\pi}(h_0)$,
         so condition 1 for $h$ follows.
 
         For condition 2,
-        assume $\pi_*(h)\not=0$ and let $a\in\mathcal A$.
+        assume $P^\pi(h)\not=0$ and let $a\in\mathcal A$.
         By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot{P^{\vec\pi}}(h)=w_1\pi_*(h)+\cdots+w_n\pi_*(h)=\pi_*(h)$.
-        So, since $\pi_*(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
+        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^pi(h)=P^\pi(h)$.
+        So, since $P^\pi(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
         Thus
         \begin{align*}
             (\vec w\cdot\vec\pi)(a|h)
                 &= \frac{\vec w\cdot {P^{\vec\pi}}(h\circ a)}{\vec w\cdot{P^{\vec\pi}}(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
-                &= \frac{w_1\pi_*(h\circ a)+\cdots+w_n\pi_*(h\circ a)}
-                    {w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
+                &= \frac{w_1P^\pi(h\circ a)+\cdots+w_nP^\pi(h\circ a)}
+                    {w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \frac{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
+                &= \frac{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
                     \pi(a|h)
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= \pi(a|h).
@@ -773,30 +769,30 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     we claim
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(a|h)$.
-    If $\vec w\cdot(\pi,\overline\pi)_*(h)=0$
+    If $P^{\vec w\cdot(\pi,\overline\pi)}(h)=0$
     then it follows by Lemmas \ref{doublenegationlemma} and
     \ref{asteriskcommuteswithoverlinelemma} that
-    $\overline{\vec w\cdot(\pi,\overline\pi)}_*(h)=0$,
+    $P^{\overline{\vec w\cdot(\pi,\overline\pi)}}(h)=0$,
     so by Definition \ref{maindefn},
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(a|h)=1/|\mathcal A|$.
-    But assume $\vec w\cdot(\pi,\overline\pi)_*(h)\not=0$.
+    But assume $P^{\vec w\cdot(\pi,\overline\pi)}(h)\not=0$.
     Then:
     \begin{align*}
         \overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
         &= (\vec w\cdot(\pi,\overline{\pi}))(a|\overline h)
             &\mbox{(Definition \ref{dualagentsdefn})}\\
         &= \frac
-            {\frac12\pi_*(\overline h\circ a)+\frac12\overline\pi_*(\overline h\circ a)}
-            {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
+            {\frac12P^\pi(\overline h\circ a)+\frac12P^{\overline\pi}(\overline h\circ a)}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
             &\mbox{(Definition \ref{maindefn})}\\
         &= \frac
-            {\frac12\pi_*(\overline{h\circ a})+\frac12\overline\pi_*(\overline{h\circ a})}
-            {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
+            {\frac12P^\pi(\overline{h\circ a})+\frac12P^{\overline\pi}(\overline{h\circ a})}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
             &\mbox{(Clearly $\overline h\circ a=\overline{h\circ a}$)}\\
         &= \frac
-            {\frac12\overline\pi_*(h\circ a)+\frac12\overline{\overline\pi}_*(h\circ a)}
-            {\frac12\overline\pi_*(h)+\frac12\overline{\overline\pi}_*(h)}
+            {\frac12P^{\overline\pi}(h\circ a)+\frac12P^{\overline{\overline\pi}}(h\circ a)}
+            {\frac12P^{\overline\pi}(h)+\frac12P^{\overline{\overline\pi}}(h)}
             &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
         &= (\vec w\cdot(\overline{\overline\pi},\overline\pi))(a|h)
             &\mbox{(Definition \ref{maindefn})}\\
