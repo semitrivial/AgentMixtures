@@ -61,9 +61,9 @@
     strengthen an informal result of Alexander and Hutter. We also use mixture
     agents to prove additional results, including a surprising result
     which we call the genericness of non-deterministic intelligence. Loosely:
-    any particular non-deterministic action an agent takes
-    can have its probabilities modified without making the agent less
-    intelligent.
+    if some history causes an agent to assign nonzero probabilities to multiple
+    actions, then those nonzero probabilities can be modified without making
+    the agent less intelligent.
 \end{abstract}
 
 \section{Introduction}
@@ -101,12 +101,12 @@ with $\mu$. But this is all quite informal, as the RL
 framework does not actually provide any mechanism for such an initial
 coin-flip.
 
-More generally, given agents $\vec{\pi}=(\pi^1,\ldots,\pi^n)$ and positive real
+More generally, given agents $\vec{\pi}=(\pi_1,\ldots,\pi_n)$ and positive real
 numbers
 $\vec{w}=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
 who, at the start of each agent-environment interaction, randomly transforms
-into $\pi^1$ (with probability $w_1$) or into $\pi^2$ (with probability $w_2$),
-etc. If each $\pi^i$ would get total expected reward $r_i$ from an environment
+into $\pi_1$ (with probability $w_1$) or into $\pi_2$ (with probability $w_2$),
+etc. If each $\pi_i$ would get total expected reward $r_i$ from an environment
 $\mu$, intuitively $\sigma$ should get total expected reward
 $\vec{w}\cdot \vec{r}=w_1r_1+\cdots+w_nr_n$ from that environment.
 But again, the RL
@@ -280,68 +280,68 @@ and lemmas.
     \begin{enumerate}
         \item
         For every agent $\pi$, for every $h\in\mathcal H$, we define a real number
-        $\pi_*(h)\in[0,1]$ as follows.
+        $P^\pi(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $h=\langle\rangle$ then $\pi_*(h)=1$.
+            If $h=\langle\rangle$ then $P^\pi(h)=1$.
             \item
-            If $h=g\circ p$ for some $p\in\mathcal P$ then $\pi_*(h)=\pi_*(g)$.
+            If $h=g\circ p$ for some $p\in\mathcal P$ then $P^\pi(h)=P^\pi(g)$.
             \item
-            If $h=g\circ a$ for some $a\in\mathcal A$ then $\pi_*(h)=\pi_*(g)\pi(a|g)$.
+            If $h=g\circ a$ for some $a\in\mathcal A$ then $P^\pi(h)=P^\pi(g)\pi(a|g)$.
         \end{itemize}
-        The intended intuition is that $\pi_*(h)$ can be thought of as the
+        The intended intuition is that $P^\pi(h)$ can be thought of as the
         conditional probability that when $\pi$
         and any environment
         $\mu$ interact, the interaction will begin with initial segment
         $h$, \emph{assuming}
         that $\mu$ produces the percepts in $h$.
-        But note that $\pi_*$ is \emph{not} a probability distribution.
+        But note that $P^\pi$ is \emph{not} a probability distribution.
         \item
         For every environment $\mu$, for every $h\in\mathcal H$, we define a real number
-        $\mu_*(h)\in[0,1]$ as follows.
+        $P_\mu(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $h=\langle\rangle$ then $\mu_*(h)=1$.
+            If $h=\langle\rangle$ then $P_\mu(h)=1$.
             \item
-            If $h=g\circ p$ for some $p\in\mathcal P$ then $\mu_*(h)=\mu_*(g)\mu(p|g)$.
+            If $h=g\circ p$ for some $p\in\mathcal P$ then $P_\mu(h)=P_\mu(g)\mu(p|g)$.
             \item
-            If $s=g\circ a$ for some $a\in\mathcal A$ then $\mu_*(h)=\mu_*(g)$.
+            If $s=g\circ a$ for some $a\in\mathcal A$ then $P_\mu(h)=P_\mu(g)$.
         \end{itemize}
-        The intended intuition is that $\mu_*(h)$ can be thought of as the
+        The intended intuition is that $P_\mu(h)$ can be thought of as the
         conditional probability that when any agent $\pi$ and $\mu$ interact,
         the interaction will begin with initial segment $h$, \emph{assuming} that
         $\pi$ produces the actions in $h$.
-        But note that $\mu_*$ is \emph{not} a probability distribution.
+        But note that $P_\mu$ is \emph{not} a probability distribution.
         \item
         For every agent $\pi$, environment $\mu$, and $h\in\mathcal H$, we define a
-        real number $(\pi,\mu)_*(h)\in[0,1]$ by induction as follows.
+        real number $P^\pi_\mu(h)\in[0,1]$ by induction as follows.
         \begin{itemize}
             \item
-            If $h=\langle\rangle$ then $(\pi,\mu)_*(h)=1$.
+            If $h=\langle\rangle$ then $P^\pi_\mu(h)=1$.
             \item
             If $h=g\circ p$ for some $p\in\mathcal P$ then
-            $(\pi,\mu)_*(h)=(\pi,\mu)_*(g)\mu(p|g)$.
+            $P^\pi_\mu(h)=P^\pi_\mu(g)\mu(p|g)$.
             \item
             If $h=g\circ a$ for some $a\in\mathcal A$ then
-            $(\pi,\mu)_*(h)=(\pi,\mu)_*(g)\pi(a|g)$.
+            $P^\pi_\mu(h)=P^\pi_\mu(g)\pi(a|g)$.
         \end{itemize}
-        The intended intuition is that $(\pi,\mu)_*(h)$ can be thought of as
+        The intended intuition is that $P^\pi_\mu(h)$ can be thought of as
         the probability that when $\pi$ and $\mu$ interact, the interaction
         will begin with initial segment $h$. But note that
-        $(\pi,\mu)_*$ is \emph{not} a probability distribution.
+        $P^\pi_\mu$ is \emph{not} a probability distribution.
     \end{enumerate}
 \end{definition}
 
 Some authors, such as \cite{hutter2009discrete}, would write $P(h)$ or a variation thereof
-for $(\pi,\mu)_*(h)$, provided $\pi$ and $\mu$ are clear from context.
+for $P^\pi_\mu$, provided $\pi$ and $\mu$ are clear from context.
 
 One could alternately more directly define
 \[
-    \pi_*(x_1y_1\ldots x_ty_t)
+    P^\pi(x_1y_1\ldots x_ty_t)
     = \pi(y_1|x_1)\pi(y_2|x_1y_1x_2)\cdots \pi(y_t|x_1y_1\ldots x_t),
 \]
-and similarly define $\pi_*(x_1y_1\ldots x_t)$,
-and likewise for $\mu_*$ and for $(\pi,\mu)_*$. Surprisingly, this more
+and similarly define $P^\pi(x_1y_1\ldots x_t)$,
+and likewise for $P_\mu$ and for $P^\pi_\mu$. Surprisingly, this more
 direct definition would actually be \emph{less} useful than
 Definition \ref{pullbackdef}, because it would not lend itself so well
 to proofs by induction.
@@ -350,7 +350,7 @@ to proofs by induction.
 \label{factorizationlemma}
     For all $h$, $\pi$, $\mu$ as in Definition \ref{pullbackdef},
     \[
-        (\pi,\mu)_*(h) = \pi_*(h)\mu_*(h).
+        P^\pi_\mu(h) = P^\pi(h)P_\mu(h).
     \]
 \end{lemma}
 
@@ -362,14 +362,14 @@ to proofs by induction.
     Case 2: $h=g\circ p$ for some $p\in\mathcal P$.
         Then
         \begin{align*}
-            (\pi,\mu)_*(h)
-                &= (\pi,\mu)_*(g)\mu(p|g)
+            P^\pi_\mu(h)
+                &= P^\pi_\mu(g)\mu(p|g)
                     &\mbox{(Definition \ref{pullbackdef} part 3)}\\
-                &= \pi_*(g)\mu_*(g)\mu(p|g)
+                &= P^\pi(g)P_\mu(g)\mu(p|g)
                     &\mbox{(Induction)}\\
-                &= \pi_*(h)\mu_*(g)\mu(p|g)
+                &= P^\pi(h)P_\mu(g)\mu(p|g)
                     &\mbox{(Definition \ref{pullbackdef} part 1)}\\
-                &= \pi_*(h)\mu_*(h).
+                &= P^\pi(h)P_\mu(h).
                     &\mbox{(Definition \ref{pullbackdef} part 2)}
         \end{align*}
 
@@ -379,7 +379,7 @@ to proofs by induction.
 
 \begin{lemma}
 \label{basicprobabilitylemma}
-    $V^\pi_{\mu,t}=\sum_{h\in X}(\pi,\mu)_*(h)R(h),$
+    $V^\pi_{\mu,t}=\sum_{h\in X}P^\pi_\mu(h)R(h),$
     where $X$ is the set of all $h\in\mathcal H$
     of length $2(t+1)$ (i.e., all $h\in\mathcal H$ of the form
     $x_1y_1\ldots x_{t+1}y_{t+1}$
@@ -392,16 +392,16 @@ to proofs by induction.
 \end{proof}
 
 \begin{definition}
-    If $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents, $\mu$ is an environment,
+    If $\vec\pi=(\pi_1,\ldots,\pi_n)$ are agents, $\mu$ is an environment,
     $h\in\mathcal H$, $t\in\mathbb N$, and $\Upsilon$ is a weighted
     intelligence measure, then we define:
     \begin{itemize}
-        \item $\vec\pi_*(h)=(\pi^1_*(h),\ldots,\pi^n_*(h))$.
-        \item $(\vec\pi,\mu)_*(h)=((\pi^1,\mu)_*(h),\ldots,(\pi^n,\mu)_*(h))$.
-        \item $V^{\vec\pi}_{\mu,t}=(V^{\pi^1}_{\mu,t},\ldots,V^{\pi^n}_{\mu,t})$.
-        \item If each $V^{\pi^i}_\mu$ converges, we say $V^{\vec\pi}_\mu$
-            converges, and define $V^{\vec\pi}_\mu=(V^{\pi^1}_\mu,\ldots,V^{\pi^n}_\mu)$.
-        \item $\Upsilon(\vec\pi)=(\Upsilon(\pi^1),\ldots,\Upsilon(\pi^n))$.
+        \item ${P^{\vec\pi}}(h)=(P^{\pi_1}(h),\ldots,P^{\pi_n}(h))$.
+        \item $P^{\vec\pi}_\mu(h)=(P^{\pi_1}_\mu(h),\ldots,P^{\pi_n}_\mu(h))$.
+        \item $V^{\vec\pi}_{\mu,t}=(V^{\pi_1}_{\mu,t},\ldots,V^{\pi_n}_{\mu,t})$.
+        \item If each $V^{\pi_i}_\mu$ converges, we say $V^{\vec\pi}_\mu$
+            converges, and define $V^{\vec\pi}_\mu=(V^{\pi_1}_\mu,\ldots,V^{\pi_n}_\mu)$.
+        \item $\Upsilon(\vec\pi)=(\Upsilon(\pi_1),\ldots,\Upsilon(\pi_n))$.
     \end{itemize}
     Recall that if $\vec u=(u_1,\ldots,u_n)$ and
     $\vec v=(v_1,\ldots,v_n)$ are any two equal-length
@@ -415,7 +415,7 @@ Now we are ready to define mixture agents.
 \begin{definition}
 \label{maindefn}
     (Mixture agents)
-    Suppose $\vec\pi=(\pi^1,\ldots,\pi^n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
+    Suppose $\vec\pi=(\pi_1,\ldots,\pi_n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
     are positive real numbers with $w_1+\cdots+w_n=1$.
     Define the \emph{mixture agent} $\vec w\cdot\vec\pi$ as follows: for all
     $h\in (\mathcal P\mathcal A)^*\mathcal P$, let
@@ -423,35 +423,18 @@ Now we are ready to define mixture agents.
         (\vec w\cdot\vec\pi)(a|h)
         =
         \begin{cases}
-            \dfrac{\vec w\cdot \vec\pi_*(h\circ a)}{\vec w\cdot \vec\pi_*(h)}
-            &\mbox{if $\vec w\cdot \vec\pi_*(h)\not=0$,}\\
-            1/|\mathcal{A}| &\mbox{otherwise}
+            \dfrac{\vec w\cdot {P^{\vec\pi}}(h\circ a)}{\vec w\cdot {P^{\vec\pi}}(h)}
+            &\mbox{if $\vec w\cdot {P^{\vec\pi}}(h)\not=0$,}\\
+            1/|\mathcal{A}| &\mbox{otherwise.}
         \end{cases}
     \]
-    where
-    $\vec w\cdot\vec\pi_*(h)$ denotes $\vec w\cdot(\vec\pi_*(h))$ and
-    $\vec w\cdot\vec\pi_*(h\circ a)$ denotes
-    $\vec w\cdot(\vec\pi_*(h\circ a))$.
 \end{definition}
-
-\begin{remark}
-\label{ambiguityremark}
-    In Definition \ref{maindefn},
-    the expression $\vec w\cdot \vec\pi_*(h)$ would have been inherently
-    ambiguous if we had not specified that it denotes
-    the vector dot-product $\vec w\cdot (\vec\pi_*(h))$.
-    For, otherwise, it could just as well denote
-    $(\vec w\cdot \vec\pi)_*(h)$.
-    Likewise for $\vec w\cdot \vec\pi_*(h\circ a)$.
-    In Theorem \ref{maintheorem} below, we will see that in fact
-    there is no ambiguity: $\vec w\cdot(\vec\pi_*(h))=(\vec w\cdot \vec\pi)_*(h)$.
-\end{remark}
 
 \begin{remark}
     Definition \ref{maindefn} is complicated by Remark \ref{impossibleremark},
     which forces us to include the case
     $(\vec w\cdot\vec\pi)(a|h)=1/|\mathcal A|$ when
-    $\vec w\cdot \vec\pi_*(h)=0$: we are obligated to specify how
+    $\vec w\cdot {P^{\vec\pi}}(h)=0$: we are obligated to specify how
     $\vec w\cdot\vec\pi$ chooses actions even in response to histories that
     are ``impossible'' for $\vec w\cdot\vec\pi$ (histories which involve
     $\vec w\cdot\vec\pi$ having taken actions which $\vec w\cdot\vec\pi$
@@ -471,50 +454,50 @@ Now we are ready to define mixture agents.
     It remains to show
     $\sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)=1$.
 
-    Case 1: $\vec w\cdot (\vec\pi_*(h))=0$. Then
+    Case 1: $\vec w\cdot {P^{\vec\pi}}(h)=0$. Then
     each $(\vec w\cdot\vec\pi)(a|h)=1/|\mathcal A|$ so the
     claim is immediate.
 
-    Case 2: $\vec w\cdot (\vec\pi_*(h))\not=0$. Then
+    Case 2: $\vec w\cdot {P^{\vec\pi}}(h)\not=0$. Then
     \begin{align*}
         &{} \sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)\\
             &= \sum_{a\in\mathcal A}
-                \frac{\vec w\cdot (\vec\pi_*(h\circ a))}{\vec w\cdot (\vec\pi_*(h))}
+                \frac{\vec w\cdot {P^{\vec\pi}}(h\circ a)}{\vec w\cdot {P^{\vec\pi}}(h)}
                 &\mbox{(Definition \ref{maindefn})}\\
             &= \sum_{a\in\mathcal A}
                 \frac
-                {w_1\pi^1_*(h)\pi^1(a|h)+\cdots+w_n\pi^n_*(h)\pi^n(a|h)}
-                {\vec w\cdot(\vec\pi_*(h))}
+                {w_1 P^{\pi_1}(h)\pi_1(a|h)+\cdots+w_n P^{\pi_n}(h)\pi_n(a|h)}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \frac{
-                w_1\pi^1_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^1(a|h)$}\right)
+                w_1 P^{\pi_1}(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi_1(a|h)$}\right)
                 +\cdots+
-                w_n\pi^n_*(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi^n(a|h)$}\right)
+                w_n P^{\pi_n}(h)\left(\mbox{$\sum_{a\in\mathcal A}\pi_n(a|h)$}\right)
                 }
-                {\vec w\cdot (\vec\pi_*(h))}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
                 &\mbox{(Algebra)}\\
             &= \frac
-                {w_1\pi^1_*(h)\cdot 1 + \cdots + w_n\pi^n_*(h)\cdot1}
-                {\vec w\cdot (\vec\pi_*(h))}
-                =\frac{\vec w\cdot (\vec\pi_*(h))}{\vec w\cdot (\vec\pi_*(h))}=1.
-                &\mbox{($\pi^i$ are agents)}
+                {w_1 P^{\pi_1}(h)\cdot 1 + \cdots + w_n P^{\pi_n}(h)\cdot1}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                =\frac{\vec w\cdot {P^{\vec\pi}}(h)}{\vec w\cdot {P^{\vec\pi}}(h)}=1.
+                &\mbox{($\pi_i$ are agents)}
     \end{align*}
 \end{proof}
 
 \begin{theorem}
 \label{maintheorem}
     (Commutativity of $\vec w$)
-    Let $\vec\pi=(\pi^1,\ldots,\pi^n)$ be agents.
+    Let $\vec\pi=(\pi_1,\ldots,\pi_n)$ be agents.
     Let $\vec w=(w_1,\ldots,w_n)$ be positive reals with
     $w_1+\cdots+w_n=1$. Let $\mu$ be any environment.
     Then:
     \begin{enumerate}
         \item
         For any $h\in\mathcal H$,
-        $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot(\vec\pi_*(h))$.
+        $P^{\vec w\cdot \vec\pi}(h)=\vec w\cdot {P^{\vec\pi}}(h)$.
         \item
         For any $h\in\mathcal H$,
-        $(\vec w\cdot \vec\pi,\mu)_*(h)=\vec w\cdot(\vec\pi,\mu)_*(h)$.
+        $P^{\vec w\cdot \vec\pi}_\mu(h)=\vec w \cdot P^{\vec\pi}_\mu(h)$.
         \item
         For any $t\in\mathbb N$,
         $V^{\vec w\cdot \vec\pi}_{\mu,t}=\vec w\cdot V^{\vec\pi}_{\mu,t}$.
@@ -535,62 +518,62 @@ Now we are ready to define mixture agents.
     (1) By induction on $h$.
 
     Case 1: $h=\langle\rangle$. Then
-    $(\vec w\cdot\vec\pi)_*(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
-    =\vec w\cdot (\vec\pi_*(h))$.
+    $P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
+    =\vec w\cdot ({P^{\vec\pi}}(h))$.
 
     Case 2: $h=g\circ p$ for some $p\in\mathcal P$. Then
     \begin{align*}
-        (\vec w\cdot \vec\pi)_*(h)
-            &= (\vec w\cdot\vec\pi)_*(g)
+        P^{\vec w\cdot\vec\pi}(h)
+            &= P^{\vec w\cdot\vec\pi}(g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi_*(g))
+            &= \vec w\cdot({P^{\vec\pi}}(g))
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(g\circ p))
+            &= \vec w\cdot({P^{\vec\pi}}(g\circ p))
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot(\vec\pi_*(h)).
+            &= \vec w\cdot({P^{\vec\pi}}(h)).
     \end{align*}
 
     Case 3: $h=g\circ a$ for some $a\in\mathcal A$.
 
-    Subcase 3.1: $(\vec w\cdot \vec\pi)_*(g)=0$.
-        By induction $\vec w\cdot(\vec\pi_*(g))=0$.
+    Subcase 3.1: $P^{\vec w\cdot\vec\pi}(g)=0$.
+        By induction $\vec w\cdot({P^{\vec\pi}}(g))=0$.
         Since the $w_i$ are positive, this implies
-        each $\pi^i_*(g)=0$.
+        each $P^{\pi_i}(g)=0$.
         Thus each
         \begin{align*}
-            w_i\pi^i_*(g\circ a)
-                &= w_i\pi^i_*(g)\pi^i(a|g)
+            w_i P^{\pi_i}(g\circ a)
+                &= w_i P^{\pi_i}(g)\pi_i(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
-                &= 0w_i\pi^i(a|g)=0,
+                &= 0w_i\pi_i(a|g)=0,
         \end{align*}
-        i.e., $\vec w\cdot(\vec\pi_*(g\circ a))=0$.
+        i.e., $\vec w\cdot({P^{\vec\pi}}(g\circ a))=0$.
         And
         \begin{align*}
-            (\vec w\cdot\vec\pi)_*(g\circ a)
-                &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
+            P^{\vec w\cdot\vec\pi}(g\circ a)
+                &= P^{\vec w\cdot\vec\pi}(g)(\vec w\cdot\vec\pi)(a|g)
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= 0(\vec w\cdot\vec\pi)(a|g) = 0,
         \end{align*}
-        so $(\vec w\cdot\vec\pi)_*(h)=\vec w\cdot(\vec \pi_*(h))=0$.
+        so $P^{\vec w\cdot\vec\pi}(h)=\vec w\cdot P^{\vec\pi}(h)=0$.
 
-    Subcase 3.2: $\vec w\cdot (\vec\pi_*(g))\not=0$. Then
+    Subcase 3.2: ${P^{\vec w\cdot\vec\pi}}(g)\not=0$. Then
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(h)
-            &= (\vec w\cdot\vec\pi)_*(g)(\vec w\cdot\vec\pi)(a|g)
+        P^{\vec w\cdot\vec\pi}(h)
+            &= P^{\vec w\cdot\vec\pi}(g)(\vec w\cdot\vec\pi)(a|g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(g)
+            &= P^{\vec w\cdot\vec\pi}(g)
                 \frac
-                {\vec w\cdot(\vec\pi_*(g\circ a))}
-                {\vec w\cdot(\vec\pi_*(g))}
+                {\vec w\cdot {P^{\vec\pi}}(g\circ a)}
+                {\vec w\cdot {P^{\vec\pi}}(g)}
                 &\mbox{(Definition \ref{maindefn})}\\
-            &= \vec w\cdot(\vec\pi_*(g))
+            &= \vec w\cdot {P^{\vec\pi}}(g)
                 \frac
-                {\vec w\cdot(\vec\pi_*(g\circ a))}
-                {\vec w\cdot(\vec\pi_*(g))}
+                {\vec w\cdot {P^{\vec\pi}}(g\circ a)}
+                {\vec w\cdot {P^{\vec\pi}}(g)}
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot(\vec\pi_*(g\circ a))
+            &= \vec w\cdot {P^{\vec\pi}}(g\circ a)
                 &\mbox{(Basic Algebra)}\\
-            &= \vec w\cdot(\vec\pi_*(h)).
+            &= \vec w\cdot {P^{\vec\pi}}(h).
     \end{align*}
 
     (2) Follows from (1) and Lemma \ref{factorizationlemma}.
@@ -601,11 +584,6 @@ Now we are ready to define mixture agents.
 
     (5) Immediate from (4).
 \end{proof}
-
-By part 1 of Theorem \ref{maintheorem},
-we may unambiguously write $\vec w\cdot \vec\pi_*(h)$
-for either $(\vec w\cdot\vec\pi)_*(h)$ or $\vec w\cdot(\vec\pi_*(h))$.
-We will freely do so for the remainder of the paper.
 
 \section{Duality and Janus agents:
 Strengthening and formalizing a result of Alexander and Hutter}
@@ -648,7 +626,7 @@ Strengthening and formalizing a result of Alexander and Hutter}
 \begin{lemma}
 \label{asteriskcommuteswithoverlinelemma}
     For any agent $\pi$ and any $h\in(\mathcal P\mathcal A)^*\mathcal P$,
-    $\pi_*(\overline h)=\overline{\pi}_*(h)$.
+    $P^\pi(\overline h)=P^{\overline{\pi}}(h)$.
 \end{lemma}
 
 \begin{proof}
@@ -676,9 +654,9 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     If $\pi$ and $\rho$ are agents, we say $\pi\equiv\rho$ if the
     following conditions hold:
     \begin{enumerate}
-        \item For all $h\in\mathcal H$, $\pi_*(h)=0$ iff $\rho_*(h)=0$.
+        \item For all $h\in\mathcal H$, $P^\pi(h)=0$ iff $P^\rho(h)=0$.
         \item For all $h\in(\mathcal P\mathcal A)^*\mathcal P$,
-            if $\pi_*(h)\not=0$ then for all $a\in\mathcal A$,
+            if $P^\pi(h)\not=0$ then for all $a\in\mathcal A$,
             $\pi(a|h)=\rho(a|h)$.
     \end{enumerate}
 \end{definition}
@@ -714,8 +692,8 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     simultaneously by induction on $h$.
  
     Case 1: $h=\langle\rangle$. Then
-    $\pi_*(h)=\vec w\cdot\vec\pi_*(h)=1\not=0$, so
-    vacuously $\pi_*(h)=0$ iff $\vec w\cdot\vec\pi_*(h)=0$
+    $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
+    vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
     (proving condition 1).
     For condition 2, there is nothing to check, since
     $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
@@ -726,52 +704,53 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         $h\not\in(\mathcal P\mathcal A)^*\mathcal P$.
         For condition 1, we consider two cases.
 
-        Subcase 2.1: $\pi_*(h_0)=0$.
+        Subcase 2.1: $P^\pi(h_0)=0$.
         By induction, condition 1 holds for $h_0$, so
-        $\vec w\cdot\vec\pi_*(h_0)=0$.
+        $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
         By Definition \ref{pullbackdef},
-        $\pi_*(h)=0\pi(a_0|h_0)=0$
-        and $(\vec w\cdot\vec\pi)_*(h)=0(\vec w\cdot\vec\pi)(a_0|h_0)=0$.
-        So $\pi_*(h)=0$ iff $(\vec w\cdot\vec\pi)_*(h)=0$.
+        $P^\pi(h)=0\pi(a_0|h_0)=0$
+        and $P^{\vec w\cdot\vec\pi}(h)=0(\vec w\cdot\vec\pi)(a_0|h_0)=0$.
+        So $P^\pi(h)=0$ iff $P^{\vec w\cdot\vec\pi}(h)=0$.
 
-        Subcase 2.2: $\pi_*(h_0)\not=0$.
+        Subcase 2.2: $P^\pi(h_0)\not=0$.
         Then
         \begin{align*}
-            (\vec w\cdot \vec\pi)_*(h)
-                &= \vec w\cdot(\vec\pi_*(h))
+            P^{\vec w\cdot \vec\pi}(h)
+                &= \vec w\cdot{P^{\vec\pi}}(h)
                     &\mbox{(Theorem \ref{maintheorem})}\\
-                &= (w_1\pi_*(h)+\cdots+w_n\pi_*(h))
+                &= w_1 P^\pi(h)+\cdots+w_n P^\pi(h)
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \pi_*(h)
+                &= P^\pi(h)
                     &\mbox{($w_1+\cdots+w_n=1$)}\\
-                &= \pi_*(h_0)\pi(a_0|h_0).
+                &= P^\pi(h_0)\pi(a_0|h_0).
                     &\mbox{(Definition \ref{pullbackdef})}
         \end{align*}
-        Since $\pi_*(h_0)\not=0$, and since $\mathbb R$ has the zero-product property,
+        Since $P^\pi(h_0)\not=0$, and since $\mathbb R$ has the zero-product property,
         it follows that
-        $(\vec w\cdot\vec\pi)_*(h)=0$ iff $\pi_*(h)=0$ iff $\pi(a_0|h_0)=0$.
+        $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(a_0|h_0)=0$.
 
     Case 3: $h=h_0\circ p$ for some $h_0\in (\mathcal P\mathcal A)^*$,
         $p\in\mathcal P$.
         By induction, conditions 1 and 2 hold for $h_0$.
         By Definition \ref{pullbackdef},
-        $\pi_*(h)=\pi_*(h_0)$ and $(\vec w\cdot\vec\pi)_*(h)=(\vec w\cdot\vec\pi)_*(h_0)$,
+        $P^\pi(h)=P^\pi(h_0)$ and
+        $P^{\vec w\cdot\vec\pi}(h)=P^{\vec w\cdot\vec\pi}(h_0)$,
         so condition 1 for $h$ follows.
 
         For condition 2,
-        assume $\pi_*(h)\not=0$ and let $a\in\mathcal A$.
+        assume $P^\pi(h)\not=0$ and let $a\in\mathcal A$.
         By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot\vec\pi_*(h)=w_1\pi_*(h)+\cdots+w_n\pi_*(h)=\pi_*(h)$.
-        So, since $\pi_*(h)\not=0$, $\vec w\cdot\vec\pi_*(h)\not=0$.
+        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^\pi(h)=P^\pi(h)$.
+        So, since $P^\pi(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
         Thus
         \begin{align*}
             (\vec w\cdot\vec\pi)(a|h)
-                &= \frac{\vec w\cdot \vec\pi_*(h\circ a)}{\vec w\cdot\vec\pi_*(h)}
+                &= \frac{\vec w\cdot {P^{\vec\pi}}(h\circ a)}{\vec w\cdot{P^{\vec\pi}}(h)}
                     &\mbox{(Definition \ref{maindefn})}\\
-                &= \frac{w_1\pi_*(h\circ a)+\cdots+w_n\pi_*(h\circ a)}
-                    {w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
+                &= \frac{w_1P^\pi(h\circ a)+\cdots+w_nP^\pi(h\circ a)}
+                    {w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
                     &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \frac{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}{w_1\pi_*(h)+\cdots+w_n\pi_*(h)}
+                &= \frac{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
                     \pi(a|h)
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= \pi(a|h).
@@ -790,30 +769,41 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     we claim
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(a|h)$.
-    If $\vec w\cdot(\pi,\overline\pi)_*(h)=0$
-    then it follows by Lemmas \ref{doublenegationlemma} and
-    \ref{asteriskcommuteswithoverlinelemma} that
-    $\overline{\vec w\cdot(\pi,\overline\pi)}_*(h)=0$,
-    so by Definition \ref{maindefn},
+    Noting that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\frac12P^\pi(h)+\frac12P^{\overline\pi}(h)$
+    and
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)
+    =\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)$,
+    Lemmas \ref{doublenegationlemma} and \ref{asteriskcommuteswithoverlinelemma}
+    imply that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)$.
+    So if
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)=0$
+    then $\vec w\cdot P^{(\pi,\overline{\pi})}(h)=0$
+    and it follows from
+    Definition \ref{maindefn}
+    and Lemma \ref{asteriskcommuteswithoverlinelemma} that
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(a|h)=1/|\mathcal A|$.
-    But assume $\vec w\cdot(\pi,\overline\pi)_*(h)\not=0$.
+    But assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
     Then:
     \begin{align*}
         \overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
         &= (\vec w\cdot(\pi,\overline{\pi}))(a|\overline h)
             &\mbox{(Definition \ref{dualagentsdefn})}\\
         &= \frac
-            {\frac12\pi_*(\overline h\circ a)+\frac12\overline\pi_*(\overline h\circ a)}
-            {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
+            {\frac12P^\pi(\overline h\circ a)+\frac12P^{\overline\pi}(\overline h\circ a)}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
             &\mbox{(Definition \ref{maindefn})}\\
         &= \frac
-            {\frac12\pi_*(\overline{h\circ a})+\frac12\overline\pi_*(\overline{h\circ a})}
-            {\frac12\pi_*(\overline h)+\frac12\overline\pi_*(\overline h)}
+            {\frac12P^\pi(\overline{h\circ a})+\frac12P^{\overline\pi}(\overline{h\circ a})}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
             &\mbox{(Clearly $\overline h\circ a=\overline{h\circ a}$)}\\
         &= \frac
-            {\frac12\overline\pi_*(h\circ a)+\frac12\overline{\overline\pi}_*(h\circ a)}
-            {\frac12\overline\pi_*(h)+\frac12\overline{\overline\pi}_*(h)}
+            {\frac12P^{\overline\pi}(h\circ a)+\frac12P^{\overline{\overline\pi}}(h\circ a)}
+            {\frac12P^{\overline\pi}(h)+\frac12P^{\overline{\overline\pi}}(h)}
             &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
         &= (\vec w\cdot(\overline{\overline\pi},\overline\pi))(a|h)
             &\mbox{(Definition \ref{maindefn})}\\
@@ -892,8 +882,8 @@ In this section, we give another application of mixture agents.
     A set $\Pi$ is \emph{closed under mixtures} if the following
     condition holds: for all positive reals $\vec w=(w_1,\ldots,w_n)$
     with $w_1+\cdots+w_n=1$,
-    for all agents $\vec\pi=(\pi^1,\ldots,\pi^n)$,
-    if $\pi^i\in \Pi$ for every $i=1,\ldots,n$, then
+    for all agents $\vec\pi=(\pi_1,\ldots,\pi_n)$,
+    if $\pi_i\in \Pi$ for every $i=1,\ldots,n$, then
     $\vec w\cdot\vec\pi\in\Pi$.
 \end{definition}
 
@@ -909,10 +899,10 @@ In this section, we give another application of mixture agents.
     Assume $\Pi$ is detectable.
     Let $\mu$ be as in
     Definition \ref{incentivizabilitydefn}.
-    To see $\Pi$ is closed under mixtures, let $\vec w$, $\vec\pi=(\pi^1,\ldots,\pi^n)$ be
+    To see $\Pi$ is closed under mixtures, let $\vec w$, $\vec\pi=(\pi_1,\ldots,\pi_n)$ be
     as in Definition \ref{mixtureclosuredef}.
-    Assume $\pi^i\in\Pi$ for all $i=1,\ldots,n$.
-    By choice of $\mu$, $V^{\pi^i}_\mu>0$ for all $i=1,\ldots,n$.
+    Assume $\pi_i\in\Pi$ for all $i=1,\ldots,n$.
+    By choice of $\mu$, $V^{\pi_i}_\mu>0$ for all $i=1,\ldots,n$.
     Thus
     \begin{align*}
         V^{\vec w\cdot\vec\pi}_\mu
@@ -952,7 +942,7 @@ some interesting results.
     Let $h\in\mathcal H$ be such that
     for every $a\in\mathcal A$,
     $h_0\circ a$ is not an initial segment of $h$.
-    Then $\pi^{h_0\mapsto m}_*(h)=\pi_*(h)$.
+    Then $P^{\pi^{h_0\mapsto m}}(h)=P^\pi(h)$.
 \end{lemma}
 
 \begin{proof}
@@ -963,7 +953,7 @@ some interesting results.
 \label{thirdtechlemmaforgenericity}
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
     For any $a\in\mathcal A$,
-    $\pi^{h_0\mapsto m}_*(h_0\circ a)=\pi_*(h_0)m(a)$.
+    $P^{\pi^{h_0\mapsto m}}(h_0\circ a)=P^\pi(h_0)m(a)$.
 \end{lemma}
 
 \begin{proof}
@@ -975,7 +965,7 @@ some interesting results.
     Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
     Assume $h\in\mathcal H$, $a_0\in\mathcal A$, and $h_0\circ a_0$ is
     an initial segment of $h$. Assume $\pi(a_0|h_0)\not=0$. Then
-    $\pi^{h_0\mapsto m}_*(h) = \frac{\pi_*(h)m(a_0)}{\pi(a_0|h_0)}$.
+    $P^{\pi^{h_0\mapsto m}}(h) = \frac{P^\pi(h)m(a_0)}{\pi(a_0|h_0)}$.
 \end{lemma}
 
 \begin{proof}
@@ -983,47 +973,47 @@ some interesting results.
 
     Case 1: $h=h_0\circ a_0$. Then
     \begin{align*}
-        \pi^{h_0\mapsto m}_*(h)
-        &= \pi^{h_0\mapsto m}_*(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= \pi_*(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
+        &= P^\pi(h_0)\pi^{h_0\mapsto m}(a_0|h_0)
             &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-        &= \pi_*(h_0)m(a_0)
+        &= P^\pi(h_0)m(a_0)
             &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= \pi_*(h_0)\pi(a_0|h_0)m(a_0)/\pi(a_0|h_0)
+        &= P^\pi(h_0)\pi(a_0|h_0)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Basic Algebra)}\\
-        &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
+        &= P^\pi(h)m(a_0)/\pi(a_0|h_0).
             &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
     Case 2: $h=h_0\circ a_0\circ h_1\circ p$ for some $h_1\in\mathcal H$
         and $p\in\mathcal P$. Then
     \begin{align*}
-        \pi^{h_0\mapsto m}_*(h)
-        &= \pi^{h_0\mapsto m}_*(h_0\circ a_0\circ h_1)
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0\circ a_0\circ h_1)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= \pi_*(h_0\circ a_0\circ h_1)m(a_0)/\pi(a_0|h_0)
+        &= P^\pi(h_0\circ a_0\circ h_1)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Induction)}\\
-        &= \pi_*(h_0\circ a_0\circ h_1\circ p)m(a_0)/\pi(a_0|h_0)
+        &= P^\pi(h_0\circ a_0\circ h_1\circ p)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
+        &= P^\pi(h)m(a_0)/\pi(a_0|h_0).
     \end{align*}
 
     Case 3: $h=h_0\circ a_0\circ h_1\circ a$ for some $h_1\in\mathcal H$ and
         $a\in\mathcal A$. Then
     \begin{align*}
-        \pi^{h_0\mapsto m}_*(h)
-        &= \pi^{h_0\mapsto m}_*(h_0\circ a_0\circ h_1)
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0\circ a_0\circ h_1)
             \pi^{h_0\mapsto m}(a|h_0\circ a\circ h_1)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= \pi^{h_0\mapsto m}_*(h_0\circ a_0\circ h_1)
+        &= P^{\pi^{h_0\mapsto m}}(h_0\circ a_0\circ h_1)
             \pi(a|h_0\circ a\circ h_1)
             &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= \pi_*(h_0\circ a_0\circ h_1)\pi(a|h_0\circ a\circ h_1)m(a_0)/\pi(a_0|h_0)
+        &= P^\pi(h_0\circ a_0\circ h_1)\pi(a|h_0\circ a\circ h_1)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Induction)}\\
-        &= \pi_*(h_0\circ a_0\circ h_1\circ a)m(a_0)/\pi(a_0|h_0)
+        &= P^\pi(h_0\circ a_0\circ h_1\circ a)m(a_0)/\pi(a_0|h_0)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= \pi_*(h)m(a_0)/\pi(a_0|h_0).
+        &= P^\pi(h)m(a_0)/\pi(a_0|h_0).
     \end{align*}
 \end{proof}
 
@@ -1099,90 +1089,90 @@ $\pi^{h\mapsto \vec m}$.
     By Lemma \ref{basicprobabilitylemma}, it suffices to show that for every
     well-behaved $\mu$ and every $g\in\mathcal H$,
     $
-    (\pi,\mu)_*(g)
+    P^\pi_\mu(g)
     =
-    (\vec w\cdot\vec\pi,\mu)_*(g)
+    P^{\vec w\cdot\vec\pi}_\mu(g)
     $.
     By Lemma \ref{factorizationlemma}, it suffices
     to show that for every $g\in\mathcal H$,
-    $\pi_*(g)=(\vec w\cdot\vec\pi)_*(g)$.
+    $P^\pi(g)=P^{\vec w\cdot\vec\pi}(g)$.
     We prove this by induction on $g$.
 
     Case 1: $g=\langle\rangle$.
-    Then $\pi_*(g)=1
-    =(\vec w\cdot\vec\pi)_*(g)$.
+    Then $P^\pi(g)=1
+    =P^{\vec w\cdot\vec\pi}(g)$.
 
     Case 2: $g=f\circ p$ for some $p\in\mathcal P$.
     Then
     \begin{align*}
-        \pi_*(g)
-            &= \pi_*(f)
+        P^\pi(g)
+            &= P^\pi(f)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= (\vec w\cdot\vec\pi)_*(f)
+            &= P^{\vec w\cdot\vec\pi}(f)
                 &\mbox{(Induction)}\\
-            &= (\vec w\cdot\vec\pi)_*(g).
+            &= P^{\vec w\cdot\vec\pi}(g).
                 &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
     Case 3: $g=f\circ a$ for some $a\in\mathcal A$.
 
-    Subcase 3.1: $\pi_*(f)=0$.
+    Subcase 3.1: $P^\pi(f)=0$.
     Then
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(g)
-            &= (\vec w\cdot\vec\pi)_*(f)
+        P^{\vec w\cdot\vec\pi}(g)
+            &= P^{\vec w\cdot\vec\pi}(f)
             (\vec w\cdot\vec\pi)(a|f)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \pi_*(f)(\vec w\cdot\vec\pi)(a|f)
+            &= P^\pi(f)(\vec w\cdot\vec\pi)(a|f)
                 &\mbox{(Induction)}\\
             &= 0.
     \end{align*}
-    Similarly, $\pi_*(g)=0$. So $(\vec w\cdot\vec\pi)_*(g)=\pi_*(g)$.
+    Similarly, $P^\pi(g)=0$. So $P^{\vec w\cdot\vec\pi}(g)=P^\pi(g)$.
 
-    Subcase 3.2: $\pi_*(f)\not=0$ and $f=h$. Then:
+    Subcase 3.2: $P^\pi(f)\not=0$ and $f=h$. Then:
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(g)
-            &= (\vec w\cdot\vec\pi)_*(h\circ a)\\
-            &= \vec w\cdot\vec\pi_*(h\circ a)
+        P^{\vec w\cdot\vec\pi}(g)
+            &= P^{\vec w\cdot\vec\pi}(h\circ a)\\
+            &= \vec w\cdot{P^{\vec\pi}}(h\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1\pi_*(h)m_1(a)+\cdots+w_n\pi_*(h)m_n(a)
+            &= w_1P^\pi(h)m_1(a)+\cdots+w_nP^\pi(h)m_n(a)
                     &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
-            &= \pi_*(h)\pi(a|h)
+            &= P^\pi(h)\pi(a|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
-            &= \pi_*(h\circ a) = \pi_*(g).
+            &= P^\pi(h\circ a) = P^\pi(g).
                     &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
-    Subcase 3.3: $\pi_*(f)\not=0$, $f\not=h$, and
+    Subcase 3.3: $P^\pi(f)\not=0$, $f\not=h$, and
     $f$ has an initial segment $h\circ a_0$ ($a_0\in\mathcal A$).
 
     Then $\pi(a_0|h)\not=0$, lest
-    we would have $\pi_*(f)=0$. Thus:
+    we would have $P^\pi(f)=0$. Thus:
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(g)
-            &= (\vec w\cdot \vec\pi)_*(f\circ a)\\
-            &= \vec w\cdot\vec\pi_*(f\circ a)
+        P^{\vec w\cdot\vec\pi}(g)
+            &= P^{\vec w\cdot \vec\pi}(f\circ a)\\
+            &= \vec w\cdot{P^{\vec\pi}}(f\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1\frac{\pi_*(f\circ a)m_1(a_0)}{\pi(a_0|h)}
-                +\cdots+w_n\frac{\pi_*(f\circ a)m_n(a_0)}{\pi(a_0|h)}
+            &= w_1\frac{P^\pi(f\circ a)m_1(a_0)}{\pi(a_0|h)}
+                +\cdots+w_n\frac{P^\pi(f\circ a)m_n(a_0)}{\pi(a_0|h)}
                     &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{\pi_*(f\circ a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
+            &= \frac{P^\pi(f\circ a)}{\pi(a_0|h)}(w_1m_1(a_0)+\cdots+w_nm_n(a_0))
                     &\mbox{(Basic Algebra)}\\
-            &= \frac{\pi_*(f\circ a)}{\pi(a_0|h)}\pi(a_0|h)
+            &= \frac{P^\pi(f\circ a)}{\pi(a_0|h)}\pi(a_0|h)
                     &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
-            &= \pi_*(f\circ a) = \pi_*(g).
+            &= P^\pi(f\circ a) = P^\pi(g).
     \end{align*}
 
-    Subcase 3.4: $\pi_*(f)\not=0$, $f\not=h$, and $f$ has no initial segment
+    Subcase 3.4: $P^\pi(f)\not=0$, $f\not=h$, and $f$ has no initial segment
         of the form $h\circ a_0$. Then:
     \begin{align*}
-        (\vec w\cdot\vec\pi)_*(g)
-            &= (\vec w\cdot\vec\pi)_*(f\circ a)\\
-            &= \vec w\cdot\vec\pi_*(f\circ a)
+        P^{\vec w\cdot\vec\pi}(g)
+            &= P^{\vec w\cdot\vec\pi}(f\circ a)\\
+            &= \vec w\cdot{P^{\vec\pi}}(f\circ a)
                     &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1\pi_*(f\circ a)+\cdots+w_n\pi_*(f\circ a)
+            &= w_1P^\pi(f\circ a)+\cdots+w_nP^\pi(f\circ a)
                     &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-            &= \pi_*(f\circ a) = \pi_*(g),
+            &= P^\pi(f\circ a) = P^\pi(g),
                     &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
     as desired.
