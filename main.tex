@@ -137,6 +137,7 @@ By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
 By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all $\mathbb Q$-valued
 probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
+By $\mathbb N$ we mean $\{0,1,2,\ldots\}$.
 
 \begin{definition}
 \label{omnibusdefn}
@@ -161,7 +162,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         $x_1y_1\ldots x_{t-1}y_{t-1}x_t$
         (each $x_i$ a percept, each $y_i$ an action).
         \item
-        An \emph{agent} is defined as a function
+        An \emph{agent} is defined to be a function
         $\pi:(\mathcal E\mathcal A)^*\mathcal E\to \Delta \mathcal A$.
         For any $h\in (\mathcal E\mathcal A)^*\mathcal E$,
         we write $\pi(\cdot|h)$ for the value of $\pi$ at $h$, and
@@ -170,17 +171,13 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         Intuitively, $\pi(y|h)$ is the probability that agent $\pi$
         will take action $y$ in response to history $h$.
         \item
-        By an \emph{environment}, we mean a function $\mu$
-        with domain $(\mathcal E\mathcal A)^*$,
-        which assigns to every
-        $h\in (\mathcal E\mathcal A)^*$
-        a $\mathbb Q$-valued probability measure,
-        written $\mu(\cdot|h)$,
-        on $\mathcal E$.
-        For every such $s$ and every $(o,r)\in\mathcal E$,
-        we write $\mu(o,r|h)$ for $(\mu(\cdot|h))(o,r)$.
-        If $p=(o,r)$ then we may also write $\mu(p|h)$ for
-        $(\mu(\cdot|h))(o,r)$.
+        An \emph{environment} is defined to be a function
+        $\mu:(\mathcal E\mathcal A)^*\to\Delta\mathcal E$.
+        For every $h\in(\mathcal E\mathcal A)^*$, we write
+        $\mu(\cdot|h)$ for the value of $\mu$ at $h$, and for any
+        $x\in\mathcal E$, we write $\mu(x|h)$ for $(\mu(\cdot|h))(x)$.
+        If $x=(o,r)$ ($o\in\mathcal O$, $r\in\mathcal R$), we may also
+        write $\mu(o,r|h)$ for $(\mu(\cdot|h))(x)$.
         Intuitively, $\mu(o,r|h)$ is the probability that environment
         $\mu$ will issue percept $(o,r)$ (observation $o$ and reward $r$)
         to the agent in response to history $h$.
@@ -188,23 +185,23 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         If $\pi$ is an agent, $\mu$ is an environment, and $t\in\mathbb N$,
         we write $V^\pi_{\mu,t}$ for the expected value of the sum of
         the rewards which would occur in the sequence
-        $x_1y_1\ldots x_{t+1}y_{t+1}$
+        $x_0y_0\ldots x_{t}y_{t}$
         randomly generated as follows:
         \begin{enumerate}
-            \item $x_1\in \mathcal E$ is chosen randomly based
-            on the probability measure $\mu(\cdot|\epsilon)$.
-            \item $y_1\in\mathcal A$ is chosen randomly based on the probability
-            measure $\pi(\cdot|x_1)$.
             \item
-            For each $i>1$,
-            $x_i\in\mathcal E$ is chosen randomly based on
-            the probability measure
-            $\mu(\cdot|x_1y_1\ldots x_{i-1}y_{i-1})$.
+            Each $x_i\in\mathcal E$ is chosen randomly based on
+            the probability distribution
+            $\mu(\cdot|x_1y_1\ldots x_{i-1}y_{i-1})$
+            (or $\mu(\cdot|\epsilon)$ if $i=0$).
             \item
-            For each $i>1$,
-            $y_i\in\mathcal A$ is chosen randomly based on the probability measure
-            $\pi(\cdot|x_1y_1\ldots x_{i-1}y_{i-1}x_i)$.
+            Each
+            $y_i\in\mathcal A$ is chosen randomly based on the probability distribution
+            $\pi(\cdot|x_1y_1\ldots x_{i-1}y_{i-1}x_i)$
+            (or $\pi(\cdot|\epsilon)$ if $i=0$).
         \end{enumerate}
+        Intuitively, if each $x_i=(o_i,r_i)$, then
+        $V^\pi_{\mu,t}$ can be thought of as the expected total reward
+        $\mathbb E(\sum_{i=0}^t r_i)$.
         \item
         If $\pi$ is an agent and $\mu$ is an environment,
         let $V^\pi_\mu=\lim_{t\to\infty}V^{\pi}_{\mu,t}$.
@@ -217,6 +214,11 @@ Note that it is possible for $V^\pi_\mu$ to be undefined.
 For example, if $\mu$ is an environment which always issues
 reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
 then $V^\pi_\mu$ is undefined for every agent $\pi$.
+But we will only be interested in environments $\mu$ such that $V^\pi_\mu$
+is always defined. Note also that, following \cite{legg2007universal},
+we delegate any possible reward discounting to the environments themselves,
+rather than build a fixed reward discounting factor into the definition
+of $V^\pi_\mu$.
 
 \begin{remark}
 \label{impossibleremark}
@@ -228,16 +230,21 @@ then $V^\pi_\mu$ is undefined for every agent $\pi$.
     (so that $\pi(\cdot|x_1y_1x_2)$ contributes nothing to
     $V^\pi_{\mu,t}$ and thus nothing to $V^\pi_\mu$).
     Intuitively, an agent must choose actions even in response to
-    a history that is ``impossible'' for that agent (impossible because the history
-    involves the agent having taken an action the agent never would have taken).
+    a history that would never occur with nonzero probability.
+    For example, even if, for its initial action, an agent assigns
+    probability $0$ to action $a_1$, the agent must nevertheless
+    be defined on histories where $a_1$ occurred as initial action.
     This convention (in which we follow \cite{legg2007universal}) simplifies most
     definitions, though it will complicate our definition of mixture agents
-    (Definition \ref{maindefn} below). It also has implications about the
-    self-reflectivity of agents, explored in \cite{extendedenvironmentspaper}.
+    (Definition \ref{maindefn} below). The agent's outputs on such
+    $0$-probability inputs have no effect on the agent's performance
+    in any environment, but these outputs may have implications for introspection
+    and self-reflection, see \cite{extendedenvironmentspaper}.
 \end{remark}
 
 \begin{definition}
-    An environment $\mu$ is \emph{well-behaved} if $\mu$ is computable and the following
+    An environment $\mu$ is \emph{well-behaved} if $\mu$ is Turing
+    computable and the following
     condition holds: for every agent $\pi$, $V^\pi_\mu$ exists and
     $-1\leq V^\pi_\mu\leq 1$. Let $W$ be the set of all well-behaved environments.
 \end{definition}
@@ -245,11 +252,14 @@ then $V^\pi_\mu$ is undefined for every agent $\pi$.
 \begin{definition}
 \label{performanceaveragerdefn}
     By a \emph{weighted intelligence measure}, we mean a function
-    $\Upsilon$ assigning real numbers to agents, such that there
-    are weights $\{w_\mu\}_{\mu\in W}$ such that for every agent
-    $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$
-    (and such that this infinite sum is absolutely convergent
-    for every agent $\pi$).
+    $\Upsilon:\Pi\to \mathbb R$ (where $\Pi$ is the set of all agents)
+    such that there exist non-negative reals $\{w_\mu\}_{\mu\in W}$ such that:
+    \begin{enumerate}
+        \item
+        $\sum_{\mu\in W}w_\mu$ converges.
+        \item
+        For every agent $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$.
+    \end{enumerate}
 \end{definition}
 
 The prototypical weighted intelligence measure is the Legg-Hutter intelligence
@@ -1339,8 +1349,9 @@ clear.
     the contributions from $\nu$ and $\overline\nu$ are equal-weight multiples of
     $V^\pi_{\nu}$ and $-V^\pi_{\nu}$,
     respectively, and so cancel each other
-    (terms of the infinite series can be regrouped due the absolute convergence
-    in Definition \ref{performanceaveragerdefn}).
+    (terms of the infinite series can be regrouped because
+    Condition 1 of Definition \ref{performanceaveragerdefn} implies
+    the series defining $\Upsilon(\pi)$ is absolutely convergent).
     Thus for any Janus agent $\pi$,
     $\Upsilon(\pi)$ consists solely of the contributions from $\mu$ and $\overline\mu$,
     i.e.,
