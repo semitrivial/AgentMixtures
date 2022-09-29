@@ -63,7 +63,7 @@
     which we call the genericness of non-deterministic intelligence. Loosely:
     if some history causes an agent to assign nonzero probabilities to multiple
     actions, then those nonzero probabilities can be modified without making
-    the agent less intelligent.
+    the agent less intelligent (in the sense of weighted average performance).
 \end{abstract}
 
 \section{Introduction}
@@ -74,29 +74,29 @@ The agent and the environment take turns.
 \item
 On $\pi$'s turn, $\pi$
 outputs a probability distribution over a fixed action-set.
-Based on this distribution, an action is randomly chosen
+Based on this distribution, an action is sampled
 and is transmitted to $\pi$ and $\mu$.
 \item
 On $\mu$'s turn, $\mu$
 outputs a probability distribution over a fixed percept-set,
 where every percept includes an observation (thought of as
 the agent's view of the world) and a numerical reward.
-Based on this distribution, a percept is randomly chosen and
+Based on this distribution, a percept is sampled and
 is transmitted to $\pi$ and $\mu$.
 \end{itemize}
 These turns continue forever, and the whole sequence of turns
 is called an agent-environment interaction.
 
-If $\pi$ and $\rho$ are two agents, we can informally imagine a new agent
+If $\pi_1$ and $\pi_2$ are two agents, we can informally imagine a new agent
 $\sigma$ (first described in \cite{alexander2021reward})
 as follows. At the beginning of every agent-environment interaction,
-$\sigma$ flips a coin. If the coin lands heads, then $\sigma$ transforms into
-$\pi$; otherwise, $\sigma$ transforms into $\rho$. Note that the coin is only
+$\sigma$ flips a fair coin. If the coin lands heads, then $\sigma$ transforms into
+$\pi_1$; otherwise, $\sigma$ transforms into $\pi_2$. Note that the coin is only
 flipped one time, at the very start of the agent-environment interaction:
 it is not repeatedly flipped every turn. Intuitively, it seems like the
 expected total reward in the agent-environment interaction
 when $\sigma$ interacts with $\mu$, should be the average
-of the corresponding expected total rewards when $\pi$ or $\rho$ interact
+of the corresponding expected total rewards when $\pi_1$ or $\pi_2$ interact
 with $\mu$. But this is all quite informal, as the RL
 framework does not actually provide any mechanism for such an initial
 coin-flip.
