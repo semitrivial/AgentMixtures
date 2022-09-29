@@ -197,7 +197,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
     This convention (in which we follow \cite{legg2007universal}) simplifies most
     definitions, though it will complicate our definition of mixture agents
     (Definition \ref{maindefn} below). The agent's outputs on such
-    $0$-probability inputs have no effect on the agent's performance
+    ``impossible'' (i.e.\ $0$-probability) inputs have no effect on the agent's performance
     in any environment, but these outputs may have implications for introspection
     and self-reflection, see \cite{extendedenvironmentspaper}.
 \end{remark}
@@ -722,7 +722,8 @@ self-dual agents (up to equivalence modulo a certain natural equivalence relatio
     Intuitively, Definition \ref{equivdefn} says that $\pi\equiv\rho$
     iff the histories which are ``possible'' for $\pi$ (in the sense of
     Remark \ref{impossibleremark}) are exactly the histories which are
-    ``possible'' for $\rho$, and $\pi=\rho$ on those histories.
+    ``possible'' for $\rho$, and $\pi=\rho$ on those histories
+    ($\pi$ and $\rho$ may differ on ``impossible'' histories).
 \end{remark}
 
 \begin{lemma}
@@ -734,6 +735,10 @@ self-dual agents (up to equivalence modulo a certain natural equivalence relatio
 \begin{proof}
     Straightforward.
 \end{proof}
+
+In the proof of the following lemma, we will use the well-known null-factor
+law, which states that for all real numbers $a$ and $b$, if $ab=0$,
+then $a=0$ or $b=0$.
 
 \begin{lemma}
 \label{piopluspilemma}
@@ -765,7 +770,7 @@ self-dual agents (up to equivalence modulo a certain natural equivalence relatio
         By induction, condition 1 holds for $h_0$, so
         $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
         By Definition \ref{pullbackdef},
-        $P^\pi(h)=0\pi(y_0|h_0)=0$
+        $P^\pi(h)=P^\pi(h_0)\pi(y_0|h_0)=0$
         and $P^{\vec w\cdot\vec\pi}(h)=0(\vec w\cdot\vec\pi)(y_0|h_0)=0$.
         So $P^\pi(h)=0$ iff $P^{\vec w\cdot\vec\pi}(h)=0$.
 
@@ -782,7 +787,8 @@ self-dual agents (up to equivalence modulo a certain natural equivalence relatio
                 &= P^\pi(h_0)\pi(y_0|h_0).
                     &\mbox{(Definition \ref{pullbackdef})}
         \end{align*}
-        Since $P^\pi(h_0)\not=0$, and since $\mathbb R$ has the zero-product property,
+        Since $P^\pi(h_0)\not=0$,
+        by the null-factor law,
         it follows that
         $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(y_0|h_0)=0$.
 
