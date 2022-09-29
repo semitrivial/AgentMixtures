@@ -387,6 +387,7 @@ Before defining mixture agents, we will first extend some of the above
 definitions to vectors of agents.
 
 \begin{definition}
+\label{vectorizationdefn}
     Suppose $\vec\pi=(\pi_1,\ldots,\pi_n)$ is a vector of agents, $\mu$ is an environment,
     $h\in\mathcal H$, $t\in\mathbb N$, and $\Upsilon$ is a weighted
     intelligence measure. We define:
@@ -430,21 +431,24 @@ Now we are ready to define mixture agents.
 \end{definition}
 
 \begin{remark}
-    Definition \ref{maindefn} is complicated by Remark \ref{impossibleremark},
-    which forces us to include the case
+    Definition \ref{maindefn} is complicated by the way
+    Definition \ref{omnibusdefn} part 3
+    forces us to include the case
     $(\vec w\cdot\vec\pi)(y|h)=1/|\mathcal A|$ when
-    $\vec w\cdot {P^{\vec\pi}}(h)=0$: we are obligated to specify how
+    $\vec w\cdot {P^{\vec\pi}}(h)=0$
+    (see Remark \ref{impossibleremark}): we are obligated to specify how
     $\vec w\cdot\vec\pi$ chooses actions even in response to histories that
-    are ``impossible'' for $\vec w\cdot\vec\pi$ (histories which involve
-    $\vec w\cdot\vec\pi$ having taken actions which $\vec w\cdot\vec\pi$
-    never would take). The value $1/|\mathcal A|$ in this case is completely arbitrary;
-    any other value would be just as good,
-    provided $\sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)=1$.
+    are ``impossible'' for $\vec w\cdot\vec\pi$ (histories which contain actions that
+    $\vec w\cdot\vec\pi$ would never take in those circumstances).
+    The value $1/|\mathcal A|$ in this case is completely arbitrary;
+    any other probabilities would be just as good,
+    provided $\vec w\cdot\vec pi(h)\in\Delta\mathcal A$.
 \end{remark}
 
 \begin{lemma}
     If $\vec\pi$ and $\vec w$ are as in Definition \ref{maindefn}
-    then $\vec w\cdot\vec\pi$ really is an agent.
+    then the mixture agent $\vec w\cdot\vec\pi$ is an agent
+    (per Definition \ref{omnibusdefn} part 3).
 \end{lemma}
 
 \begin{proof}
@@ -463,6 +467,11 @@ Now we are ready to define mixture agents.
             &= \sum_{y\in\mathcal A}
                 \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot {P^{\vec\pi}}(h)}
                 &\mbox{(Definition \ref{maindefn})}\\
+            &= \sum_{y\in\mathcal A}
+                \frac
+                {\vec w\cdot(P^{\pi_1}(hy),\ldots,P^{\pi_n}(hy))}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Definition \ref{vectorizationdefn})}\\
             &= \sum_{y\in\mathcal A}
                 \frac
                 {w_1 P^{\pi_1}(h)\pi_1(y|h)+\cdots+w_n P^{\pi_n}(h)\pi_n(y|h)}
