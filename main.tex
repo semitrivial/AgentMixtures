@@ -381,6 +381,36 @@ This depends on a background universal
 Turing machine, the choice of which is highly nontrivial
 \cite{leike2015bad}.
 
+We will repeatedly write proofs by induction on histories $h\in\mathcal H$
+(rather than on the usual induction on natural
+numbers), implicitly using the following lemma without mention.
+
+\begin{lemma}
+\label{trivialinductionlemma}
+    Suppose $\mathscr P$ is a property of histories. In order to prove
+    that $\mathscr P(h)$ is true
+    for all $h\in\mathcal H$, it suffices to prove the following three cases:
+    \begin{enumerate}
+        \item $\mathscr P(\epsilon)$.
+        \item If $h=gx$ for some $x\in\mathcal A$, if $\mathscr P(g)$, then $\mathscr P(h)$.
+        \item If $h=gy$ for some $y\in\mathcal E$, if $\mathscr P(g)$, then $\mathscr P(h)$.
+    \end{enumerate}
+    In proving (2) and (3), we refer to the hypothesis ``$\mathscr P(g)$'' as the
+    ``Induction Hypothesis'' (or just ``Induction'').
+\end{lemma}
+
+\begin{proof}
+    By induction on the length $\ell$ of $h\in\mathcal H$.
+    For the base case, if $\ell=0$ then $h=\epsilon$ so $\mathscr P(h)$ holds by (1).
+    For the induction step, assume $\ell>0$.
+    If $h\in(\mathcal E\mathcal A)^*$ then this implies
+    $h=gx$ for some $x\in\mathcal A$ such that $g$ has length $\ell-1$.
+    By induction, $\mathscr P(g)$. Thus $\mathscr P(h)$ by (2).
+    Otherwise, $h\in(\mathcal E\mathcal A)^*\mathcal A$, which implies
+    $h=gy$ for some $y\in\mathcal E$ such that $g$ has length $\ell-1$.
+    By induction, $\mathscr P(g)$, thus $\mathscr P(h)$ by (3).
+\end{proof}
+
 \section{Mixture agents}
 
 Before defining mixture agents, we will first extend some of the above
@@ -446,6 +476,7 @@ Now we are ready to define mixture agents.
 \end{remark}
 
 \begin{lemma}
+\label{mixturereallyisanagent}
     If $\vec\pi$ and $\vec w$ are as in Definition \ref{maindefn}
     then the mixture agent $\vec w\cdot\vec\pi$ is an agent
     (per Definition \ref{omnibusdefn} part 3).
@@ -492,6 +523,12 @@ Now we are ready to define mixture agents.
     \end{align*}
 \end{proof}
 
+We will frequently use Lemma \ref{mixturereallyisanagent} without explicit mention.
+For example, the lemma allows us to speak of $P^{\vec w\cdot \vec\pi}(h)$
+(Definition \ref{pullbackdefn}), $V^{\vec w\cdot\vec\pi}_{\mu}$
+(Definition \ref{performancedefn}), etc., and we will freely do so without
+explicitly citing Lemma \ref{mixturereallyisanagent}.
+
 \begin{theorem}
 \label{maintheorem}
     (Commutativity of $\vec w$)
@@ -523,7 +560,7 @@ Now we are ready to define mixture agents.
 \end{theorem}
 
 \begin{proof}
-    (1) By induction on $h$.
+    (1) By induction on $h$ (using Lemma \ref{trivialinductionlemma}).
 
     Case 1: $h=\epsilon$. Then
     $P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
@@ -586,14 +623,14 @@ Now we are ready to define mixture agents.
 
     (2) Follows from (1) and Lemma \ref{factorizationlemma}.
 
-    (3) Follows from (2) and Definition \ref{performancedefn}.
+    (3) Follows from (2) and Definition \ref{performancedefn} part 1.
 
-    (4) Immediate from (3).
+    (4) Follows from (3) and Definition \ref{performancedefn} part 2.
 
-    (5) Immediate from (4).
+    (5) Follows from (4) and Definition \ref{performanceaveragerdefn}.
 \end{proof}
 
-\section{Duality and Janus agents:
+\section{Duality and self-dual agents:
 Strengthening and formalizing a result of Alexander and Hutter}
 
 \begin{definition}
@@ -601,20 +638,20 @@ Strengthening and formalizing a result of Alexander and Hutter}
 (Dual Agents and Dual Environments)
 \begin{enumerate}
     \item
-    For each $h\in\mathcal H$, let $\overline h$ be the sequence obtained
+    For each $h\in\mathcal H$,
+    we define the \emph{dual} of $h$, denoted $\overline h$, to be
+    the sequence obtained
     by replacing every percept $(o,r)$ in $h$ by $(o,-r)$ (in other words:
     replacing every reward $r$ in $h$ by $-r$).
     \item
     Suppose $\pi$ is an agent.
-    We define a new agent $\overline \pi$, the \emph{dual} of $\pi$,
-    as follows:
+    We define the \emph{dual} of $\pi$, denoted $\overline \pi$, as follows:
     for each $h\in (\mathcal E\mathcal A)^*\mathcal E$,
     for each action $y\in\mathcal A$,
     \[\overline\pi(y|h)=\pi(y|\overline h).\]
     \item
     Suppose $\mu$ is an environment.
-    We define a new environment $\overline\mu$, the \emph{dual} of $\mu$,
-    as follows:
+    We define the \emph{dual} of $\mu$, denoted $\overline\mu$, as follows:
     for each $h\in (\mathcal E\mathcal A)^*$,
     for each $(o,r)\in\mathcal E$,
     \[\overline\mu(o,r|h)=\mu(o,-r|\overline h).\]
@@ -623,12 +660,12 @@ Strengthening and formalizing a result of Alexander and Hutter}
 
 \begin{lemma}
 \label{doublenegationlemma}
-    If $x$ is any agent, environment, or element of $\mathcal H$,
+    If $x$ is any agent, environment, or history,
     then $\overline{\overline x}=x$.
 \end{lemma}
 
 \begin{proof}
-    By the fact that $--r=r$ for all real $r$.
+    Trivial as $-(-r)=r$ for all real $r$.
 \end{proof}
 
 \begin{lemma}
@@ -641,21 +678,15 @@ Strengthening and formalizing a result of Alexander and Hutter}
     By induction on $h$.
 \end{proof}
 
-The following class of agents is named after Janus, the mythological
-Roman god of duality. In the myth, Janus has two faces, one facing
-forward, the other facing backward. Thus in some sense, flipping Janus
-around by $180^\circ$ would not change him.
-
 \begin{definition}
-    (Janus agents)
-    A \emph{Janus agent} is an agent $\pi$ such that
-    $\overline{\pi}=\pi$.
+    (Self-dual agents)
+    An agent $\pi$ is \emph{self-dual} if $\overline{\pi}=\pi$.
 \end{definition}
 
-We will use Janus agents to strengthen and formalize an informal result
+We will use self-dual agents to strengthen and formalize an informal result
 from \cite{alexander2021reward}.
 But first, we will use mixture agents to characterize
-Janus agents (up to equivalence modulo a certain natural equivalence relation).
+self-dual agents (up to equivalence modulo a certain natural equivalence relation).
 
 \begin{definition}
 \label{equivdefn}
@@ -768,7 +799,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 \begin{lemma}
 \label{reflectionmakesjanuslemma}
     For any agent $\pi$,
-    $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is a Janus agent.
+    $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is self-dual.
 \end{lemma}
 
 \begin{proof}
@@ -821,10 +852,10 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 \end{proof}
 
 \begin{proposition}
-    (Characterization of Janus agents modulo $\equiv$)
+    (Characterization of self-dual agents modulo $\equiv$)
     For any agent $\pi$, the following are equivalent:
     \begin{enumerate}
-        \item $\pi\equiv\rho$ for some Janus agent $\rho$.
+        \item $\pi\equiv\rho$ for some self-dual agent $\rho$.
         \item $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$
             for some agent $\rho$.
     \end{enumerate}
@@ -832,7 +863,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 
 \begin{proof}
     ($\Rightarrow$)
-    Assume $\pi\equiv\rho$ for some Janus agent $\rho$.
+    Assume $\pi\equiv\rho$ for some self-dual agent $\rho$.
     Then $\rho=\overline{\rho}$, so
     $\rho\equiv (\frac12,\frac12)\cdot(\rho,\overline{\rho})$ by
     Lemma \ref{piopluspilemma}, thus, by Lemma \ref{equivrelationlemma},
@@ -841,7 +872,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     ($\Leftarrow$)
     Assume $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ for some agent $\rho$.
     By Lemma \ref{reflectionmakesjanuslemma},
-    $(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ is a Janus agent, so we are done.
+    $(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ is self-dual, so we are done.
 \end{proof}
 
 The following theorem formalizes and strengthens an informal result
@@ -849,7 +880,7 @@ from \cite{alexander2021reward}.
 
 \begin{theorem}
     Suppose $\Upsilon$ is a weighted intelligence measure.
-    If $\Upsilon(\pi)=0$ for every Janus agent $\pi$,
+    If $\Upsilon(\pi)=0$ for every self-dual agent $\pi$,
     then $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$
     for every agent $\pi$.
 \end{theorem}
@@ -857,7 +888,7 @@ from \cite{alexander2021reward}.
 \begin{proof}
     Let $\pi$ be any agent.
     By Lemma \ref{reflectionmakesjanuslemma},
-    $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is a Janus agent.
+    $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is self-dual.
     So by assumption,
     $\Upsilon((\frac12,\frac12)\cdot(\pi,\overline\pi))=0$.
     Thus by Theorem \ref{maintheorem},
@@ -1343,8 +1374,9 @@ clear.
     $\overline\mu$ has weight $1$, and such that for every
     environment $\nu\not\in\{\mu,\overline{\mu}\}$, $\nu$ and $\overline{\nu}$ have
     equal weight.
-    By Corollary 6 of \cite{alexander2021reward}, for any Janus agent $\pi$ and
-    any environment $\nu$, $V^\pi_{\overline\nu}=-V^\pi_{\nu}$, thus for any Janus agent $\pi$,
+    By Corollary 6 of \cite{alexander2021reward}, for any self-dual agent $\pi$ and
+    any environment $\nu$, $V^\pi_{\overline\nu}=-V^\pi_{\nu}$, thus for any
+    self-dual agent $\pi$,
     in the sum $\Upsilon(\pi)$, for any environment $\nu\not\in\{\mu,\overline{\mu}\}$,
     the contributions from $\nu$ and $\overline\nu$ are equal-weight multiples of
     $V^\pi_{\nu}$ and $-V^\pi_{\nu}$,
@@ -1352,7 +1384,7 @@ clear.
     (terms of the infinite series can be regrouped because
     Condition 1 of Definition \ref{performanceaveragerdefn} implies
     the series defining $\Upsilon(\pi)$ is absolutely convergent).
-    Thus for any Janus agent $\pi$,
+    Thus for any self-dual agent $\pi$,
     $\Upsilon(\pi)$ consists solely of the contributions from $\mu$ and $\overline\mu$,
     i.e.,
     \[
@@ -1372,7 +1404,7 @@ clear.
             &= 1-2^{-k},
                     &\mbox{(Geometric series)}
     \end{align*}
-    so $\Upsilon(\pi_k)=1-2^{-k}$ (as $\pi_k$ is a Janus agent).
+    so $\Upsilon(\pi_k)=1-2^{-k}$ (as $\pi_k$ is self-dual).
     Thus:
     \begin{enumerate}
         \item For each $k$, transforming $\pi_k$ into $\pi_{k+1}$
@@ -1383,7 +1415,7 @@ clear.
             repeat it to infinity, even though each individual step
             \emph{increases} intelligence, we finally end up with
             the completely deterministic
-            Janus agent $\pi_{\infty}$ who always takes action $a_0$ and who is
+            self-dual agent $\pi_{\infty}$ who always takes action $a_0$ and who is
             \emph{less} intelligent than each $\pi_k$:
             $\Upsilon(\pi_{\infty})=V^{\pi_\infty}_\mu=-1$.
     \end{enumerate}
