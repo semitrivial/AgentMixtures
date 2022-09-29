@@ -470,9 +470,6 @@ Now we are ready to define mixture agents.
     $\vec w\cdot\vec\pi$ chooses actions even in response to histories that
     are ``impossible'' for $\vec w\cdot\vec\pi$ (histories which contain actions that
     $\vec w\cdot\vec\pi$ would never take in those circumstances).
-    The value $1/|\mathcal A|$ in this case is completely arbitrary;
-    any other probabilities would be just as good,
-    provided $\vec w\cdot\vec pi(h)\in\Delta\mathcal A$.
 \end{remark}
 
 \begin{lemma}
@@ -830,8 +827,10 @@ then $a=0$ or $b=0$.
     Let $\vec w=(\frac12,\frac12)$.
     For any $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $y\in\mathcal A$,
     we claim
-    $\overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
-    =(\vec w\cdot(\pi,\overline{\pi}))(y|h)$.
+    \[
+        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
+        =(\vec w\cdot(\pi,\overline{\pi}))(y|h).
+    \]
     Noting that
     $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
     =\frac12P^\pi(h)+\frac12P^{\overline\pi}(h)$
@@ -850,7 +849,7 @@ then $a=0$ or $b=0$.
     and Lemma \ref{asteriskcommuteswithoverlinelemma} that
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(y|h)=1/|\mathcal A|$.
-    But assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
+    So assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
     Then:
     \begin{align*}
         \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
@@ -876,6 +875,7 @@ then $a=0$ or $b=0$.
 \end{proof}
 
 \begin{proposition}
+\label{janusagentcharacterizationproposition}
     (Characterization of self-dual agents modulo $\equiv$)
     For any agent $\pi$, the following are equivalent:
     \begin{enumerate}
@@ -888,39 +888,137 @@ then $a=0$ or $b=0$.
 \begin{proof}
     ($\Rightarrow$)
     Assume $\pi\equiv\rho$ for some self-dual agent $\rho$.
-    Then $\rho=\overline{\rho}$, so
-    $\rho\equiv (\frac12,\frac12)\cdot(\rho,\overline{\rho})$ by
-    Lemma \ref{piopluspilemma}, thus, by Lemma \ref{equivrelationlemma},
+    By Lemma \ref{piopluspilemma}
+    $\rho\equiv (\frac12,\frac12)\cdot(\rho,\rho)$,
+    but $\rho=\overline{\rho}$ by self-duality,
+    so
+    $\rho\equiv (\frac12,\frac12)\cdot(\rho,\overline{\rho})$.
+    By transitivity of $\equiv$ (Lemma \ref{equivrelationlemma}),
     $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$.
 
     ($\Leftarrow$)
     Assume $\pi\equiv(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ for some agent $\rho$.
     By Lemma \ref{reflectionmakesjanuslemma},
-    $(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ is self-dual, so we are done.
+    $(\frac12,\frac12)\cdot(\rho,\overline{\rho})$ is self-dual.
 \end{proof}
 
-The following theorem formalizes and strengthens an informal result
-from \cite{alexander2021reward}.
+Proposition \ref{janusagentcharacterizationproposition} is analogous to the
+following well-known fact: a function $f:\mathbb R\to\mathbb R$ is even
+(i.e.\ satisfies the identity $f(x)=f(-x)$, a kind of self-dual property)
+if and only if $f(x)=\frac12(g(x)+g(-x))$ for some $g:\mathbb R\to\mathbb R$.
+
+Alexander and Hutter \cite{alexander2021reward} considered various symmetry properties of
+weighted intelligence measures. They informally argued that a
+certain somewhat-weak symmetry property implies a strong symmetry property.
+We will make the argument formal, and strengthen it further,
+by showing that the strong symmetry property is implied by an
+even weaker symmetry property. We will show in Corollary \ref{equivalentsymmetriescor} that
+the following three symmetry conditions are equivalent.
+
+\begin{definition}
+    (Weighted intelligence measure symmetry properties)
+    Let $\Upsilon$ be a weighted intelligence measure.
+    \begin{enumerate}
+        \item $\Upsilon$ \emph{satisfies the weak symmetry condition}
+            if $\Upsilon(\pi)=0$ for every self-dual agent $\pi$.
+        \item $\Upsilon$ \emph{satisfies the intermediate symmetry condition}
+            if $\Upsilon(\pi)=0$ for every agent $\pi$
+            such that $\Upsilon(\pi)=\Upsilon(\overline\pi)$.
+        \item $\Upsilon$ \emph{satisfies the strong symmetry condition}
+            if $\Upsilon(\overline\pi)=-\Upsilon(\pi)$ for every agent $\pi$.
+    \end{enumerate}
+\end{definition}
+
+Alexander and Hutter gave an informal argument that the intermediate symmetry condition
+implies the strong symmetry condition (to be precise, they considered
+the contrapositive of the above intermediate symmetry condition).
+Their argument was informal because it
+invoked a coin-flipping agent (as in this paper's Introduction), but such
+coin-flipping agents do not actually fit in the formal Legg-Hutter-style RL
+framework where this all takes place. In the following, we will formally
+prove (using mixture agents instead of coin-flipping agents) that
+the weak symmetry condition implies the strong symmetry condition.
+Then in Corollary \ref{equivalentsymmetriescor} we will show that in fact all three
+conditions are equivalent (a much stronger formal result than what
+Alexander and Hutter informally proved).
+
+This result is important because the Legg-Hutter attempt \cite{legg2007universal} to
+formally measure intelligence depends on the choice of background universal Turing machine
+(UTM), which choice is non-trivial \cite{leike2015bad}. Thus it is desirable to
+find plausible conditions by which to constrain the UTM-space.
+Alexander and Hutter proposed the strong symmetry condition as one such constraint
+(namely, that the UTM be chosen so that the resulting canonical weighted intelligence
+measure of \cite{legg2007universal} (modified to allow negative rewards)
+be strongly symmetric).
+Indeed, this can be considered an intrinsically desirable (at least in the RL context)
+property of UTMs,
+or informally, of programming languages: an objectively desirable property
+(as opposed to subjective properties like whether or not white-space
+should matter, curly-braces vs.\ square-braces, and so on).
+Such intrinsically desirable UTM properties are elusive; attempts
+(like \cite{muller2010stationary}) to find them confirm the difficulty thereof.
+Alexander and Hutter used the fact that the intermediate symmetry condition implies
+the strong symmetry condition to argue for the latter's plausibility.
+Indeed, if intelligence is measured as weighted average total reward across
+all well-behaved environments, it is quite
+plausible that self-dual agents should have intelligence $0$ (this is the weak
+symmetry condition), because in some sense a self-dual agent does not ``know''
+whether positive rewards are good and negative rewards are bad, or vice versa,
+so how could said agent possibly optimize rewards across all environments?
+It is surprising that this weak symmetry condition implies the strong symmetry
+condition, which, a priori, seems to demand much more.
 
 \begin{theorem}
+\label{weakimpliesstrongthm}
     Suppose $\Upsilon$ is a weighted intelligence measure.
+    If $\Upsilon$ satisfies the weak symmetry condition then
+    $\Upsilon$ satisfies the strong symmetry condition.
     If $\Upsilon(\pi)=0$ for every self-dual agent $\pi$,
     then $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$
     for every agent $\pi$.
 \end{theorem}
 
 \begin{proof}
+    Assume $\Upsilon$ satisfies the weak symmetry condition.
     Let $\pi$ be any agent.
     By Lemma \ref{reflectionmakesjanuslemma},
     $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is self-dual.
-    So by assumption,
+    So by weak symmetry,
     $\Upsilon((\frac12,\frac12)\cdot(\pi,\overline\pi))=0$.
-    Thus by Theorem \ref{maintheorem},
+    Thus by Theorem \ref{maintheorem} (part 5),
     \[
         (\mbox{$\frac12$},\mbox{$\frac12$})\cdot\Upsilon((\pi,\overline\pi))
         =\mbox{$\frac12$}\Upsilon(\pi)+\mbox{$\frac12$}\Upsilon(\overline\pi)=0.
     \]
     So $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$.
+    By arbitrariness of $\pi$, $\Upsilon$ satisfies the strong
+    symmetry condition.
+\end{proof}
+
+\begin{corollary}
+\label{equivalentsymmetriescor}
+    The weak, intermediate, and strong symmetry conditions are equivalent.
+\end{corollary}
+
+\begin{proof}
+    (Weak $\Rightarrow$ Strong) By Theorem \ref{weakimpliesstrongthm}.
+
+    (Strong $\Rightarrow$ Intermediate) Assume weighted intelligence measure
+    $\Upsilon$ satisfies the strong symmetry condition.
+    Let $\pi$ be any agent such that $\Upsilon(\pi)=\Upsilon(\overline\pi)$.
+    By strong symmetry, $\Upsilon(\overline\pi)=-\Upsilon(\pi)$,
+    so $\Upsilon(\pi)=-\Upsilon(\pi)$, so $\Upsilon(\pi)=0$.
+    By arbitrariness of $\pi$, $\Upsilon$ satisfies the intermediate
+    symmetry condition.
+
+    (Intermediate $\Rightarrow$ Weak)
+    Assume weighted intelligence measure
+    $\Upsilon$ satisfies the intermediate symmetry condition.
+    Let $\pi$ be any self-dual agent.
+    Then $\pi=\overline{\pi}$, so $\Upsilon(\pi)=\Upsilon(\overline{\pi})$.
+    By intermediate symmetry, $\Upsilon(\pi)=0$.
+    By arbitrariness of $\pi$, $\Upsilon$ satisfies the weak symmetry
+    condition.
 \end{proof}
 
 
