@@ -321,7 +321,7 @@ integers.
         For every $t\in\mathbb N$,
         we define
         \[
-            V^\pi_{\mu,t}=\sum_{h\in X_t}P^\pi_\mu(h)R(h)
+            V^\pi_{\mu,t}=\sum_{h\in X_t}R(h)P^\pi_\mu(h)
         \]
         where $X_t\subseteq\mathcal H$ is the set of all
         length-$2t$ histories (i.e., all $h\in\mathcal H$ of the form
@@ -623,7 +623,25 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
 
     (2) Follows from (1) and Lemma \ref{factorizationlemma}.
 
-    (3) Follows from (2) and Definition \ref{performancedefn} part 1.
+    (3) With $X_t$ and $R$ as in Definition \ref{performancedefn}, we compute:
+    \begin{align*}
+        V^{\vec w\cdot\vec\pi}_{\mu,t}
+            &= \mbox{$\sum_{h\in X_t}R(h)P^{\vec w\cdot\vec\pi}_\mu(h)$}
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= \mbox{$\sum_{h\in X_t}\vec w\cdot R(h)P^{\vec\pi}_\mu(h)$}
+                &\mbox{(By (2))}\\
+            &= \mbox{$\vec w\cdot \sum_{h\in X_t}R(h)P^{\vec\pi}_\mu(h)$}
+                &\mbox{(Distributive law)}\\
+            &= \mbox{$\vec w\cdot
+                \left(
+                    \sum_{h\in X_t}R(h)P^{\pi_1}_\mu(h)
+                    ,...,
+                    \sum_{h\in X_t}R(h)P^{\pi_n}_\mu(h)
+                \right)$}
+                &\mbox{(Definition \ref{vectorizationdefn} part 2)}
+            &= \vec w\cdot V^{\vec\pi}_{\mu,t}.
+                &\mbox{(Definition \ref{vectorizationdefn} part 3)}
+    \end{align*}
 
     (4) Follows from (3) and Definition \ref{performancedefn} part 2.
 
