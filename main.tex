@@ -392,8 +392,8 @@ numbers), implicitly using the following lemma without mention.
     for all $h\in\mathcal H$, it suffices to prove the following three cases:
     \begin{enumerate}
         \item $\mathscr P(\epsilon)$.
-        \item If $h=gx$ for some $x\in\mathcal A$, if $\mathscr P(g)$, then $\mathscr P(h)$.
-        \item If $h=gy$ for some $y\in\mathcal E$, if $\mathscr P(g)$, then $\mathscr P(h)$.
+        \item If $h=gy$ for some $y\in\mathcal A$, if $\mathscr P(g)$, then $\mathscr P(h)$.
+        \item If $h=gx$ for some $x\in\mathcal E$, if $\mathscr P(g)$, then $\mathscr P(h)$.
     \end{enumerate}
     In proving (2) and (3), we refer to the hypothesis ``$\mathscr P(g)$'' as the
     ``Induction Hypothesis'' (or just ``Induction'').
@@ -404,10 +404,10 @@ numbers), implicitly using the following lemma without mention.
     For the base case, if $\ell=0$ then $h=\epsilon$ so $\mathscr P(h)$ holds by (1).
     For the induction step, assume $\ell>0$.
     If $h\in(\mathcal E\mathcal A)^*$ then this implies
-    $h=gx$ for some $x\in\mathcal A$ such that $g$ has length $\ell-1$.
+    $h=gy$ for some $y\in\mathcal A$ such that $g$ has length $\ell-1$.
     By induction, $\mathscr P(g)$. Thus $\mathscr P(h)$ by (2).
     Otherwise, $h\in(\mathcal E\mathcal A)^*\mathcal A$, which implies
-    $h=gy$ for some $y\in\mathcal E$ such that $g$ has length $\ell-1$.
+    $h=gx$ for some $x\in\mathcal E$ such that $g$ has length $\ell-1$.
     By induction, $\mathscr P(g)$, thus $\mathscr P(h)$ by (3).
 \end{proof}
 
