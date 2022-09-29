@@ -137,7 +137,6 @@ By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
 By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all $\mathbb Q$-valued
 probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
-By $\mathbb N$ we mean $\{0,1,2,\ldots\}$.
 
 \begin{definition}
 \label{omnibusdefn}
@@ -181,59 +180,20 @@ By $\mathbb N$ we mean $\{0,1,2,\ldots\}$.
         Intuitively, $\mu(o,r|h)$ is the probability that environment
         $\mu$ will issue percept $(o,r)$ (observation $o$ and reward $r$)
         to the agent in response to history $h$.
-        \item
-        If $\pi$ is an agent, $\mu$ is an environment, and $t\in\mathbb N$,
-        we write $V^\pi_{\mu,t}$ for the expected value of the sum of
-        the rewards which would occur in the sequence
-        $x_0y_0\ldots x_{t}y_{t}$
-        randomly generated as follows:
-        \begin{enumerate}
-            \item
-            Each $x_i\in\mathcal E$ is chosen randomly based on
-            the probability distribution
-            $\mu(\cdot|x_1y_1\ldots x_{i-1}y_{i-1})$
-            (or $\mu(\cdot|\epsilon)$ if $i=0$).
-            \item
-            Each
-            $y_i\in\mathcal A$ is chosen randomly based on the probability distribution
-            $\pi(\cdot|x_1y_1\ldots x_{i-1}y_{i-1}x_i)$
-            (or $\pi(\cdot|\epsilon)$ if $i=0$).
-        \end{enumerate}
-        Intuitively, if each $x_i=(o_i,r_i)$, then
-        $V^\pi_{\mu,t}$ can be thought of as the expected total reward
-        $\mathbb E(\sum_{i=0}^t r_i)$.
-        \item
-        If $\pi$ is an agent and $\mu$ is an environment,
-        let $V^\pi_\mu=\lim_{t\to\infty}V^{\pi}_{\mu,t}$.
-        Intuitively, $V^\pi_\mu$ is the expected total reward which $\pi$ would extract
-        from $\mu$.
     \end{enumerate}
 \end{definition}
-
-Note that it is possible for $V^\pi_\mu$ to be undefined.
-For example, if $\mu$ is an environment which always issues
-reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
-then $V^\pi_\mu$ is undefined for every agent $\pi$.
-But we will only be interested in environments $\mu$ such that $V^\pi_\mu$
-is always defined. Note also that, following \cite{legg2007universal},
-we delegate any possible reward discounting to the environments themselves,
-rather than build a fixed reward discounting factor into the definition
-of $V^\pi_\mu$.
 
 \begin{remark}
 \label{impossibleremark}
     Note that in Definition \ref{omnibusdefn} part 3, we require,
     e.g., $\pi(\cdot|x_1y_1x_2)$ to be defined even if
-    $\pi(y_1|x_1)=0$, in which case in Definition \ref{omnibusdefn} part 5,
-    there would be zero probability that the randomly-generated initial
-    sequence would begin with this particular $x_1y_1x_2$
-    (so that $\pi(\cdot|x_1y_1x_2)$ contributes nothing to
-    $V^\pi_{\mu,t}$ and thus nothing to $V^\pi_\mu$).
-    Intuitively, an agent must choose actions even in response to
-    a history that would never occur with nonzero probability.
+    $\pi(y_1|x_1)=0$, in which case the initial percept-action sequence $x_1y_1x_2$
+    would have probability $0$ of ever occurring in any agent-environment
+    interaction. Intuitively: an agent must be able to choose actions even
+    in response to histories that would never occur with nonzero probability.
     For example, even if, for its initial action, an agent assigns
-    probability $0$ to action $a_1$, the agent must nevertheless
-    be defined on histories where $a_1$ occurred as initial action.
+    probability $0$ to action $A$, the agent must nevertheless
+    be defined on histories where $A$ occurred as initial action.
     This convention (in which we follow \cite{legg2007universal}) simplifies most
     definitions, though it will complicate our definition of mixture agents
     (Definition \ref{maindefn} below). The agent's outputs on such
@@ -241,40 +201,6 @@ of $V^\pi_\mu$.
     in any environment, but these outputs may have implications for introspection
     and self-reflection, see \cite{extendedenvironmentspaper}.
 \end{remark}
-
-\begin{definition}
-    An environment $\mu$ is \emph{well-behaved} if $\mu$ is Turing
-    computable and the following
-    condition holds: for every agent $\pi$, $V^\pi_\mu$ exists and
-    $-1\leq V^\pi_\mu\leq 1$. Let $W$ be the set of all well-behaved environments.
-\end{definition}
-
-\begin{definition}
-\label{performanceaveragerdefn}
-    By a \emph{weighted intelligence measure}, we mean a function
-    $\Upsilon:\Pi\to \mathbb R$ (where $\Pi$ is the set of all agents)
-    such that there exist non-negative reals $\{w_\mu\}_{\mu\in W}$ such that:
-    \begin{enumerate}
-        \item
-        $\sum_{\mu\in W}w_\mu$ converges.
-        \item
-        For every agent $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$.
-    \end{enumerate}
-\end{definition}
-
-The prototypical weighted intelligence measure is the Legg-Hutter intelligence
-measure $\Upsilon$ introduced in \cite{legg2007universal},
-where each well-behaved $\mu$ is
-weighed using the universal prior \cite{li2008introduction}, i.e.,
-given weight $2^{-K(\mu)}$
-where $K$ denotes Kolmogorov complexity. This depends on a background universal
-Turing machine, the choice of which is highly nontrivial
-\cite{leike2015bad}.
-
-\section{Mixture agents}
-
-Before defining mixture agents, we need to start with some preliminary definitions
-and lemmas.
 
 \begin{definition}
     By $\mathcal H$ we mean
@@ -385,19 +311,83 @@ to proofs by induction.
         Similar to Case 2.
 \end{proof}
 
-\begin{lemma}
-\label{basicprobabilitylemma}
-    $V^\pi_{\mu,t}=\sum_{h\in X}P^\pi_\mu(h)R(h),$
-    where $X$ is the set of all $h\in\mathcal H$
-    of length $2(t+1)$ (i.e., all $h\in\mathcal H$ of the form
-    $x_1y_1\ldots x_{t+1}y_{t+1}$
-    as in Part 5 of Definition \ref{omnibusdefn}),
-    and where $R(h)$ is the total reward in $h$.
-\end{lemma}
+In the following definition (and the rest of the paper),
+$\mathbb N$ denotes the set $\{0,1,2,\ldots\}$ of non-negative
+integers.
 
-\begin{proof}
-    Basic probability theory.
-\end{proof}
+\begin{definition}
+\label{performancedefn}
+    (Performance in an environment)
+    Let $\pi$ be an agent, $\mu$ an environment.
+    \begin{enumerate}
+    \item
+        For every $t\in\mathbb N$,
+        we define
+        \[
+            V^\pi_{\mu,t}=\sum_{h\in X_t}P^\pi_\mu(h)R(h)
+        \]
+        where $X_t\subseteq\mathcal H$ is the set of all
+        length-$2t$ histories (i.e., all $h\in\mathcal H$ of the form
+        $x_1y_1\ldots x_ty_t$ (each $x_i\in\mathcal E$, each $y_i\in\mathcal A$)
+        provided $t>0$) and $R(h)$ is the sum of the rewards in $h$.
+        Intuitively, $V^\pi_{\mu,t}$ is the expected total reward
+        if $\pi$ were to interact with $\mu$ for $t$ steps.
+        Note that $X_0=\{\epsilon\}$ and so $V^\pi_{\mu,0}=0$.
+    \item
+        We define $V^\pi_\mu=\lim_{t\to\infty}V^\pi_{\mu,t}$,
+        provided the limit converges to a real number.
+        Intuitively, $V^\pi_\mu$ is the expected total reward which $\pi$ would extract
+        from $\mu$.
+    \end{enumerate}
+\end{definition}
+
+Note that it is possible for $V^\pi_\mu$ to be undefined.
+For example, if $\mu$ is an environment which always issues
+reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
+then $V^\pi_\mu$ is undefined for every agent $\pi$.
+But, following \cite{legg2007universal}, we will only be interested in
+environments $\mu$ such that $V^\pi_\mu$
+is always defined. Note also that, following \cite{legg2007universal},
+we delegate any possible reward discounting to the environments themselves,
+rather than build a fixed reward discounting factor into the definition
+of $V^\pi_\mu$.
+
+\begin{definition}
+\label{wellbehaveddefn}
+    An environment $\mu$ is \emph{well-behaved} if $\mu$ is Turing
+    computable and the following
+    condition holds: for every agent $\pi$, $V^\pi_\mu$ exists and
+    $-1\leq V^\pi_\mu\leq 1$. Let $W$ be the set of all well-behaved environments.
+\end{definition}
+
+\begin{definition}
+\label{performanceaveragerdefn}
+    By a \emph{weighted intelligence measure}, we mean a function
+    $\Upsilon:\Pi\to \mathbb R$ (where $\Pi$ is the set of all agents)
+    such that there exist non-negative reals $\{w_\mu\}_{\mu\in W}$ such that:
+    \begin{enumerate}
+        \item
+        $\sum_{\mu\in W}w_\mu$ converges.
+        \item
+        For every agent $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$.
+    \end{enumerate}
+\end{definition}
+
+The prototypical weighted intelligence measure is the Legg-Hutter intelligence
+measure $\Upsilon$ introduced in \cite{legg2007universal},
+where each well-behaved $\mu$ is
+weighed using the universal prior \cite{li2008introduction}, i.e.,
+given weight $2^{-K(\mu)}$
+where $K$ denotes Kolmogorov complexity ($K(\mu)$ exists because of the Turing
+computability requirement in Definition \ref{wellbehaveddefn}).
+This depends on a background universal
+Turing machine, the choice of which is highly nontrivial
+\cite{leike2015bad}.
+
+\section{Mixture agents}
+
+Before defining mixture agents, we will first extend some of the above
+definitions to vectors of agents.
 
 \begin{definition}
     If $\vec\pi=(\pi_1,\ldots,\pi_n)$ are agents, $\mu$ is an environment,
@@ -586,7 +576,7 @@ Now we are ready to define mixture agents.
 
     (2) Follows from (1) and Lemma \ref{factorizationlemma}.
 
-    (3) Follows from (2) and Lemma \ref{basicprobabilitylemma}.
+    (3) Follows from (2) and Definition \ref{performancedefn}.
 
     (4) Immediate from (3).
 
@@ -1094,7 +1084,7 @@ $\pi^{h\mapsto \vec m}$.
         =
         V^{\vec w\cdot \vec\pi}_{\mu,t}.
     $
-    By Lemma \ref{basicprobabilitylemma}, it suffices to show that for every
+    By Definition \ref{performancedefn}, it suffices to show that for every
     well-behaved $\mu$ and every $g\in\mathcal H$,
     $
     P^\pi_\mu(g)
