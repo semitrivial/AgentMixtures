@@ -1022,21 +1022,58 @@ condition, which, a priori, seems to demand much more.
 \end{proof}
 
 
-\section{Detectability of sets of agents}
+\section{Discernability and separability}
 
 In this section, we give another application of mixture agents.
+We define natural notion of \emph{discernability} and \emph{separability}
+for sets of agents,
+and we give an interesting characterization of separability
+in terms of discernability and mixtures.
+Below, if $\Pi$ is a set of agents, then $\Pi^c$ is the complement,
+in other words, $\Pi^c$ is the set of agents $\rho$ such that $\rho\not\in\Pi$.
+
+\begin{definition}
+\label{discernabilitydefn}
+    A set $\Pi$ of agents is \emph{discernable} if there exists
+    an environment $\mu$ such that for all agents $\pi$, $\rho$:
+    \begin{enumerate}
+        \item $V^\pi_\mu$ exists.
+        \item If $\pi\in\Pi$ and $\rho\in\Pi^c$, then $V^\pi_\mu\not=V^\rho_\mu$.
+    \end{enumerate}
+\end{definition}
+
+Intuitively, $\Pi$ is discernable if there is some environment in which
+no member of $\Pi$ has the same expected performance as any member of $\Pi^c$.
+
+For the next definition, recall that a subset $I$ of the reals
+is an \emph{interval} if the following requirement holds:
+for all real $i_1<i_2<i_3$, if $i_1\in I$ and $i_3\in I$, then $i_2\in I$.
+All intervals are of one of the following forms (where $i<j$ range over $\mathbb R$):
+$\mathbb R$, $(-\infty,i)$, $(-\infty,i]$, $(i,\infty)$, $[i,\infty)$,
+$(i,j)$, $(i,j]$, $[i,j)$, $[i,j]$, $\{i\}$, or $\emptyset$.
+Two sets are \emph{disjoint} if they have no point in common.
 
 \begin{definition}
 \label{incentivizabilitydefn}
-    A set $\Pi$ of agents is \emph{detectable} if there exists
-    an environment $\mu$ such that for every agent $\pi$:
+    A set $\Pi$ of agents is \emph{separable} if there exists
+    an environment $\mu$ and disjoint intervals $I$ and $J$ of
+    the reals such that for every agent $\pi$:
     \begin{enumerate}
         \item
         $V^\pi_\mu$ exists.
         \item
-        $V^\pi_\mu>0$ iff $\pi\in\Pi$.
+        If $\pi\in \Pi$ then $V^\pi_\mu\in I$.
+        \item
+        If $\pi\in \Pi^c$ then $V^\pi_\mu\in J$.
     \end{enumerate}
 \end{definition}
+
+Intuitively, $\Pi$ is separable if there is some environment in which
+the performance measures of members of $\Pi$ are separated into one
+interval, and the performance measures of outsides of $\Pi$ are separated
+into a different interval, with no overlap between those intervals.
+Clearly separability implies discernability, but what about the converse?
+We will state a partial converse making use of mixtures.
 
 \begin{definition}
 \label{mixtureclosuredef}
@@ -1048,33 +1085,105 @@ In this section, we give another application of mixture agents.
     $\vec w\cdot\vec\pi\in\Pi$.
 \end{definition}
 
+\begin{lemma}
+\label{ivtlemma}
+    For any real numbers $A<B<C$, there exists some real $0\leq \alpha\leq 1$
+    such that $\alpha A + (1-\alpha)C=B$.
+\end{lemma}
+
+\begin{proof}
+    Define $f:[0,1]\to\mathbb R$ by $f(\alpha)=\alpha A+(1-\alpha)C$.
+    Clearly $f$ is continuous, $f(0)=C$, and $f(1)=A$.
+    By the intermediate value theorem, some $\alpha$ exists with $f(\alpha)=B$.
+\end{proof}
+
 \begin{theorem}
-\label{closuretheorem}
-    (Necessary Conditition for Detectability)
-    Let $\Pi$ be any set of agents.
-    If $\Pi$ is detectable, then $\Pi$ is closed under mixtures, and so
-    is its complement $\Pi^c$.
+    (Characterization of Separability)
+    For any set $\Pi$ of agents, the following are equivalent:
+    \begin{enumerate}
+        \item $\Pi$ is separable.
+        \item $\Pi$ is discernable, and both $\Pi$ and $\Pi^c$ are closed under mixtures.
+    \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-    Assume $\Pi$ is detectable.
-    Let $\mu$ be as in
-    Definition \ref{incentivizabilitydefn}.
-    To see $\Pi$ is closed under mixtures, let $\vec w$, $\vec\pi=(\pi_1,\ldots,\pi_n)$ be
-    as in Definition \ref{mixtureclosuredef}.
-    Assume $\pi_i\in\Pi$ for all $i=1,\ldots,n$.
-    By choice of $\mu$, $V^{\pi_i}_\mu>0$ for all $i=1,\ldots,n$.
-    Thus
-    \begin{align*}
-        V^{\vec w\cdot\vec\pi}_\mu
-            &= \vec w\cdot V^{\vec\pi}_\mu
-                &\mbox{(Theorem \ref{maintheorem})}\\
-            &> w_1\cdot 0 + \cdots + w_n\cdot 0 = 0,
-    \end{align*}
-    so by choice of $\mu$, $\vec w\cdot \vec\pi\in \Pi$.
-    A similar argument shows that $\Pi^c$ is closed under mixtures.
-\end{proof}
+    ($1\Rightarrow 2$)
+    Assume $\Pi$ is separable, and let $\mu,I,J$ be as in
+    Definition \ref{incentivizabilitydefn}, so $I$ and $J$ are disjoint.
 
+    To see $\Pi$ is discernable, let $\pi,\rho$ be any agents.
+    By condition 1 of Definition \ref{incentivizabilitydefn},
+    $V^\pi_\mu$ exists. And if $\pi\in\Pi$, $\rho\in\Pi^c$, then
+    by conditions 2 and 3 of Definition \ref{incentivizabilitydefn},
+    $\pi\in I$ and $\rho\in J$. Since $I$ and $J$ are disjoint,
+    $V^\pi_\mu\not=V^\rho_\mu$. This shows $\Pi$ is discernable.
+
+    To see $\Pi$ is closed under mixtures, let $\vec w=(w_1,\ldots,w_n)$
+    and $\vec\pi=(\pi_1,\ldots,\pi_n)$ be as in Definition \ref{mixtureclosuredef}
+    and assume each $\pi_i\in\Pi$.
+    By choice of $I$, each $V^{\pi_i}_\mu\in I$.
+    By Theorem \ref{maintheorem},
+    $V^{\vec w\cdot\vec\pi}_\mu=\vec w\cdot V^{\vec\pi}_\mu$.
+    Thus $V^{\vec w\cdot\vec\pi}_\mu$ is a convex combination
+    of $V^{\pi_1}_\mu,\ldots,V^{\pi_n}_\mu$, which are elements of $I$.
+    It is well-known that any convex combination of elements of a real interval
+    is an element of that interval. Thus $V^{\vec w\cdot\vec\pi}_\mu\in I$.
+    Since $I$ and $J$ are disjoint, $V^{\vec w\cdot\vec\pi}_\mu\not\in J$,
+    so by choice of $J$, $\vec w\cdot\vec\pi\in\Pi$, as desired.
+    A similar argument shows $\Pi^c$ is closed under mixtures.
+
+    ($2\Rightarrow 1$)
+    Assume $\Pi$ is discernable and both $\Pi$ and $\Pi^c$ are closed under mixtures.
+    Since $\Pi$ is discernable, there is some environment $\mu$
+    as in Definition \ref{discernabilitydefn}.
+    Define
+    \begin{align*}
+        I &= \{
+            r\in\mathbb R
+            \,:\,
+            \exists \pi_1,\pi_2\in\Pi\mbox{ s.t. }V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu
+        \},\\
+        J &= \{
+            r\in\mathbb R
+            \,:\,
+            \exists \rho_1,\rho_2\in\Pi^c\mbox{ s.t. }V^{\rho_1}_\mu\leq r\leq V^{\rho_2}_\mu
+        \}.
+    \end{align*}
+
+    Claim 1: $I$ is an interval. To see this, let $i_1<i_2<i_3$ be any reals
+    such that $i_1\in I$ and $i_2\in I$.
+    By definition of $I$, there are $\pi_1,\pi_2\in\Pi$
+    such that $V^{\pi_1}_\mu\leq i_1\leq V^{\pi_2}_\mu$,
+    and there are $\pi'_1,\pi'_2\in\Pi$ such that
+    $V^{\pi'_1}_\mu\leq i_3\leq V^{\pi'_2}_\mu$.
+    It follows that $V^{\pi_1}_\mu\leq i_2\leq V^{\pi'_2}_\mu$,
+    which shows $i_2\in I$, as desired.
+
+    Claim 2: $J$ is an interval. Similar to Claim 1.
+
+    Claim 3: $I$ and $J$ are disjoint. Assume not. Then there is some $r\in I\cap J$.
+    By definition of $I$, there are $\pi_1,\pi_2\in\Pi$ such that
+    $V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu$, and by definition of $J$,
+    there are $\rho_1,\rho_2\in\Pi^c$ such that $V^{\rho_1}_\mu\leq r\leq V^{\rho_2}_\mu$.
+    By Lemma \ref{ivtlemma}, there is some real $\alpha\in [0,1]$
+    such that $\alpha V^{\pi_1}_\mu + (1-\alpha)V^{\pi_2}_\mu=r$.
+    Let $\pi=(\alpha,1-\alpha)\cdot (\pi_1,\pi_2)$.
+    By Theorem \ref{maintheorem} (part 4),
+    $V^\pi_\mu = \alpha V^{\pi_1}_\mu + (1-\alpha)V^{\pi_2}_\mu=r$.
+    And since $\Pi$ is closed under mixtures, $\pi\in\Pi$.
+    By identical reasoning using $V^{\rho_1}_\mu\leq r\leq V^{\rho_2}_\mu$,
+    there exists some $\rho\in \Pi^c$ such that $V^\rho_\mu=r$.
+    But since $\mu$ satisfies condition 2 of
+    Definition \ref{discernabilitydefn}, 
+    and $\pi\in\Pi$ and $\rho\in\Pi^c$, this forces
+    $V^\pi_\mu\not=V^\rho_\mu$, a contradiction.
+
+    Claim 4: For all $\pi\in \Pi$, $V^\pi_\mu\in I$, and for all $\rho\in\Pi^c$,
+    $V^\rho_\mu\in J$. This is immediate from the definition of $I$ and $J$,
+    using $\pi_1=\pi=\pi_2$ and $\rho_1=\rho=\rho_2$.
+
+    By Claims 1--4, $\mu,I,J$ witness that $\Pi$ is separable.
+\end{proof}
 
 \section{Genericness of non-deterministic agents}
 
@@ -1082,8 +1191,9 @@ In this section, we give another application of mixture agents.
 \label{modifyagentatoneplace}
     If $\pi$ is an agent, $h_0\in(\mathcal E\mathcal A)^*\mathcal E$,
     and $m$ is a probability distribution on $\mathcal A$,
-    we write $\pi^{h_0\mapsto m}$ for the agent which is identical to $\pi$
-    except that it maps $h_0$ to $m$, in other words:
+    we write $\pi^{h_0\mapsto m}$ for the function which is identical to $\pi$
+    except that $m$ decides the action distribution for
+    $h_0$, that is,
     \[
         \pi^{h_0\mapsto m}(y|h)
         =
@@ -1093,6 +1203,15 @@ In this section, we give another application of mixture agents.
         \end{cases}
     \]
 \end{definition}
+
+\begin{lemma}
+    If $\pi$, $h_0$ and $m$ are as in Definition \ref{modifyagentatoneplace},
+    then $\pi^{h_0\mapsto m} is an agent.
+\end{lemma}
+
+\begin{proof}
+    Trivial.
+\end{proof}
 
 The following three lemmas are technical lemmas needed to prove
 some interesting results.
