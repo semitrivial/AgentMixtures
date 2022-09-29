@@ -104,11 +104,11 @@ coin-flip.
 More generally, given agents $\vec{\pi}=(\pi_1,\ldots,\pi_n)$ and positive real
 numbers
 $\vec{w}=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
-who, at the start of each agent-environment interaction, randomly transforms
-into $\pi_1$ (with probability $w_1$) or into $\pi_2$ (with probability $w_2$),
-etc. If each $\pi_i$ would get total expected reward $r_i$ from an environment
-$\mu$, intuitively $\sigma$ should get total expected reward
-$\vec{w}\cdot \vec{r}=w_1r_1+\cdots+w_nr_n$ from that environment.
+who, at the start of each agent-environment interaction, randomly chooses
+an agent $\pi_i$ to act as (each candidate $\pi_i$ being chosen with probability
+$w_i$). If each $\pi_i$ would get total expected reward $R_i$ from an environment
+$\mu$, we would expect $\sigma$ should get total expected reward
+$\vec{w}\cdot \vec{r}=w_1R_1+\cdots+w_nR_n$ from that environment.
 But again, the RL
 framework has no mechanism for such an agent $\sigma$. We will define
 an agent $\vec{w}\cdot\vec{\pi}$, called a \emph{mixture agent},
@@ -119,71 +119,65 @@ We will then use this mixture operation to prove a number of interesting results
 
 \section{Preliminaries}
 
-In defining agent and environment below, we attempt to follow
+In defining \emph{agent} and \emph{environment} below, we attempt to follow
 Legg and Hutter \cite{legg2007universal} as closely as possible,
 except that we permit environments to output rewards from $\mathbb Q \cap [-1,1]$
 rather than just $\mathbb Q\cap [0,1]$ (and, accordingly, we modify which well-behaved
 environments to restrict our attention to).
 
 Throughout the paper, we implicitly
-fix a finite set $\mathcal A$ of \emph{actions},
-a finite set $\mathcal O$ of \emph{observations},
-and a finite set $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards}
-(so each reward is a rational number between $-1$ and $1$ inclusive),
-with $|\mathcal A|>0$,
-$|\mathcal O|>0$, $|\mathcal R|>0$.
-We assume that $\mathcal R$ has the following property:
+fix non-empty finite sets $\mathcal A$ of \emph{actions},
+$\mathcal O$ of \emph{observations},
+and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards},
+with the constraint that
 whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
-also contains $-r$.
-We assume $\mathcal A$, $\mathcal O$, and $\mathcal R$ are mutually disjoint
-(i.e., no reward is an action, no reward is an observation, and no action is an
-observation).
-By $\langle\rangle$ we mean the empty sequence.
-By $\mathcal P$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
-pairs); elements of $\mathcal P$ are called \emph{percepts}.
+also contains $-r$. In other words, $\mathcal R$ is closed under negations.
+By $\epsilon$ we mean the empty sequence.
+By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
+pairs); elements of $\mathcal E$ are called \emph{percepts}.
+By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all $\mathbb Q$-valued
+probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
 
 \begin{definition}
 \label{omnibusdefn}
     (Agents, environments, etc.)
     \begin{enumerate}
         \item
-        By $(\mathcal P\mathcal A)^*$ we mean the set of
-        all finite sequences
-        starting with a percept, ending with an action,
-        and following the pattern ``percept, action, ...''.
-        We also include $\langle\rangle$ in $(\mathcal P\mathcal A)^*$.
-        Nonempty elements of $(\mathcal P\mathcal A)^*$ have the
+        We denote the set of all finite sequences
+        of alternating percept-action pairs $x_1y_1\ldots x_ty_t$
+        by $(\mathcal E\mathcal A)^*$.
+        We also include $\epsilon$ in $(\mathcal E\mathcal A)^*$.
+        Nonempty elements of $(\mathcal E\mathcal A)^*$ have the
         form $x_1y_1\ldots x_ty_t$ where each $x_i$ is a percept and
         each $y_i$ is an action.
         \item
-        By $(\mathcal P\mathcal A)^* \mathcal P$
-        we mean the set of all sequences of the form $s\circ p$ where
-        $s\in (\mathcal P\mathcal A)^*$, $p\in\mathcal P$
-        ($\circ$ denotes concatenation).
-        Elements of $(\mathcal P\mathcal A)^* \mathcal P$
+        % By $(\mathcal E\mathcal A)^* \mathcal E$ we mean
+        We denote the set of all sequences of the form $sx$ (where
+        $s\in (\mathcal E\mathcal A)^*$, $x\in\mathcal E$, and $sx$
+        is the result of appending $x$ to $s$) by
+        $(\mathcal E\mathcal A)^*\mathcal E$.
+        Elements of $(\mathcal E\mathcal A)^* \mathcal E$
         of length $>1$ have the form
         $x_1y_1\ldots x_{t-1}y_{t-1}x_t$
         (each $x_i$ a percept, each $y_i$ an action).
         \item
-        By an \emph{agent}, we mean a function $\pi$
-        with domain $(\mathcal P\mathcal A)^* \mathcal P$,
-        which assigns to every sequence
-        $h\in (\mathcal P\mathcal A)^* \mathcal P$ a
-        $\mathbb Q$-valued probability measure,
-        written $\pi(\cdot|h)$, on $\mathcal A$.
-        For every such $h$ and every $a\in\mathcal A$,
-        we write $\pi(a|h)$ for $(\pi(\cdot|h))(a)$.
-        Intuitively, $\pi(a|h)$ is the probability that agent $\pi$
-        will take action $a$ in response to history $h$.
+        An \emph{agent} is defined as a function
+        $\pi:(\mathcal E\mathcal A)^*\mathcal E\to \Delta \mathcal A$.
+        For any $h\in (\mathcal E\mathcal A)^*\mathcal E$,
+        we write $\pi(\cdot|h)$ for the value of $\pi$ at $h$, and
+        for any $y\in \mathcal A$, we write $\pi(y|h)$ for
+        $(\pi(\cdot|h))(y)$.
+        Intuitively, $\pi(y|h)$ is the probability that agent $\pi$
+        will take action $y$ in response to history $h$.
         \item
         By an \emph{environment}, we mean a function $\mu$
-        with domain $(\mathcal P\mathcal A)^*$,
+        with domain $(\mathcal E\mathcal A)^*$,
         which assigns to every
-        $h\in (\mathcal P\mathcal A)^*$
+        $h\in (\mathcal E\mathcal A)^*$
         a $\mathbb Q$-valued probability measure,
         written $\mu(\cdot|h)$,
-        on $\mathcal P$.
-        For every such $s$ and every $(o,r)\in\mathcal P$,
+        on $\mathcal E$.
+        For every such $s$ and every $(o,r)\in\mathcal E$,
         we write $\mu(o,r|h)$ for $(\mu(\cdot|h))(o,r)$.
         If $p=(o,r)$ then we may also write $\mu(p|h)$ for
         $(\mu(\cdot|h))(o,r)$.
@@ -197,13 +191,13 @@ pairs); elements of $\mathcal P$ are called \emph{percepts}.
         $x_1y_1\ldots x_{t+1}y_{t+1}$
         randomly generated as follows:
         \begin{enumerate}
-            \item $x_1\in \mathcal P$ is chosen randomly based
-            on the probability measure $\mu(\cdot|\langle\rangle)$.
+            \item $x_1\in \mathcal E$ is chosen randomly based
+            on the probability measure $\mu(\cdot|\epsilon)$.
             \item $y_1\in\mathcal A$ is chosen randomly based on the probability
             measure $\pi(\cdot|x_1)$.
             \item
             For each $i>1$,
-            $x_i\in\mathcal P$ is chosen randomly based on
+            $x_i\in\mathcal E$ is chosen randomly based on
             the probability measure
             $\mu(\cdot|x_1y_1\ldots x_{i-1}y_{i-1})$.
             \item
@@ -274,7 +268,7 @@ and lemmas.
 
 \begin{definition}
     By $\mathcal H$ we mean
-    $((\mathcal P\mathcal A)^*)\cup((\mathcal P\mathcal A)^*\mathcal P)$.
+    $((\mathcal E\mathcal A)^*)\cup((\mathcal E\mathcal A)^*\mathcal E)$.
     We refer to elements $h$ of $\mathcal H$ as \emph{histories} (a history
     may terminate with either a percept or an action).
 \end{definition}
@@ -287,9 +281,9 @@ and lemmas.
         $P^\pi(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $h=\langle\rangle$ then $P^\pi(h)=1$.
+            If $h=\epsilon$ then $P^\pi(h)=1$.
             \item
-            If $h=g\circ p$ for some $p\in\mathcal P$ then $P^\pi(h)=P^\pi(g)$.
+            If $h=g\circ p$ for some $p\in\mathcal E$ then $P^\pi(h)=P^\pi(g)$.
             \item
             If $h=g\circ a$ for some $a\in\mathcal A$ then $P^\pi(h)=P^\pi(g)\pi(a|g)$.
         \end{itemize}
@@ -305,9 +299,9 @@ and lemmas.
         $P_\mu(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $h=\langle\rangle$ then $P_\mu(h)=1$.
+            If $h=\epsilon$ then $P_\mu(h)=1$.
             \item
-            If $h=g\circ p$ for some $p\in\mathcal P$ then $P_\mu(h)=P_\mu(g)\mu(p|g)$.
+            If $h=g\circ p$ for some $p\in\mathcal E$ then $P_\mu(h)=P_\mu(g)\mu(p|g)$.
             \item
             If $s=g\circ a$ for some $a\in\mathcal A$ then $P_\mu(h)=P_\mu(g)$.
         \end{itemize}
@@ -321,9 +315,9 @@ and lemmas.
         real number $P^\pi_\mu(h)\in[0,1]$ by induction as follows.
         \begin{itemize}
             \item
-            If $h=\langle\rangle$ then $P^\pi_\mu(h)=1$.
+            If $h=\epsilon$ then $P^\pi_\mu(h)=1$.
             \item
-            If $h=g\circ p$ for some $p\in\mathcal P$ then
+            If $h=g\circ p$ for some $p\in\mathcal E$ then
             $P^\pi_\mu(h)=P^\pi_\mu(g)\mu(p|g)$.
             \item
             If $h=g\circ a$ for some $a\in\mathcal A$ then
@@ -361,9 +355,9 @@ to proofs by induction.
 \begin{proof}
     By induction on $h$.
 
-    Case 1: $h=\langle\rangle$. Then the lemma is trivial.
+    Case 1: $h=\epsilon$. Then the lemma is trivial.
 
-    Case 2: $h=g\circ p$ for some $p\in\mathcal P$.
+    Case 2: $h=g\circ p$ for some $p\in\mathcal E$.
         Then
         \begin{align*}
             P^\pi_\mu(h)
@@ -422,7 +416,7 @@ Now we are ready to define mixture agents.
     Suppose $\vec\pi=(\pi_1,\ldots,\pi_n)$ are agents and $\vec w=(w_1,\ldots,w_n)$
     are positive real numbers with $w_1+\cdots+w_n=1$.
     Define the \emph{mixture agent} $\vec w\cdot\vec\pi$ as follows: for all
-    $h\in (\mathcal P\mathcal A)^*\mathcal P$, let
+    $h\in (\mathcal E\mathcal A)^*\mathcal E$, let
     \[
         (\vec w\cdot\vec\pi)(a|h)
         =
@@ -453,7 +447,7 @@ Now we are ready to define mixture agents.
 \end{lemma}
 
 \begin{proof}
-    Let $h\in(\mathcal P\mathcal A)^*\mathcal P$.
+    Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
     Clearly $(\vec w\cdot\vec\pi)(a|h)\geq 0$ for all $a\in\mathcal A$.
     It remains to show
     $\sum_{a\in\mathcal A}(\vec w\cdot\vec\pi)(a|h)=1$.
@@ -521,11 +515,11 @@ Now we are ready to define mixture agents.
 \begin{proof}
     (1) By induction on $h$.
 
-    Case 1: $h=\langle\rangle$. Then
+    Case 1: $h=\epsilon$. Then
     $P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
     =\vec w\cdot ({P^{\vec\pi}}(h))$.
 
-    Case 2: $h=g\circ p$ for some $p\in\mathcal P$. Then
+    Case 2: $h=g\circ p$ for some $p\in\mathcal E$. Then
     \begin{align*}
         P^{\vec w\cdot\vec\pi}(h)
             &= P^{\vec w\cdot\vec\pi}(g)
@@ -604,15 +598,15 @@ Strengthening and formalizing a result of Alexander and Hutter}
     Suppose $\pi$ is an agent.
     We define a new agent $\overline \pi$, the \emph{dual} of $\pi$,
     as follows:
-    for each $h\in (\mathcal P\mathcal A)^*\mathcal P$,
+    for each $h\in (\mathcal E\mathcal A)^*\mathcal E$,
     for each action $a\in\mathcal A$,
     \[\overline\pi(a|h)=\pi(a|\overline h).\]
     \item
     Suppose $\mu$ is an environment.
     We define a new environment $\overline\mu$, the \emph{dual} of $\mu$,
     as follows:
-    for each $h\in (\mathcal P\mathcal A)^*$,
-    for each $(o,r)\in\mathcal P$,
+    for each $h\in (\mathcal E\mathcal A)^*$,
+    for each $(o,r)\in\mathcal E$,
     \[\overline\mu(o,r|h)=\mu(o,-r|\overline h).\]
 \end{enumerate}
 \end{definition}
@@ -629,7 +623,7 @@ Strengthening and formalizing a result of Alexander and Hutter}
 
 \begin{lemma}
 \label{asteriskcommuteswithoverlinelemma}
-    For any agent $\pi$ and any $h\in(\mathcal P\mathcal A)^*\mathcal P$,
+    For any agent $\pi$ and any $h\in(\mathcal E\mathcal A)^*\mathcal E$,
     $P^\pi(\overline h)=P^{\overline{\pi}}(h)$.
 \end{lemma}
 
@@ -659,7 +653,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     following conditions hold:
     \begin{enumerate}
         \item For all $h\in\mathcal H$, $P^\pi(h)=0$ iff $P^\rho(h)=0$.
-        \item For all $h\in(\mathcal P\mathcal A)^*\mathcal P$,
+        \item For all $h\in(\mathcal E\mathcal A)^*\mathcal E$,
             if $P^\pi(h)\not=0$ then for all $a\in\mathcal A$,
             $\pi(a|h)=\rho(a|h)$.
     \end{enumerate}
@@ -695,17 +689,17 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
     We prove conditions 1 and 2 of Definition \ref{equivdefn}
     simultaneously by induction on $h$.
  
-    Case 1: $h=\langle\rangle$. Then
+    Case 1: $h=\epsilon$. Then
     $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
     vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
     (proving condition 1).
     For condition 2, there is nothing to check, since
-    $\langle\rangle\not\in(\mathcal P\mathcal A)^*\mathcal P$.
+    $\epsilon\not\in(\mathcal E\mathcal A)^*\mathcal E$.
 
     Case 2: $h=h_0\circ a_0$ for some
-        $h_0\in(\mathcal P\mathcal A)^*\mathcal P$, $a_0\in\mathcal A$.
+        $h_0\in(\mathcal E\mathcal A)^*\mathcal E$, $a_0\in\mathcal A$.
         For condition 2, there is nothing to prove, since
-        $h\not\in(\mathcal P\mathcal A)^*\mathcal P$.
+        $h\not\in(\mathcal E\mathcal A)^*\mathcal E$.
         For condition 1, we consider two cases.
 
         Subcase 2.1: $P^\pi(h_0)=0$.
@@ -733,8 +727,8 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
         it follows that
         $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(a_0|h_0)=0$.
 
-    Case 3: $h=h_0\circ p$ for some $h_0\in (\mathcal P\mathcal A)^*$,
-        $p\in\mathcal P$.
+    Case 3: $h=h_0\circ p$ for some $h_0\in (\mathcal E\mathcal A)^*$,
+        $p\in\mathcal E$.
         By induction, conditions 1 and 2 hold for $h_0$.
         By Definition \ref{pullbackdef},
         $P^\pi(h)=P^\pi(h_0)$ and
@@ -769,7 +763,7 @@ Janus agents (up to equivalence modulo a certain natural equivalence relation).
 
 \begin{proof}
     Let $\vec w=(\frac12,\frac12)$.
-    For any $h\in(\mathcal P\mathcal A)^*\mathcal P$ and $a\in\mathcal A$,
+    For any $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $a\in\mathcal A$,
     we claim
     $\overline{\vec w\cdot(\pi,\overline{\pi})}(a|h)
     =(\vec w\cdot(\pi,\overline{\pi}))(a|h)$.
@@ -923,7 +917,7 @@ In this section, we give another application of mixture agents.
 
 \begin{definition}
 \label{modifyagentatoneplace}
-    If $\pi$ is an agent, $h_0\in(\mathcal P\mathcal A)^*\mathcal P$,
+    If $\pi$ is an agent, $h_0\in(\mathcal E\mathcal A)^*\mathcal E$,
     and $m$ is a probability distribution on $\mathcal A$,
     we write $\pi^{h_0\mapsto m}$ for the agent which is identical to $\pi$
     except that it maps $h_0$ to $m$, in other words:
@@ -991,7 +985,7 @@ some interesting results.
     \end{align*}
 
     Case 2: $h=h_0\circ a_0\circ h_1\circ p$ for some $h_1\in\mathcal H$
-        and $p\in\mathcal P$. Then
+        and $p\in\mathcal E$. Then
     \begin{align*}
         P^{\pi^{h_0\mapsto m}}(h)
         &= P^{\pi^{h_0\mapsto m}}(h_0\circ a_0\circ h_1)
@@ -1057,7 +1051,7 @@ some interesting results.
 \end{proof}
 
 \begin{definition}
-    For any agent $\pi$, for any $h\in(\mathcal P\mathcal A)^*\mathcal P$,
+    For any agent $\pi$, for any $h\in(\mathcal E\mathcal A)^*\mathcal E$,
     for any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     let $\pi^{h\mapsto \vec m}=(\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n})$.
 \end{definition}
@@ -1072,7 +1066,7 @@ $\pi^{h\mapsto \vec m}$.
 \begin{proposition}
 \label{longproposition}
     Let $\Upsilon$ be any weighted intelligence measure, let $\pi$ be any agent,
-    and let $h\in(\mathcal P\mathcal A)^*\mathcal P$.
+    and let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
     Suppose $\vec m$ and $\vec w$ are as in Definition \ref{sumofdistros}.
     If $\vec w\cdot\vec m = \pi(\cdot|h)$, then
     $
@@ -1102,11 +1096,11 @@ $\pi^{h\mapsto \vec m}$.
     $P^\pi(g)=P^{\vec w\cdot\vec\pi}(g)$.
     We prove this by induction on $g$.
 
-    Case 1: $g=\langle\rangle$.
+    Case 1: $g=\epsilon$.
     Then $P^\pi(g)=1
     =P^{\vec w\cdot\vec\pi}(g)$.
 
-    Case 2: $g=f\circ p$ for some $p\in\mathcal P$.
+    Case 2: $g=f\circ p$ for some $p\in\mathcal E$.
     Then
     \begin{align*}
         P^\pi(g)
@@ -1197,7 +1191,7 @@ $\pi^{h\mapsto \vec m}$.
     (Pointwise Genericness of Non-Deterministic Intelligence)
     Let $\Upsilon$ be any weighted intelligence measure and let
     $\pi$ be an agent.
-    Let $h\in (\mathcal P\mathcal A)^*\mathcal P$.
+    Let $h\in (\mathcal E\mathcal A)^*\mathcal E$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
     if $\vec w\cdot\vec m=\pi(\cdot|h)$,
@@ -1238,7 +1232,7 @@ of $\pi$.
 
 \begin{example}
 \label{genericnessexample}
-    Suppose $\pi$ is an agent and $h_0\in(\mathcal P\mathcal A)^*\mathcal P$.
+    Suppose $\pi$ is an agent and $h_0\in(\mathcal E\mathcal A)^*\mathcal E$.
     Assume $\mathcal A=\{a_1,a_2,a_3\}$.
     Suppose $\pi(a|h_0)=\frac13$ for every $a\in\mathcal A$.
     Define probability distributions $\vec m=(m_1,m_2,m_3)$ on $\mathcal A$ by
@@ -1285,7 +1279,7 @@ Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
 \label{nondeterminismcorollary}
     (Pointwise Unnecessariness of Non-Determinism)
     Suppose $\Upsilon$ is a weighted intelligence measure, $\pi$ is an agent,
-    and $h_0\in(\mathcal P\mathcal A)^*\mathcal P$.
+    and $h_0\in(\mathcal E\mathcal A)^*\mathcal E$.
     Let $a_1,\ldots,a_n$ enumerate $\{a\in\mathcal A\,:\,\pi(a|h_0)\not=0\}$.
     For each $i=1,\ldots,n$, let $m_i$ be the
     deterministic $\mathcal A$-probability distribution
