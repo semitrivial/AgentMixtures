@@ -40,8 +40,7 @@
 %\aistatsauthor{ Author 1 \And Author 2 \And  Author 3 }
 %\aistatsaddress{ Institution 1 \And  Institution 2 \And Institution 3 } ]
 
- \title{Agent mixtures and the genericness of non-deterministic intelligence}
-% \titlerunning{Agent mixtures and genericness}
+ \title{Agent mixtures and the geometry of intelligence}
 \author{Samuel Allen Alexander \& Len Du \& Marcus Hutter}
 
 % \institute{The U.S.\ Securities and Exchange Commission
@@ -58,12 +57,11 @@
     gets in any environment is the corresponding weighted average
     of the expected total rewards the original agents get in that
     environment. We use mixture agents to formalize and
-    strengthen an informal result of Alexander and Hutter. We also use mixture
-    agents to prove additional results, including a surprising result
-    which we call the genericness of non-deterministic intelligence. Loosely:
-    if some history causes an agent to assign nonzero probabilities to multiple
-    actions, then those nonzero probabilities can be modified without making
-    the agent less intelligent (in the sense of weighted average performance).
+    strengthen an informal result of Alexander and Hutter and to prove
+    various other interesting new theorems. Considering the set of agents
+    as a subspace of the Hilbert cube, these theorems shed
+    light on the geometric shape of weighted-average-performance
+    hypersurfaces defined on that subspace.
 \end{abstract}
 
 \section{Introduction}
@@ -132,7 +130,7 @@ and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards},
 with the constraint that
 whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
 also contains $-r$. In other words, $\mathcal R$ is closed under negations.
-By $\epsilon$ we mean the empty sequence.
+By $\varepsilon$ we mean the empty sequence.
 By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
 By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all $\mathbb Q$-valued
@@ -146,7 +144,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         We denote the set of all finite sequences
         of alternating percept-action pairs $x_1y_1\ldots x_ty_t$
         by $(\mathcal E\mathcal A)^*$.
-        We also include $\epsilon$ in $(\mathcal E\mathcal A)^*$.
+        We also include $\varepsilon$ in $(\mathcal E\mathcal A)^*$.
         Nonempty elements of $(\mathcal E\mathcal A)^*$ have the
         form $x_1y_1\ldots x_ty_t$ where each $x_i$ is a percept and
         each $y_i$ is an action.
@@ -220,7 +218,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         $P^\pi(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $h=\epsilon$ then $P^\pi(h)=1$.
+            If $h=\varepsilon$ then $P^\pi(h)=1$.
             \item
             If $h=gx$ for some $x\in\mathcal E$ then $P^\pi(h)=P^\pi(g)$.
             \item
@@ -237,7 +235,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         $P_\mu(h)\in[0,1]$ as follows.
         \begin{itemize}
             \item
-            If $h=\epsilon$ then $P_\mu(h)=1$.
+            If $h=\varepsilon$ then $P_\mu(h)=1$.
             \item
             If $h=gx$ for some $x\in\mathcal E$ then $P_\mu(h)=P_\mu(g)\mu(x|g)$.
             \item
@@ -252,7 +250,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         real number $P^\pi_\mu(h)\in[0,1]$ by induction as follows.
         \begin{itemize}
             \item
-            If $h=\epsilon$ then $P^\pi_\mu(h)=1$.
+            If $h=\varepsilon$ then $P^\pi_\mu(h)=1$.
             \item
             If $h=gx$ for some $x\in\mathcal E$ then
             $P^\pi_\mu(h)=P^\pi_\mu(g)\mu(x|g)$.
@@ -288,7 +286,7 @@ and likewise for $P_\mu$ and for $P^\pi_\mu$.
 \begin{proof}
     By induction on $h$.
 
-    Case 1: $h=\epsilon$. Then the lemma is trivial.
+    Case 1: $h=\varepsilon$. Then the lemma is trivial.
 
     Case 2: $h=gx$ for some $x\in\mathcal E$.
         Then
@@ -329,7 +327,7 @@ integers.
         provided $t>0$) and $R(h)$ is the sum of the rewards in $h$.
         Intuitively, $V^\pi_{\mu,t}$ is the expected total reward
         if $\pi$ were to interact with $\mu$ for $t$ steps.
-        Note that $X_0=\{\epsilon\}$ and so $V^\pi_{\mu,0}=0$.
+        Note that $X_0=\{\varepsilon\}$ and so $V^\pi_{\mu,0}=0$.
     \item
         We define $V^\pi_\mu=\lim_{t\to\infty}V^\pi_{\mu,t}$,
         provided the limit converges to a real number.
@@ -391,7 +389,7 @@ numbers), implicitly using the following lemma without mention.
     that $\mathscr P(h)$ is true
     for all $h\in\mathcal H$, it suffices to prove the following three cases:
     \begin{enumerate}
-        \item $\mathscr P(\epsilon)$.
+        \item $\mathscr P(\varepsilon)$.
         \item If $h=gy$ for some $y\in\mathcal A$, if $\mathscr P(g)$, then $\mathscr P(h)$.
         \item If $h=gx$ for some $x\in\mathcal E$, if $\mathscr P(g)$, then $\mathscr P(h)$.
     \end{enumerate}
@@ -401,7 +399,7 @@ numbers), implicitly using the following lemma without mention.
 
 \begin{proof}
     By induction on the length $\ell$ of $h\in\mathcal H$.
-    For the base case, if $\ell=0$ then $h=\epsilon$ so $\mathscr P(h)$ holds by (1).
+    For the base case, if $\ell=0$ then $h=\varepsilon$ so $\mathscr P(h)$ holds by (1).
     For the induction step, assume $\ell>0$.
     If $h\in(\mathcal E\mathcal A)^*$ then this implies
     $h=gy$ for some $y\in\mathcal A$ such that $g$ has length $\ell-1$.
@@ -559,7 +557,7 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
 \begin{proof}
     (1) By induction on $h$ (using Lemma \ref{trivialinductionlemma}).
 
-    Case 1: $h=\epsilon$. Then
+    Case 1: $h=\varepsilon$. Then
     $P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
     =\vec w\cdot ({P^{\vec\pi}}(h))$.
 
@@ -750,12 +748,12 @@ then $a=0$ or $b=0$.
     We prove conditions 1 and 2 of Definition \ref{equivdefn}
     simultaneously by induction on $h$.
  
-    Case 1: $h=\epsilon$. Then
+    Case 1: $h=\varepsilon$. Then
     $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
     vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
     (proving condition 1).
     For condition 2, there is nothing to check, since
-    $\epsilon\not\in(\mathcal E\mathcal A)^*\mathcal E$.
+    $\varepsilon\not\in(\mathcal E\mathcal A)^*\mathcal E$.
 
     Case 2: $h=h_0y_0$ for some
         $h_0\in(\mathcal E\mathcal A)^*\mathcal E$, $y_0\in\mathcal A$.
@@ -1183,7 +1181,7 @@ We will state a partial converse making use of mixtures.
     By Claims 1--4, $\mu,I,J$ witness that $\Pi$ is separable.
 \end{proof}
 
-\section{Genericness of non-deterministic agents}
+\section{Local extrema and lattice points of intelligence surfaces}
 
 \begin{definition}
 \label{modifyagentatoneplace}
@@ -1362,7 +1360,7 @@ $\pi^{h\mapsto \vec m}$.
     $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
     We prove this by induction on $g$.
 
-    Case 1: $g=\epsilon$.
+    Case 1: $g=\varepsilon$.
     Then $P^\pi(g)=1
     =P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
 
@@ -1461,30 +1459,35 @@ $\pi^{h\mapsto \vec m}$.
 
 \begin{definition}
     Suppose $\pi$ and $\pi_1,\ldots,\pi_n$ are agents and $\Upsilon$ is a
-    weighted intelligence measure. We say that $\pi$ \emph{strictly Pareto dominates}
+    weighted intelligence measure. We say that $\pi$ is \emph{strictly better than}
     $\pi_1,\ldots,\pi_n$ (as measured by $\Upsilon$) if the following conditions hold:
     \begin{enumerate}
         \item $\Upsilon(\pi)\geq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$.
         \item $\Upsilon(\pi)>\Upsilon(\pi_i)$ for some $i=1,\ldots,n$.
     \end{enumerate}
+    We say $\pi$ is \emph{strictly worse than} $\pi_1,\ldots,\pi_n$ (as measured by
+    $\Upsilon$) if the following conditions hold:
+    \begin{enumerate}
+        \item $\Upsilon(\pi)\leq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$.
+        \item $\Upsilon(\pi)<\Upsilon(\pi_i)$ for some $i=1,\ldots,n$.
+    \end{enumerate}
 \end{definition}
 
-\begin{theorem}
+\begin{proposition}
 \label{pointwisegenericnessthm}
-    (Pointwise Genericness of Non-Deterministic Intelligence)
     Let $\Upsilon$ be any weighted intelligence measure and let
     $\pi$ be an agent.
     Let $h\in (\mathcal E\mathcal A)^*\mathcal E$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
     if $\vec w\cdot\vec m=\pi(\cdot|h)$,
-    then $\pi$ does not strictly Pareto dominate
+    then $\pi$ is not strictly better (nor strictly worse) than
     $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
     (as measured by $\Upsilon$).
-\end{theorem}
+\end{proposition}
 
 \begin{proof}
-    Assume $\pi$ strictly Pareto dominates $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    Assume $\pi$ is strictly better than $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
     (as measured by $\Upsilon$).
     This implies
     \begin{align*}
@@ -1498,170 +1501,106 @@ $\pi^{h\mapsto \vec m}$.
             &= \Upsilon(\pi),
                 &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
-    absurd.
+    absurd. Similar reasoning holds if $\pi$ is strictly
+    worse than $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$.
 \end{proof}
 
-Theorem \ref{pointwisegenericnessthm} is interesting because it implies that for
-any intelligent agent $\pi$, for any history $h$, if $\pi(\cdot|h)$ is not deterministic,
-then the optimality of $\pi$ does not critically depend on the specific probabilities
-which $\pi(\cdot|h)$ assigns to different actions. For any decomposition
-$\pi(\cdot|h)=\vec w\cdot\vec m$ of $\pi(\cdot|h)$ into competing probability
-distributions $\vec m$
-(with $w_1+\cdots+w_n=1$), either $\pi^{h\mapsto m_i}$ is more intelligent
-than $\pi$ for some $i$, or else every $\pi^{h\mapsto m_i}$ has the same intelligence as
-$\pi$. This is counter-intuitive because one might imagine that the specific probability
-distribution $\pi(\cdot|h)$ was carefully chosen and optimized to maximize the intelligence
-of $\pi$.
+\begin{definition}
+    (Local intelligence extrema)
+    \begin{enumerate}
+    \item
+        We make the space of all agents into a metric space by defining
+        the distance from agent $\pi$
+        to agent $\rho$ to be
+        $
+            d(\pi,\rho)
+            =
+            \sup_{h\in(\mathcal E\mathcal A)^*\mathcal E,y\in\mathcal A}\left|
+                \pi(y|h) - \rho(y|h)
+            \right|.
+        $
+    \item
+        Suppose $\Upsilon$ is a weighted intelligence measure. An agent $\pi$
+        is a \emph{strict local maximum} (resp.\ \emph{strict local minimum})
+        of $\Upsilon$ if there is some real $\epsilon>0$
+        such that for every agent $\rho\not\equiv\pi$
+        (recall Definition \ref{equivdefn}), if $d(\rho,\pi)<\epsilon$
+        then $\Upsilon(\pi)>\Upsilon(\rho)$ (resp.\ $\Upsilon(\pi)<\Upsilon(\rho)$).
+        If $\pi$ is a strict local maximum or minimum of $\Upsilon$ then
+        $\pi$ is a \emph{strict local extremum} of $\Upsilon$.
+    \end{enumerate}
+\end{definition}
 
-\begin{example}
-\label{genericnessexample}
-    Suppose $\pi$ is an agent and $h_0\in(\mathcal E\mathcal A)^*\mathcal E$.
-    Assume $\mathcal A=\{y_1,y_2,y_3\}$.
-    Suppose $\pi(y|h_0)=\frac13$ for every $y\in\mathcal A$.
-    Define probability distributions $\vec m=(m_1,m_2,m_3)$ on $\mathcal A$ by
-    \begin{align*}
-        m_1(y) &=
-        \begin{cases}
-            \frac16 &\mbox{if $y\in\{y_1,y_2\}$}\\
-            \frac23 &\mbox{if $y=y_3$}
-        \end{cases}\\
-        m_2(y) &=
-        \begin{cases}
-            \frac16 &\mbox{if $y\in\{y_1,y_3\}$}\\
-            \frac23 &\mbox{if $y=y_2$}
-        \end{cases}\\
-        m_3(y) &=
-        \begin{cases}
-            \frac16 &\mbox{if $y\in\{y_2,y_3\}$}\\
-            \frac23 &\mbox{if $y=y_1$}
-        \end{cases}
-    \end{align*}
-    Let $\vec w=(w_1,w_2,w_3)=(\frac13,\frac13,\frac13)$. Then $w_1+w_2+w_3=1$ and
-    it is easy to check
-    $(\vec w\cdot\vec m)(y)=\frac13$ for every $y\in\mathcal A$,
-    i.e., $\vec w\cdot\vec m=\pi(\cdot|h_0)$.
-    By Theorem \ref{pointwisegenericnessthm},
-    for any weighted intelligence measure $\Upsilon$,
-    $\pi$ does not strictly Pareto dominate (as measured by $\Upsilon$)
-    the set of agents obtained by changing the value of $\pi(\cdot|h_0)$ to $m_i$
-    ($i=1,\ldots,n$).
-\end{example}
+\begin{definition}
+\label{deterministicinpracticedefn}
+    An agent $\pi$ is \emph{deterministic in all possible histories}
+    if the following condition
+    holds. For all $h\in(\mathcal E\mathcal A)^*\mathcal E$,
+    if $P^\pi(h)\not=0$ then for all $y\in\mathcal A$,
+    $\pi(y|h)\in\{0,1\}$.
+\end{definition}
 
-In Example \ref{genericnessexample}, Theorem \ref{pointwisegenericnessthm} shows
-that the optimality of $\pi$ cannot crucially depend on the specific values
-$\pi(y_1|h_0)=\pi(y_2|h_0)=\pi(y_3|h_0)=\frac13$ of $\pi$.
-This is counter-intuitive because, a priori, it seems
-plausible that these values could have been chosen
-in order to maximize $\pi$'s intelligence. We could imagine ourselves
-saying: ``These particular values $\pi(y_1|h_0)=\pi(y_2|h_0)=\pi(y_3|h_0)=\frac13$ are
-critical to $\pi$'s
-performance. Any other values would make $\pi$ sub-optimal.''
-Theorem \ref{pointwisegenericnessthm} shows that no such statement can be true.
+Note that an agent $\pi$ can be deterministic in all possible histories
+(Definition \ref{deterministicinpracticedefn}) and still assign a
+probability $0<\pi(y|h)<1$, provided $P^\pi(h)=0$ (recall Remark \ref{impossibleremark}).
+It is easy to show that $\pi$ is deterministic in all possible histories iff $\pi\equiv\rho$
+for some strictly
+deterministic $\rho$ (i.e., some $\rho$ such that $\rho(y|h)\in\{0,1\}$ for
+all $y,h$).
 
-\begin{corollary}
-\label{nondeterminismcorollary}
-    (Pointwise Unnecessariness of Non-Determinism)
-    Suppose $\Upsilon$ is a weighted intelligence measure, $\pi$ is an agent,
-    and $h_0\in(\mathcal E\mathcal A)^*\mathcal E$.
-    Let $y_1,\ldots,y_n$ enumerate $\{y\in\mathcal A\,:\,\pi(y|h_0)\not=0\}$.
-    For each $i=1,\ldots,n$, let $m_i$ be the
-    deterministic $\mathcal A$-probability distribution
-    \[
-        m_i(y) = \begin{cases}
-            1 &\mbox{if $y=y_i$,}\\
-            0 &\mbox{if $y\not=y_i$.}
-        \end{cases}
-    \]
-    Then $\pi$ does not strictly Pareto dominate
-    $\pi^{h_0\mapsto m_0},\ldots,\pi^{h_0\mapsto m_n}$
-    (as measured by $\Upsilon$).
-\end{corollary}
+The following theorem sheds light on the geometry of the infinite-dimensional hypersurface
+$z=\Upsilon(\pi)$. Since $\mathcal A\times((\mathcal E\mathcal A)^*\mathcal E)$ is
+countable, we can picture the set of agents as a subspace of the Hilbert cube
+$[0,1]^{\mathbb N}$, and $z=\Upsilon(\pi)$ can be pictured as a ``surface'' above
+that subspace (or more precisely, a surface which is above that subspace in some places,
+below it in other places, and which intersects it in the hypercurve $\Upsilon(\pi)=0$,
+the ``$z$-intercept'' of $z=\Upsilon(\pi)$). Recall that in geometry, a \emph{lattice point}
+is a point whose coordinates are integers. In our geometric viewpoint of the set of
+agents, lattice points are exactly the agents which are strictly deterministic. The following
+theorem therefore says that, modulo $\equiv$, the hypersurface $z=\Upsilon(\pi)$
+cannot have any ``hyperridges'' or ``hypertroughs'' except possibly
+where $\pi$ is a lattice point.
+
+\begin{theorem}
+    (``Strict local extrema are deterministic'')
+    For any weighted intelligence measure $\Upsilon$, for any agent $\pi$,
+    if $\pi$ is a strict local extremum of $\Upsilon$, then
+    $\pi$ is deterministic in all possible histories.
+\end{theorem}
 
 \begin{proof}
-    By Theorem \ref{pointwisegenericnessthm} with
-    $\vec m=(m_1,\ldots,m_n)$ and $\vec w=(w_1,\ldots,w_n)$ where each
-    $w_i=\pi(a_i|h_0)$.
-\end{proof}
-
-Corollary \ref{nondeterminismcorollary} shows that for any individual
-history $h_0$, the optimality of $\pi$ cannot crucially depend on $\pi(\cdot|h_0)$
-being non-deterministic. This is counter-intuitive because we could imagine saying:
-``In response to such-and-such history, it would be optimal for our agent
-to assume the environment is such-and-such environment where it is optimal to
-assign uniform probabilities to every action;
-certainly, it would be sub-optimal for our agent to instead assign probability $1$ to
-any particular action.'' Corollary \ref{nondeterminismcorollary} shows
-that no such statement can be true.
-
-The ``pointwise'' nature of Corollary \ref{nondeterminismcorollary}
-is essential: by applying the corollary repeatedly, one can remove non-determinism
-from $\pi$ at any finite number of points without ever decreasing $\pi$'s intelligence,
-but one cannot conclude from this that non-determinism can be removed at infinitely
-many points without decreasing $\pi$'s intelligence. The following example makes this
-clear.
-
-\begin{example}
-    (Intelligence Discontinuity)
-    Fix distinct actions $a_0,a_1\in\mathcal A$.
-    Let $\mu$ be an environment such that in every agent-environment interaction:
-    \begin{enumerate}
-        \item If the agent always takes action $a_0$, then the agent gets total reward $-1$.
-        \item If the agent initially takes action $a_0$ exactly $k$ times and
-            then takes a different action, then the agent either
-            gets total reward $1$ (with probability $1-2^{-k}$)
-            or total reward $0$ (with probability $2^{-k}$)---so in expected
-            value, the agent gets total reward $1-2^{-k}$.
-    \end{enumerate}
-    Let $\Upsilon$ be a weighted intelligence measure in which $\mu$ has weight $2$,
-    $\overline\mu$ has weight $1$, and such that for every
-    environment $\nu\not\in\{\mu,\overline{\mu}\}$, $\nu$ and $\overline{\nu}$ have
-    equal weight.
-    By Corollary 6 of \cite{alexander2021reward}, for any self-dual agent $\pi$ and
-    any environment $\nu$, $V^\pi_{\overline\nu}=-V^\pi_{\nu}$, thus for any
-    self-dual agent $\pi$,
-    in the sum $\Upsilon(\pi)$, for any environment $\nu\not\in\{\mu,\overline{\mu}\}$,
-    the contributions from $\nu$ and $\overline\nu$ are equal-weight multiples of
-    $V^\pi_{\nu}$ and $-V^\pi_{\nu}$,
-    respectively, and so cancel each other
-    (terms of the infinite series can be regrouped because
-    Condition 1 of Definition \ref{performanceaveragerdefn} implies
-    the series defining $\Upsilon(\pi)$ is absolutely convergent).
-    Thus for any self-dual agent $\pi$,
-    $\Upsilon(\pi)$ consists solely of the contributions from $\mu$ and $\overline\mu$,
-    i.e.,
+    Assume $\pi$ is not deterministic in all possible histories, so there exist
+    $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $y_0\in\mathcal A$
+    such that $P^\pi(h)\not=0$ and $0<\pi(y_0|h)<1$.
+    We will show $\pi$ is not a strict local maximum (a similar argument
+    shows $\pi$ is not a strict local minimum) of $\Upsilon$.
+    Since $0<\pi(y_0|h)<1$ and $\pi(\cdot|h)\in\Delta\mathcal A$,
+    there must be some $y_1\in\mathcal A$, $y_1\not=y_0$, such that
+    $0<\pi(y_1|h)<1$. Let $\epsilon>0$.
+    Since $0<\pi(y_0|h)<1$ and $0<\pi(y_1|h)<1$, it follows
+    that there is some $0<\epsilon'\leq \epsilon$
+    such that $0<\pi(y_0|h)\pm\epsilon'<1$ and $0<\pi(y_1|h)\pm\epsilon'<1$.
+    Define $m_1,m_2:\mathcal A\to \mathbb R$ by
     \[
-        \Upsilon(\pi)=2V^\pi_\mu+1V^\pi_{\overline\mu}
-        =2V^\pi_\mu-1V^\pi_{\mu}=V^\pi_\mu.
+        m_i(y) = \begin{cases}
+            \pi(y|h)+(-1)^i\epsilon' &\mbox{if $y=y_0$,}\\
+            \pi(y|h)-(-1)^i\epsilon' &\mbox{if $y=y_1$,}\\
+            \pi(y|h) &\mbox{otherwise.}
+        \end{cases}
     \]
-    For every $k\in\mathbb N$, let $\pi_k$ be the agent which ignores the environment,
-    blindly taking action $a_0$ exactly $k$ times, and then forever thereafter,
-    randomly taking action $a_0$ with probability $1/2$ or action $a_1$ with probability
-    $1/2$.
-    For every $k$,
-    \begin{align*}
-        V^{\pi_k}_\mu
-            &= (1-2^{-(k+0)})\cdot \mbox{$\frac12$}
-                +(1-2^{-(k+1)})\cdot\mbox{$\frac14$} + \cdots
-                    &\mbox{(Basic probability)}\\
-            &= 1-2^{-k},
-                    &\mbox{(Geometric series)}
-    \end{align*}
-    so $\Upsilon(\pi_k)=1-2^{-k}$ (as $\pi_k$ is self-dual).
-    Thus:
-    \begin{enumerate}
-        \item For each $k$, transforming $\pi_k$ into $\pi_{k+1}$
-            (by changing finitely many $50\%$-probability-$a_0$
-            actions into $100\%$-probability-$a_0$ actions)
-            \emph{increases} intelligence.
-        \item However, if we start this process with $\pi_0$ and
-            repeat it to infinity, even though each individual step
-            \emph{increases} intelligence, we finally end up with
-            the completely deterministic
-            self-dual agent $\pi_{\infty}$ who always takes action $a_0$ and who is
-            \emph{less} intelligent than each $\pi_k$:
-            $\Upsilon(\pi_{\infty})=V^{\pi_\infty}_\mu=-1$.
-    \end{enumerate}
-\end{example}
+    By choice of $\epsilon'$ it follows that $m_1,m_2\in\Delta\mathcal A$.
+    Let $\vec w=(\frac12,\frac12)$, $\vec m=(m_1,m_2)$.
+    Clearly $\vec w\cdot\vec m=\pi(\cdot|h)$.
+    By Proposition \ref{pointwisegenericnessthm},
+    $\pi$ is not strictly better than $\pi^{h\mapsto m_1},\pi^{h\mapsto m_2}$
+    (as measured by $\Upsilon$).
+    Thus $\Upsilon(\pi)\leq \Upsilon(\pi^{h\mapsto m_i})$
+    for some $i\in\{1,2\}$.
+    Clearly $\pi\not\equiv \pi^{h\mapsto m_i}$
+    and $d(\pi,\pi^{h\mapsto m_i})=\epsilon'\leq\epsilon$.
+    By arbitrariness of $\epsilon$, this shows
+    $\pi$ is not a strict local maximum of $\Upsilon$.
+\end{proof}
 
 \bibliographystyle{alpha} % Not for COLT
 \bibliography{main}
