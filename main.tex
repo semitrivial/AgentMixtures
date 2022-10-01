@@ -35,20 +35,21 @@
 
 \begin{document}
 
-%\twocolumn[
+\twocolumn[
 %\aistatstitle{Instructions for Paper Submissions to AISTATS 2023}
 %\aistatsauthor{ Author 1 \And Author 2 \And  Author 3 }
 %\aistatsaddress{ Institution 1 \And  Institution 2 \And Institution 3 } ]
 
- \title{Agent mixtures and the genericness of non-deterministic intelligence}
+\aistatstitle{Agent Mixtures and the Genericness of Non-deterministic Intelligence}
 % \titlerunning{Agent mixtures and genericness}
-\author{Samuel Allen Alexander \& Len Du \& Marcus Hutter}
+\aistatsauthor{Samuel Allen Alexander \& David Quarrel \& Len Du \& Marcus Hutter}
 
 % \institute{The U.S.\ Securities and Exchange Commission
 % \email{samuelallenalexander@gmail.com}
 % \url{https://philpeople.org/profiles/samuel-alexander/publications}}
 
-\maketitle
+%\maketitle
+]
 
 \begin{abstract}
     We introduce a weighted mixture operation on
@@ -120,7 +121,7 @@ We will then use this mixture operation to prove a number of interesting results
 \section{Preliminaries}
 
 In defining agent and environment below, we attempt to follow
-Legg and Hutter \cite{legg2007universal} as closely as possible,
+the Legg and Hutter formulation of universal intelligence \cite{legg2007universal} as closely as possible,
 except that we permit environments to output rewards from $\mathbb Q \cap [-1,1]$
 rather than just $\mathbb Q\cap [0,1]$ (and, accordingly, we modify which well-behaved
 environments to restrict our attention to).
@@ -1380,7 +1381,9 @@ clear.
     \end{enumerate}
 \end{example}
 
-\bibliographystyle{alpha} % Not for COLT
+\section{Conclusion and future work}
+
+\bibliographystyle{apalike} % AISTATS
 \bibliography{main}
 
 %\appendix
