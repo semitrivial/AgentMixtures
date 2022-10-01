@@ -358,14 +358,17 @@ of $V^\pi_\mu$.
 \begin{definition}
 \label{performanceaveragerdefn}
     By a \emph{weighted intelligence measure}, we mean a function
-    $\Upsilon:\Pi\to \mathbb R$ (where $\Pi$ is the set of all agents)
-    such that there exist non-negative reals $\{w_\mu\}_{\mu\in W}$ such that:
-    \begin{enumerate}
-        \item
-        $\sum_{\mu\in W}w_\mu$ converges.
-        \item
-        For every agent $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$.
-    \end{enumerate}
+    $
+        \Upsilon:
+        (\Delta\mathcal A)^{(\mathcal E\mathcal A)^*\mathcal E}
+        \to
+        \mathbb R
+    $
+    (where
+    $(\Delta\mathcal A)^{(\mathcal E\mathcal A)^*\mathcal E}$ denotes the set of all agents)
+    such that there exist non-negative reals $\{w_\mu\}_{\mu\in W}$ such that the following
+    condition holds:
+    for every agent $\pi$, $\Upsilon(\pi)=\sum_{\mu\in W}w_\mu V^\pi_\mu$.
 \end{definition}
 
 The prototypical weighted intelligence measure is the Legg-Hutter intelligence
@@ -432,6 +435,7 @@ definitions to vectors of agents.
 We also recall the operation of dot product:
 
 \begin{definition}
+\label{dotproductdefn}
     If $\vec u=(u_1,\ldots,u_n)$ and
     $\vec v=(v_1,\ldots,v_n)$ are any two equal-length
     vectors of real numbers, then their \emph{dot product}
@@ -1600,6 +1604,343 @@ where $\pi$ is a lattice point.
     and $d(\pi,\pi^{h\mapsto m_i})=\epsilon'\leq\epsilon$.
     By arbitrariness of $\epsilon$, this shows
     $\pi$ is not a strict local maximum of $\Upsilon$.
+\end{proof}
+
+\section{Environment mixtures and universal environments}
+
+\begin{definition}
+\label{wprimedefn}
+    An environment $\mu$ is \emph{strongly well-behaved} if $\mu$ is well-behaved
+    (Definition \ref{wellbehaveddefn}) and the following condition holds.
+    For every agent $\pi$, for every $t\in\mathbb N$,
+    $-1\leq V^\pi_{\mu,t}\leq 1$. We write $S$ for the set of all
+    strongly well-behaved environments.
+\end{definition}
+
+\begin{definition}
+\label{swbperformanceaveragerdefn}
+    (Compare Definition \ref{performanceaveragerdefn})
+    By a \emph{$S$-restricted weighted intelligence measure},
+    we mean a function
+    $
+        \Upsilon:
+        (\Delta\mathcal A)^{(\mathcal E\mathcal A)^*\mathcal E}
+        \to
+        \mathbb R
+    $
+    (where
+    $(\Delta\mathcal A)^{(\mathcal E\mathcal A)^*\mathcal E}$ denotes the set of all agents)
+    such that there exists a function $w:S\to (0,\infty)$ such that:
+    \begin{enumerate}
+        \item
+        $\sum_{\mu\in S}w(\mu)=1$.
+        \item
+        For every agent $\pi$, $\Upsilon(\pi)=\sum_{\mu\in S}w(\mu) V^\pi_\mu$.
+    \end{enumerate}
+\end{definition}
+
+Thus, a $S$-restricted weighted intelligence measure is
+a weighted intelligence measure (Definition \ref{performanceaveragerdefn})
+which assigns positive weight to every strongly well-behaved environment,
+zero weight to every well-behaved but not strongly well-behaved environment,
+and whose weights by themselves sum up to $1$.
+
+\begin{definition}
+\label{infinitedimensionalvectorizationdefn}
+    (Compare Definition \ref{vectorizationdefn})
+    Let $w:S\to(0,\infty)$ be as in Definition \ref{swbperformanceaveragerdefn}.
+    Suppose $\pi$ is an environment, $h\in\mathcal H$, $t\in\mathbb N$,
+    and $\Upsilon$ is a $S$-restricted weighted intelligence measure. We define:
+    \begin{itemize}
+        \item
+            $P_{S}(h):S\to [0,1]$ is the function
+            $P_{S}(h)(\mu)=P_\mu(h)$ for all $\mu\in S$.
+        \item
+            $P^\pi_{S}(h):S\to [0,1]$ is the function
+            $P^\pi_{S}(h)(\mu)=P^\pi_\mu(h)$ for all $\mu\in S$.
+        \item
+            $V^\pi_{S,t}(h):S\to [0,1]$ is the function
+            $V^\pi_{S,t}(h)(\mu)=V^\pi_{\mu,t}(h)$ for all $\mu\in S$.
+        \item
+            $V^\pi_{S}(h):S\to [0,1]$ is the function
+            $V^\pi_{S}(h)(\mu)=V^\pi_\mu(h)$ for all $\mu\in S$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+\label{infinitedimdotproductdefn}
+    (Infinite dimensional dot product---compare Definition \ref{dotproductdefn})
+    Let $w:S\to(0,\infty)$ be as in Definition \ref{swbperformanceaveragerdefn}.
+    For any function $v:S\to[0,1]$,
+    we define $w\cdot v=\sum_{\mu\in S}w(\mu)v(\mu)$.
+\end{definition}
+
+\begin{lemma}
+    For all $w,v$ as in Definition \ref{infinitedimdotproductdefn},
+    $w\cdot v$ converges (and its value does not depend on the order in which
+    the summands are added).
+\end{lemma}
+
+\begin{proof}
+    By condition 1 of Definition \ref{swbperformanceaveragerdefn},
+    $\sum_{\mu\in S}w(\mu)=1$.
+    Since $w$ has codomain $(0,\infty)$, each $|w(\mu)|=w(\mu)$,
+    thus $\sum_{\mu\in S}w(\mu)$
+    is absolutely convergent.
+    Since $v$ has codomain $[0,1]$, it follows that
+    $\sum_{\mu\in S}w(\mu)v(\mu)$ is absolutely convergent.
+    By a well-known theorem from calculus, the sum of an absolutely
+    convergent series does not depend on the order of summation.
+\end{proof}
+
+\begin{definition}
+\label{mixtureenvdefn}
+    (Mixture environments---compare Definition \ref{maindefn})
+    Let $w:S\to(0,\infty)$ be as in Definition \ref{swbperformanceaveragerdefn}.
+    We define $w\cdot S:(\mathcal E\mathcal A)^*\to\Delta\mathcal E$ as follows:
+    for all $h\in (\mathcal E\mathcal A)^*$, $x\in\mathcal E$, let
+    \[
+        (w\cdot S)(x|h)
+        =
+        \begin{cases}
+            \dfrac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
+            &\mbox{if $w\cdot P_{S}(h)\not=0$,}\\
+            1/|\mathcal E| &\mbox{otherwise.}
+        \end{cases}
+    \]
+\end{definition}
+
+\begin{lemma}
+    (Compare Lemma \ref{mixturereallyisanagent})
+    If $w:S\to(0,\infty)$ is as in Definition \ref{swbperformanceaveragerdefn},
+    then $w\cdot S$ is an environment.
+\end{lemma}
+
+\begin{proof}
+    Let $h\in(\mathcal E\mathcal A)^*$.
+    Clearly $(w\cdot S)(x|h)\geq 0$ for all $x\in\mathcal E$.
+    It remains to show $\sum_{x\in\mathcal E}(w\cdot S)(x|h)=1$.
+    If $w\cdot P_{S}(h)=0$ then each $(w\cdot S)(x|h)=1/|\mathcal E|$
+    so the claim is immediate; assume not. Then:
+    \begin{align*}
+        &{} \sum_{x\in\mathcal E}(w\cdot S)(x|h)\\
+            &= \sum_{x\in\mathcal E}\frac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
+                &\mbox{(Definition \ref{mixtureenvdefn})}\\
+            &= \sum_{x\in\mathcal E}
+                \frac{
+                    \sum_{\mu\in S}w(\mu)P_\mu(hx)
+                }{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                }
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+            &= \sum_{x\in\mathcal E}
+                \frac{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)\mu(x|h)
+                }{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                }.
+                &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+    By absolute convergence, we can rearrange the order of summation without
+    altering the sum, so the above is
+    \[
+        \frac{
+            \sum_{\mu\in S}w(\mu)P_\mu(h)\sum_{x\in\mathcal E}\mu(x|h)
+        }{
+            \sum_{\mu\in S}w(\mu)P_\mu(h)
+        },
+    \]
+    and each $\sum_{x\in\mathcal E}\mu(x|h)=1$ since each $\mu\in\Delta\mathcal E$,
+    so the whole fraction reduces to $1$.
+\end{proof}
+
+In order to prove the Lemma \ref{envmaintheorem} below, we will need to invoke
+Tannery's Theorem, a classical result from real analysis. We state the theorem
+without proof.
+
+\begin{lemma}
+\label{tannerysthm}
+    (Tannery's Theorem)
+    Suppose $\{a_k:\mathbb N\to\mathbb R\}_{k=0}^\infty$ is a sequence of sequences
+    such that for each $k$, $\lim_{t\to\infty}a_k(t)$ converges.
+    Assume there is a sequence $\{M_k\in (0,\infty)\}_{k=0}^\infty$
+    such that $\sum_{k=0}^\infty M_k<\infty$ and such that for all $k,t\in\mathbb N$,
+    $|a_k(t)|\leq M_k$. Then
+    \[
+        \lim_{t\to\infty}\sum_{k=0}^\infty a_k(t)
+        =
+        \sum_{k=0}^\infty\lim_{t\to\infty} a_k(t).
+    \]
+\end{lemma}
+
+\begin{lemma}
+\label{envmaintheorem}
+    (Compare Theorem \ref{maintheorem})
+    Suppose $w:S\to(0,\infty)$ is as in Definition \ref{swbperformanceaveragerdefn}.
+    Let $\pi$ be any agent. Then:
+    \begin{enumerate}
+        \item
+        For any $h\in\mathcal H$,
+        $P_{w\cdot S}(h)=w\cdot P_{S}(h)$.
+        \item
+        For any $h\in\mathcal H$,
+        $P^\pi_{w\cdot S}(h)=w\cdot P^\pi_{S}(h)$.
+        \item
+        For any $t\in\mathbb N$,
+        $V^\pi_{w\cdot S,t}=w\cdot V^\pi_{S,t}$.
+        \item
+        $V^\pi_{w\cdot S}=w\cdot V^\pi_{S}$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (1) By induction on $h$.
+
+    Case 1: $h=\varepsilon$. Then
+    \begin{align*}
+        w\cdot P_{S}(h)
+        &= \sum_{\mu\in S}w(\mu)P_{S}(h)(\mu)
+            &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+        &= \sum_{\mu\in S}w(\mu)P_\mu(h)
+            &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+        &= \sum_{\mu\in S}w(\mu)
+            &\mbox{($P_\mu(\varepsilon)=1$)}\\
+        &= 1
+            &\mbox{(Definition \ref{swbperformanceaveragerdefn})}\\
+        &= P_{w\cdot S}(h).
+            &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Case 2: $h=gx$ for some $x\in\mathcal E$.
+
+    Subcase 2.1: $w\cdot P_{S}(g)=0$.
+        This means $\sum_{\mu\in S}w(\mu)P_\mu(g)=0$.
+        Since each $w(\mu)>0$, this implies each $P_\mu(g)=0$.
+        From this it easily follows that
+        $P_{w\cdot S}(gx)=w\cdot P_{S}(gx)=0$.
+
+    Subcase 2.2: $w\cdot P_{S}(g)\not=0$. Then
+    \begin{align*}
+        P_{w\cdot S}(h)
+            &= P_{w\cdot S}(g)(w\cdot S)(x|g)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= w\cdot P_{S}(g)(w\cdot S)(x|g)
+                &\mbox{(Induction)}\\
+            &= w\cdot P_{S}(g)\frac{w\cdot P_{S}(gx)}{w\cdot P_{S}(g)}
+                &\mbox{(Definition \ref{mixtureenvdefn})}\\
+            &= w\cdot P_{S}(gx) = w\cdot P_{S}(h).
+    \end{align*}
+
+    Case 3: $h=gy$ for some $y\in\mathcal A$.
+    Then
+    \begin{align*}
+        P_{w\cdot S}(h)
+            &= P_{w\cdot S}(g)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= w\cdot P_{S}(g)
+                &\mbox{(Induction)}\\
+            &= \sum_{\mu\in S} w(\mu)P_\mu(g)
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+            &= \sum_{\mu\in S} w(\mu)P_\mu(gy)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= w\cdot P_{S}(gy) = w\cdot P_{S}(h).
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+
+    (2) Compute:
+    \begin{align*}
+        P^\pi_{w\cdot S}(h)
+            &= P^\pi(h) P_{w\cdot S}(h)
+                &\mbox{(Lemma \ref{factorizationlemma})}\\
+            &= P^\pi(h) w\cdot P_{S}(h)
+                &\mbox{(By (1))}\\
+            &= P^\pi(h) \sum_{\mu\in S}w(\mu)P_\mu(h)
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+            &= \sum_{\mu\in S}w(\mu)P^\pi(h)P_\mu(h)
+                &\mbox{(Algebra)}\\
+            &= \sum_{\mu\in S}w(\mu)P^\pi_\mu(h)
+                &\mbox{(Lemma \ref{factorizationlemma})}\\
+            &= w\cdot P^\pi_{S}(h).
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+
+    (3) Let $X_t$, $R$ be as in Definition \ref{performancedefn} and compute:
+    \begin{align*}
+        V^\pi_{w\cdot S,t}
+            &= \sum_{h\in X_t}R(h)P^\pi_{w\cdot S}(h)
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= \sum_{h\in X_t}R(h)w\cdot P^\pi_{S}(h)
+                &\mbox{(By (2))}\\
+            &= \sum_{h\in X_t}R(h)\sum_{\mu\in S}w(\mu)P^\pi_\mu(h).
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+    Since $X_t$ is finite, this sum is absolutely convergent, so we can
+    rearrange terms, and the sum is equal to
+    \begin{align*}
+        \sum_{\mu\in S}w(\mu)\sum_{h\in X_t}R(h)P^\pi_\mu(h)
+            &= \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= w\cdot V^\pi_{S,t}.
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+
+    (4) Let $\{\mu_0,\mu_1,\ldots\}$ enumerate $S$ ($S$ is countable since
+    only countably many environments are Turing computable). Compute:
+    \begin{align*}
+        V^\pi_{w\cdot S}
+            &= \lim_{t\to\infty} V^\pi_{w\cdot S,t}
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= \lim_{t\to\infty} w\cdot V^\pi_{S,t}
+                &\mbox{(By (3))}\\
+            &= \lim_{t\to\infty} \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+            &= \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}.
+    \end{align*}
+    For each $k\in\mathbb N$, define $M_k\in\mathbb R$ and $a_k:\mathbb N\to\mathbb R$
+    by $M_k=w(\mu_k)$, $a_k(t)=w(\mu_k)V^\pi_{\mu_k,t}$.
+    By Definition \ref{wprimedefn}, each $\mu_k\in S$ is strongly well-behaved,
+    thus for each $k$, $-1\leq V^\pi_{\mu_k,t}\leq 1$.
+    It follows that for all $t,k\in\mathbb N$, $|a_k(t)|\leq M_k$.
+    Furthermore, $\sum_{k=0}^\infty M_k=\sum_{k=0}^\infty w(\mu_k)=1<\infty$
+    by Definition \ref{swbperformanceaveragerdefn}.
+    By Tannery's Theorem (Lemma \ref{tannerysthm}),
+    \begin{align*}
+        \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}
+            &= \sum_{k=0}^\infty\lim_{t\to\infty} w(\mu_k)V^\pi_{\mu_k,t}\\
+            &= \sum_{k=0}^\infty w(\mu_k)\lim_{t\to\infty} V^\pi_{\mu_k,t}
+                &\mbox{(Algebra)}\\
+            &= \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k}
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= \sum_{\mu\in S} w(\mu)V^\pi_{\mu_k}
+                &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
+            &= w\cdot V^\pi_{S}.
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+    So $V^\pi_{w\cdot S}=w\cdot V^\pi_{S}$.
+\end{proof}
+
+\begin{theorem}
+    For any $S$-restricted weighted intelligence measure $\Upsilon$,
+    there exists an environment $\mu_\Upsilon$ such that for every agent $\pi$,
+    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$.
+\end{theorem}
+
+\begin{proof}
+    Given $\Upsilon$, there is a corresponding $w:S\to(0,\infty)$ as in
+    Definition \ref{swbperformanceaveragerdefn}.
+    Let $\mu_\Upsilon=w\cdot S$, we claim for every agent $\pi$,
+    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$. Let $\pi$ be any agent. Then
+    \begin{align*}
+        V^\pi_{\mu_\Upsilon}
+            &= V^\pi_{w\cdot S}\\
+            &= w\cdot V^\pi_{S}
+                &\mbox{(Lemma \ref{envmaintheorem})}\\
+            &= \sum_{\mu\in S}w(\mu)V^\pi_\mu
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+            &= \Upsilon(\pi),
+                &\mbox{(By choice of $w$)}
+    \end{align*}
+    as desired.
 \end{proof}
 
 \bibliographystyle{alpha} % Not for COLT
