@@ -35,19 +35,21 @@
 
 \begin{document}
 
-%\twocolumn[
+\twocolumn[
 %\aistatstitle{Instructions for Paper Submissions to AISTATS 2023}
 %\aistatsauthor{ Author 1 \And Author 2 \And  Author 3 }
 %\aistatsaddress{ Institution 1 \And  Institution 2 \And Institution 3 } ]
 
- \title{Agent mixtures and the geometry of intelligence}
-\author{Samuel Allen Alexander \& Len Du \& Marcus Hutter}
+\title{Agent Mixtures and the Geometry of Intelligence}
+\aistatsauthor{Samuel Allen Alexander \& David Quarrel \& Len Du \& Marcus Hutter}
+\aistatstitle{Agent Mixtures and the Genericness of Non-deterministic Intelligence}
 
 % \institute{The U.S.\ Securities and Exchange Commission
 % \email{samuelallenalexander@gmail.com}
 % \url{https://philpeople.org/profiles/samuel-alexander/publications}}
 
-\maketitle
+%\maketitle
+]
 
 \begin{abstract}
     We introduce a weighted mixture operation on
@@ -118,7 +120,7 @@ We will then use this mixture operation to prove a number of interesting results
 \section{Preliminaries}
 
 In defining \emph{agent} and \emph{environment} below, we attempt to follow
-Legg and Hutter \cite{legg2007universal} as closely as possible,
+the Legg and Hutter formulation of universal intelligence \cite{legg2007universal} as closely as possible,
 except that we permit environments to output rewards from $\mathbb Q \cap [-1,1]$
 rather than just $\mathbb Q\cap [0,1]$ (and, accordingly, we modify which well-behaved
 environments to restrict our attention to).
@@ -1943,20 +1945,55 @@ without proof.
     as desired.
 \end{proof}
 
-\bibliographystyle{alpha} % Not for COLT
+\section{Conclusion and future work}
+
+\bibliographystyle{apalike} % AISTATS
 \bibliography{main}
 
-\appendix
+%\appendix
+%
+%\section{My Proof of Theorem 1}
+%
+%This is a boring technical proof. ( Copied from template )
+%
+%\section{My Proof of Theorem 2}
+%
+%This is a complete version of a proof sketched in the main text.
+%( Copied from template )
+%
+% Alternative proofs of the same theorem can be added here as a few previous COLT papers did this.
 
-\section{My Proof of Theorem 1}
+\pagebreak
 
-This is a boring technical proof. ( Copied from template )
+\onecolumn
 
-\section{My Proof of Theorem 2}
+\aistatstitle{Instructions for Paper Submissions to AISTATS 2022: \\
+Supplementary Materials}
 
-This is a complete version of a proof sketched in the main text.
-( Copied from template )
+\section{FORMATTING INSTRUCTIONS}
 
- Alternative proofs of the same theorem can be added here as a few previous COLT papers did this.
+To prepare a supplementary pdf file, we ask the authors to use \texttt{aistats2022.sty} as a style file and to follow the same formatting instructions as in the main paper.
+The only difference is that the supplementary material must be in a \emph{single-column} format.
+You can use \texttt{supplement.tex} in our starter pack as a starting point, or append the supplementary content to the main paper and split the final PDF into two separate files.
+
+Note that reviewers are under no obligation to examine your supplementary material.
+
+\section{MISSING PROOFS}
+
+The supplementary materials may contain detailed proofs of the results that are missing in the main paper.
+
+\subsection{Proof of Lemma 3}
+
+\textit{In this section, we present the detailed proof of Lemma 3 and then [ ... ]}
+
+\section{ADDITIONAL EXPERIMENTS}
+
+If you have additional experimental results, you may include them in the supplementary materials.
+
+\subsection{The Effect of Regularization Parameter}
+
+\textit{Our algorithm depends on the regularization parameter $\lambda$. Figure 1 below illustrates the effect of this parameter on the performance of our algorithm. As we can see, [ ... ]}
+
+\vfill
 
 \end{document}
