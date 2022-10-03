@@ -41,8 +41,7 @@
 %\aistatsaddress{ Institution 1 \And  Institution 2 \And Institution 3 } ]
 
 \aistatsauthor{Samuel Allen Alexander \& David Quarel \& Len Du \& Marcus Hutter}
-\aistatstitle{Agent Mixtures and the Geometry of Intelligence}
-%\aistatstitle{Linear $|$ Crowd Intelligence of Universal Agents}
+\aistatstitle{Universal Agent Mixtures and the Geometry of Intelligence}
 
 % \institute{The U.S.\ Securities and Exchange Commission
 % \email{samuelallenalexander@gmail.com}
@@ -135,10 +134,7 @@ environments to restrict our attention to).
 Throughout the paper, we implicitly
 fix non-empty finite sets $\mathcal A$ of \emph{actions},
 $\mathcal O$ of \emph{observations},
-and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards},
-with the constraint that
-whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
-also contains $-r$. In other words, $\mathcal R$ is closed under negations.
+and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards}.
 By $\varepsilon$ we mean the empty sequence.
 By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
@@ -158,7 +154,6 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         form $x_1y_1\ldots x_ty_t$ where each $x_i$ is a percept and
         each $y_i$ is an action.
         \item
-        % By $(\mathcal E\mathcal A)^* \mathcal E$ we mean
         We denote the set of all sequences of the form $sx$ (where
         $s\in (\mathcal E\mathcal A)^*$, $x\in\mathcal E$, and $sx$
         is the result of appending $x$ to $s$) by
@@ -277,10 +272,10 @@ Some authors, such as \cite{hutter2009discrete}, would write $P(h)$ or a variati
 for $P^\pi_\mu$, provided $\pi$ and $\mu$ are clear from context.
 
 One could alternately more directly define
-\[
-    P^\pi(x_1y_1\ldots x_ty_t)
-    = \pi(y_1|x_1)\pi(y_2|x_1y_1x_2)\cdots \pi(y_t|x_1y_1\ldots x_t),
-\]
+\begin{align*}
+    {} & P^\pi(x_1y_1\ldots x_ty_t)\\
+    &= \pi(y_1|x_1)\pi(y_2|x_1y_1x_2)\cdots \pi(y_t|x_1y_1\ldots x_t),
+\end{align*}
 and similarly define $P^\pi(x_1y_1\ldots x_t)$,
 and likewise for $P_\mu$ and for $P^\pi_\mu$.
 
@@ -391,36 +386,6 @@ This depends on a background universal
 Turing machine, the choice of which is highly nontrivial
 \cite{leike2015bad}.
 
-We will repeatedly write proofs by induction on histories $h\in\mathcal H$
-(rather than on the usual induction on natural
-numbers), implicitly using the following lemma without mention.
-
-\begin{lemma}
-\label{trivialinductionlemma}
-    Suppose $\mathscr P$ is a property of histories. In order to prove
-    that $\mathscr P(h)$ is true
-    for all $h\in\mathcal H$, it suffices to prove the following three cases:
-    \begin{enumerate}
-        \item $\mathscr P(\varepsilon)$.
-        \item If $h=gy$ for some $y\in\mathcal A$, if $\mathscr P(g)$, then $\mathscr P(h)$.
-        \item If $h=gx$ for some $x\in\mathcal E$, if $\mathscr P(g)$, then $\mathscr P(h)$.
-    \end{enumerate}
-    In proving (2) and (3), we refer to the hypothesis ``$\mathscr P(g)$'' as the
-    ``Induction Hypothesis'' (or just ``Induction'').
-\end{lemma}
-
-\begin{proof}
-    By induction on the length $\ell$ of $h\in\mathcal H$.
-    For the base case, if $\ell=0$ then $h=\varepsilon$ so $\mathscr P(h)$ holds by (1).
-    For the induction step, assume $\ell>0$.
-    If $h\in(\mathcal E\mathcal A)^*$ then this implies
-    $h=gy$ for some $y\in\mathcal A$ such that $g$ has length $\ell-1$.
-    By induction, $\mathscr P(g)$. Thus $\mathscr P(h)$ by (2).
-    Otherwise, $h\in(\mathcal E\mathcal A)^*\mathcal A$, which implies
-    $h=gx$ for some $x\in\mathcal E$ such that $g$ has length $\ell-1$.
-    By induction, $\mathscr P(g)$, thus $\mathscr P(h)$ by (3).
-\end{proof}
-
 \section{Mixture agents}
 
 Before defining mixture agents, we will first extend some of the above
@@ -491,44 +456,7 @@ Now we are ready to define mixture agents.
 \end{lemma}
 
 \begin{proof}
-    Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
-    Clearly $(\vec w\cdot\vec\pi)(y|h)\geq 0$ for all $y\in\mathcal A$.
-    It remains to show
-    $\sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)=1$.
-
-    Case 1: $\vec w\cdot {P^{\vec\pi}}(h)=0$. Then
-    each $(\vec w\cdot\vec\pi)(y|h)=1/|\mathcal A|$ so the
-    claim is immediate.
-
-    Case 2: $\vec w\cdot {P^{\vec\pi}}(h)\not=0$. Then
-    \begin{align*}
-        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)\\
-            &= \sum_{y\in\mathcal A}
-                \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Definition \ref{maindefn})}\\
-            &= \sum_{y\in\mathcal A}
-                \frac
-                {\vec w\cdot(P^{\pi_1}(hy),\ldots,P^{\pi_n}(hy))}
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Definition \ref{vectorizationdefn})}\\
-            &= \sum_{y\in\mathcal A}
-                \frac
-                {w_1 P^{\pi_1}(h)\pi_1(y|h)+\cdots+w_n P^{\pi_n}(h)\pi_n(y|h)}
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \frac{
-                w_1 P^{\pi_1}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_1(y|h)$}\right)
-                +\cdots+
-                w_n P^{\pi_n}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_n(y|h)$}\right)
-                }
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Algebra)}\\
-            &= \frac
-                {w_1 P^{\pi_1}(h)\cdot 1 + \cdots + w_n P^{\pi_n}(h)\cdot1}
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                =\frac{\vec w\cdot {P^{\vec\pi}}(h)}{\vec w\cdot {P^{\vec\pi}}(h)}=1.
-                &\mbox{($\pi_i$ are agents)}
-    \end{align*}
+    See Appendix.
 \end{proof}
 
 We will frequently use Lemma \ref{mixturereallyisanagent} without explicit mention.
@@ -568,11 +496,14 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
 \end{theorem}
 
 \begin{proof}
-    (1) By induction on $h$ (using Lemma \ref{trivialinductionlemma}).
+    (1) By induction on $h$.
 
     Case 1: $h=\varepsilon$. Then
-    $P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
-    =\vec w\cdot ({P^{\vec\pi}}(h))$.
+    \[
+        P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
+        =
+        \vec w\cdot ({P^{\vec\pi}}(h)).
+    \]
 
     Case 2: $h=gx$ for some $x\in\mathcal E$. Then
     \begin{align*}
@@ -635,20 +566,20 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
     \begin{align*}
         V^{\vec w\cdot\vec\pi}_{\mu,t}
             &= \mbox{$\sum_{h\in X_t}R(h)P^{\vec w\cdot\vec\pi}_\mu(h)$}
-                &\mbox{(Definition \ref{performancedefn})}\\
+                &\mbox{(Def.\ \ref{performancedefn})}\\
             &= \mbox{$\sum_{h\in X_t}\vec w\cdot R(h)P^{\vec\pi}_\mu(h)$}
                 &\mbox{(By (2))}\\
             &= \mbox{$\vec w\cdot \sum_{h\in X_t}R(h)P^{\vec\pi}_\mu(h)$}
-                &\mbox{(Vector algebra)}\\
-            &= \mbox{$\vec w\cdot
+                &\mbox{(Vect.\ algebra)}\\
+            &= \mbox{$
+                \vec w\cdot
                 \left(
                     \sum_{h\in X_t}R(h)P^{\pi_1}_\mu(h)
-                    ,...,
-                    \sum_{h\in X_t}R(h)P^{\pi_n}_\mu(h)
-                \right)$}
-                &\mbox{(Definition \ref{vectorizationdefn} part 2)}
+                \right)_{i=1}^n
+                $}
+                &\mbox{(Def.\ \ref{vectorizationdefn} part 2)}\\
             &= \vec w\cdot V^{\vec\pi}_{\mu,t}.
-                &\mbox{(Definition \ref{vectorizationdefn} part 3)}
+                &\mbox{(Def.\ \ref{vectorizationdefn} part 3)}
     \end{align*}
 
     (4) Follows from (3) and Definition \ref{performancedefn} part 2.
@@ -658,6 +589,15 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
 
 \section{Duality and self-dual agents:
 Strengthening and formalizing a result of Alexander and Hutter}
+
+In this section, we will investigate three symmetry properties
+which a weighted intelligence measure might satisfy. A priori, these
+three properties do not appear to be equivalent, but we will show
+that in fact, they are. Throughout this section, we
+assume that the background set $\mathcal R$ has the following
+additional property:
+whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
+also contains $-r$. In other words, $\mathcal R$ is closed under negations.
 
 \begin{definition}
 \label{dualagentsdefn}
@@ -757,75 +697,7 @@ then $a=0$ or $b=0$.
 \end{lemma}
 
 \begin{proof}
-    Write $\vec\pi$ for $(\pi,\ldots,\pi)$.
-    We prove conditions 1 and 2 of Definition \ref{equivdefn}
-    simultaneously by induction on $h$.
- 
-    Case 1: $h=\varepsilon$. Then
-    $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
-    vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
-    (proving condition 1).
-    For condition 2, there is nothing to check, since
-    $\varepsilon\not\in(\mathcal E\mathcal A)^*\mathcal E$.
-
-    Case 2: $h=h_0y_0$ for some
-        $h_0\in(\mathcal E\mathcal A)^*\mathcal E$, $y_0\in\mathcal A$.
-        For condition 2, there is nothing to prove, since
-        $h\not\in(\mathcal E\mathcal A)^*\mathcal E$.
-        For condition 1, we consider two cases.
-
-        Subcase 2.1: $P^\pi(h_0)=0$.
-        By induction, condition 1 holds for $h_0$, so
-        $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
-        By Definition \ref{pullbackdef},
-        $P^\pi(h)=P^\pi(h_0)\pi(y_0|h_0)=0$
-        and $P^{\vec w\cdot\vec\pi}(h)=0(\vec w\cdot\vec\pi)(y_0|h_0)=0$.
-        So $P^\pi(h)=0$ iff $P^{\vec w\cdot\vec\pi}(h)=0$.
-
-        Subcase 2.2: $P^\pi(h_0)\not=0$.
-        Then
-        \begin{align*}
-            P^{\vec w\cdot \vec\pi}(h)
-                &= \vec w\cdot{P^{\vec\pi}}(h)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-                &= w_1 P^\pi(h)+\cdots+w_n P^\pi(h)
-                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= P^\pi(h)
-                    &\mbox{($w_1+\cdots+w_n=1$)}\\
-                &= P^\pi(h_0)\pi(y_0|h_0).
-                    &\mbox{(Definition \ref{pullbackdef})}
-        \end{align*}
-        Since $P^\pi(h_0)\not=0$,
-        by the null-factor law,
-        it follows that
-        $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(y_0|h_0)=0$.
-
-    Case 3: $h=h_0x$ for some $h_0\in (\mathcal E\mathcal A)^*$,
-        $x\in\mathcal E$.
-        By induction, conditions 1 and 2 hold for $h_0$.
-        By Definition \ref{pullbackdef},
-        $P^\pi(h)=P^\pi(h_0)$ and
-        $P^{\vec w\cdot\vec\pi}(h)=P^{\vec w\cdot\vec\pi}(h_0)$,
-        so condition 1 for $h$ follows.
-
-        For condition 2,
-        assume $P^\pi(h)\not=0$ and let $y\in\mathcal A$.
-        By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^\pi(h)=P^\pi(h)$.
-        So, since $P^\pi(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
-        Thus
-        \begin{align*}
-            (\vec w\cdot\vec\pi)(y|h)
-                &= \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot{P^{\vec\pi}}(h)}
-                    &\mbox{(Definition \ref{maindefn})}\\
-                &= \frac{w_1P^\pi(hy)+\cdots+w_nP^\pi(hy)}
-                    {w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
-                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \frac{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
-                    \pi(y|h)
-                    &\mbox{(Definition \ref{pullbackdef})}\\
-                &= \pi(y|h).
-        \end{align*}
+    See Appendix.
 \end{proof}
 
 \begin{lemma}
@@ -835,54 +707,7 @@ then $a=0$ or $b=0$.
 \end{lemma}
 
 \begin{proof}
-    Let $\vec w=(\frac12,\frac12)$.
-    For any $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $y\in\mathcal A$,
-    we claim
-    \[
-        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
-        =(\vec w\cdot(\pi,\overline{\pi}))(y|h).
-    \]
-    Noting that
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
-    =\frac12P^\pi(h)+\frac12P^{\overline\pi}(h)$
-    and
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)
-    =\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)$,
-    Lemmas \ref{doublenegationlemma} and \ref{asteriskcommuteswithoverlinelemma}
-    imply that
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
-    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)$.
-    So if
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)=0$
-    then $\vec w\cdot P^{(\pi,\overline{\pi})}(h)=0$
-    and it follows from
-    Definition \ref{maindefn}
-    and Lemma \ref{asteriskcommuteswithoverlinelemma} that
-    $\overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
-    =(\vec w\cdot(\pi,\overline{\pi}))(y|h)=1/|\mathcal A|$.
-    So assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
-    Then:
-    \begin{align*}
-        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
-        &= (\vec w\cdot(\pi,\overline{\pi}))(y|\overline h)
-            &\mbox{(Definition \ref{dualagentsdefn})}\\
-        &= \frac
-            {\frac12P^\pi(\overline hy)+\frac12P^{\overline\pi}(\overline hy)}
-            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
-            &\mbox{(Definition \ref{maindefn})}\\
-        &= \frac
-            {\frac12P^\pi(\overline{hy})+\frac12P^{\overline\pi}(\overline{hy})}
-            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
-            &\mbox{(Clearly $\overline hy=\overline{hy}$)}\\
-        &= \frac
-            {\frac12P^{\overline\pi}(hy)+\frac12P^{\overline{\overline\pi}}(hy)}
-            {\frac12P^{\overline\pi}(h)+\frac12P^{\overline{\overline\pi}}(h)}
-            &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
-        &= (\vec w\cdot(\overline{\overline\pi},\overline\pi))(y|h)
-            &\mbox{(Definition \ref{maindefn})}\\
-        &= (\vec w\cdot(\pi,\overline\pi))(y|h).
-            &\mbox{(Lemma \ref{doublenegationlemma})}
-    \end{align*}
+    See Appendix.
 \end{proof}
 
 \begin{proposition}
@@ -984,9 +809,6 @@ condition, which, a priori, seems to demand much more.
     Suppose $\Upsilon$ is a weighted intelligence measure.
     If $\Upsilon$ satisfies the weak symmetry condition then
     $\Upsilon$ satisfies the strong symmetry condition.
-    If $\Upsilon(\pi)=0$ for every self-dual agent $\pi$,
-    then $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$
-    for every agent $\pi$.
 \end{theorem}
 
 \begin{proof}
@@ -1222,90 +1044,6 @@ We will state a partial converse making use of mixtures.
     Trivial.
 \end{proof}
 
-The following three lemmas are technical lemmas needed to prove
-some interesting results.
-
-\begin{lemma}
-\label{firsttechlemmaforgenericity}
-    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Let $h\in\mathcal H$ be such that
-    for every $y\in\mathcal A$,
-    $h_0y$ is not an initial segment of $h$.
-    Then $P^{\pi^{h_0\mapsto m}}(h)=P^\pi(h)$.
-\end{lemma}
-
-\begin{proof}
-    By induction on $h$.
-\end{proof}
-
-\begin{lemma}
-\label{thirdtechlemmaforgenericity}
-    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    For any $y\in\mathcal A$,
-    $P^{\pi^{h_0\mapsto m}}(h_0y)=P^\pi(h_0)m(y)$.
-\end{lemma}
-
-\begin{proof}
-    Immediate by Definition \ref{pullbackdef} and Lemma \ref{firsttechlemmaforgenericity}.
-\end{proof}
-
-\begin{lemma}
-\label{secondtechlemmaforgenericity}
-    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Assume $h\in\mathcal H$, $y_0\in\mathcal A$, and $h_0y_0$ is
-    an initial segment of $h$. Assume $\pi(y_0|h_0)\not=0$. Then
-    $P^{\pi^{h_0\mapsto m}}(h) = \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}$.
-\end{lemma}
-
-\begin{proof}
-    By induction on $h$.
-
-    Case 1: $h=h_0y_0$. Then
-    \begin{align*}
-        P^{\pi^{h_0\mapsto m}}(h)
-        &= P^{\pi^{h_0\mapsto m}}(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
-            &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-        &= P^\pi(h_0)m(y_0)
-            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= P^\pi(h_0)\pi(y_0|h_0)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Basic Algebra)}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
-            &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-
-    Case 2: $h=h_0 y_0 h_1 x$ for some $h_1\in\mathcal H$
-        and $x\in\mathcal E$. Then
-    \begin{align*}
-        P^{\pi^{h_0\mapsto m}}(h)
-        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Induction)}\\
-        &= P^\pi(h_0 a_0 h_1 x)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
-    \end{align*}
-
-    Case 3: $h=h_0 y_0 h_1 y$ for some $h_1\in\mathcal H$ and
-        $y\in\mathcal A$. Then
-    \begin{align*}
-        P^{\pi^{h_0\mapsto m}}(h)
-        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
-            \pi^{h_0\mapsto m}(y|h_0 y_0 h_1)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
-            \pi(y|h_0 a h_1)
-            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= P^\pi(h_0 y_0 h_1)\pi(y|h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Induction)}\\
-        &= P^\pi(h_0 y_0 h_1 y)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
-    \end{align*}
-\end{proof}
-
 \begin{definition}
 \label{sumofdistros}
     Suppose $\vec m=(m_1,\ldots,m_n)$ are probability distributions on $\mathcal A$
@@ -1318,28 +1056,13 @@ some interesting results.
 \end{definition}
 
 \begin{lemma}
+\label{wcdotmisaprobabilitydistro}
     If $\vec m$, $\vec w$ are as in Definition \ref{sumofdistros}
     then $\vec w\cdot\vec m$ is a probability distribution on $\mathcal A$.
 \end{lemma}
 
 \begin{proof}
-    Clearly for every $y\in\mathcal A$,
-    $(\vec w\cdot\vec m)(y) = w_1m_1(y) + \cdots + w_nm_n(y)$ is a nonnegative
-    real. It remains to show $\sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)=1$.
-    We compute:
-    \begin{align*}
-        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)\\
-        &=
-        \sum_{y\in\mathcal A} w_1m_1(y) + \cdots + w_nm_n(y)
-            &\mbox{(Definition \ref{sumofdistros})}\\
-        &=
-        w_1\left(\sum_{y\in\mathcal A} m_1(y)\right)
-        + \cdots + w_n\left(\sum_{y\in\mathcal A}m_n(y)\right)
-            &\mbox{(Basic Algebra)}\\
-        &= w_1 + \cdots + w_n
-            &\mbox{($m_1,\ldots,m_n$ are probability distr's)}\\
-        &= 1.
-    \end{align*}
+    See Appendix.
 \end{proof}
 
 \begin{definition}
@@ -1369,105 +1092,7 @@ $\pi^{h\mapsto \vec m}$.
 \end{proposition}
 
 \begin{proof}
-    \textbf{Subclaim:}For every $g\in\mathcal H$,
-    $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
-    We prove this by induction on $g$.
-
-    Case 1: $g=\varepsilon$.
-    Then $P^\pi(g)=1
-    =P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
-
-    Case 2: $g=fx$ for some $x\in\mathcal E$.
-    Then
-    \begin{align*}
-        P^\pi(g)
-            &= P^\pi(f)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
-                &\mbox{(Induction)}\\
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g).
-                &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-
-    Case 3: $g=fy$ for some $y\in\mathcal A$.
-
-    Subcase 3.1: $P^\pi(f)=0$.
-    Then
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
-            (\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= P^\pi(f)(\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
-                &\mbox{(Induction)}\\
-            &= 0.
-    \end{align*}
-    Similarly, $P^\pi(g)=0$. So $P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)=P^\pi(g)$.
-
-    Subcase 3.2: $P^\pi(f)\not=0$ and $f=h$. Then:
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(hy)\\
-            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(hy)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1P^\pi(h)m_1(y)+\cdots+w_nP^\pi(h)m_n(y)
-                    &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
-            &= P^\pi(h)\pi(y|h)
-                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
-            &= P^\pi(hy) = P^\pi(g).
-                    &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-
-    Subcase 3.3: $P^\pi(f)\not=0$, $f\not=h$, and
-    $f$ has an initial segment $h y_0$ ($y_0\in\mathcal A$).
-
-    Then $\pi(y_0|h)\not=0$, lest
-    we would have $P^\pi(f)=0$. Thus:
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot \pi^{h\mapsto \vec m}}(fy)\\
-            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1\frac{P^\pi(fy)m_1(y_0)}{\pi(y_0|h)}
-                +\cdots+w_n\frac{P^\pi(fy)m_n(y_0)}{\pi(y_0|h)}
-                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{P^\pi(fy)}{\pi(y_0|h)}(w_1m_1(y_0)+\cdots+w_nm_n(y_0))
-                    &\mbox{(Basic Algebra)}\\
-            &= \frac{P^\pi(fy)}{\pi(y_0|h)}\pi(y_0|h)
-                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
-            &= P^\pi(fy) = P^\pi(g).
-    \end{align*}
-
-    Subcase 3.4: $P^\pi(f)\not=0$, $f\not=h$, and $f$ has no initial segment
-        of the form $hy_0$. Then:
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(fy)\\
-            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1P^\pi(fy)+\cdots+w_nP^\pi(fy)
-                    &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-            &= P^\pi(fy) = P^\pi(g),
-                    &\mbox{($w_1+\cdots+w_n=1$)}
-    \end{align*}
-    as desired.
-
-    This finishes the proof of the Subclaim.
-    By Lemma \ref{factorizationlemma}, the Subclaim implies
-    that for every well-behaved $\mu$ and every $g\in\mathcal H$,
-    $
-    P^\pi_\mu(g)
-    =
-    P^{\vec w\cdot\pi^{h\mapsto \vec m}}_\mu(g)
-    $.
-    By Definition \ref{performancedefn} (part 1), this implies that
-    for every well-behaved $\mu$ and every $t\in\mathbb N$,
-    $
-        V^{\pi}_{\mu,t}
-        =
-        V^{\vec w\cdot \pi^{h\mapsto \vec m}}_{\mu,t}.
-    $
-    The proposition follows by Definition \ref{performancedefn} (part 2).
+    See Appendix.
 \end{proof}
 
 \begin{definition}
@@ -1720,47 +1345,14 @@ and whose weights by themselves sum up to $1$.
 \end{definition}
 
 \begin{lemma}
+\label{wcdotSisenvlemma}
     (Compare Lemma \ref{mixturereallyisanagent})
     If $w:S\to(0,\infty)$ is as in Definition \ref{swbperformanceaveragerdefn},
     then $w\cdot S$ is an environment.
 \end{lemma}
 
 \begin{proof}
-    Let $h\in(\mathcal E\mathcal A)^*$.
-    Clearly $(w\cdot S)(x|h)\geq 0$ for all $x\in\mathcal E$.
-    It remains to show $\sum_{x\in\mathcal E}(w\cdot S)(x|h)=1$.
-    If $w\cdot P_{S}(h)=0$ then each $(w\cdot S)(x|h)=1/|\mathcal E|$
-    so the claim is immediate; assume not. Then:
-    \begin{align*}
-        &{} \sum_{x\in\mathcal E}(w\cdot S)(x|h)\\
-            &= \sum_{x\in\mathcal E}\frac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
-                &\mbox{(Definition \ref{mixtureenvdefn})}\\
-            &= \sum_{x\in\mathcal E}
-                \frac{
-                    \sum_{\mu\in S}w(\mu)P_\mu(hx)
-                }{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)
-                }
-                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
-            &= \sum_{x\in\mathcal E}
-                \frac{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)\mu(x|h)
-                }{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)
-                }.
-                &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-    By absolute convergence, we can rearrange the order of summation without
-    altering the sum, so the above is
-    \[
-        \frac{
-            \sum_{\mu\in S}w(\mu)P_\mu(h)\sum_{x\in\mathcal E}\mu(x|h)
-        }{
-            \sum_{\mu\in S}w(\mu)P_\mu(h)
-        },
-    \]
-    and each $\sum_{x\in\mathcal E}\mu(x|h)=1$ since each $\mu\in\Delta\mathcal E$,
-    so the whole fraction reduces to $1$.
+    See Appendix.
 \end{proof}
 
 In order to prove the Lemma \ref{envmaintheorem} below, we will need to invoke
@@ -1803,6 +1395,500 @@ without proof.
 \end{lemma}
 
 \begin{proof}
+    (1--3) See Appendix.
+
+    (4) Let $\{\mu_0,\mu_1,\ldots\}$ enumerate $S$ ($S$ is countable since
+    only countably many environments are Turing computable). Compute:
+    \begin{align*}
+        V^\pi_{w\cdot S}
+            &= \lim_{t\to\infty} V^\pi_{w\cdot S,t}
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= \lim_{t\to\infty} w\cdot V^\pi_{S,t}
+                &\mbox{(By (3))}\\
+            &= \lim_{t\to\infty} \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+            &= \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}.
+    \end{align*}
+    For each $k\in\mathbb N$, define $M_k\in\mathbb R$ and $a_k:\mathbb N\to\mathbb R$
+    by $M_k=w(\mu_k)$, $a_k(t)=w(\mu_k)V^\pi_{\mu_k,t}$.
+    By Definition \ref{wprimedefn}, each $\mu_k\in S$ is strongly well-behaved,
+    thus for each $k$, $-1\leq V^\pi_{\mu_k,t}\leq 1$.
+    It follows that for all $t,k\in\mathbb N$, $|a_k(t)|\leq M_k$.
+    Furthermore, $\sum_{k=0}^\infty M_k=\sum_{k=0}^\infty w(\mu_k)=1<\infty$
+    by Definition \ref{swbperformanceaveragerdefn}.
+    By Tannery's Theorem (Lemma \ref{tannerysthm}),
+    \begin{align*}
+        &{} \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}\\
+            &= \sum_{k=0}^\infty\lim_{t\to\infty} w(\mu_k)V^\pi_{\mu_k,t}
+                &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
+            &= \sum_{k=0}^\infty w(\mu_k)\lim_{t\to\infty} V^\pi_{\mu_k,t}
+                &\mbox{(Algebra)}\\
+            &= \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k}
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= \sum_{\mu\in S} w(\mu)V^\pi_{\mu}
+                &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
+            &= w\cdot V^\pi_{S}.
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+    So $V^\pi_{w\cdot S}=w\cdot V^\pi_{S}$.
+\end{proof}
+
+\begin{theorem}
+    For any $S$-restricted weighted intelligence measure $\Upsilon$,
+    there exists an environment $\mu_\Upsilon$ such that for every agent $\pi$,
+    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$.
+\end{theorem}
+
+\begin{proof}
+    Given $\Upsilon$, there is a corresponding $w:S\to(0,\infty)$ as in
+    Definition \ref{swbperformanceaveragerdefn}.
+    Let $\mu_\Upsilon=w\cdot S$, we claim for every agent $\pi$,
+    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$. Let $\pi$ be any agent. Then
+    \begin{align*}
+        V^\pi_{\mu_\Upsilon}
+            &= V^\pi_{w\cdot S}\\
+            &= w\cdot V^\pi_{S}
+                &\mbox{(Lemma \ref{envmaintheorem})}\\
+            &= \sum_{\mu\in S}w(\mu)V^\pi_\mu
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+            &= \Upsilon(\pi),
+                &\mbox{(By choice of $w$)}
+    \end{align*}
+    as desired.
+\end{proof}
+
+\section{Conclusion and future work}
+
+\bibliographystyle{apalike} % AISTATS
+\bibliography{main}
+
+%\appendix
+%
+%\section{My Proof of Theorem 1}
+%
+%This is a boring technical proof. ( Copied from template )
+%
+%\section{My Proof of Theorem 2}
+%
+%This is a complete version of a proof sketched in the main text.
+%( Copied from template )
+%
+% Alternative proofs of the same theorem can be added here as a few previous COLT papers did this.
+
+\pagebreak
+
+\onecolumn
+
+\section*{Appendix}
+
+\begin{proof}[Proof of Lemma \ref{mixturereallyisanagent}]
+    Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
+    Clearly $(\vec w\cdot\vec\pi)(y|h)\geq 0$ for all $y\in\mathcal A$.
+    It remains to show
+    $\sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)=1$.
+
+    Case 1: $\vec w\cdot {P^{\vec\pi}}(h)=0$. Then
+    each $(\vec w\cdot\vec\pi)(y|h)=1/|\mathcal A|$ so the
+    claim is immediate.
+
+    Case 2: $\vec w\cdot {P^{\vec\pi}}(h)\not=0$. Then
+    \begin{align*}
+        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)\\
+            &= \sum_{y\in\mathcal A}
+                \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Definition \ref{maindefn})}\\
+            &= \sum_{y\in\mathcal A}
+                \frac
+                {\vec w\cdot(P^{\pi_1}(hy),\ldots,P^{\pi_n}(hy))}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Definition \ref{vectorizationdefn})}\\
+            &= \sum_{y\in\mathcal A}
+                \frac
+                {w_1 P^{\pi_1}(h)\pi_1(y|h)+\cdots+w_n P^{\pi_n}(h)\pi_n(y|h)}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \frac{
+                w_1 P^{\pi_1}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_1(y|h)$}\right)
+                +\cdots+
+                w_n P^{\pi_n}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_n(y|h)$}\right)
+                }
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Algebra)}\\
+            &= \frac
+                {w_1 P^{\pi_1}(h)\cdot 1 + \cdots + w_n P^{\pi_n}(h)\cdot1}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                =\frac{\vec w\cdot {P^{\vec\pi}}(h)}{\vec w\cdot {P^{\vec\pi}}(h)}=1.
+                &\mbox{($\pi_i$ are agents)}
+    \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{piopluspilemma}]
+    Write $\vec\pi$ for $(\pi,\ldots,\pi)$.
+    We prove conditions 1 and 2 of Definition \ref{equivdefn}
+    simultaneously by induction on $h$.
+ 
+    Case 1: $h=\varepsilon$. Then
+    $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
+    vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
+    (proving condition 1).
+    For condition 2, there is nothing to check, since
+    $\varepsilon\not\in(\mathcal E\mathcal A)^*\mathcal E$.
+
+    Case 2: $h=h_0y_0$ for some
+        $h_0\in(\mathcal E\mathcal A)^*\mathcal E$, $y_0\in\mathcal A$.
+        For condition 2, there is nothing to prove, since
+        $h\not\in(\mathcal E\mathcal A)^*\mathcal E$.
+        For condition 1, we consider two cases.
+
+        Subcase 2.1: $P^\pi(h_0)=0$.
+        By induction, condition 1 holds for $h_0$, so
+        $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
+        By Definition \ref{pullbackdef},
+        $P^\pi(h)=P^\pi(h_0)\pi(y_0|h_0)=0$
+        and $P^{\vec w\cdot\vec\pi}(h)=0(\vec w\cdot\vec\pi)(y_0|h_0)=0$.
+        So $P^\pi(h)=0$ iff $P^{\vec w\cdot\vec\pi}(h)=0$.
+
+        Subcase 2.2: $P^\pi(h_0)\not=0$.
+        Then
+        \begin{align*}
+            P^{\vec w\cdot \vec\pi}(h)
+                &= \vec w\cdot{P^{\vec\pi}}(h)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+                &= w_1 P^\pi(h)+\cdots+w_n P^\pi(h)
+                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
+                &= P^\pi(h)
+                    &\mbox{($w_1+\cdots+w_n=1$)}\\
+                &= P^\pi(h_0)\pi(y_0|h_0).
+                    &\mbox{(Definition \ref{pullbackdef})}
+        \end{align*}
+        Since $P^\pi(h_0)\not=0$,
+        by the null-factor law,
+        it follows that
+        $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(y_0|h_0)=0$.
+
+    Case 3: $h=h_0x$ for some $h_0\in (\mathcal E\mathcal A)^*$,
+        $x\in\mathcal E$.
+        By induction, conditions 1 and 2 hold for $h_0$.
+        By Definition \ref{pullbackdef},
+        $P^\pi(h)=P^\pi(h_0)$ and
+        $P^{\vec w\cdot\vec\pi}(h)=P^{\vec w\cdot\vec\pi}(h_0)$,
+        so condition 1 for $h$ follows.
+
+        For condition 2,
+        assume $P^\pi(h)\not=0$ and let $y\in\mathcal A$.
+        By choice of $\vec w$ and $\vec\pi$,
+        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^\pi(h)=P^\pi(h)$.
+        So, since $P^\pi(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
+        Thus
+        \begin{align*}
+            (\vec w\cdot\vec\pi)(y|h)
+                &= \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot{P^{\vec\pi}}(h)}
+                    &\mbox{(Definition \ref{maindefn})}\\
+                &= \frac{w_1P^\pi(hy)+\cdots+w_nP^\pi(hy)}
+                    {w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
+                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
+                &= \frac{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
+                    \pi(y|h)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= \pi(y|h).
+        \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{reflectionmakesjanuslemma}]
+    Let $\vec w=(\frac12,\frac12)$.
+    For any $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $y\in\mathcal A$,
+    we claim
+    \[
+        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
+        =(\vec w\cdot(\pi,\overline{\pi}))(y|h).
+    \]
+    Noting that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\frac12P^\pi(h)+\frac12P^{\overline\pi}(h)$
+    and
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)
+    =\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)$,
+    Lemmas \ref{doublenegationlemma} and \ref{asteriskcommuteswithoverlinelemma}
+    imply that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)$.
+    So if
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)=0$
+    then $\vec w\cdot P^{(\pi,\overline{\pi})}(h)=0$
+    and it follows from
+    Definition \ref{maindefn}
+    and Lemma \ref{asteriskcommuteswithoverlinelemma} that
+    $\overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
+    =(\vec w\cdot(\pi,\overline{\pi}))(y|h)=1/|\mathcal A|$.
+    So assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
+    Then:
+    \begin{align*}
+        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
+        &= (\vec w\cdot(\pi,\overline{\pi}))(y|\overline h)
+            &\mbox{(Definition \ref{dualagentsdefn})}\\
+        &= \frac
+            {\frac12P^\pi(\overline hy)+\frac12P^{\overline\pi}(\overline hy)}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= \frac
+            {\frac12P^\pi(\overline{hy})+\frac12P^{\overline\pi}(\overline{hy})}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
+            &\mbox{(Clearly $\overline hy=\overline{hy}$)}\\
+        &= \frac
+            {\frac12P^{\overline\pi}(hy)+\frac12P^{\overline{\overline\pi}}(hy)}
+            {\frac12P^{\overline\pi}(h)+\frac12P^{\overline{\overline\pi}}(h)}
+            &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
+        &= (\vec w\cdot(\overline{\overline\pi},\overline\pi))(y|h)
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= (\vec w\cdot(\pi,\overline\pi))(y|h).
+            &\mbox{(Lemma \ref{doublenegationlemma})}
+    \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{wcdotmisaprobabilitydistro}]
+    Clearly for every $y\in\mathcal A$,
+    $(\vec w\cdot\vec m)(y) = w_1m_1(y) + \cdots + w_nm_n(y)$ is a nonnegative
+    real. It remains to show $\sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)=1$.
+    We compute:
+    \begin{align*}
+        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)\\
+        &=
+        \sum_{y\in\mathcal A} w_1m_1(y) + \cdots + w_nm_n(y)
+            &\mbox{(Definition \ref{sumofdistros})}\\
+        &=
+        w_1\left(\sum_{y\in\mathcal A} m_1(y)\right)
+        + \cdots + w_n\left(\sum_{y\in\mathcal A}m_n(y)\right)
+            &\mbox{(Basic Algebra)}\\
+        &= w_1 + \cdots + w_n
+            &\mbox{($m_1,\ldots,m_n$ are probability distr's)}\\
+        &= 1.
+    \end{align*}
+\end{proof}
+
+The following auxiliary lemmas will be used in our proof of Lemma \ref{...}
+
+\begin{lemma}
+\label{firsttechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    Let $h\in\mathcal H$ be such that
+    for every $y\in\mathcal A$,
+    $h_0y$ is not an initial segment of $h$.
+    Then $P^{\pi^{h_0\mapsto m}}(h)=P^\pi(h)$.
+\end{lemma}
+
+\begin{proof}
+    By induction on $h$.
+\end{proof}
+
+\begin{lemma}
+\label{thirdtechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    For any $y\in\mathcal A$,
+    $P^{\pi^{h_0\mapsto m}}(h_0y)=P^\pi(h_0)m(y)$.
+\end{lemma}
+
+\begin{proof}
+    Immediate by Definition \ref{pullbackdef} and Lemma \ref{firsttechlemmaforgenericity}.
+\end{proof}
+
+\begin{lemma}
+\label{secondtechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    Assume $h\in\mathcal H$, $y_0\in\mathcal A$, and $h_0y_0$ is
+    an initial segment of $h$. Assume $\pi(y_0|h_0)\not=0$. Then
+    $P^{\pi^{h_0\mapsto m}}(h) = \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}$.
+\end{lemma}
+
+\begin{proof}
+    By induction on $h$.
+
+    Case 1: $h=h_0y_0$. Then
+    \begin{align*}
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= P^\pi(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
+            &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+        &= P^\pi(h_0)m(y_0)
+            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
+        &= \frac{P^\pi(h_0)\pi(y_0|h_0)m(y_0)}{\pi(y_0|h_0)}
+            &\mbox{(Basic Algebra)}\\
+        &= \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}.
+            &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Case 2: $h=h_0 y_0 h_1 x$ for some $h_1\in\mathcal H$
+        and $x\in\mathcal E$. Then
+    \begin{align*}
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \frac{P^\pi(h_0 y_0 h_1)m(y_0)}{\pi(y_0|h_0)}
+            &\mbox{(Induction)}\\
+        &= \frac{P^\pi(h_0 a_0 h_1 x)m(y_0)}{\pi(y_0|h_0)}
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}.
+    \end{align*}
+
+    Case 3: $h=h_0 y_0 h_1 y$ for some $h_1\in\mathcal H$ and
+        $y\in\mathcal A$. Then
+    \begin{align*}
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
+            \pi^{h_0\mapsto m}(y|h_0 y_0 h_1)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
+            \pi(y|h_0 a h_1)
+            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
+        &= \frac{P^\pi(h_0 y_0 h_1)\pi(y|h_0 y_0 h_1)m(y_0)}{\pi(y_0|h_0)}
+            &\mbox{(Induction)}\\
+        &= \frac{P^\pi(h_0 y_0 h_1 y)m(y_0)}{\pi(y_0|h_0)}
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}.
+    \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{longproposition}]
+    \textbf{Subclaim:}For every $g\in\mathcal H$,
+    $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
+    We prove this by induction on $g$.
+
+    Case 1: $g=\varepsilon$.
+    Then $P^\pi(g)=1
+    =P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
+
+    Case 2: $g=fx$ for some $x\in\mathcal E$.
+    Then
+    \begin{align*}
+        P^\pi(g)
+            &= P^\pi(f)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
+                &\mbox{(Induction)}\\
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g).
+                &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Case 3: $g=fy$ for some $y\in\mathcal A$.
+
+    Subcase 3.1: $P^\pi(f)=0$.
+    Then
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
+            (\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= P^\pi(f)(\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
+                &\mbox{(Induction)}\\
+            &= 0.
+    \end{align*}
+    Similarly, $P^\pi(g)=0$. So $P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)=P^\pi(g)$.
+
+    Subcase 3.2: $P^\pi(f)\not=0$ and $f=h$. Then:
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(hy)\\
+            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(hy)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+            &= w_1P^\pi(h)m_1(y)+\cdots+w_nP^\pi(h)m_n(y)
+                    &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
+            &= P^\pi(h)\pi(y|h)
+                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
+            &= P^\pi(hy) = P^\pi(g).
+                    &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Subcase 3.3: $P^\pi(f)\not=0$, $f\not=h$, and
+    $f$ has an initial segment $h y_0$ ($y_0\in\mathcal A$).
+
+    Then $\pi(y_0|h)\not=0$, lest
+    we would have $P^\pi(f)=0$. Thus:
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot \pi^{h\mapsto \vec m}}(fy)\\
+            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+            &= w_1\frac{P^\pi(fy)m_1(y_0)}{\pi(y_0|h)}
+                +\cdots+w_n\frac{P^\pi(fy)m_n(y_0)}{\pi(y_0|h)}
+                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
+            &= \frac{P^\pi(fy)}{\pi(y_0|h)}(w_1m_1(y_0)+\cdots+w_nm_n(y_0))
+                    &\mbox{(Basic Algebra)}\\
+            &= \frac{P^\pi(fy)}{\pi(y_0|h)}\pi(y_0|h)
+                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
+            &= P^\pi(fy) = P^\pi(g).
+    \end{align*}
+
+    Subcase 3.4: $P^\pi(f)\not=0$, $f\not=h$, and $f$ has no initial segment
+        of the form $hy_0$. Then:
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(fy)\\
+            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+            &= w_1P^\pi(fy)+\cdots+w_nP^\pi(fy)
+                    &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+            &= P^\pi(fy) = P^\pi(g),
+                    &\mbox{($w_1+\cdots+w_n=1$)}
+    \end{align*}
+    as desired.
+
+    This finishes the proof of the Subclaim.
+    By Lemma \ref{factorizationlemma}, the Subclaim implies
+    that for every well-behaved $\mu$ and every $g\in\mathcal H$,
+    $
+    P^\pi_\mu(g)
+    =
+    P^{\vec w\cdot\pi^{h\mapsto \vec m}}_\mu(g)
+    $.
+    By Definition \ref{performancedefn} (part 1), this implies that
+    for every well-behaved $\mu$ and every $t\in\mathbb N$,
+    $
+        V^{\pi}_{\mu,t}
+        =
+        V^{\vec w\cdot \pi^{h\mapsto \vec m}}_{\mu,t}.
+    $
+    The proposition follows by Definition \ref{performancedefn} (part 2).
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{wcdotSisenvlemma}]
+    Let $h\in(\mathcal E\mathcal A)^*$.
+    Clearly $(w\cdot S)(x|h)\geq 0$ for all $x\in\mathcal E$.
+    It remains to show $\sum_{x\in\mathcal E}(w\cdot S)(x|h)=1$.
+    If $w\cdot P_{S}(h)=0$ then each $(w\cdot S)(x|h)=1/|\mathcal E|$
+    so the claim is immediate; assume not. Then:
+    \begin{align*}
+        &{} \sum_{x\in\mathcal E}(w\cdot S)(x|h)\\
+            &= \sum_{x\in\mathcal E}\frac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
+                &\mbox{(Definition \ref{mixtureenvdefn})}\\
+            &= \sum_{x\in\mathcal E}
+                \frac{
+                    \sum_{\mu\in S}w(\mu)P_\mu(hx)
+                }{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                }
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+            &= \sum_{x\in\mathcal E}
+                \frac{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)\mu(x|h)
+                }{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                }.
+                &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+    By absolute convergence, we can rearrange the order of summation without
+    altering the sum, so the above is
+    \[
+        \frac{
+            \sum_{\mu\in S}w(\mu)P_\mu(h)\sum_{x\in\mathcal E}\mu(x|h)
+        }{
+            \sum_{\mu\in S}w(\mu)P_\mu(h)
+        },
+    \]
+    and each $\sum_{x\in\mathcal E}\mu(x|h)=1$ since each $\mu\in\Delta\mathcal E$,
+    so the whole fraction reduces to $1$.
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{envmaintheorem} (1--3)]
     (1) By induction on $h$.
 
     Case 1: $h=\varepsilon$. Then
@@ -1892,115 +1978,6 @@ without proof.
             &= w\cdot V^\pi_{S,t}.
                 &\mbox{(Definition \ref{infinitedimdotproductdefn})}
     \end{align*}
-
-    (4) Let $\{\mu_0,\mu_1,\ldots\}$ enumerate $S$ ($S$ is countable since
-    only countably many environments are Turing computable). Compute:
-    \begin{align*}
-        V^\pi_{w\cdot S}
-            &= \lim_{t\to\infty} V^\pi_{w\cdot S,t}
-                &\mbox{(Definition \ref{performancedefn})}\\
-            &= \lim_{t\to\infty} w\cdot V^\pi_{S,t}
-                &\mbox{(By (3))}\\
-            &= \lim_{t\to\infty} \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
-            &= \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}.
-    \end{align*}
-    For each $k\in\mathbb N$, define $M_k\in\mathbb R$ and $a_k:\mathbb N\to\mathbb R$
-    by $M_k=w(\mu_k)$, $a_k(t)=w(\mu_k)V^\pi_{\mu_k,t}$.
-    By Definition \ref{wprimedefn}, each $\mu_k\in S$ is strongly well-behaved,
-    thus for each $k$, $-1\leq V^\pi_{\mu_k,t}\leq 1$.
-    It follows that for all $t,k\in\mathbb N$, $|a_k(t)|\leq M_k$.
-    Furthermore, $\sum_{k=0}^\infty M_k=\sum_{k=0}^\infty w(\mu_k)=1<\infty$
-    by Definition \ref{swbperformanceaveragerdefn}.
-    By Tannery's Theorem (Lemma \ref{tannerysthm}),
-    \begin{align*}
-        \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}
-            &= \sum_{k=0}^\infty\lim_{t\to\infty} w(\mu_k)V^\pi_{\mu_k,t}\\
-            &= \sum_{k=0}^\infty w(\mu_k)\lim_{t\to\infty} V^\pi_{\mu_k,t}
-                &\mbox{(Algebra)}\\
-            &= \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k}
-                &\mbox{(Definition \ref{performancedefn})}\\
-            &= \sum_{\mu\in S} w(\mu)V^\pi_{\mu_k}
-                &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
-            &= w\cdot V^\pi_{S}.
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
-    \end{align*}
-    So $V^\pi_{w\cdot S}=w\cdot V^\pi_{S}$.
 \end{proof}
-
-\begin{theorem}
-    For any $S$-restricted weighted intelligence measure $\Upsilon$,
-    there exists an environment $\mu_\Upsilon$ such that for every agent $\pi$,
-    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$.
-\end{theorem}
-
-\begin{proof}
-    Given $\Upsilon$, there is a corresponding $w:S\to(0,\infty)$ as in
-    Definition \ref{swbperformanceaveragerdefn}.
-    Let $\mu_\Upsilon=w\cdot S$, we claim for every agent $\pi$,
-    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$. Let $\pi$ be any agent. Then
-    \begin{align*}
-        V^\pi_{\mu_\Upsilon}
-            &= V^\pi_{w\cdot S}\\
-            &= w\cdot V^\pi_{S}
-                &\mbox{(Lemma \ref{envmaintheorem})}\\
-            &= \sum_{\mu\in S}w(\mu)V^\pi_\mu
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \Upsilon(\pi),
-                &\mbox{(By choice of $w$)}
-    \end{align*}
-    as desired.
-\end{proof}
-
-\section{Conclusion and future work}
-
-\bibliographystyle{apalike} % AISTATS
-\bibliography{main}
-
-%\appendix
-%
-%\section{My Proof of Theorem 1}
-%
-%This is a boring technical proof. ( Copied from template )
-%
-%\section{My Proof of Theorem 2}
-%
-%This is a complete version of a proof sketched in the main text.
-%( Copied from template )
-%
-% Alternative proofs of the same theorem can be added here as a few previous COLT papers did this.
-
-\pagebreak
-
-\onecolumn
-
-\aistatstitle{Instructions for Paper Submissions to AISTATS 2022: \\
-Supplementary Materials}
-
-\section{FORMATTING INSTRUCTIONS}
-
-To prepare a supplementary pdf file, we ask the authors to use \texttt{aistats2022.sty} as a style file and to follow the same formatting instructions as in the main paper.
-The only difference is that the supplementary material must be in a \emph{single-column} format.
-You can use \texttt{supplement.tex} in our starter pack as a starting point, or append the supplementary content to the main paper and split the final PDF into two separate files.
-
-Note that reviewers are under no obligation to examine your supplementary material.
-
-\section{MISSING PROOFS}
-
-The supplementary materials may contain detailed proofs of the results that are missing in the main paper.
-
-\subsection{Proof of Lemma 3}
-
-\textit{In this section, we present the detailed proof of Lemma 3 and then [ ... ]}
-
-\section{ADDITIONAL EXPERIMENTS}
-
-If you have additional experimental results, you may include them in the supplementary materials.
-
-\subsection{The Effect of Regularization Parameter}
-
-\textit{Our algorithm depends on the regularization parameter $\lambda$. Figure 1 below illustrates the effect of this parameter on the performance of our algorithm. As we can see, [ ... ]}
-
-\vfill
 
 \end{document}
