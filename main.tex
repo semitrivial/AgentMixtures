@@ -127,10 +127,7 @@ environments to restrict our attention to).
 Throughout the paper, we implicitly
 fix non-empty finite sets $\mathcal A$ of \emph{actions},
 $\mathcal O$ of \emph{observations},
-and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards},
-with the constraint that
-whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
-also contains $-r$. In other words, $\mathcal R$ is closed under negations.
+and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards}.
 By $\varepsilon$ we mean the empty sequence.
 By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
@@ -649,6 +646,15 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
 
 \section{Duality and self-dual agents:
 Strengthening and formalizing a result of Alexander and Hutter}
+
+In this section, we will investigate three symmetry properties
+which a weighted intelligence measure might satisfy. A priori, these
+three properties do not appear to be equivalent, but we will show
+that in fact, they are. Throughout this section, we
+assume that the background set $\mathcal R$ has the following
+additional property:
+whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
+also contains $-r$. In other words, $\mathcal R$ is closed under negations.
 
 \begin{definition}
 \label{dualagentsdefn}
