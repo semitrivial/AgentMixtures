@@ -1335,47 +1335,14 @@ and whose weights by themselves sum up to $1$.
 \end{definition}
 
 \begin{lemma}
+\label{wcdotSisenvlemma}
     (Compare Lemma \ref{mixturereallyisanagent})
     If $w:S\to(0,\infty)$ is as in Definition \ref{swbperformanceaveragerdefn},
     then $w\cdot S$ is an environment.
 \end{lemma}
 
 \begin{proof}
-    Let $h\in(\mathcal E\mathcal A)^*$.
-    Clearly $(w\cdot S)(x|h)\geq 0$ for all $x\in\mathcal E$.
-    It remains to show $\sum_{x\in\mathcal E}(w\cdot S)(x|h)=1$.
-    If $w\cdot P_{S}(h)=0$ then each $(w\cdot S)(x|h)=1/|\mathcal E|$
-    so the claim is immediate; assume not. Then:
-    \begin{align*}
-        &{} \sum_{x\in\mathcal E}(w\cdot S)(x|h)\\
-            &= \sum_{x\in\mathcal E}\frac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
-                &\mbox{(Definition \ref{mixtureenvdefn})}\\
-            &= \sum_{x\in\mathcal E}
-                \frac{
-                    \sum_{\mu\in S}w(\mu)P_\mu(hx)
-                }{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)
-                }
-                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
-            &= \sum_{x\in\mathcal E}
-                \frac{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)\mu(x|h)
-                }{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)
-                }.
-                &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-    By absolute convergence, we can rearrange the order of summation without
-    altering the sum, so the above is
-    \[
-        \frac{
-            \sum_{\mu\in S}w(\mu)P_\mu(h)\sum_{x\in\mathcal E}\mu(x|h)
-        }{
-            \sum_{\mu\in S}w(\mu)P_\mu(h)
-        },
-    \]
-    and each $\sum_{x\in\mathcal E}\mu(x|h)=1$ since each $\mu\in\Delta\mathcal E$,
-    so the whole fraction reduces to $1$.
+    See Appendix.
 \end{proof}
 
 In order to prove the Lemma \ref{envmaintheorem} below, we will need to invoke
@@ -1418,95 +1385,7 @@ without proof.
 \end{lemma}
 
 \begin{proof}
-    (1) By induction on $h$.
-
-    Case 1: $h=\varepsilon$. Then
-    \begin{align*}
-        w\cdot P_{S}(h)
-        &= \sum_{\mu\in S}w(\mu)P_{S}(h)(\mu)
-            &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-        &= \sum_{\mu\in S}w(\mu)P_\mu(h)
-            &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
-        &= \sum_{\mu\in S}w(\mu)
-            &\mbox{($P_\mu(\varepsilon)=1$)}\\
-        &= 1
-            &\mbox{(Definition \ref{swbperformanceaveragerdefn})}\\
-        &= P_{w\cdot S}(h).
-            &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-
-    Case 2: $h=gx$ for some $x\in\mathcal E$.
-
-    Subcase 2.1: $w\cdot P_{S}(g)=0$.
-        This means $\sum_{\mu\in S}w(\mu)P_\mu(g)=0$.
-        Since each $w(\mu)>0$, this implies each $P_\mu(g)=0$.
-        From this it easily follows that
-        $P_{w\cdot S}(gx)=w\cdot P_{S}(gx)=0$.
-
-    Subcase 2.2: $w\cdot P_{S}(g)\not=0$. Then
-    \begin{align*}
-        P_{w\cdot S}(h)
-            &= P_{w\cdot S}(g)(w\cdot S)(x|g)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= w\cdot P_{S}(g)(w\cdot S)(x|g)
-                &\mbox{(Induction)}\\
-            &= w\cdot P_{S}(g)\frac{w\cdot P_{S}(gx)}{w\cdot P_{S}(g)}
-                &\mbox{(Definition \ref{mixtureenvdefn})}\\
-            &= w\cdot P_{S}(gx) = w\cdot P_{S}(h).
-    \end{align*}
-
-    Case 3: $h=gy$ for some $y\in\mathcal A$.
-    Then
-    \begin{align*}
-        P_{w\cdot S}(h)
-            &= P_{w\cdot S}(g)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= w\cdot P_{S}(g)
-                &\mbox{(Induction)}\\
-            &= \sum_{\mu\in S} w(\mu)P_\mu(g)
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \sum_{\mu\in S} w(\mu)P_\mu(gy)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= w\cdot P_{S}(gy) = w\cdot P_{S}(h).
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
-    \end{align*}
-
-    (2) Compute:
-    \begin{align*}
-        P^\pi_{w\cdot S}(h)
-            &= P^\pi(h) P_{w\cdot S}(h)
-                &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= P^\pi(h) w\cdot P_{S}(h)
-                &\mbox{(By (1))}\\
-            &= P^\pi(h) \sum_{\mu\in S}w(\mu)P_\mu(h)
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \sum_{\mu\in S}w(\mu)P^\pi(h)P_\mu(h)
-                &\mbox{(Algebra)}\\
-            &= \sum_{\mu\in S}w(\mu)P^\pi_\mu(h)
-                &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= w\cdot P^\pi_{S}(h).
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
-    \end{align*}
-
-    (3) Let $X_t$, $R$ be as in Definition \ref{performancedefn} and compute:
-    \begin{align*}
-        V^\pi_{w\cdot S,t}
-            &= \sum_{h\in X_t}R(h)P^\pi_{w\cdot S}(h)
-                &\mbox{(Definition \ref{performancedefn})}\\
-            &= \sum_{h\in X_t}R(h)w\cdot P^\pi_{S}(h)
-                &\mbox{(By (2))}\\
-            &= \sum_{h\in X_t}R(h)\sum_{\mu\in S}w(\mu)P^\pi_\mu(h).
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
-    \end{align*}
-    Since $X_t$ is finite, this sum is absolutely convergent, so we can
-    rearrange terms, and the sum is equal to
-    \begin{align*}
-        \sum_{\mu\in S}w(\mu)\sum_{h\in X_t}R(h)P^\pi_\mu(h)
-            &= \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
-                &\mbox{(Definition \ref{performancedefn})}\\
-            &= w\cdot V^\pi_{S,t}.
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
-    \end{align*}
+    (1--3) See Appendix.
 
     (4) Let $\{\mu_0,\mu_1,\ldots\}$ enumerate $S$ ($S$ is countable since
     only countably many environments are Turing computable). Compute:
@@ -1958,6 +1837,136 @@ The following auxiliary lemmas will be used in our proof of Lemma \ref{...}
         V^{\vec w\cdot \pi^{h\mapsto \vec m}}_{\mu,t}.
     $
     The proposition follows by Definition \ref{performancedefn} (part 2).
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{wcdotSisenvlemma}]
+    Let $h\in(\mathcal E\mathcal A)^*$.
+    Clearly $(w\cdot S)(x|h)\geq 0$ for all $x\in\mathcal E$.
+    It remains to show $\sum_{x\in\mathcal E}(w\cdot S)(x|h)=1$.
+    If $w\cdot P_{S}(h)=0$ then each $(w\cdot S)(x|h)=1/|\mathcal E|$
+    so the claim is immediate; assume not. Then:
+    \begin{align*}
+        &{} \sum_{x\in\mathcal E}(w\cdot S)(x|h)\\
+            &= \sum_{x\in\mathcal E}\frac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
+                &\mbox{(Definition \ref{mixtureenvdefn})}\\
+            &= \sum_{x\in\mathcal E}
+                \frac{
+                    \sum_{\mu\in S}w(\mu)P_\mu(hx)
+                }{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                }
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+            &= \sum_{x\in\mathcal E}
+                \frac{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)\mu(x|h)
+                }{
+                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                }.
+                &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+    By absolute convergence, we can rearrange the order of summation without
+    altering the sum, so the above is
+    \[
+        \frac{
+            \sum_{\mu\in S}w(\mu)P_\mu(h)\sum_{x\in\mathcal E}\mu(x|h)
+        }{
+            \sum_{\mu\in S}w(\mu)P_\mu(h)
+        },
+    \]
+    and each $\sum_{x\in\mathcal E}\mu(x|h)=1$ since each $\mu\in\Delta\mathcal E$,
+    so the whole fraction reduces to $1$.
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{envmaintheorem} (1--3)]
+    (1) By induction on $h$.
+
+    Case 1: $h=\varepsilon$. Then
+    \begin{align*}
+        w\cdot P_{S}(h)
+        &= \sum_{\mu\in S}w(\mu)P_{S}(h)(\mu)
+            &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+        &= \sum_{\mu\in S}w(\mu)P_\mu(h)
+            &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+        &= \sum_{\mu\in S}w(\mu)
+            &\mbox{($P_\mu(\varepsilon)=1$)}\\
+        &= 1
+            &\mbox{(Definition \ref{swbperformanceaveragerdefn})}\\
+        &= P_{w\cdot S}(h).
+            &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Case 2: $h=gx$ for some $x\in\mathcal E$.
+
+    Subcase 2.1: $w\cdot P_{S}(g)=0$.
+        This means $\sum_{\mu\in S}w(\mu)P_\mu(g)=0$.
+        Since each $w(\mu)>0$, this implies each $P_\mu(g)=0$.
+        From this it easily follows that
+        $P_{w\cdot S}(gx)=w\cdot P_{S}(gx)=0$.
+
+    Subcase 2.2: $w\cdot P_{S}(g)\not=0$. Then
+    \begin{align*}
+        P_{w\cdot S}(h)
+            &= P_{w\cdot S}(g)(w\cdot S)(x|g)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= w\cdot P_{S}(g)(w\cdot S)(x|g)
+                &\mbox{(Induction)}\\
+            &= w\cdot P_{S}(g)\frac{w\cdot P_{S}(gx)}{w\cdot P_{S}(g)}
+                &\mbox{(Definition \ref{mixtureenvdefn})}\\
+            &= w\cdot P_{S}(gx) = w\cdot P_{S}(h).
+    \end{align*}
+
+    Case 3: $h=gy$ for some $y\in\mathcal A$.
+    Then
+    \begin{align*}
+        P_{w\cdot S}(h)
+            &= P_{w\cdot S}(g)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= w\cdot P_{S}(g)
+                &\mbox{(Induction)}\\
+            &= \sum_{\mu\in S} w(\mu)P_\mu(g)
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+            &= \sum_{\mu\in S} w(\mu)P_\mu(gy)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= w\cdot P_{S}(gy) = w\cdot P_{S}(h).
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+
+    (2) Compute:
+    \begin{align*}
+        P^\pi_{w\cdot S}(h)
+            &= P^\pi(h) P_{w\cdot S}(h)
+                &\mbox{(Lemma \ref{factorizationlemma})}\\
+            &= P^\pi(h) w\cdot P_{S}(h)
+                &\mbox{(By (1))}\\
+            &= P^\pi(h) \sum_{\mu\in S}w(\mu)P_\mu(h)
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
+            &= \sum_{\mu\in S}w(\mu)P^\pi(h)P_\mu(h)
+                &\mbox{(Algebra)}\\
+            &= \sum_{\mu\in S}w(\mu)P^\pi_\mu(h)
+                &\mbox{(Lemma \ref{factorizationlemma})}\\
+            &= w\cdot P^\pi_{S}(h).
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+
+    (3) Let $X_t$, $R$ be as in Definition \ref{performancedefn} and compute:
+    \begin{align*}
+        V^\pi_{w\cdot S,t}
+            &= \sum_{h\in X_t}R(h)P^\pi_{w\cdot S}(h)
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= \sum_{h\in X_t}R(h)w\cdot P^\pi_{S}(h)
+                &\mbox{(By (2))}\\
+            &= \sum_{h\in X_t}R(h)\sum_{\mu\in S}w(\mu)P^\pi_\mu(h).
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
+    Since $X_t$ is finite, this sum is absolutely convergent, so we can
+    rearrange terms, and the sum is equal to
+    \begin{align*}
+        \sum_{\mu\in S}w(\mu)\sum_{h\in X_t}R(h)P^\pi_\mu(h)
+            &= \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
+                &\mbox{(Definition \ref{performancedefn})}\\
+            &= w\cdot V^\pi_{S,t}.
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+    \end{align*}
 \end{proof}
 
 \end{document}
