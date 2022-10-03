@@ -379,36 +379,6 @@ This depends on a background universal
 Turing machine, the choice of which is highly nontrivial
 \cite{leike2015bad}.
 
-We will repeatedly write proofs by induction on histories $h\in\mathcal H$
-(rather than on the usual induction on natural
-numbers), implicitly using the following lemma without mention.
-
-\begin{lemma}
-\label{trivialinductionlemma}
-    Suppose $\mathscr P$ is a property of histories. In order to prove
-    that $\mathscr P(h)$ is true
-    for all $h\in\mathcal H$, it suffices to prove the following three cases:
-    \begin{enumerate}
-        \item $\mathscr P(\varepsilon)$.
-        \item If $h=gy$ for some $y\in\mathcal A$, if $\mathscr P(g)$, then $\mathscr P(h)$.
-        \item If $h=gx$ for some $x\in\mathcal E$, if $\mathscr P(g)$, then $\mathscr P(h)$.
-    \end{enumerate}
-    In proving (2) and (3), we refer to the hypothesis ``$\mathscr P(g)$'' as the
-    ``Induction Hypothesis'' (or just ``Induction'').
-\end{lemma}
-
-\begin{proof}
-    By induction on the length $\ell$ of $h\in\mathcal H$.
-    For the base case, if $\ell=0$ then $h=\varepsilon$ so $\mathscr P(h)$ holds by (1).
-    For the induction step, assume $\ell>0$.
-    If $h\in(\mathcal E\mathcal A)^*$ then this implies
-    $h=gy$ for some $y\in\mathcal A$ such that $g$ has length $\ell-1$.
-    By induction, $\mathscr P(g)$. Thus $\mathscr P(h)$ by (2).
-    Otherwise, $h\in(\mathcal E\mathcal A)^*\mathcal A$, which implies
-    $h=gx$ for some $x\in\mathcal E$ such that $g$ has length $\ell-1$.
-    By induction, $\mathscr P(g)$, thus $\mathscr P(h)$ by (3).
-\end{proof}
-
 \section{Mixture agents}
 
 Before defining mixture agents, we will first extend some of the above
