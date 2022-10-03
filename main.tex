@@ -449,44 +449,7 @@ Now we are ready to define mixture agents.
 \end{lemma}
 
 \begin{proof}
-    Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
-    Clearly $(\vec w\cdot\vec\pi)(y|h)\geq 0$ for all $y\in\mathcal A$.
-    It remains to show
-    $\sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)=1$.
-
-    Case 1: $\vec w\cdot {P^{\vec\pi}}(h)=0$. Then
-    each $(\vec w\cdot\vec\pi)(y|h)=1/|\mathcal A|$ so the
-    claim is immediate.
-
-    Case 2: $\vec w\cdot {P^{\vec\pi}}(h)\not=0$. Then
-    \begin{align*}
-        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)\\
-            &= \sum_{y\in\mathcal A}
-                \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Definition \ref{maindefn})}\\
-            &= \sum_{y\in\mathcal A}
-                \frac
-                {\vec w\cdot(P^{\pi_1}(hy),\ldots,P^{\pi_n}(hy))}
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Definition \ref{vectorizationdefn})}\\
-            &= \sum_{y\in\mathcal A}
-                \frac
-                {w_1 P^{\pi_1}(h)\pi_1(y|h)+\cdots+w_n P^{\pi_n}(h)\pi_n(y|h)}
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \frac{
-                w_1 P^{\pi_1}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_1(y|h)$}\right)
-                +\cdots+
-                w_n P^{\pi_n}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_n(y|h)$}\right)
-                }
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                &\mbox{(Algebra)}\\
-            &= \frac
-                {w_1 P^{\pi_1}(h)\cdot 1 + \cdots + w_n P^{\pi_n}(h)\cdot1}
-                {\vec w\cdot {P^{\vec\pi}}(h)}
-                =\frac{\vec w\cdot {P^{\vec\pi}}(h)}{\vec w\cdot {P^{\vec\pi}}(h)}=1.
-                &\mbox{($\pi_i$ are agents)}
-    \end{align*}
+    See Appendix.
 \end{proof}
 
 We will frequently use Lemma \ref{mixturereallyisanagent} without explicit mention.
@@ -724,75 +687,7 @@ then $a=0$ or $b=0$.
 \end{lemma}
 
 \begin{proof}
-    Write $\vec\pi$ for $(\pi,\ldots,\pi)$.
-    We prove conditions 1 and 2 of Definition \ref{equivdefn}
-    simultaneously by induction on $h$.
- 
-    Case 1: $h=\varepsilon$. Then
-    $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
-    vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
-    (proving condition 1).
-    For condition 2, there is nothing to check, since
-    $\varepsilon\not\in(\mathcal E\mathcal A)^*\mathcal E$.
-
-    Case 2: $h=h_0y_0$ for some
-        $h_0\in(\mathcal E\mathcal A)^*\mathcal E$, $y_0\in\mathcal A$.
-        For condition 2, there is nothing to prove, since
-        $h\not\in(\mathcal E\mathcal A)^*\mathcal E$.
-        For condition 1, we consider two cases.
-
-        Subcase 2.1: $P^\pi(h_0)=0$.
-        By induction, condition 1 holds for $h_0$, so
-        $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
-        By Definition \ref{pullbackdef},
-        $P^\pi(h)=P^\pi(h_0)\pi(y_0|h_0)=0$
-        and $P^{\vec w\cdot\vec\pi}(h)=0(\vec w\cdot\vec\pi)(y_0|h_0)=0$.
-        So $P^\pi(h)=0$ iff $P^{\vec w\cdot\vec\pi}(h)=0$.
-
-        Subcase 2.2: $P^\pi(h_0)\not=0$.
-        Then
-        \begin{align*}
-            P^{\vec w\cdot \vec\pi}(h)
-                &= \vec w\cdot{P^{\vec\pi}}(h)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-                &= w_1 P^\pi(h)+\cdots+w_n P^\pi(h)
-                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= P^\pi(h)
-                    &\mbox{($w_1+\cdots+w_n=1$)}\\
-                &= P^\pi(h_0)\pi(y_0|h_0).
-                    &\mbox{(Definition \ref{pullbackdef})}
-        \end{align*}
-        Since $P^\pi(h_0)\not=0$,
-        by the null-factor law,
-        it follows that
-        $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(y_0|h_0)=0$.
-
-    Case 3: $h=h_0x$ for some $h_0\in (\mathcal E\mathcal A)^*$,
-        $x\in\mathcal E$.
-        By induction, conditions 1 and 2 hold for $h_0$.
-        By Definition \ref{pullbackdef},
-        $P^\pi(h)=P^\pi(h_0)$ and
-        $P^{\vec w\cdot\vec\pi}(h)=P^{\vec w\cdot\vec\pi}(h_0)$,
-        so condition 1 for $h$ follows.
-
-        For condition 2,
-        assume $P^\pi(h)\not=0$ and let $y\in\mathcal A$.
-        By choice of $\vec w$ and $\vec\pi$,
-        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^\pi(h)=P^\pi(h)$.
-        So, since $P^\pi(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
-        Thus
-        \begin{align*}
-            (\vec w\cdot\vec\pi)(y|h)
-                &= \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot{P^{\vec\pi}}(h)}
-                    &\mbox{(Definition \ref{maindefn})}\\
-                &= \frac{w_1P^\pi(hy)+\cdots+w_nP^\pi(hy)}
-                    {w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
-                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
-                &= \frac{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
-                    \pi(y|h)
-                    &\mbox{(Definition \ref{pullbackdef})}\\
-                &= \pi(y|h).
-        \end{align*}
+    See Appendix.
 \end{proof}
 
 \begin{lemma}
@@ -802,54 +697,7 @@ then $a=0$ or $b=0$.
 \end{lemma}
 
 \begin{proof}
-    Let $\vec w=(\frac12,\frac12)$.
-    For any $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $y\in\mathcal A$,
-    we claim
-    \[
-        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
-        =(\vec w\cdot(\pi,\overline{\pi}))(y|h).
-    \]
-    Noting that
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
-    =\frac12P^\pi(h)+\frac12P^{\overline\pi}(h)$
-    and
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)
-    =\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)$,
-    Lemmas \ref{doublenegationlemma} and \ref{asteriskcommuteswithoverlinelemma}
-    imply that
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
-    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)$.
-    So if
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)=0$
-    then $\vec w\cdot P^{(\pi,\overline{\pi})}(h)=0$
-    and it follows from
-    Definition \ref{maindefn}
-    and Lemma \ref{asteriskcommuteswithoverlinelemma} that
-    $\overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
-    =(\vec w\cdot(\pi,\overline{\pi}))(y|h)=1/|\mathcal A|$.
-    So assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
-    Then:
-    \begin{align*}
-        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
-        &= (\vec w\cdot(\pi,\overline{\pi}))(y|\overline h)
-            &\mbox{(Definition \ref{dualagentsdefn})}\\
-        &= \frac
-            {\frac12P^\pi(\overline hy)+\frac12P^{\overline\pi}(\overline hy)}
-            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
-            &\mbox{(Definition \ref{maindefn})}\\
-        &= \frac
-            {\frac12P^\pi(\overline{hy})+\frac12P^{\overline\pi}(\overline{hy})}
-            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
-            &\mbox{(Clearly $\overline hy=\overline{hy}$)}\\
-        &= \frac
-            {\frac12P^{\overline\pi}(hy)+\frac12P^{\overline{\overline\pi}}(hy)}
-            {\frac12P^{\overline\pi}(h)+\frac12P^{\overline{\overline\pi}}(h)}
-            &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
-        &= (\vec w\cdot(\overline{\overline\pi},\overline\pi))(y|h)
-            &\mbox{(Definition \ref{maindefn})}\\
-        &= (\vec w\cdot(\pi,\overline\pi))(y|h).
-            &\mbox{(Lemma \ref{doublenegationlemma})}
-    \end{align*}
+    See Appendix.
 \end{proof}
 
 \begin{proposition}
@@ -951,9 +799,6 @@ condition, which, a priori, seems to demand much more.
     Suppose $\Upsilon$ is a weighted intelligence measure.
     If $\Upsilon$ satisfies the weak symmetry condition then
     $\Upsilon$ satisfies the strong symmetry condition.
-    If $\Upsilon(\pi)=0$ for every self-dual agent $\pi$,
-    then $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$
-    for every agent $\pi$.
 \end{theorem}
 
 \begin{proof}
@@ -1941,33 +1786,170 @@ without proof.
 
 \onecolumn
 
-\aistatstitle{Instructions for Paper Submissions to AISTATS 2022: \\
-Supplementary Materials}
+\section*{Appendix}
 
-\section{FORMATTING INSTRUCTIONS}
+\begin{proof}[Proof of Lemma \ref{mixturereallyisanagent}]
+    Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
+    Clearly $(\vec w\cdot\vec\pi)(y|h)\geq 0$ for all $y\in\mathcal A$.
+    It remains to show
+    $\sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)=1$.
 
-To prepare a supplementary pdf file, we ask the authors to use \texttt{aistats2022.sty} as a style file and to follow the same formatting instructions as in the main paper.
-The only difference is that the supplementary material must be in a \emph{single-column} format.
-You can use \texttt{supplement.tex} in our starter pack as a starting point, or append the supplementary content to the main paper and split the final PDF into two separate files.
+    Case 1: $\vec w\cdot {P^{\vec\pi}}(h)=0$. Then
+    each $(\vec w\cdot\vec\pi)(y|h)=1/|\mathcal A|$ so the
+    claim is immediate.
 
-Note that reviewers are under no obligation to examine your supplementary material.
+    Case 2: $\vec w\cdot {P^{\vec\pi}}(h)\not=0$. Then
+    \begin{align*}
+        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec\pi)(y|h)\\
+            &= \sum_{y\in\mathcal A}
+                \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Definition \ref{maindefn})}\\
+            &= \sum_{y\in\mathcal A}
+                \frac
+                {\vec w\cdot(P^{\pi_1}(hy),\ldots,P^{\pi_n}(hy))}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Definition \ref{vectorizationdefn})}\\
+            &= \sum_{y\in\mathcal A}
+                \frac
+                {w_1 P^{\pi_1}(h)\pi_1(y|h)+\cdots+w_n P^{\pi_n}(h)\pi_n(y|h)}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= \frac{
+                w_1 P^{\pi_1}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_1(y|h)$}\right)
+                +\cdots+
+                w_n P^{\pi_n}(h)\left(\mbox{$\sum_{y\in\mathcal A}\pi_n(y|h)$}\right)
+                }
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                &\mbox{(Algebra)}\\
+            &= \frac
+                {w_1 P^{\pi_1}(h)\cdot 1 + \cdots + w_n P^{\pi_n}(h)\cdot1}
+                {\vec w\cdot {P^{\vec\pi}}(h)}
+                =\frac{\vec w\cdot {P^{\vec\pi}}(h)}{\vec w\cdot {P^{\vec\pi}}(h)}=1.
+                &\mbox{($\pi_i$ are agents)}
+    \end{align*}
+\end{proof}
 
-\section{MISSING PROOFS}
+\begin{proof}[Proof of Lemma \ref{piopluspilemma}]
+    Write $\vec\pi$ for $(\pi,\ldots,\pi)$.
+    We prove conditions 1 and 2 of Definition \ref{equivdefn}
+    simultaneously by induction on $h$.
+ 
+    Case 1: $h=\varepsilon$. Then
+    $P^\pi(h)=\vec w\cdot{P^{\vec\pi}}(h)=1\not=0$, so
+    vacuously $P^\pi(h)=0$ iff $\vec w\cdot{P^{\vec\pi}}(h)=0$
+    (proving condition 1).
+    For condition 2, there is nothing to check, since
+    $\varepsilon\not\in(\mathcal E\mathcal A)^*\mathcal E$.
 
-The supplementary materials may contain detailed proofs of the results that are missing in the main paper.
+    Case 2: $h=h_0y_0$ for some
+        $h_0\in(\mathcal E\mathcal A)^*\mathcal E$, $y_0\in\mathcal A$.
+        For condition 2, there is nothing to prove, since
+        $h\not\in(\mathcal E\mathcal A)^*\mathcal E$.
+        For condition 1, we consider two cases.
 
-\subsection{Proof of Lemma 3}
+        Subcase 2.1: $P^\pi(h_0)=0$.
+        By induction, condition 1 holds for $h_0$, so
+        $\vec w\cdot{P^{\vec\pi}}(h_0)=0$.
+        By Definition \ref{pullbackdef},
+        $P^\pi(h)=P^\pi(h_0)\pi(y_0|h_0)=0$
+        and $P^{\vec w\cdot\vec\pi}(h)=0(\vec w\cdot\vec\pi)(y_0|h_0)=0$.
+        So $P^\pi(h)=0$ iff $P^{\vec w\cdot\vec\pi}(h)=0$.
 
-\textit{In this section, we present the detailed proof of Lemma 3 and then [ ... ]}
+        Subcase 2.2: $P^\pi(h_0)\not=0$.
+        Then
+        \begin{align*}
+            P^{\vec w\cdot \vec\pi}(h)
+                &= \vec w\cdot{P^{\vec\pi}}(h)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+                &= w_1 P^\pi(h)+\cdots+w_n P^\pi(h)
+                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
+                &= P^\pi(h)
+                    &\mbox{($w_1+\cdots+w_n=1$)}\\
+                &= P^\pi(h_0)\pi(y_0|h_0).
+                    &\mbox{(Definition \ref{pullbackdef})}
+        \end{align*}
+        Since $P^\pi(h_0)\not=0$,
+        by the null-factor law,
+        it follows that
+        $P^{\vec w\cdot\vec\pi}(h)=0$ iff $P^\pi(h)=0$ iff $\pi(y_0|h_0)=0$.
 
-\section{ADDITIONAL EXPERIMENTS}
+    Case 3: $h=h_0x$ for some $h_0\in (\mathcal E\mathcal A)^*$,
+        $x\in\mathcal E$.
+        By induction, conditions 1 and 2 hold for $h_0$.
+        By Definition \ref{pullbackdef},
+        $P^\pi(h)=P^\pi(h_0)$ and
+        $P^{\vec w\cdot\vec\pi}(h)=P^{\vec w\cdot\vec\pi}(h_0)$,
+        so condition 1 for $h$ follows.
 
-If you have additional experimental results, you may include them in the supplementary materials.
+        For condition 2,
+        assume $P^\pi(h)\not=0$ and let $y\in\mathcal A$.
+        By choice of $\vec w$ and $\vec\pi$,
+        $\vec w\cdot{P^{\vec\pi}}(h)=w_1P^\pi(h)+\cdots+w_nP^\pi(h)=P^\pi(h)$.
+        So, since $P^\pi(h)\not=0$, $\vec w\cdot{P^{\vec\pi}}(h)\not=0$.
+        Thus
+        \begin{align*}
+            (\vec w\cdot\vec\pi)(y|h)
+                &= \frac{\vec w\cdot {P^{\vec\pi}}(hy)}{\vec w\cdot{P^{\vec\pi}}(h)}
+                    &\mbox{(Definition \ref{maindefn})}\\
+                &= \frac{w_1P^\pi(hy)+\cdots+w_nP^\pi(hy)}
+                    {w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
+                    &\mbox{(Def.\ of $\vec w$ and $\vec\pi$)}\\
+                &= \frac{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}{w_1P^\pi(h)+\cdots+w_nP^\pi(h)}
+                    \pi(y|h)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= \pi(y|h).
+        \end{align*}
+\end{proof}
 
-\subsection{The Effect of Regularization Parameter}
-
-\textit{Our algorithm depends on the regularization parameter $\lambda$. Figure 1 below illustrates the effect of this parameter on the performance of our algorithm. As we can see, [ ... ]}
-
-\vfill
+\begin{proof}[Proof of Lemma \ref{reflectionmakesjanuslemma}]
+    Let $\vec w=(\frac12,\frac12)$.
+    For any $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $y\in\mathcal A$,
+    we claim
+    \[
+        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
+        =(\vec w\cdot(\pi,\overline{\pi}))(y|h).
+    \]
+    Noting that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\frac12P^\pi(h)+\frac12P^{\overline\pi}(h)$
+    and
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)
+    =\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)$,
+    Lemmas \ref{doublenegationlemma} and \ref{asteriskcommuteswithoverlinelemma}
+    imply that
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)$.
+    So if
+    $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)=0$
+    then $\vec w\cdot P^{(\pi,\overline{\pi})}(h)=0$
+    and it follows from
+    Definition \ref{maindefn}
+    and Lemma \ref{asteriskcommuteswithoverlinelemma} that
+    $\overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
+    =(\vec w\cdot(\pi,\overline{\pi}))(y|h)=1/|\mathcal A|$.
+    So assume $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)\not=0$.
+    Then:
+    \begin{align*}
+        \overline{\vec w\cdot(\pi,\overline{\pi})}(y|h)
+        &= (\vec w\cdot(\pi,\overline{\pi}))(y|\overline h)
+            &\mbox{(Definition \ref{dualagentsdefn})}\\
+        &= \frac
+            {\frac12P^\pi(\overline hy)+\frac12P^{\overline\pi}(\overline hy)}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= \frac
+            {\frac12P^\pi(\overline{hy})+\frac12P^{\overline\pi}(\overline{hy})}
+            {\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)}
+            &\mbox{(Clearly $\overline hy=\overline{hy}$)}\\
+        &= \frac
+            {\frac12P^{\overline\pi}(hy)+\frac12P^{\overline{\overline\pi}}(hy)}
+            {\frac12P^{\overline\pi}(h)+\frac12P^{\overline{\overline\pi}}(h)}
+            &\mbox{(Lemma \ref{asteriskcommuteswithoverlinelemma})}\\
+        &= (\vec w\cdot(\overline{\overline\pi},\overline\pi))(y|h)
+            &\mbox{(Definition \ref{maindefn})}\\
+        &= (\vec w\cdot(\pi,\overline\pi))(y|h).
+            &\mbox{(Lemma \ref{doublenegationlemma})}
+    \end{align*}
+\end{proof}
 
 \end{document}
