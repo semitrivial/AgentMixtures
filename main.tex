@@ -1034,90 +1034,6 @@ We will state a partial converse making use of mixtures.
     Trivial.
 \end{proof}
 
-The following three lemmas are technical lemmas needed to prove
-some interesting results.
-
-\begin{lemma}
-\label{firsttechlemmaforgenericity}
-    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Let $h\in\mathcal H$ be such that
-    for every $y\in\mathcal A$,
-    $h_0y$ is not an initial segment of $h$.
-    Then $P^{\pi^{h_0\mapsto m}}(h)=P^\pi(h)$.
-\end{lemma}
-
-\begin{proof}
-    By induction on $h$.
-\end{proof}
-
-\begin{lemma}
-\label{thirdtechlemmaforgenericity}
-    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    For any $y\in\mathcal A$,
-    $P^{\pi^{h_0\mapsto m}}(h_0y)=P^\pi(h_0)m(y)$.
-\end{lemma}
-
-\begin{proof}
-    Immediate by Definition \ref{pullbackdef} and Lemma \ref{firsttechlemmaforgenericity}.
-\end{proof}
-
-\begin{lemma}
-\label{secondtechlemmaforgenericity}
-    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
-    Assume $h\in\mathcal H$, $y_0\in\mathcal A$, and $h_0y_0$ is
-    an initial segment of $h$. Assume $\pi(y_0|h_0)\not=0$. Then
-    $P^{\pi^{h_0\mapsto m}}(h) = \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}$.
-\end{lemma}
-
-\begin{proof}
-    By induction on $h$.
-
-    Case 1: $h=h_0y_0$. Then
-    \begin{align*}
-        P^{\pi^{h_0\mapsto m}}(h)
-        &= P^{\pi^{h_0\mapsto m}}(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
-            &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-        &= P^\pi(h_0)m(y_0)
-            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= P^\pi(h_0)\pi(y_0|h_0)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Basic Algebra)}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
-            &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-
-    Case 2: $h=h_0 y_0 h_1 x$ for some $h_1\in\mathcal H$
-        and $x\in\mathcal E$. Then
-    \begin{align*}
-        P^{\pi^{h_0\mapsto m}}(h)
-        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Induction)}\\
-        &= P^\pi(h_0 a_0 h_1 x)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
-    \end{align*}
-
-    Case 3: $h=h_0 y_0 h_1 y$ for some $h_1\in\mathcal H$ and
-        $y\in\mathcal A$. Then
-    \begin{align*}
-        P^{\pi^{h_0\mapsto m}}(h)
-        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
-            \pi^{h_0\mapsto m}(y|h_0 y_0 h_1)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
-            \pi(y|h_0 a h_1)
-            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= P^\pi(h_0 y_0 h_1)\pi(y|h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Induction)}\\
-        &= P^\pi(h_0 y_0 h_1 y)m(y_0)\div\pi(y_0|h_0)
-            &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
-    \end{align*}
-\end{proof}
-
 \begin{definition}
 \label{sumofdistros}
     Suppose $\vec m=(m_1,\ldots,m_n)$ are probability distributions on $\mathcal A$
@@ -1130,28 +1046,13 @@ some interesting results.
 \end{definition}
 
 \begin{lemma}
+\label{wcdotmisaprobabilitydistro}
     If $\vec m$, $\vec w$ are as in Definition \ref{sumofdistros}
     then $\vec w\cdot\vec m$ is a probability distribution on $\mathcal A$.
 \end{lemma}
 
 \begin{proof}
-    Clearly for every $y\in\mathcal A$,
-    $(\vec w\cdot\vec m)(y) = w_1m_1(y) + \cdots + w_nm_n(y)$ is a nonnegative
-    real. It remains to show $\sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)=1$.
-    We compute:
-    \begin{align*}
-        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)\\
-        &=
-        \sum_{y\in\mathcal A} w_1m_1(y) + \cdots + w_nm_n(y)
-            &\mbox{(Definition \ref{sumofdistros})}\\
-        &=
-        w_1\left(\sum_{y\in\mathcal A} m_1(y)\right)
-        + \cdots + w_n\left(\sum_{y\in\mathcal A}m_n(y)\right)
-            &\mbox{(Basic Algebra)}\\
-        &= w_1 + \cdots + w_n
-            &\mbox{($m_1,\ldots,m_n$ are probability distr's)}\\
-        &= 1.
-    \end{align*}
+    See Appendix.
 \end{proof}
 
 \begin{definition}
@@ -1181,105 +1082,7 @@ $\pi^{h\mapsto \vec m}$.
 \end{proposition}
 
 \begin{proof}
-    \textbf{Subclaim:}For every $g\in\mathcal H$,
-    $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
-    We prove this by induction on $g$.
-
-    Case 1: $g=\varepsilon$.
-    Then $P^\pi(g)=1
-    =P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
-
-    Case 2: $g=fx$ for some $x\in\mathcal E$.
-    Then
-    \begin{align*}
-        P^\pi(g)
-            &= P^\pi(f)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
-                &\mbox{(Induction)}\\
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g).
-                &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-
-    Case 3: $g=fy$ for some $y\in\mathcal A$.
-
-    Subcase 3.1: $P^\pi(f)=0$.
-    Then
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
-            (\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= P^\pi(f)(\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
-                &\mbox{(Induction)}\\
-            &= 0.
-    \end{align*}
-    Similarly, $P^\pi(g)=0$. So $P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)=P^\pi(g)$.
-
-    Subcase 3.2: $P^\pi(f)\not=0$ and $f=h$. Then:
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(hy)\\
-            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(hy)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1P^\pi(h)m_1(y)+\cdots+w_nP^\pi(h)m_n(y)
-                    &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
-            &= P^\pi(h)\pi(y|h)
-                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
-            &= P^\pi(hy) = P^\pi(g).
-                    &\mbox{(Definition \ref{pullbackdef})}
-    \end{align*}
-
-    Subcase 3.3: $P^\pi(f)\not=0$, $f\not=h$, and
-    $f$ has an initial segment $h y_0$ ($y_0\in\mathcal A$).
-
-    Then $\pi(y_0|h)\not=0$, lest
-    we would have $P^\pi(f)=0$. Thus:
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot \pi^{h\mapsto \vec m}}(fy)\\
-            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1\frac{P^\pi(fy)m_1(y_0)}{\pi(y_0|h)}
-                +\cdots+w_n\frac{P^\pi(fy)m_n(y_0)}{\pi(y_0|h)}
-                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
-            &= \frac{P^\pi(fy)}{\pi(y_0|h)}(w_1m_1(y_0)+\cdots+w_nm_n(y_0))
-                    &\mbox{(Basic Algebra)}\\
-            &= \frac{P^\pi(fy)}{\pi(y_0|h)}\pi(y_0|h)
-                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
-            &= P^\pi(fy) = P^\pi(g).
-    \end{align*}
-
-    Subcase 3.4: $P^\pi(f)\not=0$, $f\not=h$, and $f$ has no initial segment
-        of the form $hy_0$. Then:
-    \begin{align*}
-        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
-            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(fy)\\
-            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
-                    &\mbox{(Theorem \ref{maintheorem})}\\
-            &= w_1P^\pi(fy)+\cdots+w_nP^\pi(fy)
-                    &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
-            &= P^\pi(fy) = P^\pi(g),
-                    &\mbox{($w_1+\cdots+w_n=1$)}
-    \end{align*}
-    as desired.
-
-    This finishes the proof of the Subclaim.
-    By Lemma \ref{factorizationlemma}, the Subclaim implies
-    that for every well-behaved $\mu$ and every $g\in\mathcal H$,
-    $
-    P^\pi_\mu(g)
-    =
-    P^{\vec w\cdot\pi^{h\mapsto \vec m}}_\mu(g)
-    $.
-    By Definition \ref{performancedefn} (part 1), this implies that
-    for every well-behaved $\mu$ and every $t\in\mathbb N$,
-    $
-        V^{\pi}_{\mu,t}
-        =
-        V^{\vec w\cdot \pi^{h\mapsto \vec m}}_{\mu,t}.
-    $
-    The proposition follows by Definition \ref{performancedefn} (part 2).
+    See Appendix.
 \end{proof}
 
 \begin{definition}
@@ -1950,6 +1753,211 @@ without proof.
         &= (\vec w\cdot(\pi,\overline\pi))(y|h).
             &\mbox{(Lemma \ref{doublenegationlemma})}
     \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{wcdotmisaprobabilitydistro}]
+    Clearly for every $y\in\mathcal A$,
+    $(\vec w\cdot\vec m)(y) = w_1m_1(y) + \cdots + w_nm_n(y)$ is a nonnegative
+    real. It remains to show $\sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)=1$.
+    We compute:
+    \begin{align*}
+        &{} \sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)\\
+        &=
+        \sum_{y\in\mathcal A} w_1m_1(y) + \cdots + w_nm_n(y)
+            &\mbox{(Definition \ref{sumofdistros})}\\
+        &=
+        w_1\left(\sum_{y\in\mathcal A} m_1(y)\right)
+        + \cdots + w_n\left(\sum_{y\in\mathcal A}m_n(y)\right)
+            &\mbox{(Basic Algebra)}\\
+        &= w_1 + \cdots + w_n
+            &\mbox{($m_1,\ldots,m_n$ are probability distr's)}\\
+        &= 1.
+    \end{align*}
+\end{proof}
+
+The following auxiliary lemmas will be used in our proof of Lemma \ref{...}
+
+\begin{lemma}
+\label{firsttechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    Let $h\in\mathcal H$ be such that
+    for every $y\in\mathcal A$,
+    $h_0y$ is not an initial segment of $h$.
+    Then $P^{\pi^{h_0\mapsto m}}(h)=P^\pi(h)$.
+\end{lemma}
+
+\begin{proof}
+    By induction on $h$.
+\end{proof}
+
+\begin{lemma}
+\label{thirdtechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    For any $y\in\mathcal A$,
+    $P^{\pi^{h_0\mapsto m}}(h_0y)=P^\pi(h_0)m(y)$.
+\end{lemma}
+
+\begin{proof}
+    Immediate by Definition \ref{pullbackdef} and Lemma \ref{firsttechlemmaforgenericity}.
+\end{proof}
+
+\begin{lemma}
+\label{secondtechlemmaforgenericity}
+    Suppose $\pi$, $h_0$, $m$ are as in Definition \ref{modifyagentatoneplace}.
+    Assume $h\in\mathcal H$, $y_0\in\mathcal A$, and $h_0y_0$ is
+    an initial segment of $h$. Assume $\pi(y_0|h_0)\not=0$. Then
+    $P^{\pi^{h_0\mapsto m}}(h) = \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}$.
+\end{lemma}
+
+\begin{proof}
+    By induction on $h$.
+
+    Case 1: $h=h_0y_0$. Then
+    \begin{align*}
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= P^\pi(h_0)\pi^{h_0\mapsto m}(y_0|h_0)
+            &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+        &= P^\pi(h_0)m(y_0)
+            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
+        &= P^\pi(h_0)\pi(y_0|h_0)m(y_0)\div\pi(y_0|h_0)
+            &\mbox{(Basic Algebra)}\\
+        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
+            &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Case 2: $h=h_0 y_0 h_1 x$ for some $h_1\in\mathcal H$
+        and $x\in\mathcal E$. Then
+    \begin{align*}
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= P^\pi(h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
+            &\mbox{(Induction)}\\
+        &= P^\pi(h_0 a_0 h_1 x)m(y_0)\div\pi(y_0|h_0)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
+    \end{align*}
+
+    Case 3: $h=h_0 y_0 h_1 y$ for some $h_1\in\mathcal H$ and
+        $y\in\mathcal A$. Then
+    \begin{align*}
+        P^{\pi^{h_0\mapsto m}}(h)
+        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
+            \pi^{h_0\mapsto m}(y|h_0 y_0 h_1)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
+            \pi(y|h_0 a h_1)
+            &\mbox{(Definition \ref{modifyagentatoneplace})}\\
+        &= P^\pi(h_0 y_0 h_1)\pi(y|h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
+            &\mbox{(Induction)}\\
+        &= P^\pi(h_0 y_0 h_1 y)m(y_0)\div\pi(y_0|h_0)
+            &\mbox{(Definition \ref{pullbackdef})}\\
+        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
+    \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{longproposition}]
+    \textbf{Subclaim:}For every $g\in\mathcal H$,
+    $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
+    We prove this by induction on $g$.
+
+    Case 1: $g=\varepsilon$.
+    Then $P^\pi(g)=1
+    =P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
+
+    Case 2: $g=fx$ for some $x\in\mathcal E$.
+    Then
+    \begin{align*}
+        P^\pi(g)
+            &= P^\pi(f)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
+                &\mbox{(Induction)}\\
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g).
+                &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Case 3: $g=fy$ for some $y\in\mathcal A$.
+
+    Subcase 3.1: $P^\pi(f)=0$.
+    Then
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(f)
+            (\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
+                &\mbox{(Definition \ref{pullbackdef})}\\
+            &= P^\pi(f)(\vec w\cdot\pi^{h\mapsto \vec m})(y|f)
+                &\mbox{(Induction)}\\
+            &= 0.
+    \end{align*}
+    Similarly, $P^\pi(g)=0$. So $P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)=P^\pi(g)$.
+
+    Subcase 3.2: $P^\pi(f)\not=0$ and $f=h$. Then:
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(hy)\\
+            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(hy)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+            &= w_1P^\pi(h)m_1(y)+\cdots+w_nP^\pi(h)m_n(y)
+                    &\mbox{(Lemma \ref{thirdtechlemmaforgenericity})}\\
+            &= P^\pi(h)\pi(y|h)
+                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
+            &= P^\pi(hy) = P^\pi(g).
+                    &\mbox{(Definition \ref{pullbackdef})}
+    \end{align*}
+
+    Subcase 3.3: $P^\pi(f)\not=0$, $f\not=h$, and
+    $f$ has an initial segment $h y_0$ ($y_0\in\mathcal A$).
+
+    Then $\pi(y_0|h)\not=0$, lest
+    we would have $P^\pi(f)=0$. Thus:
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot \pi^{h\mapsto \vec m}}(fy)\\
+            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+            &= w_1\frac{P^\pi(fy)m_1(y_0)}{\pi(y_0|h)}
+                +\cdots+w_n\frac{P^\pi(fy)m_n(y_0)}{\pi(y_0|h)}
+                    &\mbox{(Lemma \ref{secondtechlemmaforgenericity})}\\
+            &= \frac{P^\pi(fy)}{\pi(y_0|h)}(w_1m_1(y_0)+\cdots+w_nm_n(y_0))
+                    &\mbox{(Basic Algebra)}\\
+            &= \frac{P^\pi(fy)}{\pi(y_0|h)}\pi(y_0|h)
+                    &\mbox{($\vec w\cdot\vec m=\pi(\cdot|h)$)}\\
+            &= P^\pi(fy) = P^\pi(g).
+    \end{align*}
+
+    Subcase 3.4: $P^\pi(f)\not=0$, $f\not=h$, and $f$ has no initial segment
+        of the form $hy_0$. Then:
+    \begin{align*}
+        P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)
+            &= P^{\vec w\cdot\pi^{h\mapsto \vec m}}(fy)\\
+            &= \vec w\cdot{P^{\pi^{h\mapsto \vec m}}}(fy)
+                    &\mbox{(Theorem \ref{maintheorem})}\\
+            &= w_1P^\pi(fy)+\cdots+w_nP^\pi(fy)
+                    &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
+            &= P^\pi(fy) = P^\pi(g),
+                    &\mbox{($w_1+\cdots+w_n=1$)}
+    \end{align*}
+    as desired.
+
+    This finishes the proof of the Subclaim.
+    By Lemma \ref{factorizationlemma}, the Subclaim implies
+    that for every well-behaved $\mu$ and every $g\in\mathcal H$,
+    $
+    P^\pi_\mu(g)
+    =
+    P^{\vec w\cdot\pi^{h\mapsto \vec m}}_\mu(g)
+    $.
+    By Definition \ref{performancedefn} (part 1), this implies that
+    for every well-behaved $\mu$ and every $t\in\mathbb N$,
+    $
+        V^{\pi}_{\mu,t}
+        =
+        V^{\vec w\cdot \pi^{h\mapsto \vec m}}_{\mu,t}.
+    $
+    The proposition follows by Definition \ref{performancedefn} (part 2).
 \end{proof}
 
 \end{document}
