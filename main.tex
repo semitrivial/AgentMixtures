@@ -265,10 +265,10 @@ Some authors, such as \cite{hutter2009discrete}, would write $P(h)$ or a variati
 for $P^\pi_\mu$, provided $\pi$ and $\mu$ are clear from context.
 
 One could alternately more directly define
-\[
-    P^\pi(x_1y_1\ldots x_ty_t)
-    = \pi(y_1|x_1)\pi(y_2|x_1y_1x_2)\cdots \pi(y_t|x_1y_1\ldots x_t),
-\]
+\begin{align*}
+    {} & P^\pi(x_1y_1\ldots x_ty_t)\\
+    &= \pi(y_1|x_1)\pi(y_2|x_1y_1x_2)\cdots \pi(y_t|x_1y_1\ldots x_t),
+\end{align*}
 and similarly define $P^\pi(x_1y_1\ldots x_t)$,
 and likewise for $P_\mu$ and for $P^\pi_\mu$.
 
@@ -489,11 +489,14 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
 \end{theorem}
 
 \begin{proof}
-    (1) By induction on $h$ (using Lemma \ref{trivialinductionlemma}).
+    (1) By induction on $h$.
 
     Case 1: $h=\varepsilon$. Then
-    $P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
-    =\vec w\cdot ({P^{\vec\pi}}(h))$.
+    \[
+        P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
+        =
+        \vec w\cdot ({P^{\vec\pi}}(h)).
+    \]
 
     Case 2: $h=gx$ for some $x\in\mathcal E$. Then
     \begin{align*}
@@ -556,20 +559,20 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
     \begin{align*}
         V^{\vec w\cdot\vec\pi}_{\mu,t}
             &= \mbox{$\sum_{h\in X_t}R(h)P^{\vec w\cdot\vec\pi}_\mu(h)$}
-                &\mbox{(Definition \ref{performancedefn})}\\
+                &\mbox{(Def.\ \ref{performancedefn})}\\
             &= \mbox{$\sum_{h\in X_t}\vec w\cdot R(h)P^{\vec\pi}_\mu(h)$}
                 &\mbox{(By (2))}\\
             &= \mbox{$\vec w\cdot \sum_{h\in X_t}R(h)P^{\vec\pi}_\mu(h)$}
-                &\mbox{(Vector algebra)}\\
-            &= \mbox{$\vec w\cdot
+                &\mbox{(Vect.\ algebra)}\\
+            &= \mbox{$
+                \vec w\cdot
                 \left(
                     \sum_{h\in X_t}R(h)P^{\pi_1}_\mu(h)
-                    ,...,
-                    \sum_{h\in X_t}R(h)P^{\pi_n}_\mu(h)
-                \right)$}
-                &\mbox{(Definition \ref{vectorizationdefn} part 2)}
+                \right)_{i=1}^n
+                $}
+                &\mbox{(Def.\ \ref{vectorizationdefn} part 2)}\\
             &= \vec w\cdot V^{\vec\pi}_{\mu,t}.
-                &\mbox{(Definition \ref{vectorizationdefn} part 3)}
+                &\mbox{(Def.\ \ref{vectorizationdefn} part 3)}
     \end{align*}
 
     (4) Follows from (3) and Definition \ref{performancedefn} part 2.
@@ -1396,7 +1399,7 @@ without proof.
             &= \lim_{t\to\infty} w\cdot V^\pi_{S,t}
                 &\mbox{(By (3))}\\
             &= \lim_{t\to\infty} \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
             &= \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}.
     \end{align*}
     For each $k\in\mathbb N$, define $M_k\in\mathbb R$ and $a_k:\mathbb N\to\mathbb R$
@@ -1408,13 +1411,14 @@ without proof.
     by Definition \ref{swbperformanceaveragerdefn}.
     By Tannery's Theorem (Lemma \ref{tannerysthm}),
     \begin{align*}
-        \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}
-            &= \sum_{k=0}^\infty\lim_{t\to\infty} w(\mu_k)V^\pi_{\mu_k,t}\\
+        &{} \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}\\
+            &= \sum_{k=0}^\infty\lim_{t\to\infty} w(\mu_k)V^\pi_{\mu_k,t}
+                &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
             &= \sum_{k=0}^\infty w(\mu_k)\lim_{t\to\infty} V^\pi_{\mu_k,t}
                 &\mbox{(Algebra)}\\
             &= \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k}
                 &\mbox{(Definition \ref{performancedefn})}\\
-            &= \sum_{\mu\in S} w(\mu)V^\pi_{\mu_k}
+            &= \sum_{\mu\in S} w(\mu)V^\pi_{\mu}
                 &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
             &= w\cdot V^\pi_{S}.
                 &\mbox{(Definition \ref{infinitedimdotproductdefn})}
@@ -1700,9 +1704,9 @@ The following auxiliary lemmas will be used in our proof of Lemma \ref{...}
             &\mbox{(Lemma \ref{firsttechlemmaforgenericity})}\\
         &= P^\pi(h_0)m(y_0)
             &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= P^\pi(h_0)\pi(y_0|h_0)m(y_0)\div\pi(y_0|h_0)
+        &= \frac{P^\pi(h_0)\pi(y_0|h_0)m(y_0)}{\pi(y_0|h_0)}
             &\mbox{(Basic Algebra)}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
+        &= \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}.
             &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
@@ -1712,11 +1716,11 @@ The following auxiliary lemmas will be used in our proof of Lemma \ref{...}
         P^{\pi^{h_0\mapsto m}}(h)
         &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
+        &= \frac{P^\pi(h_0 y_0 h_1)m(y_0)}{\pi(y_0|h_0)}
             &\mbox{(Induction)}\\
-        &= P^\pi(h_0 a_0 h_1 x)m(y_0)\div\pi(y_0|h_0)
+        &= \frac{P^\pi(h_0 a_0 h_1 x)m(y_0)}{\pi(y_0|h_0)}
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
+        &= \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}.
     \end{align*}
 
     Case 3: $h=h_0 y_0 h_1 y$ for some $h_1\in\mathcal H$ and
@@ -1729,11 +1733,11 @@ The following auxiliary lemmas will be used in our proof of Lemma \ref{...}
         &= P^{\pi^{h_0\mapsto m}}(h_0 y_0 h_1)
             \pi(y|h_0 a h_1)
             &\mbox{(Definition \ref{modifyagentatoneplace})}\\
-        &= P^\pi(h_0 y_0 h_1)\pi(y|h_0 y_0 h_1)m(y_0)\div\pi(y_0|h_0)
+        &= \frac{P^\pi(h_0 y_0 h_1)\pi(y|h_0 y_0 h_1)m(y_0)}{\pi(y_0|h_0)}
             &\mbox{(Induction)}\\
-        &= P^\pi(h_0 y_0 h_1 y)m(y_0)\div\pi(y_0|h_0)
+        &= \frac{P^\pi(h_0 y_0 h_1 y)m(y_0)}{\pi(y_0|h_0)}
             &\mbox{(Definition \ref{pullbackdef})}\\
-        &= P^\pi(h)m(y_0)\div\pi(y_0|h_0).
+        &= \frac{P^\pi(h)m(y_0)}{\pi(y_0|h_0)}.
     \end{align*}
 \end{proof}
 
