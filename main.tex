@@ -50,11 +50,14 @@
 %\maketitle
 ]
 
+%NOTE: " weighted linear " is kind of repetitive as linear implies weighted by default
+
 \begin{abstract}
-    We introduce a weighted mixture operation on
-    reinforcement learning agents. The mixture of several weighted agents is
-    an agent with the
-    following property: the expected total reward the mixture agent
+    In this work, we investigate the crowd intelligence and collective behaviour
+    of theoretical intelligent agents by
+    introducing a weighted linear mixture operation on universal
+    reinforcement learning agents. The weighted linear mixture of multiple agents leads to the
+    following result: the expected total reward the mixture agent
     gets in any environment is the corresponding weighted average
     of the expected total rewards the original agents get in that
     environment. We use mixture agents to formalize and
@@ -113,8 +116,12 @@ framework has no mechanism for such an agent $\sigma$. We will define
 an agent $\vec{w}\cdot\vec{\pi}$, called a \emph{mixture agent},
 within the constraints
 of the RL framework, and prove that ``the expected total reward of the
-weighted mixture is the weighted average of the expected total rewards''.
-We will then use this mixture operation to prove a number of interesting results.
+weighted linear mixture is the linear combination of the expected total rewards''.
+%We will then use this mixture operation to prove a number of interesting results.
+This linearity result then leads to multiple further interesting results, of which the following we also discuss in this paper.
+\begin{itemize}
+    \item (((List the other results here)))
+\end{itemize}
 
 \section{Preliminaries}
 
