@@ -53,22 +53,25 @@
 %NOTE: " weighted linear " is kind of repetitive as linear implies weighted by default
 
 \begin{abstract}
-    Inspired by recent progress in multiagent reinforcement learning,
+    Inspired by recent progress in multi-agent Reinforcement Learning (RL),
     in this work we examine the collective intelligent behaviour
     of theoretical universal agents by
-    introducing a weighted linear mixture operation on them.
-    The operation leads to the
-    following result: the expected total reward the mixture agent
-    receives in any environment is the corresponding weighted average
-    of the expected total rewards the original agents receive in that
-    environment.
-    Beyond formalizing and
-    strengthening a previous informal result of Alexander and Hutter (((Is this appropriate for double-blind???))), this result
-    enables
-    various other interesting new theorems. Considering the set of agents
-    as a subspace of the Hilbert cube, these theorems shed
-    light on the geometric shape of weighted-average-performance
-    hypersurfaces defined on that subspace.
+    introducing a weighted mixture operation.
+    Given a weighted set of agents,
+    their weighted mixture is a new agent whose expected total reward in any environment
+    is the corresponding weighted average
+    of the original agents' expected total rewards in that environment.
+    Thus, if RL agent intelligence is quantified in terms of performance across
+    environments, the weighted mixture's intelligence is the weighted average of
+    the original agents' intelligence.
+    This operation enables
+    various interesting new theorems that shed light on the geometry of RL
+    agent intelligence, namely: results about symmetries, convex agent-sets,
+    and local extrema. We also show that any RL agent intelligence measure
+    based on average performance across environments, subject to certain
+    weak technical conditions, is identical (up to a constant factor) to
+    performance within a single environment dependent on said intelligence
+    measure.
 \end{abstract}
 
 \section{Introduction}
