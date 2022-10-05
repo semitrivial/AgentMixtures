@@ -53,22 +53,40 @@
 %NOTE: " weighted linear " is kind of repetitive as linear implies weighted by default
 
 \begin{abstract}
-    In this work, we investigate the crowd intelligence and collective behaviour
-    of theoretical intelligent agents by
-    introducing a weighted linear mixture operation on universal
-    reinforcement learning agents. The weighted linear mixture of multiple agents leads to the
-    following result: the expected total reward the mixture agent
-    gets in any environment is the corresponding weighted average
-    of the expected total rewards the original agents get in that
-    environment. We use mixture agents to formalize and
-    strengthen an informal result of Alexander and Hutter and to prove
-    various other interesting new theorems. Considering the set of agents
-    as a subspace of the Hilbert cube, these theorems shed
-    light on the geometric shape of weighted-average-performance
-    hypersurfaces defined on that subspace.
+    Inspired by recent progress in multi-agent Reinforcement Learning (RL),
+    in this work we examine the collective intelligent behaviour
+    of theoretical universal agents by
+    introducing a weighted mixture operation.
+    Given a weighted set of agents,
+    their weighted mixture is a new agent whose expected total reward in any environment
+    is the corresponding weighted average
+    of the original agents' expected total rewards in that environment.
+    Thus, if RL agent intelligence is quantified in terms of performance across
+    environments, the weighted mixture's intelligence is the weighted average of
+    the original agents' intelligence.
+    This operation enables
+    various interesting new theorems that shed light on the geometry of RL
+    agent intelligence, namely: results about symmetries, convex agent-sets,
+    and local extrema. We also show that any RL agent intelligence measure
+    based on average performance across environments, subject to certain
+    weak technical conditions, is identical (up to a constant factor) to
+    performance within a single environment dependent on said intelligence
+    measure.
 \end{abstract}
 
 \section{Introduction}
+
+Multi-agent reinforcement learning, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research.
+Both further promises and challenges have been frequented, particularly signified by the
+high-profile attempt at replicating the triumph of AI game-playing at more complex realtime video games \cite{nature-starcraft}
+than previous well-known AI game-playing achievements based on deep reinforcement learning \cite{nature-ATARI,nature-go-2}.
+
+Not very surprisingly, collaboration of agents is a popular topic within multiagent reinforcement learning.
+In fact, collaboration of artificial intelligence, or that between human and artificial intelligence, has attracted ample attention even without reinforcement learning.
+
+As our result is derived from a very general and abstract definition of intelligence, it applies not only to collaboration among artificial intelligent agents, but also between human as intelligent agents and artificial ones.
+
+Another close related concept is the collective behavior of intelligent agents.
 
 In reinforcement learning (RL), an agent $\pi$ interacts with an environment $\mu$.
 The agent and the environment take turns.
