@@ -228,56 +228,29 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
 
 \begin{definition}
 \label{pullbackdef}
-    \begin{enumerate}
+    For all agents $\pi$, histories $h$, and environments $\mu$,
+    we define real numbers $\Pi^\pi(h)$, $\Pi_\mu(h)$, and $\Pi^\pi_\mu(h)$
+    inductively as follows.
+    \begin{itemize}
         \item
-        For every agent $\pi$, for every $h\in\mathcal H$, we define a real number
-        $P^\pi(h)\in[0,1]$ as follows.
-        \begin{itemize}
-            \item
-            If $h=\varepsilon$ then $P^\pi(h)=1$.
-            \item
-            If $h=gx$ for some $x\in\mathcal E$ then $P^\pi(h)=P^\pi(g)$.
-            \item
-            If $h=gy$ for some $y\in\mathcal A$ then $P^\pi(h)=P^\pi(g)\pi(y|g)$.
-        \end{itemize}
-        The intended intuition is that $P^\pi(h)$ can be thought of as the
-        conditional probability that when $\pi$
-        and any environment
-        $\mu$ interact, the interaction will begin with initial segment
-        $h$, \emph{assuming}
-        that $\mu$ produces the percepts in $h$.
+        If $h=\varepsilon$ then $P^\pi(h)=P_\mu(h)=P^\pi_\mu(h)=1$.
         \item
-        For every environment $\mu$, for every $h\in\mathcal H$, we define a real number
-        $P_\mu(h)\in[0,1]$ as follows.
-        \begin{itemize}
-            \item
-            If $h=\varepsilon$ then $P_\mu(h)=1$.
-            \item
-            If $h=gx$ for some $x\in\mathcal E$ then $P_\mu(h)=P_\mu(g)\mu(x|g)$.
-            \item
-            If $h=gy$ for some $y\in\mathcal A$ then $P_\mu(h)=P_\mu(g)$.
-        \end{itemize}
-        The intended intuition is that $P_\mu(h)$ can be thought of as the
-        conditional probability that when any agent $\pi$ and $\mu$ interact,
-        the interaction will begin with initial segment $h$, \emph{assuming} that
-        $\pi$ produces the actions in $h$.
+        If $h=gx$ (some $x\in\mathcal E$) then
+        $P^\pi(h)=P^\pi(g)$, $P_\mu(h)=P_\mu(g)\mu(x|g)$,
+        and $P^\pi_\mu(h)=P^\pi_\mu(g)\mu(x|g)$.
         \item
-        For every agent $\pi$, environment $\mu$, and $h\in\mathcal H$, we define a
-        real number $P^\pi_\mu(h)\in[0,1]$ by induction as follows.
-        \begin{itemize}
-            \item
-            If $h=\varepsilon$ then $P^\pi_\mu(h)=1$.
-            \item
-            If $h=gx$ for some $x\in\mathcal E$ then
-            $P^\pi_\mu(h)=P^\pi_\mu(g)\mu(x|g)$.
-            \item
-            If $h=gy$ for some $y\in\mathcal A$ then
-            $P^\pi_\mu(h)=P^\pi_\mu(g)\pi(y|g)$.
-        \end{itemize}
-        The intended intuition is that $P^\pi_\mu(h)$ can be thought of as
-        the probability that when $\pi$ and $\mu$ interact, the interaction
-        will begin with initial segment $h$.
-    \end{enumerate}
+        If $h=gy$ (some $y\in\mathcal A$) then
+        $P^\pi(h)=P^\pi(g)\pi(y|g)$, $P_\mu(h)=P_\mu(g)$,
+        and $P^\pi_\mu(h)=P^\pi_\mu(g)\pi(y|g)$.
+    \end{itemize}
+    Intuitively: $P^\pi(h)$ is the conditional
+    probability $\pi$ will choose the actions in $h$ assuming the
+    environment which $\pi$ is interacting with chooses the percepts in
+    $h$; $P_\mu(h)$ is the conditional probability $\mu$ will choose
+    the percepts in $h$ assuming the agent which $\mu$ is interacting
+    with chooses the actions in $h$; and $P^\pi_\mu(h)$ is the probability
+    that $\pi$ and $\mu$ will choose $h$'s actions and percepts when
+    interacting together.
 \end{definition}
 
 Some authors, such as \cite{hutter2009discrete}, would write $P(h)$ or a variation thereof
@@ -309,13 +282,13 @@ and likewise for $P_\mu$ and for $P^\pi_\mu$.
         \begin{align*}
             P^\pi_\mu(h)
                 &= P^\pi_\mu(g)\mu(x|g)
-                    &\mbox{(Definition \ref{pullbackdef} part 3)}\\
+                    &\mbox{(Definition \ref{pullbackdef})}\\
                 &= P^\pi(g)P_\mu(g)\mu(x|g)
                     &\mbox{(Induction)}\\
                 &= P^\pi(h)P_\mu(g)\mu(x|g)
-                    &\mbox{(Definition \ref{pullbackdef} part 1)}\\
+                    &\mbox{(Definition \ref{pullbackdef})}\\
                 &= P^\pi(h)P_\mu(h).
-                    &\mbox{(Definition \ref{pullbackdef} part 2)}
+                    &\mbox{(Definition \ref{pullbackdef})}
         \end{align*}
 
     Case 3: $h=gy$ for some $y\in\mathcal A$.
