@@ -273,26 +273,7 @@ and likewise for $P_\mu$ and for $P^\pi_\mu$.
 \end{lemma}
 
 \begin{proof}
-    By induction on $h$.
-
-    Case 1: $h=\varepsilon$. Then the lemma is trivial.
-
-    Case 2: $h=gx$ for some $x\in\mathcal E$.
-        Then
-        \begin{align*}
-            P^\pi_\mu(h)
-                &= P^\pi_\mu(g)\mu(x|g)
-                    &\mbox{(Definition \ref{pullbackdef})}\\
-                &= P^\pi(g)P_\mu(g)\mu(x|g)
-                    &\mbox{(Induction)}\\
-                &= P^\pi(h)P_\mu(g)\mu(x|g)
-                    &\mbox{(Definition \ref{pullbackdef})}\\
-                &= P^\pi(h)P_\mu(h).
-                    &\mbox{(Definition \ref{pullbackdef})}
-        \end{align*}
-
-    Case 3: $h=gy$ for some $y\in\mathcal A$.
-        Similar to Case 2.
+    See Appendix.
 \end{proof}
 
 In the following definition (and the rest of the paper),
@@ -1448,6 +1429,29 @@ without proof.
 \onecolumn
 
 \section*{Appendix}
+
+\begin{proof}[Proof of Lemma \ref{factorizationlemma}]
+    By induction on $h$.
+
+    Case 1: $h=\varepsilon$. Then the lemma is trivial.
+
+    Case 2: $h=gx$ for some $x\in\mathcal E$.
+        Then
+        \begin{align*}
+            P^\pi_\mu(h)
+                &= P^\pi_\mu(g)\mu(x|g)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= P^\pi(g)P_\mu(g)\mu(x|g)
+                    &\mbox{(Induction)}\\
+                &= P^\pi(h)P_\mu(g)\mu(x|g)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= P^\pi(h)P_\mu(h).
+                    &\mbox{(Definition \ref{pullbackdef})}
+        \end{align*}
+
+    Case 3: $h=gy$ for some $y\in\mathcal A$.
+        Similar to Case 2.
+\end{proof}
 
 \begin{proof}[Proof of Lemma \ref{mixturereallyisanagent}]
     Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
