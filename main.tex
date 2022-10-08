@@ -1130,6 +1130,25 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
 
 \section{Environment mixtures and universal environments}
 
+\begin{definition}
+\label{stronglywellbehaveddefn}
+    An environment $\mu$ is \emph{strongly well-behaved}
+    $\mu$ is well-behaved and for all agents $\pi$ and all
+    $t\in\mathbb N$, $-1\leq V^\pi_{\mu,t}\leq 1$.
+    A weighted intelligence measure $\Upsilon$ is \emph{strongly well-behaved}
+    if corresponding weights $\{w_\mu\}_{\mu\in W}$
+    (as in Definition \ref{performanceaveragerdefn}) exist such that
+    $\sum_{\mu\in W}w_\mu=1$ and such that
+    $w_\mu=0$ for all $\mu$ not strongly well-behaved (informally: the weights
+    underlying $\Upsilon$ add up to $1$, and any environment that is not strongly
+    well-behaved has weight $0$).
+\end{definition}
+
+We will show (Theorem \ref{universalenvtheorem} below)
+that for every strongly well-behaved $\Upsilon$,
+there is an environment $\mu_\Upsilon$ such that for every agent $\pi$,
+$\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$.
+
 In this section, let $\mathscr W$ be the set infinite sequences
 $\vec w=(w_1,w_2,\ldots)$ with each $w_i>0$ real and
 $\sum_{i=1}^\infty w_i=1$. For any $w\in\mathscr W$ and any
@@ -1272,7 +1291,7 @@ without proof.
             &= \lim_{t\to\infty} \vec w\cdot V^\pi_{\vec\mu,t}
                 &\mbox{(By (3))}\\
             &= \lim_{t\to\infty} \sum_{i=1}^\infty w_i V^\pi_{\mu_i,t}.
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
     For each $i\in\mathbb N$, $a_i:\mathbb N\to\mathbb R$
     by $a_i(t)=w_iV^\pi_{\mu_i,t}$.
@@ -1289,33 +1308,38 @@ without proof.
             &= \sum_{i=1}^\infty w_iV^\pi_{\mu_i}
                 &\mbox{(Definition \ref{performancedefn})}\\
             &= \vec w\cdot V^\pi_{\vec\mu}.
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
     So $V^\pi_{\vec w\cdot\vec\mu}=\vec w\cdot V^\pi_{\vec\mu}$.
 \end{proof}
 
 \begin{theorem}
-    For any $S$-restricted weighted intelligence measure $\Upsilon$,
-    there exists an environment $\mu_\Upsilon$ such that for every agent $\pi$,
+\label{universalenvtheorem}
+    For any strongly well-behaved weighted intelligence measure $\Upsilon$,
+    there is an environment $\mu_\Upsilon$ such that for every agent $\pi$,
     $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$.
 \end{theorem}
 
 \begin{proof}
-    Given $\Upsilon$, there is a corresponding $w:S\to(0,\infty)$ as in
-    Definition \ref{swbperformanceaveragerdefn}.
-    Let $\mu_\Upsilon=w\cdot S$, we claim for every agent $\pi$,
-    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$. Let $\pi$ be any agent. Then
+    Let $\vec\mu=(\mu_1,\mu_2,\ldots)$ be any enumeration of the set of all
+    strongly well-behaved environments (this set is countable since every
+    well-behaved environment is Turing computable).
+    Thus there are weights $(w_\mu)_{\mu\in W}$ as in Definition \ref{stronglywellbehaveddefn}.
+    Let $\vec w=(w_{\mu_1},w_{\mu_2},\ldots)$,
+    thus $\vec w\in\mathscr W$.
+    Let $\mu_\Upsilon=\vec w\cdot \vec\mu$. Then for any agent $\pi$,
     \begin{align*}
         V^\pi_{\mu_\Upsilon}
-            &= V^\pi_{w\cdot S}\\
-            &= w\cdot V^\pi_{S}
+            &= V^\pi_{\vec w\cdot \vec\mu}
+                &\mbox{(Definition of $\mu_\Upsilon$)}\\
+            &= \vec w\cdot V^\pi_{\vec\mu}
                 &\mbox{(Lemma \ref{envmaintheorem})}\\
-            &= \sum_{\mu\in S}w(\mu)V^\pi_\mu
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \Upsilon(\pi),
-                &\mbox{(By choice of $w$)}
+            &= \sum_{i=1}^\infty w_i V^\pi_{\mu_i},
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
-    as desired.
+    which is $\sum_{\mu\in W}w_\mu V^\pi_\mu$ since $w_\mu=0$ whenever
+    $\mu$ is not strongly well-behaved; and this is $\Upsilon(\pi)$
+    by Definition \ref{performanceaveragerdefn}.
 \end{proof}
 
 \section{Conclusion and future work}
@@ -1864,7 +1888,7 @@ Proposition \ref{longproposition}.
             &= \sum_{i=1}^\infty w_i V^\pi_{\mu_i,t}
                 &\mbox{(Definition \ref{performancedefn})}\\
             &= \vec w\cdot V^\pi_{\vec\mu,t}.
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
 \end{proof}
 
