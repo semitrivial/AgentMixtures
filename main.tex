@@ -184,7 +184,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         for any $y\in \mathcal A$, we write $\pi(y|h)$ for
         $(\pi(\cdot|h))(y)$.
         Intuitively, $\pi(y|h)$ is the probability that agent $\pi$
-        will take action $y$ in response to history $h$.
+        takes action $y$ in response to history $h$.
         \item
         An \emph{environment} is defined to be a function
         $\mu:(\mathcal E\mathcal A)^*\to\Delta\mathcal E$.
@@ -194,7 +194,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         If $x=(o,r)$ ($o\in\mathcal O$, $r\in\mathcal R$), we may also
         write $\mu(o,r|h)$ for $(\mu(\cdot|h))(x)$.
         Intuitively, $\mu(o,r|h)$ is the probability that environment
-        $\mu$ will issue percept $(o,r)$ (observation $o$ and reward $r$)
+        $\mu$ issues percept $(o,r)$ (observation $o$ and reward $r$)
         to the agent in response to history $h$.
     \end{enumerate}
 \end{definition}
@@ -205,17 +205,10 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
     e.g., $\pi(\cdot|x_1y_1x_2)$ to be defined even if
     $\pi(y_1|x_1)=0$, in which case the initial percept-action sequence $x_1y_1x_2$
     would have probability $0$ of ever occurring in any agent-environment
-    interaction. Intuitively: an agent must be able to choose actions even
+    interaction. Intuitively: an agent must choose actions even
     in response to histories that would never occur with nonzero probability.
-    For example, even if, for its initial action, an agent assigns
-    probability $0$ to action $A$, the agent must nevertheless
-    be defined on histories where $A$ occurred as initial action.
-    This convention (in which we follow \cite{legg2007universal}) simplifies most
-    definitions, though it will complicate our definition of mixture agents
-    (Definition \ref{maindefn} below). The agent's outputs on such
-    ``impossible'' (i.e.\ $0$-probability) inputs have no effect on the agent's performance
-    in any environment, but these outputs may have implications for introspection
-    and self-reflection, see \cite{extendedenvironmentspaper}.
+    This convention (in which we follow \cite{legg2007universal}) simplifies
+    many definitions.
 \end{remark}
 
 \begin{definition}
@@ -230,60 +223,33 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
 
 \begin{definition}
 \label{pullbackdef}
-    \begin{enumerate}
+    For all agents $\pi$, histories $h$, and environments $\mu$,
+    we define real numbers $\Pi^\pi(h)$, $\Pi_\mu(h)$, and $\Pi^\pi_\mu(h)$
+    inductively as follows.
+    \begin{itemize}
         \item
-        For every agent $\pi$, for every $h\in\mathcal H$, we define a real number
-        $P^\pi(h)\in[0,1]$ as follows.
-        \begin{itemize}
-            \item
-            If $h=\varepsilon$ then $P^\pi(h)=1$.
-            \item
-            If $h=gx$ for some $x\in\mathcal E$ then $P^\pi(h)=P^\pi(g)$.
-            \item
-            If $h=gy$ for some $y\in\mathcal A$ then $P^\pi(h)=P^\pi(g)\pi(y|g)$.
-        \end{itemize}
-        The intended intuition is that $P^\pi(h)$ can be thought of as the
-        conditional probability that when $\pi$
-        and any environment
-        $\mu$ interact, the interaction will begin with initial segment
-        $h$, \emph{assuming}
-        that $\mu$ produces the percepts in $h$.
+        If $h=\varepsilon$ then $P^\pi(h)=P_\mu(h)=P^\pi_\mu(h)=1$.
         \item
-        For every environment $\mu$, for every $h\in\mathcal H$, we define a real number
-        $P_\mu(h)\in[0,1]$ as follows.
-        \begin{itemize}
-            \item
-            If $h=\varepsilon$ then $P_\mu(h)=1$.
-            \item
-            If $h=gx$ for some $x\in\mathcal E$ then $P_\mu(h)=P_\mu(g)\mu(x|g)$.
-            \item
-            If $h=gy$ for some $y\in\mathcal A$ then $P_\mu(h)=P_\mu(g)$.
-        \end{itemize}
-        The intended intuition is that $P_\mu(h)$ can be thought of as the
-        conditional probability that when any agent $\pi$ and $\mu$ interact,
-        the interaction will begin with initial segment $h$, \emph{assuming} that
-        $\pi$ produces the actions in $h$.
+        If $h=gx$ (some $x\in\mathcal E$) then
+        $P^\pi(h)=P^\pi(g)$, $P_\mu(h)=P_\mu(g)\mu(x|g)$,
+        and $P^\pi_\mu(h)=P^\pi_\mu(g)\mu(x|g)$.
         \item
-        For every agent $\pi$, environment $\mu$, and $h\in\mathcal H$, we define a
-        real number $P^\pi_\mu(h)\in[0,1]$ by induction as follows.
-        \begin{itemize}
-            \item
-            If $h=\varepsilon$ then $P^\pi_\mu(h)=1$.
-            \item
-            If $h=gx$ for some $x\in\mathcal E$ then
-            $P^\pi_\mu(h)=P^\pi_\mu(g)\mu(x|g)$.
-            \item
-            If $h=gy$ for some $y\in\mathcal A$ then
-            $P^\pi_\mu(h)=P^\pi_\mu(g)\pi(y|g)$.
-        \end{itemize}
-        The intended intuition is that $P^\pi_\mu(h)$ can be thought of as
-        the probability that when $\pi$ and $\mu$ interact, the interaction
-        will begin with initial segment $h$.
-    \end{enumerate}
+        If $h=gy$ (some $y\in\mathcal A$) then
+        $P^\pi(h)=P^\pi(g)\pi(y|g)$, $P_\mu(h)=P_\mu(g)$,
+        and $P^\pi_\mu(h)=P^\pi_\mu(g)\pi(y|g)$.
+    \end{itemize}
+    Intuitively: $P^\pi(h)$ is the conditional
+    probability $\pi$ will choose the actions in $h$ assuming the
+    environment which $\pi$ is interacting with chooses the percepts in
+    $h$; $P_\mu(h)$ is the conditional probability $\mu$ will choose
+    the percepts in $h$ assuming the agent which $\mu$ is interacting
+    with chooses the actions in $h$; and $P^\pi_\mu(h)$ is the probability
+    that $\pi$ and $\mu$ will choose $h$'s actions and percepts when
+    interacting together.
 \end{definition}
 
 Some authors, such as \cite{hutter2009discrete}, would write $P(h)$ or a variation thereof
-for $P^\pi_\mu$, provided $\pi$ and $\mu$ are clear from context.
+for $P^\pi_\mu$, if $\pi$ and $\mu$ are clear from context.
 
 One could alternately more directly define
 \begin{align*}
@@ -302,26 +268,7 @@ and likewise for $P_\mu$ and for $P^\pi_\mu$.
 \end{lemma}
 
 \begin{proof}
-    By induction on $h$.
-
-    Case 1: $h=\varepsilon$. Then the lemma is trivial.
-
-    Case 2: $h=gx$ for some $x\in\mathcal E$.
-        Then
-        \begin{align*}
-            P^\pi_\mu(h)
-                &= P^\pi_\mu(g)\mu(x|g)
-                    &\mbox{(Definition \ref{pullbackdef} part 3)}\\
-                &= P^\pi(g)P_\mu(g)\mu(x|g)
-                    &\mbox{(Induction)}\\
-                &= P^\pi(h)P_\mu(g)\mu(x|g)
-                    &\mbox{(Definition \ref{pullbackdef} part 1)}\\
-                &= P^\pi(h)P_\mu(h).
-                    &\mbox{(Definition \ref{pullbackdef} part 2)}
-        \end{align*}
-
-    Case 3: $h=gy$ for some $y\in\mathcal A$.
-        Similar to Case 2.
+    See Appendix.
 \end{proof}
 
 In the following definition (and the rest of the paper),
@@ -360,7 +307,7 @@ reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
 then $V^\pi_\mu$ is undefined for every agent $\pi$.
 But, following \cite{legg2007universal}, we will only be interested in
 environments $\mu$ such that $V^\pi_\mu$
-is always defined. Note also that, following \cite{legg2007universal},
+is always defined. Note also that, following \emph{ibid},
 we delegate any possible reward discounting to the environments themselves,
 rather than build a fixed reward discounting factor into the definition
 of $V^\pi_\mu$.
@@ -415,12 +362,10 @@ definitions to vectors of agents.
         \item $P^{\vec\pi}_\mu(h)=(P^{\pi_1}_\mu(h),\ldots,P^{\pi_n}_\mu(h))$.
         \item $V^{\vec\pi}_{\mu,t}=(V^{\pi_1}_{\mu,t},\ldots,V^{\pi_n}_{\mu,t})$.
         \item $V^{\vec\pi}_\mu=(V^{\pi_1}_\mu,\ldots,V^{\pi_n}_\mu)$,
-            provided $V^{\pi_1}_\mu,\ldots,V^{\pi_n}_\mu$ are defined.
+            if $V^{\pi_1}_\mu,\ldots,V^{\pi_n}_\mu$ are defined.
         \item $\Upsilon(\vec\pi)=(\Upsilon(\pi_1),\ldots,\Upsilon(\pi_n))$.
     \end{itemize}
 \end{definition}
-
-We also recall the operation of dot product:
 
 \begin{definition}
 \label{dotproductdefn}
@@ -457,8 +402,8 @@ Now we are ready to define mixture agents.
     $(\vec w\cdot\vec\pi)(y|h)=1/|\mathcal A|$ when
     $\vec w\cdot {P^{\vec\pi}}(h)=0$
     (see Remark \ref{impossibleremark}): we are obligated to specify how
-    $\vec w\cdot\vec\pi$ chooses actions even in response to histories that
-    are ``impossible'' for $\vec w\cdot\vec\pi$ (histories which contain actions that
+    $\vec w\cdot\vec\pi$ chooses actions even in response to ``impossible''
+    histories for $\vec w\cdot\vec\pi$ (histories containing actions
     $\vec w\cdot\vec\pi$ would never take in those circumstances).
 \end{remark}
 
@@ -499,8 +444,8 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
         \item
         (``The expected reward of a weighted mixture is the weighted
         average of the expected rewards'')
-        If $V^{\vec\pi}_\mu$ converges, then $V^{\vec w\cdot\vec\pi}_\mu$
-        converges and $V^{\vec w\cdot\vec\pi}_\mu=\vec w\cdot V^{\vec\pi}_\mu$.
+        If $V^{\vec\pi}_\mu$ is defined, then
+        $V^{\vec w\cdot\vec\pi}_\mu=\vec w\cdot V^{\vec\pi}_\mu$.
         \item
         (``The intelligence of a weighted mixture is the weighted average
         of the intelligences'')
@@ -526,9 +471,8 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
                 &\mbox{(Definition \ref{pullbackdef})}\\
             &= \vec w\cdot({P^{\vec\pi}}(g))
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot({P^{\vec\pi}}(gx))
-                &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot({P^{\vec\pi}}(h)).
+            &= \vec w\cdot({P^{\vec\pi}}(gx))= \vec w\cdot({P^{\vec\pi}}(h)).
+                &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
     Case 3: $h=gy$ for some $y\in\mathcal A$.
@@ -569,9 +513,8 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
                 {\vec w\cdot {P^{\vec\pi}}(gy)}
                 {\vec w\cdot {P^{\vec\pi}}(g)}
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot {P^{\vec\pi}}(gy)
-                &\mbox{(Basic Algebra)}\\
-            &= \vec w\cdot {P^{\vec\pi}}(h).
+            &= \vec w\cdot {P^{\vec\pi}}(gy) = \vec w\cdot {P^{\vec\pi}}(h).
+                &\mbox{(Basic Algebra)}
     \end{align*}
 
     (2) Follows from (1) and Lemma \ref{factorizationlemma}.
@@ -610,7 +553,7 @@ that in fact, they are equivalent. Throughout this section, we
 assume that the background set $\mathcal R$ has the following
 additional property:
 whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
-also contains $-r$. In other words, $\mathcal R$ is closed under negations.
+also contains $-r$.
 
 \begin{definition}
 \label{dualagentsdefn}
@@ -627,20 +570,15 @@ also contains $-r$. In other words, $\mathcal R$ is closed under negations.
     We define the \emph{dual} of $\pi$, denoted $\overline \pi$, as follows:
     for each $h\in (\mathcal E\mathcal A)^*\mathcal E$,
     for each action $y\in\mathcal A$,
-    \[\overline\pi(y|h)=\pi(y|\overline h).\]
-    \item
-    Suppose $\mu$ is an environment.
-    We define the \emph{dual} of $\mu$, denoted $\overline\mu$, as follows:
-    for each $h\in (\mathcal E\mathcal A)^*$,
-    for each $(o,r)\in\mathcal E$,
-    \[\overline\mu(o,r|h)=\mu(o,-r|\overline h).\]
+    $\overline\pi(y|h)=\pi(y|\overline h)$.
 \end{enumerate}
 \end{definition}
 
 \begin{lemma}
 \label{doublenegationlemma}
-    If $x$ is any agent, environment, or history,
-    then $\overline{\overline x}=x$.
+    If $x$ is any agent or history,
+    then
+    $\overline{\overline x}=x$.
 \end{lemma}
 
 \begin{proof}
@@ -689,7 +627,7 @@ self-dual agents (up to equivalence modulo a natural equivalence relation).
 
 \begin{lemma}
 \label{equivrelationlemma}
-    The relation $\equiv$ of Definition \ref{equivdefn} is an equivalence
+    $\equiv$ (Definition \ref{equivdefn}) is an equivalence
     relation.
 \end{lemma}
 
@@ -748,9 +686,9 @@ self-dual agents (up to equivalence modulo a natural equivalence relation).
 \end{proof}
 
 Proposition \ref{janusagentcharacterizationproposition} is analogous to the
-following well-known fact: a function $f:\mathbb R\to\mathbb R$ is even
-(i.e.\ satisfies the identity $f(x)=f(-x)$, a kind of self-dual property)
-if and only if $f(x)=\frac12(g(x)+g(-x))$ for some $g:\mathbb R\to\mathbb R$.
+fact that a function $f:\mathbb R\to\mathbb R$ is even
+(i.e.\ satisfies $f(x)=f(-x)$)
+iff $f(x)=\frac12(g(x)+g(-x))$ for some $g:\mathbb R\to\mathbb R$.
 
 We will show in Corollary \ref{equivalentsymmetriescor} that
 the following two symmetry conditions are equivalent.
@@ -814,12 +752,12 @@ considering this UTM property to be inherently desirable (in the RL context).
 \section{Discernability and separability}
 
 In this section, we give another application of mixture agents.
-We define natural notion of \emph{discernability} and \emph{separability}
+We define natural notions of \emph{discernability} and \emph{separability}
 for sets of agents,
 and we give an interesting characterization of separability
 in terms of discernability and mixtures.
-Below, if $\Pi$ is a set of agents, then $\Pi^c$ is the complement,
-in other words, $\Pi^c$ is the set of agents $\rho$ such that $\rho\not\in\Pi$.
+Below, if $\Pi$ is a set of agents, then
+$\Pi^c$ is the set of agents $\rho$ such that $\rho\not\in\Pi$.
 
 \begin{definition}
 \label{discernabilitydefn}
@@ -835,17 +773,14 @@ Intuitively, $\Pi$ is discernable if there is some environment in which
 no member of $\Pi$ has the same expected performance as any member of $\Pi^c$.
 
 For the next definition, recall that a subset $I$ of the reals
-is an \emph{interval} if the following requirement holds:
+is \emph{convex} if the following requirement holds:
 for all real $i_1<i_2<i_3$, if $i_1\in I$ and $i_3\in I$, then $i_2\in I$.
-All intervals are of one of the following forms (where $i<j$ range over $\mathbb R$):
-$\mathbb R$, $(-\infty,i)$, $(-\infty,i]$, $(i,\infty)$, $[i,\infty)$,
-$(i,j)$, $(i,j]$, $[i,j)$, $[i,j]$, $\{i\}$, or $\emptyset$.
 Two sets are \emph{disjoint} if they have no point in common.
 
 \begin{definition}
 \label{incentivizabilitydefn}
     A set $\Pi$ of agents is \emph{separable} if there exists
-    an environment $\mu$ and disjoint intervals $I$ and $J$ of
+    an environment $\mu$ and disjoint convex sets $I$ and $J$ of
     the reals such that for every agent $\pi$:
     \begin{enumerate}
         \item
@@ -859,15 +794,15 @@ Two sets are \emph{disjoint} if they have no point in common.
 
 Intuitively, $\Pi$ is separable if there is some environment in which
 the performance measures of members of $\Pi$ are separated into one
-interval, and the performance measures of outsides of $\Pi$ are separated
-into a different interval, with no overlap between those intervals.
+convex set, and the performance measures of outsides of $\Pi$ are separated
+into a different convex set, with no overlap.
 Clearly separability implies discernability, but what about the converse?
 We will state a partial converse making use of mixtures.
 
 \begin{definition}
 \label{mixtureclosuredef}
     A set $\Pi$ is \emph{closed under mixtures} if the following
-    condition holds: for all positive reals $\vec w=(w_1,\ldots,w_n)$
+    holds: for all $\vec w=(w_1,\ldots,w_n)$
     with $w_1+\cdots+w_n=1$,
     for all agents $\vec\pi=(\pi_1,\ldots,\pi_n)$,
     if $\pi_i\in \Pi$ for every $i=1,\ldots,n$, then
@@ -876,12 +811,12 @@ We will state a partial converse making use of mixtures.
 
 \begin{lemma}
 \label{ivtlemma}
-    For any real numbers $A<B<C$, there exists some real $0\leq \alpha\leq 1$
+    For any real numbers $A\leq B\leq C$, there exists some real $0\leq \alpha\leq 1$
     such that $\alpha A + (1-\alpha)C=B$.
 \end{lemma}
 
 \begin{proof}
-    If $A=C$, take $\alpha=1$. Otherwise, take $\alpha=(B-C)/(A-C)$.
+    Let $\alpha=(C-B)/(C-A)$ (or $\alpha=1$ if $A=C$).
 \end{proof}
 
 \begin{theorem}
@@ -913,8 +848,7 @@ We will state a partial converse making use of mixtures.
     $V^{\vec w\cdot\vec\pi}_\mu=\vec w\cdot V^{\vec\pi}_\mu$.
     Thus $V^{\vec w\cdot\vec\pi}_\mu$ is a convex combination
     of $V^{\pi_1}_\mu,\ldots,V^{\pi_n}_\mu$, which are elements of $I$.
-    It is well-known that any convex combination of elements of a real interval
-    is an element of that interval. Thus $V^{\vec w\cdot\vec\pi}_\mu\in I$.
+    Since $I$ is convex, it follows that $V^{\vec w\cdot\vec\pi}_\mu\in I$.
     Since $I$ and $J$ are disjoint, $V^{\vec w\cdot\vec\pi}_\mu\not\in J$,
     so by choice of $J$, $\vec w\cdot\vec\pi\in\Pi$, as desired.
     A similar argument shows $\Pi^c$ is closed under mixtures.
@@ -937,7 +871,7 @@ We will state a partial converse making use of mixtures.
         \}.
     \end{align*}
 
-    Claim 1: $I$ is an interval. To see this, let $i_1<i_2<i_3$ be any reals
+    Claim 1: $I$ is convex. To see this, let $i_1<i_2<i_3$ be any reals
     such that $i_1\in I$ and $i_3\in I$.
     By definition of $I$, there are $\pi_1,\pi_2\in\Pi$
     such that $V^{\pi_1}_\mu\leq i_1\leq V^{\pi_2}_\mu$,
@@ -946,7 +880,7 @@ We will state a partial converse making use of mixtures.
     It follows that $V^{\pi_1}_\mu\leq i_2\leq V^{\pi'_2}_\mu$,
     which shows $i_2\in I$, as desired.
 
-    Claim 2: $J$ is an interval. Similar to Claim 1.
+    Claim 2: $J$ is convex. Similar to Claim 1.
 
     Claim 3: $I$ and $J$ are disjoint. Assume not. Then there is some $r\in I\cap J$.
     By definition of $I$, there are $\pi_1,\pi_2\in\Pi$ such that
@@ -963,7 +897,7 @@ We will state a partial converse making use of mixtures.
     But since $\mu$ satisfies condition 2 of
     Definition \ref{discernabilitydefn}, 
     and $\pi\in\Pi$ and $\rho\in\Pi^c$, this forces
-    $V^\pi_\mu\not=V^\rho_\mu$, a contradiction.
+    $V^\pi_\mu\not=V^\rho_\mu$, absurd.
 
     Claim 4: For all $\pi\in \Pi$, $V^\pi_\mu\in I$, and for all $\rho\in\Pi^c$,
     $V^\rho_\mu\in J$. This is immediate from the definition of $I$ and $J$,
@@ -992,8 +926,8 @@ We will state a partial converse making use of mixtures.
 \end{definition}
 
 \begin{lemma}
-    If $\pi$, $h_0$ and $m$ are as in Definition \ref{modifyagentatoneplace},
-    then $\pi^{h_0\mapsto m}$ is an agent.
+    $\pi^{h_0\mapsto m}$ (as in Definition \ref{modifyagentatoneplace})
+    is an agent.
 \end{lemma}
 
 \begin{proof}
@@ -1054,17 +988,13 @@ $\pi^{h\mapsto \vec m}$.
 \begin{definition}
     Suppose $\pi$ and $\pi_1,\ldots,\pi_n$ are agents and $\Upsilon$ is a
     weighted intelligence measure. We say that $\pi$ is \emph{strictly better than}
-    $\pi_1,\ldots,\pi_n$ (as measured by $\Upsilon$) if the following conditions hold:
+    $\pi_1,\ldots,\pi_n$ (as measured by $\Upsilon$) if either:
     \begin{enumerate}
-        \item $\Upsilon(\pi)\geq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$.
+        \item $\Upsilon(\pi)\geq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$; or
         \item $\Upsilon(\pi)>\Upsilon(\pi_i)$ for some $i=1,\ldots,n$.
     \end{enumerate}
-    We say $\pi$ is \emph{strictly worse than} $\pi_1,\ldots,\pi_n$ (as measured by
-    $\Upsilon$) if the following conditions hold:
-    \begin{enumerate}
-        \item $\Upsilon(\pi)\leq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$.
-        \item $\Upsilon(\pi)<\Upsilon(\pi_i)$ for some $i=1,\ldots,n$.
-    \end{enumerate}
+    We define \emph{strictly worse} similarly (change $\geq$ to $\leq$,
+    $>$ to $<$).
 \end{definition}
 
 \begin{proposition}
@@ -1081,9 +1011,8 @@ $\pi^{h\mapsto \vec m}$.
 \end{proposition}
 
 \begin{proof}
-    Assume $\pi$ is strictly better than $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
-    (as measured by $\Upsilon$).
-    This implies
+    If $\pi$ is strictly better than $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    (as measured by $\Upsilon$), then this implies
     \begin{align*}
         \Upsilon(\pi)
             &= \Upsilon(\vec w\cdot\pi^{h\mapsto\vec m})
@@ -1095,8 +1024,7 @@ $\pi^{h\mapsto \vec m}$.
             &= \Upsilon(\pi),
                 &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
-    absurd. Similar reasoning holds if $\pi$ is strictly
-    worse than $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$.
+    absurd. Similar reasoning holds for ``strictly worse''.
 \end{proof}
 
 \begin{definition}
@@ -1142,20 +1070,24 @@ for some strictly
 deterministic $\rho$ (i.e., some $\rho$ such that $\rho(y|h)\in\{0,1\}$ for
 all $y,h$).
 
-The following theorem sheds light on the geometry of the infinite-dimensional hypersurface
-$z=\Upsilon(\pi)$. Since $\mathcal A\times((\mathcal E\mathcal A)^*\mathcal E)$ is
-countable, we can picture the set of agents as a subspace of the Hilbert cube
-$[0,1]^{\mathbb N}$, and $z=\Upsilon(\pi)$ can be pictured as a ``surface'' above
-that subspace (or more precisely, a surface which is above that subspace in some places,
-below it in other places, and which intersects it in the hypercurve $\Upsilon(\pi)=0$,
-the ``$z$-intercept'' of $z=\Upsilon(\pi)$). Recall that in geometry, a \emph{lattice point}
-is a point whose coordinates are integers. In our geometric viewpoint of the set of
-agents, lattice points are exactly the agents which are strictly deterministic. The following
-theorem therefore says that, modulo $\equiv$, the hypersurface $z=\Upsilon(\pi)$
-cannot have any ``hyperridges'' or ``hypertroughs'' except possibly
-where $\pi$ is a lattice point.
+Theorem \ref{extremitythm} below sheds light on the geometry of RL agent intelligence.
+By considering agent $\pi$'s coordinates to be
+the values $\pi(y|h)$
+for all $y$, $h$, we can view agents as inhabiting
+infinite-dimensional Euclidean space.
+An agent $\pi$ is a \emph{lattice point} (i.e., a point with integer coordinates)
+iff $\pi$ is strictly deterministic.
+We can picture $z=\Upsilon(\pi)$ as a ``surface'' above
+agents-space
+(more precisely: a surface above agent-space in some places,
+below it in others, and which intersects it in the ``$z$-intercept''
+$\Upsilon(\pi)=0$).
+Theorem \ref{extremitythm} says that, modulo $\equiv$,
+$z=\Upsilon(\pi)$
+cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
 
 \begin{theorem}
+\label{extremitythm}
     (``Strict local extrema are deterministic'')
     For any weighted intelligence measure $\Upsilon$, for any agent $\pi$,
     if $\pi$ is a strict local extremum of $\Upsilon$, then
@@ -1436,6 +1368,29 @@ without proof.
 \onecolumn
 
 \section*{Appendix}
+
+\begin{proof}[Proof of Lemma \ref{factorizationlemma}]
+    By induction on $h$.
+
+    Case 1: $h=\varepsilon$. Then the lemma is trivial.
+
+    Case 2: $h=gx$ for some $x\in\mathcal E$.
+        Then
+        \begin{align*}
+            P^\pi_\mu(h)
+                &= P^\pi_\mu(g)\mu(x|g)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= P^\pi(g)P_\mu(g)\mu(x|g)
+                    &\mbox{(Induction)}\\
+                &= P^\pi(h)P_\mu(g)\mu(x|g)
+                    &\mbox{(Definition \ref{pullbackdef})}\\
+                &= P^\pi(h)P_\mu(h).
+                    &\mbox{(Definition \ref{pullbackdef})}
+        \end{align*}
+
+    Case 3: $h=gy$ for some $y\in\mathcal A$.
+        Similar to Case 2.
+\end{proof}
 
 \begin{proof}[Proof of Lemma \ref{mixturereallyisanagent}]
     Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
