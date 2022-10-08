@@ -109,7 +109,7 @@ These turns continue forever, and the whole sequence of turns
 is called an agent-environment interaction.
 
 If $\pi_1$ and $\pi_2$ are two agents, we can informally imagine a new agent
-$\sigma$ (first described in \cite{alexander2021reward})
+$\sigma$
 as follows. At the beginning of every agent-environment interaction,
 $\sigma$ flips a fair coin. If the coin lands heads, then $\sigma$ transforms into
 $\pi_1$; otherwise, $\sigma$ transforms into $\pi_2$. Note that the coin is only
@@ -144,11 +144,6 @@ This linearity result then leads to multiple further interesting results, of whi
 
 \section{Preliminaries}
 
-In defining \emph{agent} and \emph{environment} below, we attempt to follow
-the Legg and Hutter formulation of universal intelligence \cite{legg2007universal} as closely as possible,
-except that we permit environments to output rewards from $\mathbb Q \cap [-1,1]$
-rather than just $\mathbb Q\cap [0,1]$ (and, accordingly, we modify which well-behaved
-environments to restrict our attention to).
 
 Throughout the paper, we implicitly
 fix non-empty finite sets $\mathcal A$ of \emph{actions},
@@ -549,13 +544,12 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
     (5) Follows from (4) and Definition \ref{performanceaveragerdefn}.
 \end{proof}
 
-\section{Duality and self-dual agents:
-Strengthening and formalizing a result of Alexander and Hutter}
+\section{Equivalence of weak and strong symmetry}
 
-In this section, we will investigate three symmetry properties
-which a weighted intelligence measure might satisfy. A priori, these
-three properties do not appear to be equivalent, but we will show
-that in fact, they are. Throughout this section, we
+In this section, we will investigate two symmetry properties
+which a weighted intelligence measure might satisfy. A priori, one
+property seems stricly stronger, but we will show
+that in fact, they are equivalent. Throughout this section, we
 assume that the background set $\mathcal R$ has the following
 additional property:
 whenever $\mathcal R$ contains any reward $r$, then $\mathcal R$
@@ -606,10 +600,10 @@ also contains $-r$.
     An agent $\pi$ is \emph{self-dual} if $\overline{\pi}=\pi$.
 \end{definition}
 
-We will use self-dual agents to strengthen and formalize an informal result
-from \cite{alexander2021reward}.
+The main result in this section will be the equivalence of two
+symmetry conditions on the intelligence of agents and their duals.
 But first, we will use mixture agents to characterize
-self-dual agents (up to equivalence modulo a certain natural equivalence relation).
+self-dual agents (up to equivalence modulo a natural equivalence relation).
 
 \begin{definition}
 \label{equivdefn}
@@ -640,10 +634,6 @@ self-dual agents (up to equivalence modulo a certain natural equivalence relatio
 \begin{proof}
     Straightforward.
 \end{proof}
-
-In the proof of the following lemma, we will use the well-known null-factor
-law, which states that for all real numbers $a$ and $b$, if $ab=0$,
-then $a=0$ or $b=0$.
 
 \begin{lemma}
 \label{piopluspilemma}
@@ -700,76 +690,29 @@ fact that a function $f:\mathbb R\to\mathbb R$ is even
 (i.e.\ satisfies $f(x)=f(-x)$)
 iff $f(x)=\frac12(g(x)+g(-x))$ for some $g:\mathbb R\to\mathbb R$.
 
-Alexander and Hutter \cite{alexander2021reward} considered various symmetry properties of
-weighted intelligence measures. They informally argued that a
-certain somewhat-weak symmetry property implies a strong symmetry property.
-We will make the argument formal, and strengthen it further,
-by showing that the strong symmetry property is implied by an
-even weaker symmetry property. We will show in Corollary \ref{equivalentsymmetriescor} that
-the following three symmetry conditions are equivalent.
+We will show in Corollary \ref{equivalentsymmetriescor} that
+the following two symmetry conditions are equivalent.
 
 \begin{definition}
     (Weighted intelligence measure symmetry properties)
     Let $\Upsilon$ be a weighted intelligence measure.
     \begin{enumerate}
-        \item $\Upsilon$ \emph{satisfies the weak symmetry condition}
-            if $\Upsilon(\pi)=0$ for every self-dual agent $\pi$.
-        \item $\Upsilon$ \emph{satisfies the intermediate symmetry condition}
-            if $\Upsilon(\pi)=0$ for every agent $\pi$
-            such that $\Upsilon(\pi)=\Upsilon(\overline\pi)$.
-        \item $\Upsilon$ \emph{satisfies the strong symmetry condition}
-            if $\Upsilon(\overline\pi)=-\Upsilon(\pi)$ for every agent $\pi$.
+        \item $\Upsilon$ is \emph{weakly symmetric} if
+            $\Upsilon(\pi)=0$ for every self-dual agent $\pi$.
+        \item $\Upsilon$ is \emph{strongly symmetric} if
+            $\Upsilon(\overline\pi)=-\Upsilon(\pi)$ for every agent $\pi$.
     \end{enumerate}
 \end{definition}
 
-Alexander and Hutter gave an informal argument that the intermediate symmetry condition
-implies the strong symmetry condition (to be precise, they considered
-the contrapositive of the above intermediate symmetry condition).
-Their argument was informal because it
-invoked a coin-flipping agent (as in this paper's Introduction), but such
-coin-flipping agents do not actually fit in the formal Legg-Hutter-style RL
-framework where this all takes place. In the following, we will formally
-prove (using mixture agents instead of coin-flipping agents) that
-the weak symmetry condition implies the strong symmetry condition.
-Then in Corollary \ref{equivalentsymmetriescor} we will show that in fact all three
-conditions are equivalent (a much stronger formal result than what
-Alexander and Hutter informally proved).
-
-This result is important because the Legg-Hutter attempt \cite{legg2007universal} to
-formally measure intelligence depends on the choice of background universal Turing machine
-(UTM), which choice is non-trivial \cite{leike2015bad}. Thus it is desirable to
-find plausible conditions by which to constrain the UTM-space.
-Alexander and Hutter proposed the strong symmetry condition as one such constraint
-(namely, that the UTM be chosen so that the resulting canonical weighted intelligence
-measure of \cite{legg2007universal} (modified to allow negative rewards)
-be strongly symmetric).
-Indeed, this can be considered an intrinsically desirable (at least in the RL context)
-property of UTMs,
-or informally, of programming languages: an objectively desirable property
-(as opposed to subjective properties like whether or not white-space
-should matter, curly-braces vs.\ square-braces, and so on).
-Such intrinsically desirable UTM properties are elusive; attempts
-(like \cite{muller2010stationary}) to find them confirm the difficulty thereof.
-Alexander and Hutter used the fact that the intermediate symmetry condition implies
-the strong symmetry condition to argue for the latter's plausibility.
-Indeed, if intelligence is measured as weighted average total reward across
-all well-behaved environments, it is quite
-plausible that self-dual agents should have intelligence $0$ (this is the weak
-symmetry condition), because in some sense a self-dual agent does not ``know''
-whether positive rewards are good and negative rewards are bad, or vice versa,
-so how could said agent possibly optimize rewards across all environments?
-It is surprising that this weak symmetry condition implies the strong symmetry
-condition, which, a priori, seems to demand much more.
-
 \begin{theorem}
-\label{weakimpliesstrongthm}
-    Suppose $\Upsilon$ is a weighted intelligence measure.
-    If $\Upsilon$ satisfies the weak symmetry condition then
-    $\Upsilon$ satisfies the strong symmetry condition.
+\label{equivalentsymmetriescor}
+    A weighted intelligence measure $\Upsilon$ is weakly
+    symmetric iff it is strongly symmetric.
 \end{theorem}
 
 \begin{proof}
-    Assume $\Upsilon$ satisfies the weak symmetry condition.
+    (Weak $\Rightarrow$ Strong)
+    Assume $\Upsilon$ is weakly symmetric.
     Let $\pi$ be any agent.
     By Lemma \ref{reflectionmakesjanuslemma},
     $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is self-dual.
@@ -781,33 +724,29 @@ condition, which, a priori, seems to demand much more.
         =\mbox{$\frac12$}\Upsilon(\pi)+\mbox{$\frac12$}\Upsilon(\overline\pi)=0.
     \]
     So $\Upsilon(\overline{\pi})=-\Upsilon(\pi)$.
+    By arbitrariness of $\pi$, $\Upsilon$ is strongly symmetric.
+
+    (Strong $\Rightarrow$ Weak)
+    Trivial.
 \end{proof}
 
-\begin{corollary}
-\label{equivalentsymmetriescor}
-    The weak, intermediate, and strong symmetry conditions are equivalent.
-\end{corollary}
-
-\begin{proof}
-    (Weak $\Rightarrow$ Strong) By Theorem \ref{weakimpliesstrongthm}.
-
-    (Strong $\Rightarrow$ Intermediate) Assume weighted intelligence measure
-    $\Upsilon$ satisfies the strong symmetry condition.
-    Let $\pi$ be any agent such that $\Upsilon(\pi)=\Upsilon(\overline\pi)$.
-    By strong symmetry, $\Upsilon(\overline\pi)=-\Upsilon(\pi)$,
-    so $\Upsilon(\pi)=-\Upsilon(\pi)$, so $\Upsilon(\pi)=0$.
-    By arbitrariness of $\pi$, $\Upsilon$ satisfies the intermediate
-    symmetry condition.
-
-    (Intermediate $\Rightarrow$ Weak)
-    Assume weighted intelligence measure
-    $\Upsilon$ satisfies the intermediate symmetry condition.
-    Let $\pi$ be any self-dual agent.
-    Then $\pi=\overline{\pi}$, so $\Upsilon(\pi)=\Upsilon(\overline{\pi})$.
-    By intermediate symmetry, $\Upsilon(\pi)=0$.
-    By arbitrariness of $\pi$, $\Upsilon$ satisfies the weak symmetry
-    condition.
-\end{proof}
+The canonical weighted intelligence measure is the universal
+intelligence measure $\Upsilon_U$ of \cite{legg2007universal},
+where each computable environment
+$\mu$ is given weight $2^{-K(\mu)}$, where $K(\mu)$ is $\mu$'s Kolmogorov complexity.
+This depends non-trivially on the background UTM $U$,
+prompting Leike and Hutter to ask: ``What are [...] desirable
+properties of a UTM?'' \cite{leike2015bad}.
+UTMs formalize programming languages, so the question is equivalent
+to ``What are desirable properties of a programming language?'' (i.e., \emph{inherently}
+desirable properties, as opposed to subjectively desirable properties like whether or
+not white-space matters).
+Intrinsically desirable UTM properties are elusive; attempts
+(like \cite{muller2010stationary}) to find them confirm the difficulty thereof.
+In the RL context, symmetry conditions on $\Upsilon_U$ are candidate desirable properties
+for the UTM: $U$ is weakly (resp.\ strongly) symmetric iff $\Upsilon_U$ is.
+The equivalence of weak and strong symmetry provides some justification for
+considering this UTM property to be inherently desirable (in the RL context).
 
 
 \section{Discernability and separability}
@@ -1495,6 +1434,10 @@ without proof.
 \end{proof}
 
 \begin{proof}[Proof of Lemma \ref{piopluspilemma}]
+    Recall that the real numbers satisfy the so-called \emph{null-factor law}:
+    for all real numbers $a$ and $b$, if $ab=0$, then $a=0$ or $b=0$.
+    In other words, the product of two nonzero real numbers can never be zero.
+
     Write $\vec\pi$ for $(\pi,\ldots,\pi)$.
     We prove conditions 1 and 2 of Definition \ref{equivdefn}
     simultaneously by induction on $h$.
@@ -1637,7 +1580,8 @@ without proof.
     \end{align*}
 \end{proof}
 
-The following auxiliary lemmas will be used in our proof of Lemma \ref{...}
+The following auxiliary lemmas will be used in our proof of
+Proposition \ref{longproposition}.
 
 \begin{lemma}
 \label{firsttechlemmaforgenericity}
