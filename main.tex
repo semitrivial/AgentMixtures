@@ -1118,20 +1118,20 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
         \end{cases}
     \]
     By choice of $\epsilon'$ it follows that $m_1,m_2\in\Delta\mathcal A$.
-    Let $\vec w=(\frac12,\frac12)$, $\vec m=(m_1,m_2)$.
-    Clearly $\vec w\cdot\vec m=\pi(\cdot|h)$.
-    By Proposition \ref{pointwisegenericnessthm},
+    Let $\vec w=(\frac12,\frac12)$, $\vec m=(m_1,m_2)$;
+    clearly $\vec w\cdot\vec m=\pi(\cdot|h)$.
+    By Prop.\ \ref{pointwisegenericnessthm},
     $\pi$ is not strictly better than $\pi^{h\mapsto m_1},\pi^{h\mapsto m_2}$
-    (as measured by $\Upsilon$).
-    Thus $\Upsilon(\pi)\leq \Upsilon(\pi^{h\mapsto m_i})$
+    (as measured by $\Upsilon$),
+    thus $\Upsilon(\pi)\leq \Upsilon(\pi^{h\mapsto m_i})$
     for some $i\in\{1,2\}$.
     Clearly $\pi\not\equiv \pi^{h\mapsto m_i}$
     and $d(\pi,\pi^{h\mapsto m_i})=\epsilon'\leq\epsilon$.
-    By arbitrariness of $\epsilon$, this shows
+    By arbitrariness of $\epsilon$,
     $\pi$ is not a strict local maximum of $\Upsilon$.
 \end{proof}
 
-\section{Environment mixtures and universal environments}
+\section{Environment mixture-environments}
 
 \begin{definition}
 \label{stronglywellbehaveddefn}
@@ -1143,7 +1143,7 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
     (as in Definition \ref{performanceaveragerdefn}) exist such that
     $\sum_{\mu\in W}w_\mu=1$ and such that
     $w_\mu=0$ for all $\mu$ not strongly well-behaved (informally: the weights
-    underlying $\Upsilon$ add up to $1$, and any environment that is not strongly
+    underlying $\Upsilon$ sum to $1$, and any environment not strongly
     well-behaved has weight $0$).
 \end{definition}
 
@@ -1183,7 +1183,7 @@ of $\vec v$ implies this sum converges).
 \label{mixtureenvdefn}
     (Mixture environments---compare Definition \ref{maindefn})
     Assume $\vec w\in\mathscr W$ and $\vec\mu=(\mu_1,\mu_2,\ldots)$ is an infinite
-    sequence of environments. We define an environment $\vec w\cdot\vec\mu$ by:
+    sequence of environments. Define an environment $\vec w\cdot\vec\mu$ by:
     \[
         (\vec w\cdot \vec\mu)(x|h)
         =
@@ -1247,9 +1247,7 @@ without proof.
 \end{lemma}
 
 \begin{proof}
-    (1--3) See Appendix.
-
-    (4) Compute:
+    For (1)--(3), see Appendix. For (4), compute:
     \begin{align*}
         V^\pi_{\vec w\cdot\vec\mu}
             &= \lim_{t\to\infty} V^\pi_{\vec w\cdot \vec\mu,t}
@@ -1259,10 +1257,10 @@ without proof.
             &= \lim_{t\to\infty} \sum_{i=1}^\infty w_i V^\pi_{\mu_i,t}.
                 &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
-    For each $i\in\mathbb N$, define $a_i:\mathbb N\to\mathbb R$
+    For each $i\geq 1$, define $a_i:\mathbb N\to\mathbb R$
     by $a_i(t)=w_iV^\pi_{\mu_i,t}$.
-    Since each $\mu_i$ is strongly well-behaved, each $-1\leq V^\pi_{\mu_i,t}\leq 1$.
-    It follows that for all $i>0$, for all $t\in\mathbb N$, $|a_i(t)|\leq w_i$.
+    Since $\mu_i$ is strongly well-behaved, each $-1\leq V^\pi_{\mu_i,t}\leq 1$.
+    It follows that for all $t\in\mathbb N$, $|a_i(t)|\leq w_i$.
     Furthermore, $\sum_{i=1}^\infty w_i=1<\infty$
     by Definition of $\mathscr W$. Thus
     \begin{align*}
