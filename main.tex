@@ -172,7 +172,7 @@ and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards}.
 By $\varepsilon$ we mean the empty sequence.
 By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
-By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all $\mathbb Q$-valued
+By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all
 probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
 
 \begin{definition}
@@ -325,18 +325,19 @@ Note that it is possible for $V^\pi_\mu$ to be undefined.
 For example, if $\mu$ is an environment which always issues
 reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
 then $V^\pi_\mu$ is undefined for every agent $\pi$.
-But, following \cite{legg2007universal}, we will only be interested in
+We will only be interested in
 environments $\mu$ such that $V^\pi_\mu$
-is always defined. Note also that, following \emph{ibid},
+is always defined. Note also that, following \cite{legg2007universal},
 we delegate any possible reward discounting to the environments themselves,
 rather than build a fixed reward discounting factor into the definition
 of $V^\pi_\mu$.
 
 \begin{definition}
 \label{wellbehaveddefn}
-    An environment $\mu$ is \emph{well-behaved} if $\mu$ is Turing
-    computable and the following
-    condition holds: for every agent $\pi$, $V^\pi_\mu$ exists and
+    An environment $\mu$ is \emph{well-behaved} if the following
+    requirements hold: $\mu(x|h)\in\mathbb Q$
+    for all $x\mathcal E$ and $h\in (\mathcal E\mathcal A)^*$; $\mu$ is Turing
+    computable; and for every agent $\pi$, $V^\pi_\mu$ exists and
     $-1\leq V^\pi_\mu\leq 1$. Let $W$ be the set of all well-behaved environments.
 \end{definition}
 
@@ -1168,6 +1169,12 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
     well-behaved has weight $0$).
 \end{definition}
 
+Note that if $\mu$ never gives negative rewards, then the condition
+$-1\leq V^\pi_{\mu,t}\leq 1$ is equivalent to $-1\leq V^\pi_mu\leq 1$.
+Thus if the background reward-space $\mathcal R$ is $\subseteq [0,1]$
+then every nonzero weighted intelligence measure
+is a constant multiple of a strongly well-behaved weighted intelligence
+measure.
 We will show (Theorem \ref{universalenvtheorem} below)
 that for every strongly well-behaved $\Upsilon$,
 there is an environment $\mu_\Upsilon$ such that for every agent $\pi$,
