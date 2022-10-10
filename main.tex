@@ -74,7 +74,8 @@
     measure.
 \end{abstract}
 
-\section{Introduction}
+%\section{Introduction}
+\section{INTRODUCTION}
 
 Multi-agent reinforcement learning \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited}, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
 Opinions about both further promises and challenges have emerged, particularly signified by the
@@ -84,12 +85,27 @@ than previous well-known AI game-playing achievements based on more vanilla deep
 The most obvious way to conceive multiagent reinforcement learning, is to passively consider the collective behavior of aggregated intelligent agents.
 In fact, multiagent reinforcement learning had been first introduced as ``collective learning'' \cite{collective-1993} shortly before ever being explicitly called out as multiagent reinforcement learning \cite{multiagent-1994-most-cited}.
 
+%It would be desirable if we don't explicitly devise how intelligent agents should collaborate, yet multiple agents somehow learn to collaborate on their own.
+%Not very surprisingly, collaboration of agents is a popular topic within multiagent reinforcement learning.
+%In fact, collaboration of artificial intelligence, or that between human and artificial intelligence, has attracted ample attention even without reinforcement learning.
 
-Not very surprisingly, collaboration of agents is a popular topic within multiagent reinforcement learning.
-In fact, collaboration of artificial intelligence, or that between human and artificial intelligence, has attracted ample attention even without reinforcement learning.
+One significant recent trend in machine learning (beyond just reinforcement learning)
+is Federated Reinforcement Learning \cite{federated-learning-2021},
+which is mainly about programs physically running on disparate devices collaborating to form a more powerful artificial intelligence, and conceptually borrows from how humans collaborate.
+In this regard, reinforcement learning had a much earlier head start with
+Feudal Reinforcement Learning \cite{feudal-1992} which coincidentally borrowed from the concept earlier in the history of human social organization, on which the research remain active today \cite{Johnson2020FeudalSH}.
+Otherwise, reinforcement learning is no stranger to being explored as
+collaborative \cite{Kok2006CollaborativeMR} or
+cooperative \cite{Qiu2021RMIXLR}, probably due to its anthropomorphic allure.
+It is worth noting that "collaborative" reinforcement learning sometimes refers to collaboration between human users and artificial agents, rather than that between artificial agents \cite{collab-other}.
 
-One significant recent trend in machine learning (beyond just reinforcement learning) is federated learning \cite{federated-learning-2021}, which is mostly about programs physically running on disparate devices collaborating to form a more powerful artificial intelligence, and conceptually borrows from how humans collaborate.  Reinforcement had a much earlier head start with feudal reinforcement learning \cite{feudal-1992} which coincidentally borrowed from the concept earlier in the history of human social organization, on which the research remain active today\cite{Johnson2020FeudalSH}.
+In this work, we draw inspiration from sortition, yet another way of social organization with an ancient root in the
+historical Athenian democracy \cite{sortition-ancient} -
+actually predating both feudalism and federations.
+Sortition itself has attracted recent scientific curiosity and even advocacy into real-world governance \cite{nature-sortition,Sintomer2018FromDT,sortition-2013}.
+%to formally examine the crowd intelligence.
 
+More specifically, we formally examine the expected intelligence of a group of agents, using an abstract universal model of reinforcement learning agents \cite{legg2007universal}.
 As our result is derived from a very general and abstract definition of intelligence, it applies not only to collaboration among artificial intelligent agents, but also between human as intelligent agents and artificial ones.
 
 In reinforcement learning (RL), an agent $\pi$ interacts with an environment $\mu$.
@@ -141,11 +157,12 @@ of the RL framework, and prove that ``the expected total reward of the
 weighted linear mixture is the linear combination of the expected total rewards''.
 %We will then use this mixture operation to prove a number of interesting results.
 This linearity result then leads to multiple further interesting results, of which the following we also discuss in this paper.
-\begin{itemize}
-    \item (((List the other results here)))
-\end{itemize}
+%\begin{itemize}
+%    \item (((List the other results here)))
+%\end{itemize}
 
-\section{Preliminaries}
+%\section{Preliminaries}
+\section{PRELIMINARIES}
 
 
 Throughout the paper, we implicitly
@@ -271,7 +288,7 @@ and likewise for $P_\mu$ and for $P^\pi_\mu$.
 \end{lemma}
 
 \begin{proof}
-    See Appendix.
+    See Supplementary Materials.
 \end{proof}
 
 In the following definition (and the rest of the paper),
@@ -350,7 +367,8 @@ This depends on a background universal
 Turing machine, the choice of which is highly nontrivial
 \cite{leike2015bad}.
 
-\section{Mixture agents}
+%\section{Mixture agents}
+\section{MIXTURE AGENTS}
 
 Before defining mixture agents, we will first extend some of the above
 definitions to vectors of agents.
@@ -418,7 +436,7 @@ Now we are ready to define mixture agents.
 \end{lemma}
 
 \begin{proof}
-    See Appendix.
+    See Supplementary Materials.
 \end{proof}
 
 We will frequently use Lemma \ref{mixturereallyisanagent} without explicit mention.
@@ -547,7 +565,8 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
     (5) Follows from (4) and Definition \ref{performanceaveragerdefn}.
 \end{proof}
 
-\section{Equivalence of weak and strong symmetry}
+%\section{Equivalence of weak and strong symmetry}
+\section{EQUIVALENCE OF WEAK AND STRONG SYMMETRY}
 
 In this section, we will investigate two symmetry properties
 which a weighted intelligence measure might satisfy. A priori, one
@@ -647,7 +666,7 @@ self-dual agents (up to equivalence modulo a natural equivalence relation).
 \end{lemma}
 
 \begin{proof}
-    See Appendix.
+    See Supplementary Materials.
 \end{proof}
 
 \begin{lemma}
@@ -657,7 +676,7 @@ self-dual agents (up to equivalence modulo a natural equivalence relation).
 \end{lemma}
 
 \begin{proof}
-    See Appendix.
+    See Supplementary Materials.
 \end{proof}
 
 \begin{proposition}
@@ -752,7 +771,8 @@ The equivalence of weak and strong symmetry provides some justification for
 considering this UTM property to be inherently desirable (in the RL context).
 
 
-\section{Discernability and separability}
+%\section{Discernability and separability}
+\section{DISCERNABILITY AND SEPARABILITY}
 
 In this section, we give another application of mixture agents.
 We define natural notions of \emph{discernability} and \emph{separability}
@@ -909,7 +929,8 @@ We will state a partial converse making use of mixtures.
     By Claims 1--4, $\mu,I,J$ witness that $\Pi$ is separable.
 \end{proof}
 
-\section{Local extrema and lattice points of intelligence surfaces}
+%\section{Local extrema and lattice points of intelligence surfaces}
+\section{LOCAL EXTREMA AND LATTICE POINTS OF INTELLIGENCE SURFACES}
 
 \begin{definition}
 \label{modifyagentatoneplace}
@@ -955,7 +976,7 @@ We will state a partial converse making use of mixtures.
 \end{lemma}
 
 \begin{proof}
-    See Appendix.
+    See Supplementary Materials.
 \end{proof}
 
 \begin{definition}
@@ -985,7 +1006,7 @@ $\pi^{h\mapsto \vec m}$.
 \end{proposition}
 
 \begin{proof}
-    See Appendix.
+    See Supplementary Materials.
 \end{proof}
 
 \begin{definition}
@@ -1131,7 +1152,7 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
     $\pi$ is not a strict local maximum of $\Upsilon$.
 \end{proof}
 
-\section{Environment mixture-environments}
+\section{UNIVERSAL MIXTURE-ENVIRONMENTS}
 
 \begin{definition}
 \label{stronglywellbehaveddefn}
@@ -1203,7 +1224,7 @@ of $\vec v$ implies this sum converges).
 \end{lemma}
 
 \begin{proof}
-    See Appendix.
+    See Supplementary Materials.
 \end{proof}
 
 In order to prove the Lemma \ref{envmaintheorem} below, we will need to invoke
@@ -1247,7 +1268,7 @@ without proof.
 \end{lemma}
 
 \begin{proof}
-    For (1)--(3), see Appendix. For (4), compute:
+    For (1)--(3), see Supplementary Materials. For (4), compute:
     \begin{align*}
         V^\pi_{\vec w\cdot\vec\mu}
             &= \lim_{t\to\infty} V^\pi_{\vec w\cdot \vec\mu,t}
@@ -1306,7 +1327,8 @@ without proof.
     by Definition \ref{performanceaveragerdefn}.
 \end{proof}
 
-\section{Conclusion and future work}
+%\section{Conclusion and future work}
+\section{CONCLUSION AND FUTURE WORK}
 
 \bibliographystyle{apalike} % AISTATS
 \bibliography{main}
@@ -1315,9 +1337,22 @@ without proof.
 
 \onecolumn
 
-\section*{Appendix}
+% This is to be separated into two files during submission
+% Reset counters
+% https://tex.stackexchange.com/questions/71162/reset-section-numbering-between-unnumbered-chapters
+\setcounter{section}{0}
+%\renewcommand*{\theHsection}{chX.\the\value{section}}
 
-\begin{proof}[Proof of Lemma \ref{factorizationlemma}]
+\aistatstitle{Supplementary Materials}
+%\section*{Supplementary Materials}
+
+
+\section{ADDITIONAL PROOFS}
+
+Here, we present detailed proofs missing from the main text due to length limit.
+
+\subsection{Proof of Lemma \ref{factorizationlemma}}
+\begin{proof}
     By induction on $h$.
 
     Case 1: $h=\varepsilon$. Then the lemma is trivial.
@@ -1340,7 +1375,8 @@ without proof.
         Similar to Case 2.
 \end{proof}
 
-\begin{proof}[Proof of Lemma \ref{mixturereallyisanagent}]
+\subsection{Proof of Lemma \ref{mixturereallyisanagent}}
+\begin{proof}
     Let $h\in(\mathcal E\mathcal A)^*\mathcal E$.
     Clearly $(\vec w\cdot\vec\pi)(y|h)\geq 0$ for all $y\in\mathcal A$.
     It remains to show
@@ -1381,7 +1417,8 @@ without proof.
     \end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Lemma \ref{piopluspilemma}]
+\subsection{Proof of Lemma \ref{piopluspilemma}}
+\begin{proof}
     Recall that the real numbers satisfy the so-called \emph{null-factor law}:
     for all real numbers $a$ and $b$, if $ab=0$, then $a=0$ or $b=0$.
     In other words, the product of two nonzero real numbers can never be zero.
@@ -1457,7 +1494,8 @@ without proof.
         \end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Lemma \ref{reflectionmakesjanuslemma}]
+\subsection{Proof of Lemma \ref{reflectionmakesjanuslemma}}
+\begin{proof}
     Let $\vec w=(\frac12,\frac12)$.
     For any $h\in(\mathcal E\mathcal A)^*\mathcal E$ and $y\in\mathcal A$,
     we claim
@@ -1508,7 +1546,8 @@ without proof.
     \end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Lemma \ref{wcdotmisaprobabilitydistro}]
+\subsection{Proof of Lemma \ref{wcdotmisaprobabilitydistro}}
+\begin{proof}
     Clearly for every $y\in\mathcal A$,
     $(\vec w\cdot\vec m)(y) = w_1m_1(y) + \cdots + w_nm_n(y)$ is a nonnegative
     real. It remains to show $\sum_{y\in\mathcal A}(\vec w\cdot\vec m)(y)=1$.
@@ -1612,7 +1651,8 @@ Proposition \ref{longproposition}.
     \end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Proposition \ref{longproposition}]
+\subsection{Proof of Proposition \ref{longproposition}}
+\begin{proof}
     \textbf{Subclaim:}For every $g\in\mathcal H$,
     $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
     We prove this by induction on $g$.
@@ -1714,7 +1754,8 @@ Proposition \ref{longproposition}.
     The proposition follows by Definition \ref{performancedefn} (part 2).
 \end{proof}
 
-\begin{proof}[Proof of Lemma \ref{wcdotSisenvlemma}]
+\subsection{Proof of Lemma \ref{wcdotSisenvlemma}}
+\begin{proof}
     Let $h\in(\mathcal E\mathcal A)^*$.
     Clearly $(\vec w\cdot \vec\mu)(x|h)\geq 0$ for all $x\in\mathcal E$.
     It remains to show $\sum_{x\in\mathcal E}(\vec w\cdot \vec\mu)(x|h)=1$.
@@ -1752,7 +1793,8 @@ Proposition \ref{longproposition}.
     so the whole fraction reduces to $1$.
 \end{proof}
 
-\begin{proof}[Proof of Lemma \ref{envmaintheorem} (1--3)]
+\subsection{Proof of Lemma \ref{envmaintheorem} (1--3)}
+\begin{proof}
     (1) By induction on $h$.
 
     Case 1: $h=\varepsilon$. Then
