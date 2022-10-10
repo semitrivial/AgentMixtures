@@ -78,59 +78,66 @@
 \section{INTRODUCTION}
 
 Multi-agent Reinforcement Learning \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited}, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
+% Comment
 Opinions about further promises and challenges have emerged, particularly signified by the
 high-profile attempt at replicating the super-human AI game-playing performance, in more complex realtime video games \cite{nature-starcraft},
 than previous well-known AI game-playing achievements based on more vanilla deep reinforcement learning methods \cite{nature-ATARI,nature-go-2}.
 
 The most obvious way to conceive multi-agent reinforcement learning, is to passively consider the collective behavior of aggregated intelligent agents.
-In fact, multi-agent reinforcement learning had been first introduced as ``collective learning'' \cite{collective-1993} shortly before ever being explicitly called out as multi-agent reinforcement learning \cite{multiagent-1994-most-cited}.
+In fact, multi-agent reinforcement learning was first introduced as ``collective learning'' \cite{collective-1993} even before being explicitly identified as multi-agent reinforcement learning \cite{multiagent-1994-most-cited}.
 
 %It would be desirable if we don't explicitly devise how intelligent agents should collaborate, yet multiple agents somehow learn to collaborate on their own.
 %Not very surprisingly, collaboration of agents is a popular topic within multiagent reinforcement learning.
 %In fact, collaboration of artificial intelligence, or that between human and artificial intelligence, has attracted ample attention even without reinforcement learning.
 
-One significant recent trend in machine learning (beyond just reinforcement learning)
+One significant recent trend in machine learning (beyond just RL)
 is Federated Reinforcement Learning \cite{federated-learning-2021},
-which is mainly about programs physically running on disparate devices collaborating to form a more powerful artificial intelligence, and conceptually borrows from how humans collaborate.
-In this regard, reinforcement learning had a much earlier head start with
-Feudal Reinforcement Learning \cite{feudal-1992} which coincidentally borrowed from the concept earlier in the history of human social organization, on which the research remain active today \cite{Johnson2020FeudalSH}.
-Otherwise, reinforcement learning is no stranger to being explored as
-collaborative \cite{Kok2006CollaborativeMR} or
-cooperative \cite{Qiu2021RMIXLR}, probably due to its anthropomorphic allure.
-It is worth noting that "collaborative" reinforcement learning sometimes refers to collaboration between human users and artificial agents, rather than that between artificial agents \cite{collab-other}.
+which is mainly about programs physically running on disparate devices collaborating to form a more powerful artificial intelligence. This approach conceptually borrows from how humans collaborate.
+% Comment
+In this regard, RL had a much earlier head start with
+Feudal Reinforcement Learning \cite{feudal-1992}, which borrows concepts which have been around for many hundreds of years in human social organization, and on which research remains active today \cite{Johnson2020FeudalSH}.
+RL is no stranger to
+collaboration \cite{Kok2006CollaborativeMR} or to
+cooperation \cite{Qiu2021RMIXLR}, including even collaboration with
+human users \cite{collab-other}.
 
-In this work, we draw inspiration from sortition, yet another way of social organization with an ancient root in the
-historical Athenian democracy \cite{sortition-ancient} -
-actually predating both feudalism and federations.
-Sortition itself has attracted recent scientific curiosity and even advocacy into real-world governance \cite{nature-sortition,Sintomer2018FromDT,sortition-2013}.
+In this work, we draw inspiration from \emph{sortition}, which is yet another way of social organization. In sortition, instead of the whole citizenry collaborating on individual
+decisions, citizens are chosen \emph{by lottery} and granted temporary power. Thus in a
+statistical sense, each citizen enjoys a certain amount of total expected power.
+The roots of sortition trace back to the original Athenian democracy \cite{sortition-ancient},
+and sortition has attracted recent scientific curiosity, and even advocacy in real-world governance \cite{nature-sortition,Sintomer2018FromDT,sortition-2013}.
 %to formally examine the crowd intelligence.
 
-More specifically, we formally examine the expected intelligence of a single combined
+More specifically, we examine the expected intelligence of a single combined
 mixture agent formed from a group of agents using sortition.
-Given agents $\vec{\pi}=(\pi_1,\ldots,\pi_n)$ and positive real
-number weights
-$\vec{w}=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, imagine an agent $\sigma$
+Given agents $\vec{\pi}=(\pi_1,\ldots,\pi_n)$,
+imagine an agent $\sigma$
 who, at the start of each agent-environment interaction, randomly chooses
-an agent $\pi_i$ to act as (each candidate $\pi_i$ being chosen with probability
-$w_i$). If each $\pi_i$ would get total expected reward $R_i$ from an environment
-$\mu$, we would expect $\sigma$ should get total expected reward
+an agent $\pi_i$ to act as for that entire interaction (that is, the selection
+only occurs \emph{once}, at the beginning, and then persists---we do \emph{not}
+mean that one of the $\pi_i$ is randomly chosen on every single turn).
+Imagine that each candidate $\pi_i$ is so chosen with probability (or \emph{weight})
+$w_i$ (where $w_1+\cdots+w_n=1$). If each $\pi_i$ would get total expected
+reward $R_i$ from an environment,
+we would expect $\sigma$ to get total expected reward
 $\vec{w}\cdot \vec{R}=w_1R_1+\cdots+w_nR_n$ from that environment.
 
 Starting from practical (e.g., OpenAI gym conformant)
 implementations of agents $\pi_1,\ldots,\pi_n$ as above, $\sigma$ could easily be
-implemented as a new agent who, upon initiation, uses a random number generator
+implemented as a new agent who, upon instantiation, uses a random number generator
 to determine which $\pi_i$ to act as, and stores that decision in internal memory.
 But this sort of construction is not possible in more abstract, theoretical
 RL frameworks such as \cite{legg2007universal}, where agents are mathematical functions
 which take histories as input and output action-space probability-distributions.
-Such functions have no ``\_\_init\_\_'' method, no access to a true random number
+Such functions have no ``instantiation'', no access to a true random number
 generator, and no concept of ``internal memory''. A key result of ours is that
 nevertheless, it is possible to define an agent $\sigma$ having the same exact performance
 as the above-described sortition agent, entirely within an abstract, theoretical
 RL framework. This is important because the constraints of the theoretical framework
-facilitate rigorous mathematical proofs about properties of $\sigma$. To see why this
-is non-trivial, consider instead an agent $\rho$ who, upon initiation, examines the
-computer's system clock, determine to play as $\pi_1$ if the clock says ``AM'' or as
+facilitate rigorous mathematical proofs of properties of $\sigma$. To see that the
+construction
+is non-trivial, consider instead an agent $\rho$ who, upon instantiation, examines the
+computer's system clock, and determines to play as $\pi_1$ if the clock says ``AM'' or as
 $\pi_2$ if the clock says ``PM''. Such a $\rho$ could certainly be implemented in an
 OpenAI gym conformant way, but clearly has no counterpart in a formal RL framework
 with no notion of a system clock.
