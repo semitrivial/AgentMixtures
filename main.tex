@@ -127,7 +127,7 @@ implementations of agents $\pi_1,\ldots,\pi_n$ as above, $\sigma$ could easily b
 implemented as a new agent who, upon instantiation, uses a random number generator
 to determine which $\pi_i$ to act as, and stores that decision in internal memory.
 But this sort of construction is not possible in more abstract, theoretical
-RL frameworks such as \cite{legg2007universal}, where agents are mathematical functions
+RL frameworks such as \cite{legg2007universal, DBLP:conf/ijcai/LeggH05}, where agents are mathematical functions
 which take histories as input and output action-space probability-distributions.
 Such functions have no ``instantiation'', no access to a true random number
 generator, and no concept of ``internal memory''. A key result of ours is that
@@ -348,7 +348,7 @@ of $V^\pi_\mu$.
 The prototypical weighted intelligence measure is the Legg-Hutter intelligence
 measure $\Upsilon$ introduced in \cite{legg2007universal},
 where each well-behaved $\mu$ is
-weighed using the universal prior \cite{li2008introduction}, i.e.,
+weighed using the universal prior \cite{li2008introduction,DBLP:conf/alt/Hutter03}, i.e.,
 given weight $2^{-K(\mu)}$
 where $K$ denotes Kolmogorov complexity ($K(\mu)$ exists because of the Turing
 computability requirement in Definition \ref{wellbehaveddefn}).
@@ -1301,6 +1301,27 @@ without proof.
 
 %\section{Conclusion and future work}
 \section{CONCLUSION AND FUTURE WORK}
+
+To this point, we have proven the core theorem that
+(((fill in the blank)))
+and demonstrated its use by applying it to prove
+(((fill in the blank))).
+We are certainly very optimistic about the result enabling further theoretic development in the form of new theorems
+proved, as the linearity is a very mathematically convenient property for building theories upon. %% couldn't find reference to support this though, is it okay?
+
+One particular direction in which we would like to further explore is experimentally verification.
+While we are confident in our proofs, popular reinforcement learning algorithms often subtly deviates from
+the universal intelligent agent model by effectively letting the agent look at the future, by playing the same game more than once in a separate training phase.
+On the other hand, if we consider the life of a human being as a game played by a reinforcement learning agent,
+the game is certainly non-ergodic and can be only played once by an agent. It could even be argued that everyone's life is so distinct that a single game can ever be played once by a single agent.
+
+While being able to play the exact same game multiple times is certainly more practical for real-world AI applications and thus the majority of experimental AI research,
+
+Very recent experimental evidence has shown that Proximal Policy Optimization (PPO) \cite{PPO}, a very popular reinforcement learning algorithm which makes use of multiple playouts, \cite{PPO-bad}.
+%  Copied from Samuel's mails
+%A collection of RL environments where the "step" and "reset" methods return probability distributions rather than individual percepts. (Could fork openai gym or some other existing library, perhaps.)
+%A collection of RL agents whose "act" methods return probability distributions rather than individual actions, and who are trained using a "train" method taking tuple (o_prev, action, reward, o_next, done) as input.
+
 
 \bibliographystyle{apalike} % AISTATS
 \bibliography{main}
