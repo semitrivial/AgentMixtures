@@ -793,7 +793,7 @@ Two sets are \emph{disjoint} if they have no point in common.
 \label{incentivizabilitydefn}
     A set $\Pi$ of agents is \emph{separable} if there exists
     an environment $\mu$ and disjoint convex sets $I$ and $J$ of
-    the reals such that for every agent $\pi$:
+    reals such that for every agent $\pi$:
     \begin{enumerate}
         \item
         $V^\pi_\mu$ exists.
@@ -804,10 +804,9 @@ Two sets are \emph{disjoint} if they have no point in common.
     \end{enumerate}
 \end{definition}
 
-Intuitively, $\Pi$ is separable if there is some environment in which
-the performance measures of members of $\Pi$ are separated into one
-convex set, and the performance measures of outsides of $\Pi$ are separated
-into a different convex set, with no overlap.
+Equivalently, $\Pi$ is separable if either: there is some environment where
+every member of $\Pi$ outperforms every member of $\Pi^c$; or there is some
+environment where every member of $\Pi$ underperforms every member of $\Pi^c$.
 Clearly separability implies discernability, but what about the converse?
 We will state a partial converse making use of mixtures.
 
@@ -830,6 +829,20 @@ We will state a partial converse making use of mixtures.
 \begin{proof}
     Let $\alpha=(C-B)/(C-A)$ (or $\alpha=1$ if $A=C$).
 \end{proof}
+
+\begin{lemma}
+\label{convexsetlemma}
+    For every environment $\mu$ and set $\Pi$ of agents, the
+    set
+    $
+        S_{\Pi,\mu}=\{
+            r\in\mathbb R
+            \,:\,
+            \exists \pi_1,\pi_2\in\Pi\mbox{ s.t. }V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu
+        \}
+    $
+    is convex.
+\end{lemma}
 
 \begin{theorem}
     (Characterization of Separability)
@@ -869,32 +882,11 @@ We will state a partial converse making use of mixtures.
     Assume $\Pi$ is discernable and both $\Pi$ and $\Pi^c$ are closed under mixtures.
     Since $\Pi$ is discernable, there is some environment $\mu$
     as in Definition \ref{discernabilitydefn}.
-    Define
-    \begin{align*}
-        I &= \{
-            r\in\mathbb R
-            \,:\,
-            \exists \pi_1,\pi_2\in\Pi\mbox{ s.t. }V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu
-        \},\\
-        J &= \{
-            r\in\mathbb R
-            \,:\,
-            \exists \rho_1,\rho_2\in\Pi^c\mbox{ s.t. }V^{\rho_1}_\mu\leq r\leq V^{\rho_2}_\mu
-        \}.
-    \end{align*}
-
-    Claim 1: $I$ is convex. To see this, let $i_1<i_2<i_3$ be any reals
-    such that $i_1\in I$ and $i_3\in I$.
-    By definition of $I$, there are $\pi_1,\pi_2\in\Pi$
-    such that $V^{\pi_1}_\mu\leq i_1\leq V^{\pi_2}_\mu$,
-    and there are $\pi'_1,\pi'_2\in\Pi$ such that
-    $V^{\pi'_1}_\mu\leq i_3\leq V^{\pi'_2}_\mu$.
-    It follows that $V^{\pi_1}_\mu\leq i_2\leq V^{\pi'_2}_\mu$,
-    which shows $i_2\in I$, as desired.
-
-    Claim 2: $J$ is convex. Similar to Claim 1.
-
-    Claim 3: $I$ and $J$ are disjoint. Assume not. Then there is some $r\in I\cap J$.
+    Let $I=S_{\Pi,\mu}$, $J=S_{\Pi^c,\mu}$ as in Lemma \ref{convexsetlemma},
+    so $I$ and $J$ are convex.
+    From the definition of $I$ and $J$, clearly $V^\pi_\mu\in I$ for all $\pi\in\Pi$
+    and $V^\rho_\mu\in J$ for all $\pi\in\Pi^c$. It only remains to show $I$ and $J$
+    are disjoint. Assume not. Then there is some $r\in I\cap J$.
     By definition of $I$, there are $\pi_1,\pi_2\in\Pi$ such that
     $V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu$, and by definition of $J$,
     there are $\rho_1,\rho_2\in\Pi^c$ such that $V^{\rho_1}_\mu\leq r\leq V^{\rho_2}_\mu$.
@@ -910,16 +902,10 @@ We will state a partial converse making use of mixtures.
     Definition \ref{discernabilitydefn}, 
     and $\pi\in\Pi$ and $\rho\in\Pi^c$, this forces
     $V^\pi_\mu\not=V^\rho_\mu$, absurd.
-
-    Claim 4: For all $\pi\in \Pi$, $V^\pi_\mu\in I$, and for all $\rho\in\Pi^c$,
-    $V^\rho_\mu\in J$. This is immediate from the definition of $I$ and $J$,
-    using $\pi_1=\pi=\pi_2$ and $\rho_1=\rho=\rho_2$.
-
-    By Claims 1--4, $\mu,I,J$ witness that $\Pi$ is separable.
 \end{proof}
 
 %\section{Local extrema and lattice points of intelligence surfaces}
-\section{LOCAL EXTREMA AND LATTICE POINTS OF INTELLIGENCE SURFACES}
+\section{LOCAL EXTREMA AND LATTICE POINTS}
 
 \begin{definition}
 \label{modifyagentatoneplace}
@@ -1540,6 +1526,20 @@ Here, we present detailed proofs missing from the main text due to length limit.
     \end{align*}
 \end{proof}
 
+\subsection{Proof of Lemma \ref{convexsetlemma}}
+
+\begin{proof}
+    Assume $i_1<i_2<i_3$ are reals with $i_1,i_3\in S_{\Pi,\mu}$; we must show
+    $i_2\in S_{\Pi,\mu}$.
+    Since $i_1\in S_{\Pi,\mu}$, there exist agents $\pi_1,\pi_2\in\Pi$
+    such that $V^{\pi_1}_\mu\leq i_1\leq V^{\pi_2}_\mu$.
+    And since $i_3\in S_{\Pi,\mu}$, there exist agents $\rho_1,\rho_2\in\Pi$
+    such that $V^{\rho_1}_\mu\leq i_3\leq V^{\rho_2}_\mu$.
+    Then $\pi_1,\rho_2\in \Pi$ satisfy
+    $V^{\pi_1}_\mu\leq i_2\leq V^{\rho_2}_\mu$, showing $i_2\in S_{\Pi,\mu}$
+    as desired.
+\end{proof}
+
 \subsection{Proof of Lemma \ref{wcdotmisaprobabilitydistro}}
 \begin{proof}
     Clearly for every $y\in\mathcal A$,
@@ -1561,6 +1561,7 @@ Here, we present detailed proofs missing from the main text due to length limit.
     \end{align*}
 \end{proof}
 
+\subsection{Proof of Proposition \ref{longproposition}}
 The following auxiliary lemmas will be used in our proof of
 Proposition \ref{longproposition}.
 
@@ -1645,8 +1646,7 @@ Proposition \ref{longproposition}.
     \end{align*}
 \end{proof}
 
-\subsection{Proof of Proposition \ref{longproposition}}
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{longproposition}]
     \textbf{Subclaim:}For every $g\in\mathcal H$,
     $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
     We prove this by induction on $g$.
