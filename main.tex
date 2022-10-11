@@ -838,6 +838,7 @@ We will use mixtures to state a partial converse.
 \end{proof}
 
 \begin{theorem}
+\label{separabilitycharacterizationthm}
     (Characterization of Separability)
     For any set $\Pi$ of agents, the following are equivalent:
     \begin{enumerate}
@@ -1300,27 +1301,31 @@ without proof.
 \end{proof}
 
 %\section{Conclusion and future work}
-\section{CONCLUSION AND FUTURE WORK}
+\section{SUMMARY}
 
-To this point, we have proven the core theorem that
-(((fill in the blank)))
-and demonstrated its use by applying it to prove
-(((fill in the blank))).
-We are certainly very optimistic about the result enabling further theoretic development in the form of new theorems
-proved, as the linearity is a very mathematically convenient property for building theories upon. %% couldn't find reference to support this though, is it okay?
+We introduced (Definition \ref{maindefn}) an operation
+which takes a finite sequence of RL agents and a
+finite sequence of weights, and which outputs a new agent, which can
+be thought of as a weighted mixture agent, with the property that
+in any environment,
+``The expected reward of a weighted mixture is the weighted
+average of the expected rewards''
+(Theorem \ref{maintheorem} part 4). Thus if intelligence is measured in
+terms of performance,
+``The intelligence of a weighted mixture is the weighted average
+of the intelligences'' (Theorem \ref{maintheorem} part 5).
+This construction enabled us to prove a number of results about
+the geometry of RL agent intelligence measures, namely, results about
+intelligence symmetry (Theorem \ref{equivalentsymmetriescor}),
+convexity (Theorem \ref{separabilitycharacterizationthm}),
+and strict local extrema (Theorem \ref{extremitythm}).
+Finally, by applying the same mixture idea to environments instead of
+agents, we established (Theorem \ref{universalenvtheorem})
+that for a large class of performance-based
+intelligence measures, there exist universal mixture environments,
+i.e., environments in which every agent's total expected reward in
+fact equals the agent's intelligence according to said measure.
 
-One particular direction in which we would like to further explore is experimentally verification.
-While we are confident in our proofs, popular reinforcement learning algorithms often subtly deviates from
-the universal intelligent agent model by effectively letting the agent look at the future, by playing the same game more than once in a separate training phase.
-On the other hand, if we consider the life of a human being as a game played by a reinforcement learning agent,
-the game is certainly non-ergodic and can be only played once by an agent. It could even be argued that everyone's life is so distinct that a single game can ever be played once by a single agent.
-
-While being able to play the exact same game multiple times is certainly more practical for real-world AI applications and thus the majority of experimental AI research,
-
-Very recent experimental evidence has shown that Proximal Policy Optimization (PPO) \cite{PPO}, a very popular reinforcement learning algorithm which makes use of multiple playouts, \cite{PPO-bad}.
-%  Copied from Samuel's mails
-%A collection of RL environments where the "step" and "reset" methods return probability distributions rather than individual percepts. (Could fork openai gym or some other existing library, perhaps.)
-%A collection of RL agents whose "act" methods return probability distributions rather than individual actions, and who are trained using a "train" method taking tuple (o_prev, action, reward, o_next, done) as input.
 
 
 \bibliographystyle{apalike} % AISTATS
