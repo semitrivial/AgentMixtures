@@ -77,89 +77,77 @@
 %\section{Introduction}
 \section{INTRODUCTION}
 
-Multi-agent reinforcement learning \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited}, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
-Opinions about both further promises and challenges have emerged, particularly signified by the
+Multi-agent Reinforcement Learning \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited}, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
+% Comment
+Opinions about further promises and challenges have emerged, particularly signified by the
 high-profile attempt at replicating the super-human AI game-playing performance, in more complex realtime video games \cite{nature-starcraft},
 than previous well-known AI game-playing achievements based on more vanilla deep reinforcement learning methods \cite{nature-ATARI,nature-go-2}.
 
-The most obvious way to conceive multiagent reinforcement learning, is to passively consider the collective behavior of aggregated intelligent agents.
-In fact, multiagent reinforcement learning had been first introduced as ``collective learning'' \cite{collective-1993} shortly before ever being explicitly called out as multiagent reinforcement learning \cite{multiagent-1994-most-cited}.
+The most obvious way to conceive multi-agent reinforcement learning, is to passively consider the collective behavior of aggregated intelligent agents.
+In fact, multi-agent reinforcement learning was first introduced as ``collective learning'' \cite{collective-1993} even before being explicitly identified as multi-agent reinforcement learning \cite{multiagent-1994-most-cited}.
 
 %It would be desirable if we don't explicitly devise how intelligent agents should collaborate, yet multiple agents somehow learn to collaborate on their own.
 %Not very surprisingly, collaboration of agents is a popular topic within multiagent reinforcement learning.
 %In fact, collaboration of artificial intelligence, or that between human and artificial intelligence, has attracted ample attention even without reinforcement learning.
 
-One significant recent trend in machine learning (beyond just reinforcement learning)
+One significant recent trend in machine learning (beyond just RL)
 is Federated Reinforcement Learning \cite{federated-learning-2021},
-which is mainly about programs physically running on disparate devices collaborating to form a more powerful artificial intelligence, and conceptually borrows from how humans collaborate.
-In this regard, reinforcement learning had a much earlier head start with
-Feudal Reinforcement Learning \cite{feudal-1992} which coincidentally borrowed from the concept earlier in the history of human social organization, on which the research remain active today \cite{Johnson2020FeudalSH}.
-Otherwise, reinforcement learning is no stranger to being explored as
-collaborative \cite{Kok2006CollaborativeMR} or
-cooperative \cite{Qiu2021RMIXLR}, probably due to its anthropomorphic allure.
-It is worth noting that "collaborative" reinforcement learning sometimes refers to collaboration between human users and artificial agents, rather than that between artificial agents \cite{collab-other}.
+which is mainly about programs physically running on disparate devices collaborating to form a more powerful artificial intelligence. This approach conceptually borrows from how humans collaborate.
+% Comment
+In this regard, RL had a much earlier head start with
+Feudal Reinforcement Learning \cite{feudal-1992}, which borrows concepts which have been around for many hundreds of years in human social organization, and on which research remains active today \cite{Johnson2020FeudalSH}.
+RL is no stranger to
+collaboration \cite{Kok2006CollaborativeMR} or to
+cooperation \cite{Qiu2021RMIXLR}, including even collaboration with
+human users \cite{collab-other}.
 
-In this work, we draw inspiration from sortition, yet another way of social organization with an ancient root in the
-historical Athenian democracy \cite{sortition-ancient} -
-actually predating both feudalism and federations.
-Sortition itself has attracted recent scientific curiosity and even advocacy into real-world governance \cite{nature-sortition,Sintomer2018FromDT,sortition-2013}.
+In this work, we draw inspiration from \emph{sortition}, which is yet another way of social organization. In sortition, instead of the whole citizenry collaborating on individual
+decisions, citizens are chosen \emph{by lottery} and granted temporary power. Thus in a
+statistical sense, each citizen enjoys a certain amount of total expected power.
+The roots of sortition trace back to the original Athenian democracy \cite{sortition-ancient},
+and sortition has attracted recent scientific curiosity, and even advocacy in real-world governance \cite{nature-sortition,Sintomer2018FromDT,sortition-2013}.
 %to formally examine the crowd intelligence.
 
-More specifically, we formally examine the expected intelligence of a group of agents, using an abstract universal model of reinforcement learning agents \cite{legg2007universal}.
-As our result is derived from a very general and abstract definition of intelligence, it applies not only to collaboration among artificial intelligent agents, but also between human as intelligent agents and artificial ones.
-
-In reinforcement learning (RL), an agent $\pi$ interacts with an environment $\mu$.
-The agent and the environment take turns.
-\begin{itemize}
-\item
-On $\pi$'s turn, $\pi$
-outputs a probability distribution over a fixed action-set.
-Based on this distribution, an action is sampled
-and is transmitted to $\pi$ and $\mu$.
-\item
-On $\mu$'s turn, $\mu$
-outputs a probability distribution over a fixed percept-set,
-where every percept includes an observation (thought of as
-the agent's view of the world) and a numerical reward.
-Based on this distribution, a percept is sampled and
-is transmitted to $\pi$ and $\mu$.
-\end{itemize}
-These turns continue forever, and the whole sequence of turns
-is called an agent-environment interaction.
-
-If $\pi_1$ and $\pi_2$ are two agents, we can informally imagine a new agent
-$\sigma$
-as follows. At the beginning of every agent-environment interaction,
-$\sigma$ flips a fair coin. If the coin lands heads, then $\sigma$ transforms into
-$\pi_1$; otherwise, $\sigma$ transforms into $\pi_2$. Note that the coin is only
-flipped one time, at the very start of the agent-environment interaction:
-it is not repeatedly flipped every turn. Intuitively, it seems like the
-expected total reward in the agent-environment interaction
-when $\sigma$ interacts with $\mu$, should be the average
-of the corresponding expected total rewards when $\pi_1$ or $\pi_2$ interact
-with $\mu$. But this is all quite informal, as the RL
-framework does not actually provide any mechanism for such an initial
-coin-flip.
-
-More generally, given agents $\vec{\pi}=(\pi_1,\ldots,\pi_n)$ and positive real
-numbers
-$\vec{w}=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$, we could imagine an agent $\sigma$
+More specifically, we examine the expected intelligence of a single combined
+mixture agent formed from a group of agents using sortition.
+Given agents $\vec{\pi}=(\pi_1,\ldots,\pi_n)$,
+imagine an agent $\sigma$
 who, at the start of each agent-environment interaction, randomly chooses
-an agent $\pi_i$ to act as (each candidate $\pi_i$ being chosen with probability
-$w_i$). If each $\pi_i$ would get total expected reward $R_i$ from an environment
-$\mu$, we would expect $\sigma$ should get total expected reward
-$\vec{w}\cdot \vec{r}=w_1R_1+\cdots+w_nR_n$ from that environment.
-But again, the RL
-framework has no mechanism for such an agent $\sigma$. We will define
-an agent $\vec{w}\cdot\vec{\pi}$, called a \emph{mixture agent},
-within the constraints
-of the RL framework, and prove that ``the expected total reward of the
-weighted linear mixture is the linear combination of the expected total rewards''.
-%We will then use this mixture operation to prove a number of interesting results.
-This linearity result then leads to multiple further interesting results, of which the following we also discuss in this paper.
-%\begin{itemize}
-%    \item (((List the other results here)))
-%\end{itemize}
+an agent $\pi_i$ to act as for that entire interaction (that is, the selection
+only occurs \emph{once}, at the beginning, and then persists---we do \emph{not}
+mean that one of the $\pi_i$ is randomly chosen on every single turn).
+Imagine that each candidate $\pi_i$ is so chosen with probability (or \emph{weight})
+$w_i$ (where $w_1+\cdots+w_n=1$). If each $\pi_i$ would get total expected
+reward $R_i$ from an environment,
+we would expect $\sigma$ to get total expected reward
+$\vec{w}\cdot \vec{R}=w_1R_1+\cdots+w_nR_n$ from that environment.
+
+Starting from practical (e.g., OpenAI gym conformant)
+implementations of agents $\pi_1,\ldots,\pi_n$ as above, $\sigma$ could easily be
+implemented as a new agent who, upon instantiation, uses a random number generator
+to determine which $\pi_i$ to act as, and stores that decision in internal memory.
+But this sort of construction is not possible in more abstract, theoretical
+RL frameworks such as \cite{legg2007universal}, where agents are mathematical functions
+which take histories as input and output action-space probability-distributions.
+Such functions have no ``instantiation'', no access to a true random number
+generator, and no concept of ``internal memory''. A key result of ours is that
+nevertheless, it is possible to define an agent $\sigma$ having the same exact performance
+as the above-described sortition agent, entirely within an abstract, theoretical
+RL framework. This is important because the constraints of the theoretical framework
+facilitate rigorous mathematical proofs of properties of $\sigma$. To see that the
+construction
+is non-trivial, consider instead an agent $\rho$ who, upon instantiation, examines the
+computer's system clock, and determines to play as $\pi_1$ if the clock says ``AM'' or as
+$\pi_2$ if the clock says ``PM''. Such a $\rho$ could certainly be implemented in an
+OpenAI gym conformant way, but clearly has no counterpart in a formal RL framework
+with no notion of a system clock.
+
+The fact that the weighted mixture agent $\sigma$'s expected total reward in any
+environment is the corresponding weighted average of the expected total rewards of
+$\pi_1,\ldots,\pi_n$ will allow us to prove multiple interesting results that
+shed light on the geometry of RL agent performance and performance-based intelligence
+measures.
+
 
 %\section{Preliminaries}
 \section{PRELIMINARIES}
@@ -172,7 +160,7 @@ and $\mathcal R\subseteq \mathbb Q\cap [-1,1]$ of \emph{rewards}.
 By $\varepsilon$ we mean the empty sequence.
 By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation-reward
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
-By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all $\mathbb Q$-valued
+By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all
 probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
 
 \begin{definition}
@@ -325,18 +313,19 @@ Note that it is possible for $V^\pi_\mu$ to be undefined.
 For example, if $\mu$ is an environment which always issues
 reward $(-1)^t$ in response to the agent's $t$th action $y_t$,
 then $V^\pi_\mu$ is undefined for every agent $\pi$.
-But, following \cite{legg2007universal}, we will only be interested in
+We will only be interested in
 environments $\mu$ such that $V^\pi_\mu$
-is always defined. Note also that, following \emph{ibid},
+is always defined. Note also that, following \cite{legg2007universal},
 we delegate any possible reward discounting to the environments themselves,
 rather than build a fixed reward discounting factor into the definition
 of $V^\pi_\mu$.
 
 \begin{definition}
 \label{wellbehaveddefn}
-    An environment $\mu$ is \emph{well-behaved} if $\mu$ is Turing
-    computable and the following
-    condition holds: for every agent $\pi$, $V^\pi_\mu$ exists and
+    An environment $\mu$ is \emph{well-behaved} if the following
+    requirements hold: $\mu(x|h)\in\mathbb Q$
+    for all $x\mathcal E$ and $h\in (\mathcal E\mathcal A)^*$; $\mu$ is Turing
+    computable; and for every agent $\pi$, $V^\pi_\mu$ exists and
     $-1\leq V^\pi_\mu\leq 1$. Let $W$ be the set of all well-behaved environments.
 \end{definition}
 
@@ -1139,119 +1128,84 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
         \end{cases}
     \]
     By choice of $\epsilon'$ it follows that $m_1,m_2\in\Delta\mathcal A$.
-    Let $\vec w=(\frac12,\frac12)$, $\vec m=(m_1,m_2)$.
-    Clearly $\vec w\cdot\vec m=\pi(\cdot|h)$.
-    By Proposition \ref{pointwisegenericnessthm},
+    Let $\vec w=(\frac12,\frac12)$, $\vec m=(m_1,m_2)$;
+    clearly $\vec w\cdot\vec m=\pi(\cdot|h)$.
+    By Prop.\ \ref{pointwisegenericnessthm},
     $\pi$ is not strictly better than $\pi^{h\mapsto m_1},\pi^{h\mapsto m_2}$
-    (as measured by $\Upsilon$).
-    Thus $\Upsilon(\pi)\leq \Upsilon(\pi^{h\mapsto m_i})$
+    (as measured by $\Upsilon$),
+    thus $\Upsilon(\pi)\leq \Upsilon(\pi^{h\mapsto m_i})$
     for some $i\in\{1,2\}$.
     Clearly $\pi\not\equiv \pi^{h\mapsto m_i}$
     and $d(\pi,\pi^{h\mapsto m_i})=\epsilon'\leq\epsilon$.
-    By arbitrariness of $\epsilon$, this shows
+    By arbitrariness of $\epsilon$,
     $\pi$ is not a strict local maximum of $\Upsilon$.
 \end{proof}
 
-%\section{Environment mixtures and universal environments}
-\section{ENVIRONMENT MIXTURES AND UNIVERSAL ENVIRONMENTS}
+\section{UNIVERSAL MIXTURE-ENVIRONMENTS}
 
 \begin{definition}
-\label{wprimedefn}
-    An environment $\mu$ is \emph{strongly well-behaved} if $\mu$ is well-behaved
-    (Definition \ref{wellbehaveddefn}) and the following condition holds.
-    For every agent $\pi$, for every $t\in\mathbb N$,
-    $-1\leq V^\pi_{\mu,t}\leq 1$. We write $S$ for the set of all
-    strongly well-behaved environments.
+\label{stronglywellbehaveddefn}
+    An environment $\mu$ is \emph{strongly well-behaved}
+    $\mu$ is well-behaved and for all agents $\pi$ and all
+    $t\in\mathbb N$, $-1\leq V^\pi_{\mu,t}\leq 1$.
+    A weighted intelligence measure $\Upsilon$ is \emph{strongly well-behaved}
+    if corresponding weights $\{w_\mu\}_{\mu\in W}$
+    (as in Definition \ref{performanceaveragerdefn}) exist such that
+    $\sum_{\mu\in W}w_\mu=1$ and such that
+    $w_\mu=0$ for all $\mu$ not strongly well-behaved (informally: the weights
+    underlying $\Upsilon$ sum to $1$, and any environment not strongly
+    well-behaved has weight $0$).
 \end{definition}
 
-\begin{definition}
-\label{swbperformanceaveragerdefn}
-    (Compare Definition \ref{performanceaveragerdefn})
-    By a \emph{$S$-restricted weighted intelligence measure},
-    we mean a function
-    $
-        \Upsilon:
-        (\Delta\mathcal A)^{(\mathcal E\mathcal A)^*\mathcal E}
-        \to
-        \mathbb R
-    $
-    (where
-    $(\Delta\mathcal A)^{(\mathcal E\mathcal A)^*\mathcal E}$ denotes the set of all agents)
-    such that there exists a function $w:S\to (0,\infty)$ such that:
-    \begin{enumerate}
-        \item
-        $\sum_{\mu\in S}w(\mu)=1$.
-        \item
-        For every agent $\pi$, $\Upsilon(\pi)=\sum_{\mu\in S}w(\mu) V^\pi_\mu$.
-    \end{enumerate}
-\end{definition}
+Note that if $\mu$ never gives negative rewards, then the condition
+$-1\leq V^\pi_{\mu,t}\leq 1$ is equivalent to $-1\leq V^\pi_mu\leq 1$.
+Thus if the background reward-space $\mathcal R$ is $\subseteq [0,1]$
+then every nonzero weighted intelligence measure
+is a constant multiple of a strongly well-behaved weighted intelligence
+measure.
+We will show (Theorem \ref{universalenvtheorem} below)
+that for every strongly well-behaved $\Upsilon$,
+there is an environment $\mu_\Upsilon$ such that for every agent $\pi$,
+$\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$.
 
-Thus, a $S$-restricted weighted intelligence measure is
-a weighted intelligence measure (Definition \ref{performanceaveragerdefn})
-which assigns positive weight to every strongly well-behaved environment,
-zero weight to every well-behaved but not strongly well-behaved environment,
-and whose weights by themselves sum up to $1$.
+In this section, let $\mathscr W$ be the set infinite sequences
+$\vec w=(w_1,w_2,\ldots)$ with each $w_i>0$ real and
+$\sum_{i=1}^\infty w_i=1$. For any $w\in\mathscr W$ and any
+bounded sequence $\vec v=(v_1,v_2,\ldots)$, we define the dot
+product $\vec w\cdot\vec v=\sum_{i=1}^\infty w_iv_i$ (the boundedness
+of $\vec v$ implies this sum converges).
 
 \begin{definition}
 \label{infinitedimensionalvectorizationdefn}
     (Compare Definition \ref{vectorizationdefn})
-    Let $w:S\to(0,\infty)$ be as in Definition \ref{swbperformanceaveragerdefn}.
-    Suppose $\pi$ is an environment, $h\in\mathcal H$, $t\in\mathbb N$,
-    and $\Upsilon$ is a $S$-restricted weighted intelligence measure. We define:
+    Suppose $\vec w\in\mathscr W$, $\pi$ is an agent, $\mu$ is an environment,
+    $h\in\mathcal H$, $t\in\mathbb N$,
+    and $\vec\mu=(\mu_1,\mu_2,\ldots)$ is an infinite sequence of environments.
+    We define:
     \begin{itemize}
         \item
-            $P_{S}(h):S\to [0,1]$ is the function
-            $P_{S}(h)(\mu)=P_\mu(h)$ for all $\mu\in S$.
+            $P_{\vec\mu}(h)=(P_{\mu_1}(h),P_{\mu_2}(h),\ldots)$.
         \item
-            $P^\pi_{S}(h):S\to [0,1]$ is the function
-            $P^\pi_{S}(h)(\mu)=P^\pi_\mu(h)$ for all $\mu\in S$.
+            $P^\pi_{\vec\mu}(h)=(P^\pi_{\mu_1}(h),P^\pi_{\mu_2}(h),\ldots)$.
         \item
-            $V^\pi_{S,t}(h):S\to [0,1]$ is the function
-            $V^\pi_{S,t}(h)(\mu)=V^\pi_{\mu,t}(h)$ for all $\mu\in S$.
+            $V^\pi_{\vec\mu,t}=(V^\pi_{\mu_1,t},V^\pi_{\mu_2,t},\ldots)$.
         \item
-            $V^\pi_{S}(h):S\to [0,1]$ is the function
-            $V^\pi_{S}(h)(\mu)=V^\pi_\mu(h)$ for all $\mu\in S$.
+            $V^\pi_{\vec\mu}=(V^\pi_{\mu_1},V^\pi_{\mu_2},\ldots)$ if
+            every $V^\pi_{\mu_i}$ is defined.
     \end{itemize}
 \end{definition}
 
 \begin{definition}
-\label{infinitedimdotproductdefn}
-    (Infinite dimensional dot product---compare Definition \ref{dotproductdefn})
-    Let $w:S\to(0,\infty)$ be as in Definition \ref{swbperformanceaveragerdefn}.
-    For any function $v:S\to[0,1]$,
-    we define $w\cdot v=\sum_{\mu\in S}w(\mu)v(\mu)$.
-\end{definition}
-
-\begin{lemma}
-    For all $w,v$ as in Definition \ref{infinitedimdotproductdefn},
-    $w\cdot v$ converges (and its value does not depend on the order in which
-    the summands are added).
-\end{lemma}
-
-\begin{proof}
-    By condition 1 of Definition \ref{swbperformanceaveragerdefn},
-    $\sum_{\mu\in S}w(\mu)=1$.
-    Since $w$ has codomain $(0,\infty)$, each $|w(\mu)|=w(\mu)$,
-    thus $\sum_{\mu\in S}w(\mu)$
-    is absolutely convergent.
-    Since $v$ has codomain $[0,1]$, it follows that
-    $\sum_{\mu\in S}w(\mu)v(\mu)$ is absolutely convergent.
-    By a well-known theorem from calculus, the sum of an absolutely
-    convergent series does not depend on the order of summation.
-\end{proof}
-
-\begin{definition}
 \label{mixtureenvdefn}
     (Mixture environments---compare Definition \ref{maindefn})
-    Let $w:S\to(0,\infty)$ be as in Definition \ref{swbperformanceaveragerdefn}.
-    We define $w\cdot S:(\mathcal E\mathcal A)^*\to\Delta\mathcal E$ as follows:
-    for all $h\in (\mathcal E\mathcal A)^*$, $x\in\mathcal E$, let
+    Assume $\vec w\in\mathscr W$ and $\vec\mu=(\mu_1,\mu_2,\ldots)$ is an infinite
+    sequence of environments. Define an environment $\vec w\cdot\vec\mu$ by:
     \[
-        (w\cdot S)(x|h)
+        (\vec w\cdot \vec\mu)(x|h)
         =
         \begin{cases}
-            \dfrac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
-            &\mbox{if $w\cdot P_{S}(h)\not=0$,}\\
+            \dfrac{\vec w\cdot P_{\vec\mu}(hx)}{\vec w\cdot P_{\vec\mu}(h)}
+            &\mbox{if $\vec w\cdot P_{\vec\mu}(h)\not=0$,}\\
             1/|\mathcal E| &\mbox{otherwise.}
         \end{cases}
     \]
@@ -1260,8 +1214,8 @@ and whose weights by themselves sum up to $1$.
 \begin{lemma}
 \label{wcdotSisenvlemma}
     (Compare Lemma \ref{mixturereallyisanagent})
-    If $w:S\to(0,\infty)$ is as in Definition \ref{swbperformanceaveragerdefn},
-    then $w\cdot S$ is an environment.
+    $\vec w\cdot\vec\mu$ (as in Definition \ref{mixtureenvdefn})
+    is indeed an environment.
 \end{lemma}
 
 \begin{proof}
@@ -1275,99 +1229,96 @@ without proof.
 \begin{lemma}
 \label{tannerysthm}
     (Tannery's Theorem)
-    Suppose $\{a_k:\mathbb N\to\mathbb R\}_{k=0}^\infty$ is a sequence of sequences
-    such that for each $k$, $\lim_{t\to\infty}a_k(t)$ converges.
-    Assume there is a sequence $\{M_k\in (0,\infty)\}_{k=0}^\infty$
-    such that $\sum_{k=0}^\infty M_k<\infty$ and such that for all $k,t\in\mathbb N$,
-    $|a_k(t)|\leq M_k$. Then
+    Suppose $\{a_i:\mathbb N\to\mathbb R\}_{i=1}^\infty$ is a sequence of sequences
+    such that for each $i$, $\lim_{t\to\infty}a_i(t)$ converges.
+    Assume there is a sequence $\{w_i\}_{i=1}^\infty$
+    such that $\sum_{i=1}^\infty w_k<\infty$ and such that for all $i>0$,
+    for all $t\in\mathbb N$,
+    $|a_i(t)|\leq w_k$. Then
     \[
-        \lim_{t\to\infty}\sum_{k=0}^\infty a_k(t)
+        \lim_{t\to\infty}\sum_{i=1}^\infty a_i(t)
         =
-        \sum_{k=0}^\infty\lim_{t\to\infty} a_k(t).
+        \sum_{i=1}^\infty\lim_{t\to\infty} a_i(t).
     \]
 \end{lemma}
 
 \begin{lemma}
 \label{envmaintheorem}
     (Compare Theorem \ref{maintheorem})
-    Suppose $w:S\to(0,\infty)$ is as in Definition \ref{swbperformanceaveragerdefn}.
-    Let $\pi$ be any agent. Then:
+    Let $w\in\mathscr W$, let $\vec\mu=(\mu_1,\mu_2,\ldots)$ be
+    a sequence of strongly well-behaved environments, and let $\pi$ be any agent. Then:
     \begin{enumerate}
         \item
-        For any $h\in\mathcal H$,
-        $P_{w\cdot S}(h)=w\cdot P_{S}(h)$.
+        For all $h\in\mathcal H$,
+        $P_{\vec w\cdot\mu}(h)=\vec w\cdot P_{\vec\mu}(h)$.
         \item
-        For any $h\in\mathcal H$,
-        $P^\pi_{w\cdot S}(h)=w\cdot P^\pi_{S}(h)$.
+        For all $h\in\mathcal H$,
+        $P^\pi_{\vec w\cdot\mu}(h)=\vec w\cdot P^\pi_{\vec\mu}(h)$.
         \item
-        For any $t\in\mathbb N$,
-        $V^\pi_{w\cdot S,t}=w\cdot V^\pi_{S,t}$.
+        For all $t\in\mathbb N$,
+        $V^\pi_{\vec w\cdot \vec\mu,t}=\vec w\cdot V^\pi_{\vec\mu,t}$.
         \item
-        $V^\pi_{w\cdot S}=w\cdot V^\pi_{S}$.
+        $V^\pi_{\vec w\cdot \vec\mu}=\vec w\cdot V^\pi_{\vec\mu}$.
     \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-    (1--3) See Supplementary Materials.
-
-    (4) Let $\{\mu_0,\mu_1,\ldots\}$ enumerate $S$ ($S$ is countable since
-    only countably many environments are Turing computable). Compute:
+    For (1)--(3), see Supplementary Materials. For (4), compute:
     \begin{align*}
-        V^\pi_{w\cdot S}
-            &= \lim_{t\to\infty} V^\pi_{w\cdot S,t}
+        V^\pi_{\vec w\cdot\vec\mu}
+            &= \lim_{t\to\infty} V^\pi_{\vec w\cdot \vec\mu,t}
                 &\mbox{(Definition \ref{performancedefn})}\\
-            &= \lim_{t\to\infty} w\cdot V^\pi_{S,t}
+            &= \lim_{t\to\infty} \vec w\cdot V^\pi_{\vec\mu,t}
                 &\mbox{(By (3))}\\
-            &= \lim_{t\to\infty} \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}.
+            &= \lim_{t\to\infty} \sum_{i=1}^\infty w_i V^\pi_{\mu_i,t}.
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
-    For each $k\in\mathbb N$, define $M_k\in\mathbb R$ and $a_k:\mathbb N\to\mathbb R$
-    by $M_k=w(\mu_k)$, $a_k(t)=w(\mu_k)V^\pi_{\mu_k,t}$.
-    By Definition \ref{wprimedefn}, each $\mu_k\in S$ is strongly well-behaved,
-    thus for each $k$, $-1\leq V^\pi_{\mu_k,t}\leq 1$.
-    It follows that for all $t,k\in\mathbb N$, $|a_k(t)|\leq M_k$.
-    Furthermore, $\sum_{k=0}^\infty M_k=\sum_{k=0}^\infty w(\mu_k)=1<\infty$
-    by Definition \ref{swbperformanceaveragerdefn}.
-    By Tannery's Theorem (Lemma \ref{tannerysthm}),
+    For each $i\geq 1$, define $a_i:\mathbb N\to\mathbb R$
+    by $a_i(t)=w_iV^\pi_{\mu_i,t}$.
+    Since $\mu_i$ is strongly well-behaved, each $-1\leq V^\pi_{\mu_i,t}\leq 1$.
+    It follows that for all $t\in\mathbb N$, $|a_i(t)|\leq w_i$.
+    Furthermore, $\sum_{i=1}^\infty w_i=1<\infty$
+    by Definition of $\mathscr W$. Thus
     \begin{align*}
-        &{} \lim_{t\to\infty} \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k,t}\\
-            &= \sum_{k=0}^\infty\lim_{t\to\infty} w(\mu_k)V^\pi_{\mu_k,t}
-                &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
-            &= \sum_{k=0}^\infty w(\mu_k)\lim_{t\to\infty} V^\pi_{\mu_k,t}
+        &{} \lim_{t\to\infty} \sum_{i=1}^\infty w_iV^\pi_{\mu_i,t}\\
+            &= \sum_{i=1}^\infty\lim_{t\to\infty} w_iV^\pi_{\mu_i,t}
+                &\mbox{(Tannery's Theorem)}\\
+            &= \sum_{i=1}^\infty w_i\lim_{t\to\infty} V^\pi_{\mu_i,t}
                 &\mbox{(Algebra)}\\
-            &= \sum_{k=0}^\infty w(\mu_k)V^\pi_{\mu_k}
+            &= \sum_{i=1}^\infty w_iV^\pi_{\mu_i}
                 &\mbox{(Definition \ref{performancedefn})}\\
-            &= \sum_{\mu\in S} w(\mu)V^\pi_{\mu}
-                &\mbox{(Choice of $\{\mu_k\}_{k=0}^\infty$)}\\
-            &= w\cdot V^\pi_{S}.
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+            &= \vec w\cdot V^\pi_{\vec\mu}.
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
-    So $V^\pi_{w\cdot S}=w\cdot V^\pi_{S}$.
+    So $V^\pi_{\vec w\cdot\vec\mu}=\vec w\cdot V^\pi_{\vec\mu}$.
 \end{proof}
 
 \begin{theorem}
-    For any $S$-restricted weighted intelligence measure $\Upsilon$,
-    there exists an environment $\mu_\Upsilon$ such that for every agent $\pi$,
+\label{universalenvtheorem}
+    For any strongly well-behaved weighted intelligence measure $\Upsilon$,
+    there is an environment $\mu_\Upsilon$ such that for every agent $\pi$,
     $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$.
 \end{theorem}
 
 \begin{proof}
-    Given $\Upsilon$, there is a corresponding $w:S\to(0,\infty)$ as in
-    Definition \ref{swbperformanceaveragerdefn}.
-    Let $\mu_\Upsilon=w\cdot S$, we claim for every agent $\pi$,
-    $\Upsilon(\pi)=V^\pi_{\mu_\Upsilon}$. Let $\pi$ be any agent. Then
+    Let $\vec\mu=(\mu_1,\mu_2,\ldots)$ be any enumeration of the set of all
+    strongly well-behaved environments (this set is countable since every
+    well-behaved environment is Turing computable).
+    Thus there are weights $(w_\mu)_{\mu\in W}$ as in Definition \ref{stronglywellbehaveddefn}.
+    Let $\vec w=(w_{\mu_1},w_{\mu_2},\ldots)$,
+    thus $\vec w\in\mathscr W$.
+    Let $\mu_\Upsilon=\vec w\cdot \vec\mu$. Then for any agent $\pi$,
     \begin{align*}
         V^\pi_{\mu_\Upsilon}
-            &= V^\pi_{w\cdot S}\\
-            &= w\cdot V^\pi_{S}
+            &= V^\pi_{\vec w\cdot \vec\mu}
+                &\mbox{(Definition of $\mu_\Upsilon$)}\\
+            &= \vec w\cdot V^\pi_{\vec\mu}
                 &\mbox{(Lemma \ref{envmaintheorem})}\\
-            &= \sum_{\mu\in S}w(\mu)V^\pi_\mu
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \Upsilon(\pi),
-                &\mbox{(By choice of $w$)}
+            &= \sum_{i=1}^\infty w_i V^\pi_{\mu_i}
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+            &= \Upsilon(\pi).
+                &\mbox{(Definition \ref{stronglywellbehaveddefn})}
     \end{align*}
-    as desired.
 \end{proof}
 
 %\section{Conclusion and future work}
@@ -1377,19 +1328,6 @@ without proof.
 
 \bibliographystyle{apalike} % AISTATS
 \bibliography{main}
-
-%\appendix
-%
-%\section{My Proof of Theorem 1}
-%
-%This is a boring technical proof. ( Copied from template )
-%
-%\section{My Proof of Theorem 2}
-%
-%This is a complete version of a proof sketched in the main text.
-%( Copied from template )
-%
-% Alternative proofs of the same theorem can be added here as a few previous COLT papers did this.
 
 \pagebreak
 
@@ -1815,26 +1753,26 @@ Proposition \ref{longproposition}.
 \subsection{Proof of Lemma \ref{wcdotSisenvlemma}}
 \begin{proof}
     Let $h\in(\mathcal E\mathcal A)^*$.
-    Clearly $(w\cdot S)(x|h)\geq 0$ for all $x\in\mathcal E$.
-    It remains to show $\sum_{x\in\mathcal E}(w\cdot S)(x|h)=1$.
-    If $w\cdot P_{S}(h)=0$ then each $(w\cdot S)(x|h)=1/|\mathcal E|$
+    Clearly $(\vec w\cdot \vec\mu)(x|h)\geq 0$ for all $x\in\mathcal E$.
+    It remains to show $\sum_{x\in\mathcal E}(\vec w\cdot \vec\mu)(x|h)=1$.
+    If $\vec w\cdot P_{\vec\mu}(h)=0$ then each $(\vec w\cdot \vec\mu)(x|h)=1/|\mathcal E|$
     so the claim is immediate; assume not. Then:
     \begin{align*}
-        &{} \sum_{x\in\mathcal E}(w\cdot S)(x|h)\\
-            &= \sum_{x\in\mathcal E}\frac{w\cdot P_{S}(hx)}{w\cdot P_{S}(h)}
+        &{} \sum_{x\in\mathcal E}(\vec w\cdot \vec\mu)(x|h)\\
+            &= \sum_{x\in\mathcal E}\frac{\vec w\cdot P_{\vec\mu}(hx)}{\vec w\cdot P_{\mu}(h)}
                 &\mbox{(Definition \ref{mixtureenvdefn})}\\
             &= \sum_{x\in\mathcal E}
                 \frac{
-                    \sum_{\mu\in S}w(\mu)P_\mu(hx)
+                    \sum_{i=1}^\infty w_i P_{\mu_i}(hx)
                 }{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                    \sum_{i=1}^\infty w_i P_{\mu_i}(h)
                 }
                 &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
             &= \sum_{x\in\mathcal E}
                 \frac{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)\mu(x|h)
+                    \sum_{i=1}^\infty w_i P_{\mu_i}(h)\mu_i(x|h)
                 }{
-                    \sum_{\mu\in S}w(\mu)P_\mu(h)
+                    \sum_{i=1}^\infty w_i P_{\mu_i}(h)
                 }.
                 &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
@@ -1842,9 +1780,9 @@ Proposition \ref{longproposition}.
     altering the sum, so the above is
     \[
         \frac{
-            \sum_{\mu\in S}w(\mu)P_\mu(h)\sum_{x\in\mathcal E}\mu(x|h)
+            \sum_{i=1}^\infty w_i P_{\mu_i}(h)\sum_{x\in\mathcal E}\mu_i(x|h)
         }{
-            \sum_{\mu\in S}w(\mu)P_\mu(h)
+            \sum_{i=1}^\infty w_i P_{\mu_i}
         },
     \]
     and each $\sum_{x\in\mathcal E}\mu(x|h)=1$ since each $\mu\in\Delta\mathcal E$,
@@ -1857,90 +1795,89 @@ Proposition \ref{longproposition}.
 
     Case 1: $h=\varepsilon$. Then
     \begin{align*}
-        w\cdot P_{S}(h)
-        &= \sum_{\mu\in S}w(\mu)P_{S}(h)(\mu)
-            &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-        &= \sum_{\mu\in S}w(\mu)P_\mu(h)
+        \vec w\cdot P_{\vec\mu}(h)
+        &= \sum_{i=1}^\infty w_i P_{\mu_i}(h)
             &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
-        &= \sum_{\mu\in S}w(\mu)
-            &\mbox{($P_\mu(\varepsilon)=1$)}\\
+        &= \sum_{i=1}^\infty w_i
+            &\mbox{($P_{\mu_i}(\varepsilon)=1$)}\\
         &= 1
-            &\mbox{(Definition \ref{swbperformanceaveragerdefn})}\\
-        &= P_{w\cdot S}(h).
+            &\mbox{(Definition of $\mathscr W$)}\\
+        &= P_{\vec w\cdot \vec\mu}(h).
             &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
     Case 2: $h=gx$ for some $x\in\mathcal E$.
 
-    Subcase 2.1: $w\cdot P_{S}(g)=0$.
-        This means $\sum_{\mu\in S}w(\mu)P_\mu(g)=0$.
-        Since each $w(\mu)>0$, this implies each $P_\mu(g)=0$.
+    Subcase 2.1: $\vec w\cdot P_{\vec\mu}(g)=0$.
+        This means $\sum_{i=1}^\infty w_i P_{\mu_i}(g)=0$.
+        Since each $w_i>0$, this implies each $P_{\mu_i}=0$.
         From this it easily follows that
-        $P_{w\cdot S}(gx)=w\cdot P_{S}(gx)=0$.
+        $P_{\vec w\cdot \vec\mu}(gx)=\vec w\cdot P_{\vec\mu}(gx)=0$.
 
-    Subcase 2.2: $w\cdot P_{S}(g)\not=0$. Then
+    Subcase 2.2: $\vec w\cdot P_{\vec\mu}(g)\not=0$. Then
     \begin{align*}
-        P_{w\cdot S}(h)
-            &= P_{w\cdot S}(g)(w\cdot S)(x|g)
+        P_{\vec w\cdot \vec\mu}(h)
+            &= P_{\vec w\cdot \vec\mu}(g)(\vec w\cdot\vec\mu)(x|g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= w\cdot P_{S}(g)(w\cdot S)(x|g)
+            &= \vec w\cdot P_{\vec\mu}(g)(\vec w\cdot\vec\mu)(x|g)
                 &\mbox{(Induction)}\\
-            &= w\cdot P_{S}(g)\frac{w\cdot P_{S}(gx)}{w\cdot P_{S}(g)}
+            &= \vec w\cdot P_{\vec\mu}(g)
+                \frac{\vec w\cdot P_{\vec\mu}(gx)}{\vec w\cdot P_{\mu}(g)}
                 &\mbox{(Definition \ref{mixtureenvdefn})}\\
-            &= w\cdot P_{S}(gx) = w\cdot P_{S}(h).
+            &= \vec w\cdot P_{\vec\mu}(gx) = \vec w\cdot P_{\vec\mu}(h).
     \end{align*}
 
     Case 3: $h=gy$ for some $y\in\mathcal A$.
     Then
     \begin{align*}
-        P_{w\cdot S}(h)
-            &= P_{w\cdot S}(g)
+        P_{\vec w\cdot \vec\mu}(h)
+            &= P_{\vec w\cdot \vec\mu}(g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= w\cdot P_{S}(g)
+            &= \vec w\cdot P_{\vec\mu}(g)
                 &\mbox{(Induction)}\\
-            &= \sum_{\mu\in S} w(\mu)P_\mu(g)
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \sum_{\mu\in S} w(\mu)P_\mu(gy)
+            &= \sum_{i=1}^\infty w_i P_{\mu_i}(g)
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+            &= \sum_{i=1}^\infty w_i P_{\mu_i}(gy)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= w\cdot P_{S}(gy) = w\cdot P_{S}(h).
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+            &= \vec w\cdot P_{\vec\mu}(gy) = \vec w\cdot P_{\vec\mu}(h).
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
 
     (2) Compute:
     \begin{align*}
-        P^\pi_{w\cdot S}(h)
-            &= P^\pi(h) P_{w\cdot S}(h)
+        P^\pi_{\vec w\cdot \vec\mu}(h)
+            &= P^\pi(h) P_{\vec w\cdot \vec\mu}(h)
                 &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= P^\pi(h) w\cdot P_{S}(h)
+            &= P^\pi(h) \vec w\cdot P_{\vec\mu}(h)
                 &\mbox{(By (1))}\\
-            &= P^\pi(h) \sum_{\mu\in S}w(\mu)P_\mu(h)
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}\\
-            &= \sum_{\mu\in S}w(\mu)P^\pi(h)P_\mu(h)
+            &= P^\pi(h) \sum_{i=1}^\infty w_i P_{\mu_i}(h)
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
+            &= \sum_{i=1}^\infty w_iP^\pi(h)P_{\mu_i}(h)
                 &\mbox{(Algebra)}\\
-            &= \sum_{\mu\in S}w(\mu)P^\pi_\mu(h)
+            &= \sum_{i=1}^\infty w_iP^\pi_{\mu_i}(h)
                 &\mbox{(Lemma \ref{factorizationlemma})}\\
-            &= w\cdot P^\pi_{S}(h).
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+            &= \vec w\cdot P^\pi_{\vec\mu}(h).
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
 
     (3) Let $X_t$, $R$ be as in Definition \ref{performancedefn} and compute:
     \begin{align*}
-        V^\pi_{w\cdot S,t}
-            &= \sum_{h\in X_t}R(h)P^\pi_{w\cdot S}(h)
+        V^\pi_{\vec w\cdot\vec\mu,t}
+            &= \sum_{h\in X_t}R(h)P^\pi_{\vec w\cdot\vec\mu}(h)
                 &\mbox{(Definition \ref{performancedefn})}\\
-            &= \sum_{h\in X_t}R(h)w\cdot P^\pi_{S}(h)
+            &= \sum_{h\in X_t}R(h)\vec w\cdot P^\pi_{\vec\mu}(h)
                 &\mbox{(By (2))}\\
-            &= \sum_{h\in X_t}R(h)\sum_{\mu\in S}w(\mu)P^\pi_\mu(h).
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+            &= \sum_{h\in X_t}R(h)\sum_{i=1}^\infty w_iP^\pi_{\mu_i}(h).
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
     Since $X_t$ is finite, this sum is absolutely convergent, so we can
     rearrange terms, and the sum is equal to
     \begin{align*}
-        \sum_{\mu\in S}w(\mu)\sum_{h\in X_t}R(h)P^\pi_\mu(h)
-            &= \sum_{\mu\in S}w(\mu)V^\pi_{\mu,t}
+        \sum_{i=1}^\infty w_i\sum_{h\in X_t}R(h)P^\pi_{\mu_i}(h)
+            &= \sum_{i=1}^\infty w_i V^\pi_{\mu_i,t}
                 &\mbox{(Definition \ref{performancedefn})}\\
-            &= w\cdot V^\pi_{S,t}.
-                &\mbox{(Definition \ref{infinitedimdotproductdefn})}
+            &= \vec w\cdot V^\pi_{\vec\mu,t}.
+                &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}
     \end{align*}
 \end{proof}
 
