@@ -122,7 +122,7 @@ reward $R_i$ from an environment,
 we would expect $\sigma$ to get total expected reward
 $\vec{w}\cdot \vec{R}=w_1R_1+\cdots+w_nR_n$ from that environment.
 
-Starting from practical (e.g., OpenAI gym conformant)
+Starting from practical (e.g., conformant with OpenAI Gym \cite{brockman2016openai})
 implementations of agents $\pi_1,\ldots,\pi_n$ as above, $\sigma$ could easily be
 implemented as a new agent who, upon instantiation, uses a random number generator
 to determine which $\pi_i$ to act as, and stores that decision in internal memory.
@@ -1203,7 +1203,8 @@ of $\vec v$ implies this sum converges).
 \end{proof}
 
 In order to prove the Lemma \ref{envmaintheorem} below, we will need to invoke
-Tannery's Theorem, a classical result from real analysis. We state the theorem
+Tannery's Theorem, a classical result from real analysis \cite{bromwich2005introduction}.
+We state the theorem
 without proof.
 
 \begin{lemma}
