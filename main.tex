@@ -808,7 +808,7 @@ Equivalently, $\Pi$ is separable if either: there is some environment where
 every member of $\Pi$ outperforms every member of $\Pi^c$; or there is some
 environment where every member of $\Pi$ underperforms every member of $\Pi^c$.
 Clearly separability implies discernability, but what about the converse?
-We will state a partial converse making use of mixtures.
+We will use mixtures to state a partial converse.
 
 \begin{definition}
 \label{mixtureclosuredef}
@@ -1286,18 +1286,17 @@ without proof.
     Thus there are weights $(w_\mu)_{\mu\in W}$ as in Definition \ref{stronglywellbehaveddefn}.
     Let $\vec w=(w_{\mu_1},w_{\mu_2},\ldots)$,
     thus $\vec w\in\mathscr W$.
-    Let $\mu_\Upsilon=\vec w\cdot \vec\mu$. Then for any agent $\pi$,
+    Then for any agent $\pi$,
     \begin{align*}
-        V^\pi_{\mu_\Upsilon}
-            &= V^\pi_{\vec w\cdot \vec\mu}
-                &\mbox{(Definition of $\mu_\Upsilon$)}\\
+        V^\pi_{\vec w\cdot \vec\mu}
             &= \vec w\cdot V^\pi_{\vec\mu}
                 &\mbox{(Lemma \ref{envmaintheorem})}\\
             &= \sum_{i=1}^\infty w_i V^\pi_{\mu_i}
                 &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
-            &= \Upsilon(\pi).
+            &= \Upsilon(\pi),
                 &\mbox{(Definition \ref{stronglywellbehaveddefn})}
     \end{align*}
+    so $\mu_\Upsilon=\vec w\cdot \vec\mu$ works.
 \end{proof}
 
 %\section{Conclusion and future work}
