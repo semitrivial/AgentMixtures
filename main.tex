@@ -979,13 +979,14 @@ $\pi^{h\mapsto \vec m}$.
 
 \begin{definition}
     Suppose $\pi$ and $\pi_1,\ldots,\pi_n$ are agents and $\Upsilon$ is a
-    weighted intelligence measure. We say that $\pi$ is \emph{strictly better than}
-    $\pi_1,\ldots,\pi_n$ (as measured by $\Upsilon$) if:
+    weighted intelligence measure.
+    We say $\pi\succ_\Upsilon \pi_1,\ldots,\pi_n$
+    if either:
     \begin{enumerate}
-        \item $\Upsilon(\pi)\geq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$; and
+        \item $\Upsilon(\pi)\geq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$; or
         \item $\Upsilon(\pi)>\Upsilon(\pi_i)$ for some $i=1,\ldots,n$.
     \end{enumerate}
-    We define \emph{strictly worse} similarly (change $\geq$ to $\leq$,
+    We define $\pi\prec_\Upsilon\pi_1,\ldots,\pi_n$ similarly (change $\geq$ to $\leq$,
     $>$ to $<$).
 \end{definition}
 
@@ -997,14 +998,13 @@ $\pi^{h\mapsto \vec m}$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
     if $\vec w\cdot\vec m=\pi(\cdot|h)$,
-    then $\pi$ is not strictly better (nor strictly worse) than
-    $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
-    (as measured by $\Upsilon$).
+    then $\pi\not\succ_\Upsilon \pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    and $\pi\not\prec_\Upsilon \pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$.
 \end{proposition}
 
 \begin{proof}
-    If $\pi$ is strictly better than $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
-    (as measured by $\Upsilon$), then this implies
+    If $\pi\succ_\Upsilon\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    then this implies
     \begin{align*}
         \Upsilon(\pi)
             &= \Upsilon(\vec w\cdot\pi^{h\mapsto\vec m})
@@ -1016,7 +1016,7 @@ $\pi^{h\mapsto \vec m}$.
             &= \Upsilon(\pi),
                 &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
-    absurd. Similar reasoning holds for ``strictly worse''.
+    absurd. Similar reasoning holds for $\prec_\Upsilon$.
 \end{proof}
 
 \begin{definition}
@@ -1110,8 +1110,7 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
     Let $\vec w=(\frac12,\frac12)$, $\vec m=(m_1,m_2)$;
     clearly $\vec w\cdot\vec m=\pi(\cdot|h)$.
     By Prop.\ \ref{pointwisegenericnessthm},
-    $\pi$ is not strictly better than $\pi^{h\mapsto m_1},\pi^{h\mapsto m_2}$
-    (as measured by $\Upsilon$),
+    $\pi\not\succ_\Upsilon \pi^{h\mapsto m_1},\pi^{h\mapsto m_2}$,
     thus $\Upsilon(\pi)\leq \Upsilon(\pi^{h\mapsto m_i})$
     for some $i\in\{1,2\}$.
     Clearly $\pi\not\equiv \pi^{h\mapsto m_i}$
