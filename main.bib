@@ -492,3 +492,47 @@ See actually quote at https://ai.stackexchange.com/questions/11375/what-is-the-d
   volume={16},
   pages={285-286}
 }
+
+@article{Valena1980NyquistCF,
+  title={Nyquist criterion for input/output stability of multivariable systems},
+  author={J. M. E. Valença and Christopher J. Harris},
+  journal={International Journal of Control},
+  year={1980},
+  volume={31},
+  pages={917-935}
+}
+
+@article{RL-Lyapunov-safe,
+author = {Perkins, Theodore and Barto, Andrew},
+year = {2003},
+month = {05},
+pages = {803-},
+title = {Lyapunov Design for Safe Reinforcement Learning Control},
+volume = {3},
+journal = {J. Mach. Learn. Res.},
+doi = {10.1162/jmlr.2003.3.4-5.803}
+}
+
+
+@InProceedings{pmlr-v119-stooke20a,
+  title = 	 {Responsive Safety in Reinforcement Learning by {PID} Lagrangian Methods},
+  author =       {Stooke, Adam and Achiam, Joshua and Abbeel, Pieter},
+  booktitle = 	 {Proceedings of the 37th International Conference on Machine Learning},
+  pages = 	 {9133--9143},
+  year = 	 {2020},
+  editor = 	 {III, Hal Daumé and Singh, Aarti},
+  volume = 	 {119},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {13--18 Jul},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v119/stooke20a/stooke20a.pdf},
+  url = 	 {https://proceedings.mlr.press/v119/stooke20a.html},
+  abstract = 	 {Lagrangian methods are widely used algorithms for constrained optimization problems, but their learning dynamics exhibit oscillations and overshoot which, when applied to safe reinforcement learning, leads to constraint-violating behavior during agent training. We address this shortcoming by proposing a novel Lagrange multiplier update method that utilizes derivatives of the constraint function. We take a controls perspective, wherein the traditional Lagrange multiplier update behaves as \emph{integral} control; our terms introduce \emph{proportional} and \emph{derivative} control, achieving favorable learning dynamics through damping and predictive measures. We apply our PID Lagrangian methods in deep RL, setting a new state of the art in Safety Gym, a safe RL benchmark. Lastly, we introduce a new method to ease controller tuning by providing invariance to the relative numerical scales of reward and cost. Our extensive experiments demonstrate improved performance and hyperparameter robustness, while our algorithms remain nearly as simple to derive and implement as the traditional Lagrangian approach.}
+}
+
+@inproceedings{Cheng2019EndtoEndSR,
+  title={End-to-End Safe Reinforcement Learning through Barrier Functions for Safety-Critical Continuous Control Tasks},
+  author={Richard Cheng and G{\'a}bor Orosz and Richard M. Murray and Joel W. Burdick},
+  booktitle={AAAI},
+  year={2019}
+}
