@@ -63,7 +63,7 @@
     of the original agents' expected total rewards in that environment.
     Thus, if RL agent intelligence is quantified in terms of performance across
     environments, the weighted mixture's intelligence is the weighted average of
-    the original agents' intelligence.
+    the original agents' intelligences.
     This operation enables
     various interesting new theorems that shed light on the geometry of RL
     agent intelligence, namely: results about symmetries, convex agent-sets,
@@ -77,14 +77,9 @@
 %\section{Introduction}
 \section{INTRODUCTION}
 
-Multi-agent Reinforcement Learning \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited,hernandez2011more}, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
-% Comment
-Opinions about further promises and challenges have emerged, particularly signified by the
-high-profile attempt at replicating the super-human AI game-playing performance, in more complex realtime video games \cite{nature-starcraft},
-than previous well-known AI game-playing achievements based on more vanilla deep reinforcement learning methods \cite{nature-ATARI,nature-go-2}.
-
-The most obvious way to conceive multi-agent reinforcement learning, is to passively consider the collective behavior of aggregated intelligent agents.
-In fact, multi-agent reinforcement learning was first introduced as ``collective learning'' \cite{collective-1993} even before being explicitly identified as multi-agent reinforcement learning \cite{multiagent-1994-most-cited}.
+Multi-agent Reinforcement Learning (or multi-agent RL) \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited,hernandez2011more}, as with other flavors of RL, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
+The most obvious way to conceive multi-agent RL, is to passively consider the collective behavior of aggregated intelligent agents.
+In fact, multi-agent RL was first introduced as ``collective learning'' \cite{collective-1993} even before being explicitly identified as multi-agent reinforcement learning \cite{multiagent-1994-most-cited}.
 
 %It would be desirable if we don't explicitly devise how intelligent agents should collaborate, yet multiple agents somehow learn to collaborate on their own.
 %Not very surprisingly, collaboration of agents is a popular topic within multiagent reinforcement learning.
@@ -96,6 +91,10 @@ which is mainly about programs physically running on disparate devices collabora
 % Comment
 In this regard, RL had a much earlier head start with
 Feudal Reinforcement Learning \cite{feudal-1992}, which borrows concepts which have been around for many hundreds of years in human social organization, and on which research remains active today \cite{Johnson2020FeudalSH}.
+Multi-agent methods have also received considerable attention for their usage
+in highly complex real-time video-games \cite{nature-starcraft}
+(building off of success in simpler games like Atari games
+\cite{nature-ATARI} and Go \cite{nature-go-2}).
 RL is no stranger to
 collaboration \cite{Kok2006CollaborativeMR} or to
 cooperation \cite{Qiu2021RMIXLR}, including even collaboration with
@@ -232,7 +231,7 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
 \begin{definition}
 \label{pullbackdef}
     For all agents $\pi$, histories $h$, and environments $\mu$,
-    we define real numbers $\Pi^\pi(h)$, $\Pi_\mu(h)$, and $\Pi^\pi_\mu(h)$
+    we define real numbers $P^\pi(h)$, $P_\mu(h)$, and $P^\pi_\mu(h)$
     inductively as follows.
     \begin{itemize}
         \item
@@ -324,7 +323,7 @@ of $V^\pi_\mu$.
 \label{wellbehaveddefn}
     An environment $\mu$ is \emph{well-behaved} if the following
     requirements hold: $\mu(x|h)\in\mathbb Q$
-    for all $x\mathcal E$ and $h\in (\mathcal E\mathcal A)^*$; $\mu$ is Turing
+    for all $x\in\mathcal E$ and $h\in (\mathcal E\mathcal A)^*$; $\mu$ is Turing
     computable; and for every agent $\pi$, $V^\pi_\mu$ exists and
     $-1\leq V^\pi_\mu\leq 1$. Let $W$ be the set of all well-behaved environments.
 \end{definition}
@@ -471,7 +470,7 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
     \[
         P^{\vec w\cdot\vec\pi}(h)=1=w_1\cdot 1+\cdots+w_n\cdot 1
         =
-        \vec w\cdot ({P^{\vec\pi}}(h)).
+        \vec w\cdot {P^{\vec\pi}}(h).
     \]
 
     Case 2: $h=gx$ for some $x\in\mathcal E$. Then
@@ -479,16 +478,16 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
         P^{\vec w\cdot\vec\pi}(h)
             &= P^{\vec w\cdot\vec\pi}(g)
                 &\mbox{(Definition \ref{pullbackdef})}\\
-            &= \vec w\cdot({P^{\vec\pi}}(g))
+            &= \vec w\cdot {P^{\vec\pi}}(g)
                 &\mbox{(Induction)}\\
-            &= \vec w\cdot({P^{\vec\pi}}(gx))= \vec w\cdot({P^{\vec\pi}}(h)).
+            &= \vec w\cdot {P^{\vec\pi}}(gx)= \vec w\cdot{P^{\vec\pi}}(h).
                 &\mbox{(Definition \ref{pullbackdef})}
     \end{align*}
 
     Case 3: $h=gy$ for some $y\in\mathcal A$.
 
     Subcase 3.1: $P^{\vec w\cdot\vec\pi}(g)=0$.
-        By induction $\vec w\cdot({P^{\vec\pi}}(g))=0$.
+        By induction $\vec w\cdot {P^{\vec\pi}}(g)=0$.
         Since the $w_i$ are positive, this implies
         each $P^{\pi_i}(g)=0$.
         Thus each
@@ -498,7 +497,7 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
                     &\mbox{(Definition \ref{pullbackdef})}\\
                 &= 0w_i\pi_i(y|g)=0,
         \end{align*}
-        i.e., $\vec w\cdot({P^{\vec\pi}}(gy))=0$.
+        i.e., $\vec w\cdot{P^{\vec\pi}}(gy)=0$.
         And
         \begin{align*}
             P^{\vec w\cdot\vec\pi}(gy)
@@ -541,7 +540,7 @@ explicitly citing Lemma \ref{mixturereallyisanagent}.
             &= \mbox{$
                 \vec w\cdot
                 \left(
-                    \sum_{h\in X_t}R(h)P^{\pi_1}_\mu(h)
+                    \sum_{h\in X_t}R(h)P^{\pi_i}_\mu(h)
                 \right)_{i=1}^n
                 $}
                 &\mbox{(Def.\ \ref{vectorizationdefn} part 2)}\\
@@ -568,7 +567,7 @@ also contains $-r$.
 
 \begin{definition}
 \label{dualagentsdefn}
-(Dual Agents and Dual Environments)
+(Dual Agents)
 \begin{enumerate}
     \item
     For each $h\in\mathcal H$,
@@ -701,7 +700,7 @@ fact that a function $f:\mathbb R\to\mathbb R$ is even
 (i.e.\ satisfies $f(x)=f(-x)$)
 iff $f(x)=\frac12(g(x)+g(-x))$ for some $g:\mathbb R\to\mathbb R$.
 
-We will show in Corollary \ref{equivalentsymmetriescor} that
+We will show in Theorem \ref{equivalentsymmetriescor} that
 the following two symmetry conditions are equivalent.
 
 \begin{definition}
@@ -749,7 +748,7 @@ This depends non-trivially on the background UTM $U$,
 prompting Leike and Hutter to ask: ``What are [...] desirable
 properties of a UTM?'' \cite{leike2015bad}.
 UTMs formalize programming languages, so the question is equivalent
-to ``What are desirable properties of a programming language?'' (i.e., \emph{inherently}
+to ``What are desirable properties of a programming language?''\ (i.e., \emph{inherently}
 desirable properties, as opposed to subjectively desirable properties like whether or
 not white-space matters).
 Intrinsically desirable UTM properties are elusive; attempts
@@ -776,7 +775,7 @@ $\Pi^c$ is the set of agents $\rho$ such that $\rho\not\in\Pi$.
     A set $\Pi$ of agents is \emph{discernable} if there exists
     an environment $\mu$ such that for all agents $\pi$, $\rho$:
     \begin{enumerate}
-        \item $V^\pi_\mu$ exists.
+        \item $V^\pi_\mu$ and $V^\rho_\mu$ are defined.
         \item If $\pi\in\Pi$ and $\rho\in\Pi^c$, then $V^\pi_\mu\not=V^\rho_\mu$.
     \end{enumerate}
 \end{definition}
@@ -796,7 +795,7 @@ Two sets are \emph{disjoint} if they have no point in common.
     reals such that for every agent $\pi$:
     \begin{enumerate}
         \item
-        $V^\pi_\mu$ exists.
+        $V^\pi_\mu$ is defined.
         \item
         If $\pi\in \Pi$ then $V^\pi_\mu\in I$.
         \item
@@ -854,7 +853,7 @@ We will use mixtures to state a partial converse.
 
     To see $\Pi$ is discernable, let $\pi,\rho$ be any agents.
     By condition 1 of Definition \ref{incentivizabilitydefn},
-    $V^\pi_\mu$ exists. And if $\pi\in\Pi$, $\rho\in\Pi^c$, then
+    $V^\pi_\mu$ and $V^\rho_\mu$ are defined. And if $\pi\in\Pi$, $\rho\in\Pi^c$, then
     by conditions 2 and 3 of Definition \ref{incentivizabilitydefn},
     $\pi\in I$ and $\rho\in J$. Since $I$ and $J$ are disjoint,
     $V^\pi_\mu\not=V^\rho_\mu$.
@@ -980,13 +979,14 @@ $\pi^{h\mapsto \vec m}$.
 
 \begin{definition}
     Suppose $\pi$ and $\pi_1,\ldots,\pi_n$ are agents and $\Upsilon$ is a
-    weighted intelligence measure. We say that $\pi$ is \emph{strictly better than}
-    $\pi_1,\ldots,\pi_n$ (as measured by $\Upsilon$) if either:
+    weighted intelligence measure.
+    We say $\pi\succ_\Upsilon \pi_1,\ldots,\pi_n$
+    if either:
     \begin{enumerate}
         \item $\Upsilon(\pi)\geq \Upsilon(\pi_i)$ for each $i=1,\ldots,n$; or
         \item $\Upsilon(\pi)>\Upsilon(\pi_i)$ for some $i=1,\ldots,n$.
     \end{enumerate}
-    We define \emph{strictly worse} similarly (change $\geq$ to $\leq$,
+    We define $\pi\prec_\Upsilon\pi_1,\ldots,\pi_n$ similarly (change $\geq$ to $\leq$,
     $>$ to $<$).
 \end{definition}
 
@@ -998,14 +998,13 @@ $\pi^{h\mapsto \vec m}$.
     For any probability distributions $\vec m=(m_1,\ldots,m_n)$ on $\mathcal A$,
     for any positive reals $\vec w=(w_1,\ldots,w_n)$ with $w_1+\cdots+w_n=1$,
     if $\vec w\cdot\vec m=\pi(\cdot|h)$,
-    then $\pi$ is not strictly better (nor strictly worse) than
-    $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
-    (as measured by $\Upsilon$).
+    then $\pi\not\succ_\Upsilon \pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    and $\pi\not\prec_\Upsilon \pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$.
 \end{proposition}
 
 \begin{proof}
-    If $\pi$ is strictly better than $\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
-    (as measured by $\Upsilon$), then this implies
+    If $\pi\succ_\Upsilon\pi^{h\mapsto m_1},\ldots,\pi^{h\mapsto m_n}$
+    then this implies
     \begin{align*}
         \Upsilon(\pi)
             &= \Upsilon(\vec w\cdot\pi^{h\mapsto\vec m})
@@ -1017,7 +1016,7 @@ $\pi^{h\mapsto \vec m}$.
             &= \Upsilon(\pi),
                 &\mbox{($w_1+\cdots+w_n=1$)}
     \end{align*}
-    absurd. Similar reasoning holds for ``strictly worse''.
+    absurd. Similar reasoning holds for $\prec_\Upsilon$.
 \end{proof}
 
 \begin{definition}
@@ -1071,7 +1070,7 @@ infinite-dimensional Euclidean space.
 An agent $\pi$ is a \emph{lattice point} (i.e., a point with integer coordinates)
 iff $\pi$ is strictly deterministic.
 We can picture $z=\Upsilon(\pi)$ as a ``surface'' above
-agents-space
+agent-space
 (more precisely: a surface above agent-space in some places,
 below it in others, and which intersects it in the ``$z$-intercept''
 $\Upsilon(\pi)=0$).
@@ -1111,8 +1110,7 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
     Let $\vec w=(\frac12,\frac12)$, $\vec m=(m_1,m_2)$;
     clearly $\vec w\cdot\vec m=\pi(\cdot|h)$.
     By Prop.\ \ref{pointwisegenericnessthm},
-    $\pi$ is not strictly better than $\pi^{h\mapsto m_1},\pi^{h\mapsto m_2}$
-    (as measured by $\Upsilon$),
+    $\pi\not\succ_\Upsilon \pi^{h\mapsto m_1},\pi^{h\mapsto m_2}$,
     thus $\Upsilon(\pi)\leq \Upsilon(\pi^{h\mapsto m_i})$
     for some $i\in\{1,2\}$.
     Clearly $\pi\not\equiv \pi^{h\mapsto m_i}$
@@ -1125,7 +1123,7 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
 
 \begin{definition}
 \label{stronglywellbehaveddefn}
-    An environment $\mu$ is \emph{strongly well-behaved}
+    An environment $\mu$ is \emph{strongly well-behaved} if
     $\mu$ is well-behaved and for all agents $\pi$ and all
     $t\in\mathbb N$, $-1\leq V^\pi_{\mu,t}\leq 1$.
     A weighted intelligence measure $\Upsilon$ is \emph{strongly well-behaved}
@@ -1138,7 +1136,7 @@ cannot have any ``hyperridges'' or ``hypertroughs'' above non-lattice points.
 \end{definition}
 
 Note that if $\mu$ never gives negative rewards, then the condition
-$-1\leq V^\pi_{\mu,t}\leq 1$ is equivalent to $-1\leq V^\pi_mu\leq 1$.
+$-1\leq V^\pi_{\mu,t}\leq 1$ is equivalent to $-1\leq V^\pi_\mu\leq 1$.
 Thus if the background reward-space $\mathcal R$ is $\subseteq [0,1]$
 then every nonzero weighted intelligence measure
 is a constant multiple of a strongly well-behaved weighted intelligence
@@ -1202,7 +1200,7 @@ of $\vec v$ implies this sum converges).
     See Supplementary Materials.
 \end{proof}
 
-In order to prove the Lemma \ref{envmaintheorem} below, we will need to invoke
+In order to prove Lemma \ref{envmaintheorem} below, we will need to invoke
 Tannery's Theorem, a classical result from real analysis \cite{bromwich2005introduction}.
 We state the theorem
 without proof.
@@ -1510,8 +1508,8 @@ Here, we present detailed proofs missing from the main text due to length limit.
     =\frac12P^\pi(\overline h)+\frac12P^{\overline\pi}(\overline h)$,
     Lemmas \ref{doublenegationlemma} and \ref{asteriskcommuteswithoverlinelemma}
     imply that
-    $\vec w\cdot P^{(\pi,\overline{\pi})}(h)
-    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)$.
+    \[\vec w\cdot P^{(\pi,\overline{\pi})}(h)
+    =\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h).\]
     So if
     $\vec w\cdot P^{(\pi,\overline{\pi})}(\overline h)=0$
     then $\vec w\cdot P^{(\pi,\overline{\pi})}(h)=0$
@@ -1666,7 +1664,8 @@ Proposition \ref{longproposition}.
 \end{proof}
 
 \begin{proof}[Proof of Proposition \ref{longproposition}]
-    \textbf{Subclaim:}For every $g\in\mathcal H$,
+    \textbf{Subclaim:}
+    For every $g\in\mathcal H$,
     $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
     We prove this by induction on $g$.
 
