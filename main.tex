@@ -1342,17 +1342,13 @@ As such, provable stability or convergence of agent-environment systems,
 resembling for instance the Nyquist stability in control theory \cite{Valena1980NyquistCF}, may become very useful for safe application of reinforcement learning to physical systems \cite{pmlr-v119-stooke20a,Cheng2019EndtoEndSR}.
 
 Experimentally verification are also interesting.
--While we are confident in our proofs, popular reinforcement learning algorithms often subtly deviates from
--the universal intelligent agent model by effectively letting the agent look at the future, by playing the same game more than once in a separate training phase.
--On the other hand, if we consider the life of a human being as a game played by a reinforcement learning agent,
--the game is certainly non-ergodic and can be only played once by an agent. It could even be argued that everyone's life is so distinct that a single game can ever be played once by a single agent.
--
--While being able to play the exact same game multiple times is certainly more practical for real-world AI applications and thus the majority of experimental AI research,
--
--Very recent experimental evidence has shown that Proximal Policy Optimization (PPO) \cite{PPO}, a very popular reinforcement learning algorithm which makes use of multiple playouts, \cite{PPO-bad}.
--%  Copied from Samuel's mails
--%A collection of RL environments where the "step" and "reset" methods return probability distributions rather than individual percepts. (Could fork openai gym or some other existing library, perhaps.)
--%A collection of RL agents whose "act" methods return probability distributions rather than individual actions, and who are trained using a "train" method taking tuple (o_prev, action, reward, o_next, done) as input.
+While we are confident in our proofs, popular reinforcement learning algorithms often subtly deviates from
+the universal intelligent agent model by effectively letting the agent look at the future, by playing the same game more than once in a separate training phase.
+On the other hand, if we consider the life of a human being as a game played by a reinforcement learning agent,
+the game is certainly non-ergodic and can be only played once by an agent. It could even be argued that everyone's life is so distinct that a single game can ever be played once by a single agent.
+While being able to play the exact same game multiple times is certainly more practical for real-world AI applications and thus the majority of experimental AI research,
+Very recent experimental evidence has shown that Proximal Policy Optimization (PPO) \cite{PPO}, a very popular reinforcement learning algorithm which makes use of multiple playouts, \cite{PPO-bad}.
+
 
 \bibliographystyle{apalike} % AISTATS
 \bibliography{main}
