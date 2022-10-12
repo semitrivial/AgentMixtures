@@ -77,7 +77,7 @@
 %\section{Introduction}
 \section{INTRODUCTION}
 
-Multi-agent Reinforcement Learning \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited}, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
+Multi-agent Reinforcement Learning \cite{collective-1993,multiagent-1994-most-cited,multiagent-2021-most-cited,hernandez2011more}, as with other flavors of reinforcement learning, has been enjoying increased attention in artificial intelligence research \cite{unified-multiagent}.
 % Comment
 Opinions about further promises and challenges have emerged, particularly signified by the
 high-profile attempt at replicating the super-human AI game-playing performance, in more complex realtime video games \cite{nature-starcraft},
@@ -122,7 +122,7 @@ reward $R_i$ from an environment,
 we would expect $\sigma$ to get total expected reward
 $\vec{w}\cdot \vec{R}=w_1R_1+\cdots+w_nR_n$ from that environment.
 
-Starting from practical (e.g., OpenAI gym conformant)
+Starting from practical (e.g., conformant with OpenAI Gym \cite{brockman2016openai})
 implementations of agents $\pi_1,\ldots,\pi_n$ as above, $\sigma$ could easily be
 implemented as a new agent who, upon instantiation, uses a random number generator
 to determine which $\pi_i$ to act as, and stores that decision in internal memory.
@@ -793,7 +793,7 @@ Two sets are \emph{disjoint} if they have no point in common.
 \label{incentivizabilitydefn}
     A set $\Pi$ of agents is \emph{separable} if there exists
     an environment $\mu$ and disjoint convex sets $I$ and $J$ of
-    the reals such that for every agent $\pi$:
+    reals such that for every agent $\pi$:
     \begin{enumerate}
         \item
         $V^\pi_\mu$ exists.
@@ -804,12 +804,11 @@ Two sets are \emph{disjoint} if they have no point in common.
     \end{enumerate}
 \end{definition}
 
-Intuitively, $\Pi$ is separable if there is some environment in which
-the performance measures of members of $\Pi$ are separated into one
-convex set, and the performance measures of outsides of $\Pi$ are separated
-into a different convex set, with no overlap.
+Equivalently, $\Pi$ is separable if either: there is some environment where
+every member of $\Pi$ outperforms every member of $\Pi^c$; or there is some
+environment where every member of $\Pi$ underperforms every member of $\Pi^c$.
 Clearly separability implies discernability, but what about the converse?
-We will state a partial converse making use of mixtures.
+We will use mixtures to state a partial converse.
 
 \begin{definition}
 \label{mixtureclosuredef}
@@ -822,16 +821,24 @@ We will state a partial converse making use of mixtures.
 \end{definition}
 
 \begin{lemma}
-\label{ivtlemma}
-    For any real numbers $A\leq B\leq C$, there exists some real $0\leq \alpha\leq 1$
-    such that $\alpha A + (1-\alpha)C=B$.
+\label{convexsetlemma}
+    For every environment $\mu$ and set $\Pi$ of agents,
+    $
+        S_{\Pi,\mu}=\{
+            r\in\mathbb R
+            \,:\,
+            \exists \pi_1,\pi_2\in\Pi\mbox{ s.t. }V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu
+        \}
+    $
+    is convex.
 \end{lemma}
 
 \begin{proof}
-    Let $\alpha=(C-B)/(C-A)$ (or $\alpha=1$ if $A=C$).
+    See Supplementary Material.
 \end{proof}
 
 \begin{theorem}
+\label{separabilitycharacterizationthm}
     (Characterization of Separability)
     For any set $\Pi$ of agents, the following are equivalent:
     \begin{enumerate}
@@ -850,7 +857,7 @@ We will state a partial converse making use of mixtures.
     $V^\pi_\mu$ exists. And if $\pi\in\Pi$, $\rho\in\Pi^c$, then
     by conditions 2 and 3 of Definition \ref{incentivizabilitydefn},
     $\pi\in I$ and $\rho\in J$. Since $I$ and $J$ are disjoint,
-    $V^\pi_\mu\not=V^\rho_\mu$. This shows $\Pi$ is discernable.
+    $V^\pi_\mu\not=V^\rho_\mu$.
 
     To see $\Pi$ is closed under mixtures, let $\vec w=(w_1,\ldots,w_n)$
     and $\vec\pi=(\pi_1,\ldots,\pi_n)$ be as in Definition \ref{mixtureclosuredef}
@@ -869,36 +876,15 @@ We will state a partial converse making use of mixtures.
     Assume $\Pi$ is discernable and both $\Pi$ and $\Pi^c$ are closed under mixtures.
     Since $\Pi$ is discernable, there is some environment $\mu$
     as in Definition \ref{discernabilitydefn}.
-    Define
-    \begin{align*}
-        I &= \{
-            r\in\mathbb R
-            \,:\,
-            \exists \pi_1,\pi_2\in\Pi\mbox{ s.t. }V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu
-        \},\\
-        J &= \{
-            r\in\mathbb R
-            \,:\,
-            \exists \rho_1,\rho_2\in\Pi^c\mbox{ s.t. }V^{\rho_1}_\mu\leq r\leq V^{\rho_2}_\mu
-        \}.
-    \end{align*}
-
-    Claim 1: $I$ is convex. To see this, let $i_1<i_2<i_3$ be any reals
-    such that $i_1\in I$ and $i_3\in I$.
-    By definition of $I$, there are $\pi_1,\pi_2\in\Pi$
-    such that $V^{\pi_1}_\mu\leq i_1\leq V^{\pi_2}_\mu$,
-    and there are $\pi'_1,\pi'_2\in\Pi$ such that
-    $V^{\pi'_1}_\mu\leq i_3\leq V^{\pi'_2}_\mu$.
-    It follows that $V^{\pi_1}_\mu\leq i_2\leq V^{\pi'_2}_\mu$,
-    which shows $i_2\in I$, as desired.
-
-    Claim 2: $J$ is convex. Similar to Claim 1.
-
-    Claim 3: $I$ and $J$ are disjoint. Assume not. Then there is some $r\in I\cap J$.
+    Let $I=S_{\Pi,\mu}$, $J=S_{\Pi^c,\mu}$ as in Lemma \ref{convexsetlemma},
+    so $I$ and $J$ are convex.
+    From the definition of $I$ and $J$, clearly $V^\pi_\mu\in I$ for all $\pi\in\Pi$
+    and $V^\rho_\mu\in J$ for all $\pi\in\Pi^c$. It only remains to show $I$ and $J$
+    are disjoint. Assume not. Then there is some $r\in I\cap J$.
     By definition of $I$, there are $\pi_1,\pi_2\in\Pi$ such that
     $V^{\pi_1}_\mu\leq r\leq V^{\pi_2}_\mu$, and by definition of $J$,
     there are $\rho_1,\rho_2\in\Pi^c$ such that $V^{\rho_1}_\mu\leq r\leq V^{\rho_2}_\mu$.
-    By Lemma \ref{ivtlemma}, there is some real $\alpha\in [0,1]$
+    By basic algebra, there is a real $\alpha\in [0,1]$
     such that $\alpha V^{\pi_1}_\mu + (1-\alpha)V^{\pi_2}_\mu=r$.
     Let $\pi=(\alpha,1-\alpha)\cdot (\pi_1,\pi_2)$.
     By Theorem \ref{maintheorem} (part 4),
@@ -910,16 +896,10 @@ We will state a partial converse making use of mixtures.
     Definition \ref{discernabilitydefn}, 
     and $\pi\in\Pi$ and $\rho\in\Pi^c$, this forces
     $V^\pi_\mu\not=V^\rho_\mu$, absurd.
-
-    Claim 4: For all $\pi\in \Pi$, $V^\pi_\mu\in I$, and for all $\rho\in\Pi^c$,
-    $V^\rho_\mu\in J$. This is immediate from the definition of $I$ and $J$,
-    using $\pi_1=\pi=\pi_2$ and $\rho_1=\rho=\rho_2$.
-
-    By Claims 1--4, $\mu,I,J$ witness that $\Pi$ is separable.
 \end{proof}
 
 %\section{Local extrema and lattice points of intelligence surfaces}
-\section{LOCAL EXTREMA AND LATTICE POINTS OF INTELLIGENCE SURFACES}
+\section{LOCAL EXTREMA AND LATTICE POINTS}
 
 \begin{definition}
 \label{modifyagentatoneplace}
@@ -1223,16 +1203,17 @@ of $\vec v$ implies this sum converges).
 \end{proof}
 
 In order to prove the Lemma \ref{envmaintheorem} below, we will need to invoke
-Tannery's Theorem, a classical result from real analysis. We state the theorem
+Tannery's Theorem, a classical result from real analysis \cite{bromwich2005introduction}.
+We state the theorem
 without proof.
 
 \begin{lemma}
 \label{tannerysthm}
     (Tannery's Theorem)
-    Suppose $\{a_i:\mathbb N\to\mathbb R\}_{i=1}^\infty$ is a sequence of sequences
-    such that for each $i$, $\lim_{t\to\infty}a_i(t)$ converges.
-    Assume there is a sequence $\{w_i\}_{i=1}^\infty$
-    such that $\sum_{i=1}^\infty w_k<\infty$ and such that for all $i>0$,
+    Let $\{a_i:\mathbb N\to\mathbb R\}_{i=1}^\infty$ be a sequence of sequences
+    such each $\lim_{t\to\infty}a_i(t)$ converges.
+    Assume $\{w_i\}_{i=1}^\infty$ satisfies
+    $\sum_{i=1}^\infty w_k<\infty$ and for all $i>0$,
     for all $t\in\mathbb N$,
     $|a_i(t)|\leq w_k$. Then
     \[
@@ -1301,48 +1282,51 @@ without proof.
 \end{theorem}
 
 \begin{proof}
-    Let $\vec\mu=(\mu_1,\mu_2,\ldots)$ be any enumeration of the set of all
-    strongly well-behaved environments (this set is countable since every
+    Let $\vec\mu=(\mu_1,\mu_2,\ldots)$ enumerate all
+    strongly well-behaved environments (a countable set since every
     well-behaved environment is Turing computable).
     Thus there are weights $(w_\mu)_{\mu\in W}$ as in Definition \ref{stronglywellbehaveddefn}.
     Let $\vec w=(w_{\mu_1},w_{\mu_2},\ldots)$,
     thus $\vec w\in\mathscr W$.
-    Let $\mu_\Upsilon=\vec w\cdot \vec\mu$. Then for any agent $\pi$,
+    Then for any agent $\pi$,
     \begin{align*}
-        V^\pi_{\mu_\Upsilon}
-            &= V^\pi_{\vec w\cdot \vec\mu}
-                &\mbox{(Definition of $\mu_\Upsilon$)}\\
+        V^\pi_{\vec w\cdot \vec\mu}
             &= \vec w\cdot V^\pi_{\vec\mu}
                 &\mbox{(Lemma \ref{envmaintheorem})}\\
             &= \sum_{i=1}^\infty w_i V^\pi_{\mu_i}
                 &\mbox{(Definition \ref{infinitedimensionalvectorizationdefn})}\\
-            &= \Upsilon(\pi).
+            &= \Upsilon(\pi),
                 &\mbox{(Definition \ref{stronglywellbehaveddefn})}
     \end{align*}
+    so $\mu_\Upsilon=\vec w\cdot \vec\mu$ works.
 \end{proof}
 
 %\section{Conclusion and future work}
-\section{CONCLUSION AND FUTURE WORK}
+\section{SUMMARY}
 
-To this point, we have proven the core theorem that
-(((fill in the blank)))
-and demonstrated its use by applying it to prove
-(((fill in the blank))).
-We are certainly very optimistic about the result enabling further theoretic development in the form of new theorems
-proved, as the linearity is a very mathematically convenient property for building theories upon. %% couldn't find reference to support this though, is it okay?
+We introduced (Definition \ref{maindefn}) an operation
+which takes a finite sequence of RL agents and a
+finite sequence of weights, and which outputs a new agent, which can
+be thought of as a weighted mixture agent, with the property that
+in any environment,
+``The expected reward of a weighted mixture is the weighted
+average of the expected rewards''
+(Theorem \ref{maintheorem} part 4). Thus if intelligence is measured in
+terms of performance,
+``The intelligence of a weighted mixture is the weighted average
+of the intelligences'' (Theorem \ref{maintheorem} part 5).
+This construction enabled us to prove a number of results about
+the geometry of RL agent intelligence measures, namely, results about
+intelligence symmetry (Theorem \ref{equivalentsymmetriescor}),
+convexity (Theorem \ref{separabilitycharacterizationthm}),
+and strict local extrema (Theorem \ref{extremitythm}).
+Finally, by applying the same mixture idea to environments instead of
+agents, we established (Theorem \ref{universalenvtheorem})
+that for a large class of performance-based
+intelligence measures, there exist universal mixture environments,
+i.e., environments in which every agent's total expected reward in
+fact equals the agent's intelligence according to said measure.
 
-One particular direction in which we would like to further explore is experimentally verification.
-While we are confident in our proofs, popular reinforcement learning algorithms often subtly deviates from
-the universal intelligent agent model by effectively letting the agent look at the future, by playing the same game more than once in a separate training phase.
-On the other hand, if we consider the life of a human being as a game played by a reinforcement learning agent,
-the game is certainly non-ergodic and can be only played once by an agent. It could even be argued that everyone's life is so distinct that a single game can ever be played once by a single agent.
-
-While being able to play the exact same game multiple times is certainly more practical for real-world AI applications and thus the majority of experimental AI research,
-
-Very recent experimental evidence has shown that Proximal Policy Optimization (PPO) \cite{PPO}, a very popular reinforcement learning algorithm which makes use of multiple playouts, \cite{PPO-bad}.
-%  Copied from Samuel's mails
-%A collection of RL environments where the "step" and "reset" methods return probability distributions rather than individual percepts. (Could fork openai gym or some other existing library, perhaps.)
-%A collection of RL agents whose "act" methods return probability distributions rather than individual actions, and who are trained using a "train" method taking tuple (o_prev, action, reward, o_next, done) as input.
 
 
 \bibliographystyle{apalike} % AISTATS
@@ -1561,6 +1545,20 @@ Here, we present detailed proofs missing from the main text due to length limit.
     \end{align*}
 \end{proof}
 
+\subsection{Proof of Lemma \ref{convexsetlemma}}
+
+\begin{proof}
+    Assume $i_1<i_2<i_3$ are reals with $i_1,i_3\in S_{\Pi,\mu}$; we must show
+    $i_2\in S_{\Pi,\mu}$.
+    Since $i_1\in S_{\Pi,\mu}$, there exist agents $\pi_1,\pi_2\in\Pi$
+    such that $V^{\pi_1}_\mu\leq i_1\leq V^{\pi_2}_\mu$.
+    And since $i_3\in S_{\Pi,\mu}$, there exist agents $\rho_1,\rho_2\in\Pi$
+    such that $V^{\rho_1}_\mu\leq i_3\leq V^{\rho_2}_\mu$.
+    Then $\pi_1,\rho_2\in \Pi$ satisfy
+    $V^{\pi_1}_\mu\leq i_2\leq V^{\rho_2}_\mu$, showing $i_2\in S_{\Pi,\mu}$
+    as desired.
+\end{proof}
+
 \subsection{Proof of Lemma \ref{wcdotmisaprobabilitydistro}}
 \begin{proof}
     Clearly for every $y\in\mathcal A$,
@@ -1582,6 +1580,7 @@ Here, we present detailed proofs missing from the main text due to length limit.
     \end{align*}
 \end{proof}
 
+\subsection{Proof of Proposition \ref{longproposition}}
 The following auxiliary lemmas will be used in our proof of
 Proposition \ref{longproposition}.
 
@@ -1666,8 +1665,7 @@ Proposition \ref{longproposition}.
     \end{align*}
 \end{proof}
 
-\subsection{Proof of Proposition \ref{longproposition}}
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{longproposition}]
     \textbf{Subclaim:}For every $g\in\mathcal H$,
     $P^\pi(g)=P^{\vec w\cdot\pi^{h\mapsto \vec m}}(g)$.
     We prove this by induction on $g$.
