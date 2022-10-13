@@ -272,11 +272,12 @@ and likewise for $P_\mu$ and for $P^\pi_\mu$.
     \[
         P^\pi_\mu(h) = P^\pi(h)P_\mu(h).
     \]
-\end{lemma}
+\end{lemma} %
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Materials.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Materials.
+%\end{proof}
 
 In the following definition (and the rest of the paper),
 $\mathbb N$ denotes the set $\{0,1,2,\ldots\}$ of non-negative
@@ -422,10 +423,11 @@ Now we are ready to define mixture agents.
     then the mixture agent $\vec w\cdot\vec\pi$ is an agent
     (per Definition \ref{omnibusdefn} part 3).
 \end{lemma}
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Materials.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Materials.
+%\end{proof}
 
 We will frequently use Lemma \ref{mixturereallyisanagent} without explicit mention.
 For example, the lemma allows us to speak of $P^{\vec w\cdot \vec\pi}(h)$
@@ -652,20 +654,22 @@ self-dual agents (up to equivalence modulo a natural equivalence relation).
     $\pi\equiv\vec w\cdot (\pi,\ldots,\pi)$ (where
     $(\pi,\ldots,\pi)$ has length $n$).
 \end{lemma}
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Materials.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Materials.
+%\end{proof}
 
 \begin{lemma}
 \label{reflectionmakesjanuslemma}
     For any agent $\pi$,
     $(\frac12,\frac12)\cdot(\pi,\overline\pi)$ is self-dual.
 \end{lemma}
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Materials.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Materials.
+%\end{proof}
 
 \begin{proposition}
 \label{janusagentcharacterizationproposition}
@@ -831,10 +835,11 @@ We will use mixtures to state a partial converse.
     $
     is convex.
 \end{lemma}
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Material.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Material.
+%\end{proof}
 
 \begin{theorem}
 \label{separabilitycharacterizationthm}
@@ -942,10 +947,11 @@ We will use mixtures to state a partial converse.
     If $\vec m$, $\vec w$ are as in Definition \ref{sumofdistros}
     then $\vec w\cdot\vec m$ is a probability distribution on $\mathcal A$.
 \end{lemma}
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Materials.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Materials.
+%\end{proof}
 
 \begin{definition}
     For any agent $\pi$, for any $h\in(\mathcal E\mathcal A)^*\mathcal E$,
@@ -972,10 +978,11 @@ $\pi^{h\mapsto \vec m}$.
         \Upsilon(\vec w\cdot \pi^{h\mapsto \vec m}).
     $
 \end{proposition}
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Materials.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Materials.
+%\end{proof}
 
 \begin{definition}
     Suppose $\pi$ and $\pi_1,\ldots,\pi_n$ are agents and $\Upsilon$ is a
@@ -1195,10 +1202,11 @@ of $\vec v$ implies this sum converges).
     $\vec w\cdot\vec\mu$ (as in Definition \ref{mixtureenvdefn})
     is indeed an environment.
 \end{lemma}
+\vspace{-0.5em}(Proof in Supplementary Materials.)
 
-\begin{proof}
-    See Supplementary Materials.
-\end{proof}
+%\begin{proof}
+%    See Supplementary Materials.
+%\end{proof}
 
 In order to prove Lemma \ref{envmaintheorem} below, we will need to invoke
 Tannery's Theorem, a classical result from real analysis \cite{bromwich2005introduction}.
@@ -1300,7 +1308,7 @@ without proof.
 \end{proof}
 
 %\section{Conclusion and future work}
-\section{SUMMARY}
+\section{SUMMARY AND FUTURE WORK}
 
 We introduced (Definition \ref{maindefn}) an operation
 which takes a finite sequence of RL agents and a
@@ -1325,6 +1333,22 @@ intelligence measures, there exist universal mixture environments,
 i.e., environments in which every agent's total expected reward in
 fact equals the agent's intelligence according to said measure.
 
+We are certainly very optimistic about the result enabling theoretical advances in the form of new theorems
+proved, as linearity is mathematically convenient for further theories.
+In particular, linearity is a crucial assumption in conventional control theory \cite{control-textbook-1,control-textbook-2}. With its early historical link to optimal control \cite{Sutton2005ReinforcementLA-mentions-optimal-control}, reinforcement learning has recently come full circle at being increasingly applied to
+traditional ``homegrounds'' of control theory, such as robotics \cite{RL-robotics,Li2021ReinforcementLF},
+aeronautics \cite{Wang2022DeepRL}, and even control of active vehicle suspension \cite{RL-car-suspension}.
+As such, provable stability or convergence of agent-environment systems,
+resembling for instance the Nyquist stability in control theory \cite{Valena1980NyquistCF}, may become very useful for safe reinforcement learning applications in the physical world \cite{pmlr-v119-stooke20a,Cheng2019EndtoEndSR}.
+
+%While we are confident in our proofs,
+%xperimental verification could also be interesting.
+%Popular reinforcement learning algorithms often subtly deviates from
+%the universal intelligent agent model by playing the same game more than once in a separate training phase.
+%On the other hand, if we consider the life of a human being as a game played by a reinforcement learning agent,
+%the game is certainly non-ergodic and can be only played once by an agent. It could even be argued that everyone's life is so distinct that a single game can ever be played once by a single agent.
+%While being able to play the exact same game multiple times is certainly more practical for real-world AI applications and thus the majority of experimental AI research,
+%Very recent experimental evidence has shown that Proximal Policy Optimization (PPO) \cite{PPO}, a very popular reinforcement learning algorithm which makes use of multiple playouts, \cite{PPO-bad}.
 
 
 \bibliographystyle{apalike} % AISTATS
@@ -1334,7 +1358,7 @@ fact equals the agent's intelligence according to said measure.
 
 \onecolumn
 
-% This is to be separated into two files during submission
+% This is to be separated into two t during submission
 % Reset counters
 % https://tex.stackexchange.com/questions/71162/reset-section-numbering-between-unnumbered-chapters
 \setcounter{section}{0}
