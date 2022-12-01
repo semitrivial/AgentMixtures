@@ -16,20 +16,40 @@
 
 \begin{document}
 
-You have until \textbf{Monday, December 5, 2022 (11:59PM Anywhere on Earth)} to (optionally) respond to the reviews. You must submit a single response that addresses all reviews (not one response per review). The author response is limited to a \textbf{single page} in PDF format, including all figures, tables, and references, and has to use the AISTATS ``author response'' style that accompanies this \texttt{tex}-file. You may not alter this style file; in particular, you may not change the paper size, font, font size, or margins. Moreover, author responses must not contain external links, and must be \textbf{anonymized}.
+\section{Reviewer 4 (``Accept'')}
 
-Please focus your response on either answering specific questions raised in the reviews or correcting any misunderstanding or factual errors in the reviews.
+Thank you for your insightful review. We particularly appreciate your note about the \emph{agent} vs.\ \emph{policy} terminology, and we will add some text to clarify about that.
 
-You can change your response as often as you like until the above deadline. Please note that \textbf{this deadline is strict} and we encourage you to submit your response early so as to avoid technical issues. Please be aware that the deadline is \textbf{11:59PM Anywhere on Earth}.
+\section{Reviewer 3 (``Accept'')}
 
+Thank you for this detailed review. We particularly appreciate your suggestion to use Bayesian priors to further illuminate the main definition.
 
-To include a figure in your response, the following LaTeX code is a possible solution:
+\section{Reviewers 2 (``Marginally below'') and 1 (``Reject'')}
 
-\begin{verbatim}
-\begin{minipage}[b]{0.3\linewidth}
-\includegraphics[width=\linewidth]{path_to_figure}
-\captionof{figure}{figure_caption}
-\end{minipage}
-\end{verbatim}
+Thank you for your constructive reviews. You make a great point that our introduction would
+be improved by including language about the specific results that we later prove, as well as
+about how these theoretical results are actually applicable. Thanks
+to you, we intend to add such language, which will greatly improve the paper. In particular,
+we will add language in the introduction about applications:
+\begin{itemize}
+    \item
+    We already point out in the weak and strong symmetry section that the results there
+    have implications for the search for inherently desirable properties of universal Turing
+    machines. We will put this more front-and-center by adding language to that effect in the
+    Introduction as well.
+    \item
+    The discernability and separability section has applications toward determining what
+    sorts of things can or cannot be incentivized by reinforcement learning. This is somewhat
+    analogous to how the Pumping Lemma can be used to show that, e.g., certain languages are
+    not regular. Namely: if a set of agents does not satisfy the closure properties in this
+    section, then it is hopeless to try to engineer an RL environment that ultimately rewards
+    exactly that set of agents while punishing its complement.
+    \item
+    The local extrema and lattice points section has applications for the search for
+    optimal reinforcement learning agents. It shows that the search space can be very
+    considerably narrowed down by restricting attention to deterministic agents. In concrete
+    terms, the work here shows that nothing can be gained by allowing agents to invoke
+    genuine random number generators, e.g.\ expensive RNGs based on quantum mechanics etc.
+\end{itemize}
 
 \end{document}
