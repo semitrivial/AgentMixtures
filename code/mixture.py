@@ -84,7 +84,7 @@ class Mixee1:
 
 class Mixee2:
     def __init__(self):
-        self.worker = Q_learner(epsilon=0.01, learning_rate=0.2, gamma=0.75)
+        self.worker = Q_learner(epsilon=0.5, learning_rate=0.2, gamma=0.75)
     def act(self, obs):
         return self.worker.act(obs)
     def train(self, *args):
@@ -139,7 +139,7 @@ def agent_env_interaction(agent_class, env_class, nsteps):
 
 print("Testing Mixee1 in CartPole_LowRes")
 total_rewards_mixee1 = []
-for _ in range(10000):
+for _ in range(500):
     r = agent_env_interaction(Mixee1, CartPole_LowRes, 1000)
     total_rewards_mixee1.append(r)
 result1 = sum(total_rewards_mixee1)/len(total_rewards_mixee1)
@@ -148,7 +148,7 @@ print(f"Avg total reward: {result1}")
 
 print("Testing Mixee2 in CartPole_LowRes")
 total_rewards_mixee2 = []
-for _ in range(10000):
+for _ in range(500):
     r = agent_env_interaction(Mixee2, CartPole_LowRes, 1000)
     total_rewards_mixee2.append(r)
 result2 = sum(total_rewards_mixee2)/len(total_rewards_mixee2)
@@ -160,7 +160,7 @@ mixture = Mix([Mixee1, Mixee2], [0.5, 0.5])
 
 print("Testing mixture in CartPole_LowRes")
 total_rewards_mixture = []
-for _ in range(10000):
+for _ in range(500):
     r = agent_env_interaction(mixture, CartPole_LowRes, 1000)
     total_rewards_mixture.append(r)
 result3 = sum(total_rewards_mixture)/len(total_rewards_mixture)

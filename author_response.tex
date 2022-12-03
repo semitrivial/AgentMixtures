@@ -13,42 +13,55 @@
 \usepackage{xcolor}         % define colors in text
 \usepackage{xspace}         % fix spacing around commands
 
-
 \begin{document}
+
+This is the author response for ``Universal Agent Mixtures and the Geometry of Intelligence''
+(submission 638).
 
 \section{Reviewer 4 (``Accept'')}
 
-Thank you for your insightful review. We particularly appreciate your note about the \emph{agent} vs.\ \emph{policy} terminology, and we will add some text to clarify about that.
+Thank you for your insightful review. We particularly appreciate your note about the \emph{agent} vs.\ \emph{policy} terminology, and we will add some text to clarify.
 
 \section{Reviewer 3 (``Accept'')}
 
-Thank you for this detailed review. We particularly appreciate your suggestion to use Bayesian priors to further illuminate the main definition.
+Thank you for this detailed review. We particularly appreciate your suggestion to use Bayesian priors to further illuminate the main definition. Re: Proposition 39: thank you, you're right, in Definition 38 the "either...or" ought to be "both...and".
 
 \section{Reviewers 2 (``Marginally below'') and 1 (``Reject'')}
 
 Thank you for your constructive reviews. You make a great point that our introduction would
 be improved by including language about the specific results that we later prove, as well as
-about how these theoretical results are actually applicable. Thanks
-to you, we intend to add such language, which will greatly improve the paper. In particular,
-we will add language in the introduction about applications:
+about how these theoretical results are actually applicable. We intend to add such
+language, which will greatly improve the paper. In particular, we will add language in
+the introduction about applications:
 \begin{itemize}
     \item
-    We already point out in the weak and strong symmetry section that the results there
+    By guaranteeing that ``the expected reward of a weighted mixture is the weighted
+    average of the expected rewards,'' Theorem 14 offers an application to AI safety.
+    Namely: it provides a way to mix reinforcement learning agents without the risk of
+    unforeseen side-effects. For example, if several agents have different weaknesses,
+    then, a priori, one might worry that when those agents are combined, those weaknesses
+    might compound each other, leading to a combined weakness larger than the sum of the
+    individual weaknesses; Theorem 14
+    guarantees this does not occur with our agent mixtures.
+    \item
+    We already point out in Section 4 (Equivalence of Weak and Strong Symmetry)
+    that the results there
     have implications for the search for inherently desirable properties of universal Turing
     machines. We will put this more front-and-center by adding language to that effect in the
-    Introduction as well.
+    Introduction.
     \item
-    The discernability and separability section has applications toward determining what
-    sorts of things can or cannot be incentivized by reinforcement learning. This is somewhat
-    analogous to how the Pumping Lemma can be used to show that, e.g., certain languages are
-    not regular. Namely: if a set of agents does not satisfy the closure properties in this
+    Section 5 (Discernability and Separability) has applications for determining what
+    sorts of things can or cannot be incentivized by reinforcement learning, in a formal sense 
+    (analogous to how the Pumping Lemma can be used to show that, e.g., certain
+    languages are not regular). Namely: if a set of agents does not satisfy the
+    closure properties in this
     section, then it is hopeless to try to engineer an RL environment that ultimately rewards
-    exactly that set of agents while punishing its complement.
+    exactly that set of agents while punishing all other agents.
     \item
-    The local extrema and lattice points section has applications for the search for
-    optimal reinforcement learning agents. It shows that the search space can be very
+    Section 6 (Local Extrema and Lattice Points) has applications for the search for
+    optimal reinforcement learning agents. It shows that the search space can be
     considerably narrowed down by restricting attention to deterministic agents. In concrete
-    terms, the work here shows that nothing can be gained by allowing agents to invoke
+    terms, the work here shows that nothing is gained by allowing agents to invoke
     genuine random number generators, e.g.\ expensive RNGs based on quantum mechanics etc.
 \end{itemize}
 
