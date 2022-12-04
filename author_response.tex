@@ -15,29 +15,52 @@
 
 \begin{document}
 
-This is the author response for ``Universal Agent Mixtures and the Geometry of Intelligence''
-(submission 638).
+% This is the author response for ``Universal Agent Mixtures and the Geometry of Intelligence''
+% (submission 638).
 
-\section*{Reviewer 4 (``Accept'')}
+\paragraph{W.r.t.\ Reviewer 4 (``Accept'')}
 
 Thank you for your insightful review. We particularly appreciate your note about the \emph{agent} vs.\ \emph{policy} terminology, and we will add some text to clarify. Re: Theorem 42 working with more general distances over the agent space: this is true; we will add a remark to this effect.
 
-\section*{Reviewer 3 (``Accept'')}
+\paragraph{W.r.t.\ Reviewer 3 (``Accept'')}
 
-Thank you for this detailed review. We particularly appreciate your suggestion to use Bayesian priors to further illuminate the main definition. Re: Proposition 39: thank you, you're right, in Definition 38 the "either...or" ought to be "both...and". Re: convex geometry: very good point, we will add a remark about this. Re: grounding formal statements in plain language: good point, this is yet another good way to improve the paper (particularly in Section 4 (Equivalence of Weak and Strong Symmetry), as duals and self-duality do have very intuitive concepts behind them).
+Thank you for this detailed review. We particularly appreciate your suggestion to use Bayesian priors to further illuminate the main definition. Re: Proposition 39: thank you, you're right, in Definition 38 the "either...or" ought to be "both...and". Re: convex geometry: very good point, we will add a remark about this. Re: grounding formal statements in plain language: good point, this is yet another good way to improve the paper (particularly in Section 4, as duals and self-duality do have very intuitive concepts behind them).
 
-\section*{Reviewers 2 (``Marginally below'') and 1 (``Reject'')}
+\paragraph{W.r.t.\ Reviewer 2 (``Marginally below'') and Reviewer 1 (``Reject'')}
 
-Thank you for your constructive reviews. You make a great point that our introduction would
-be improved by including language about the specific results that we later prove, as well as
-about how these theoretical results are actually applicable. We intend to add such
-language, which will greatly improve the paper. In particular, we will add language in
-the introduction about applications:
+Thank you for your constructive reviews. You make a great point that our introduction/conclusion would
+be improved by more elaboration on the specific results that we later prove, as well as
+about how these theoretical results are actually applicable.
+
+While we were limited in space laying out the impact and
+applications
+of our results, we plan to fully articulate the additional page
+allowed in the camera-ready version for this purpose - and of course refining notations and the connectedness of the introduction, as suggested by Reviewer 2.
+We are confident that the extra page would provide more than enough space for us to do so. So the space constraint as mentioned by Reviewer 1 is actually not a worry.
+
+On a higher level our results are intended as a step towards more provable behaviors in RL,
+paying a tribute to its root from control theory where system stability (and in a more pragmatic sense,
+both safety and guaranteed performance)
+is paramount.
+In our case, we have proven that RL agents collaborating
+in a specific way will \emph{not} exhibit emergent behavior, which
+can be regarded as a certain theoretical safety guarantee where emergent behavior might be undesirable.
+Due to its generalized nature, our results not only apply to artificial intelligence,
+but potentially also agent-based modeling of
+systems involving human behaviour such as \cite{Bouarfa2013AgentbasedMA}.
+For example, corruption in (human) organizations can be considered
+as an unwanted emergent ``bartering'' behavior -- and often ``learned'', which leads to remote possibilities that corruption-proof mechanisms could be designed with inspirations from RL research downstream.
+
+%We intend to add such
+%language, which will greatly improve the paper.
+Moreover, with the additional page, we would like to point out the following applications of individual results.
+%the introduction
+%about applications:
 \begin{itemize}
     \item
     By guaranteeing that ``the expected reward of a weighted mixture is the weighted
-    average of the expected rewards,'' Theorem 14 provides a way to mix reinforcement
-    learning agents without the risk of unforeseen side-effects. For example, if several
+    average of the expected rewards,'' Theorem 14 provides a way to mix RL
+    agents without the risk of unforeseen side-effects. For example, if several
     agents have different weaknesses,
     then, a priori, one might worry that when those agents are combined, those weaknesses
     might compound each other, leading to a combined weakness larger than the sum of the
@@ -48,24 +71,28 @@ the introduction about applications:
     that the results there
     have implications for the search for inherently desirable properties of universal Turing
     machines. We will put this more front-and-center by adding language to that effect in the
-    Introduction.
+    Introduction/Conclusion.
     \item
     Section 5 (Discernability and Separability) has applications for determining what
-    sorts of things can or cannot be incentivized by reinforcement learning, in a formal sense 
-    (analogous to how the Pumping Lemma can be used to show that, e.g., certain
+    sorts of things can or cannot be incentivized by RL, in a formal sense 
+    (similar to using the Pumping Lemma to show that certain
     languages are not regular). Namely: if a set of agents does not satisfy the
     closure properties in this
-    section, then it is hopeless to try to engineer an RL environment that ultimately rewards
-    exactly that set of agents while punishing all other agents.
+    section, then no RL environment rewards
+    exactly that set of agents while punishing all others.
     \item
     Section 6 (Local Extrema and Lattice Points) has applications for the search for
-    optimal reinforcement learning agents. It shows that the search space can be
+    optimal RL agents. It shows that the search space can be
     considerably narrowed down by restricting attention to deterministic agents. In concrete
     terms, the work here shows that nothing is gained by allowing agents to invoke
     genuine random number generators, e.g.\ expensive RNGs based on quantum mechanics etc.
 \end{itemize}
-This will better motivate the paper as well as make the introduction less abstract and ambiguous (as suggested by Reviewer 2) and less vague and disconnected from the results (as suggested by Reviewer 2). This will also provide better contextual discussion and motivation (as suggested by Reviewer 1) and will clarify the paper's intended impact (as suggested by Reviewer 1).
+This will better motivate the paper as well as make the introduction less abstract and ambiguous (thanks Reviewer 2) and less vague and disconnected from the results (thanks Reviewer 2). This will also provide better contextual discussion and motivation (thanks Reviewer 1) and will clarify the paper's intended impact (thanks Reviewer 1).
 
 Reviewer 1 suggested we include a motivating problem as a running example. That's a fantastic idea! The example from the first bullet point above (mixing several agents with several weaknesses, and bounding the resulting joint weakness) will make an excellent running example for the first part of the paper and will significantly improve the paper.
+
+% If the content goes over a page the second page will simply get trimmed
+\bibliographystyle{apalike} % AISTATS 
+\bibliography{main}
 
 \end{document}
