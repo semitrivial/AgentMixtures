@@ -18,21 +18,38 @@
 This is the author response for ``Universal Agent Mixtures and the Geometry of Intelligence''
 (submission 638).
 
-\section{Reviewer 4 (``Accept'')}
+\paragraph{W.r.t. Reviewer 4 (``Accept'')}
 
 Thank you for your insightful review. We particularly appreciate your note about the \emph{agent} vs.\ \emph{policy} terminology, and we will add some text to clarify.
 
-\section{Reviewer 3 (``Accept'')}
+\paragraph{W.r.t. Reviewer 3 (``Accept'')}
 
 Thank you for this detailed review. We particularly appreciate your suggestion to use Bayesian priors to further illuminate the main definition. Re: Proposition 39: thank you, you're right, in Definition 38 the "either...or" ought to be "both...and".
 
-\section{Reviewers 2 (``Marginally below'') and 1 (``Reject'')}
+\paragraph{W.r.t. Reviewers 2 (``Marginally below'') and 1 (``Reject'')}
 
-Thank you for your constructive reviews. You make a great point that our introduction would
+Thank you for your constructive reviews. You make a great point that our introduction/conclusion would
 be improved by including language about the specific results that we later prove, as well as
-about how these theoretical results are actually applicable. We intend to add such
-language, which will greatly improve the paper. In particular, we will add language in
-the introduction about applications:
+about how these theoretical results are actually applicable.
+While we were limited in space laying out the impact and applications of our results, we plan to dedicate the additional page allowed in the camera-ready version for such purpose.
+
+On a higher level our results are a step towards provable behavior in reinforcement learning,
+paying a tribute to its root from control theory where system stability (and in a more pragmatic sense,
+both safety and guaranteed performance)
+is paramount.
+In our instance we have proven that reinforcement agents collaborating
+in a specific way will \emph{not} exhibit emergent behavior, which
+can be regarded as a certain theoretical safety guarantee where emergent behavior might be undesirable.
+Due to its generalized nature, our results not only apply to artificial intelligence,
+but potentially also agent-based modeling of
+systems involving human behaviour such as \cite{Bouarfa2013AgentbasedMA}.
+For example, corruption in organizational behavior can be considered as an unwanted emergent ``bartering'' behavior. 
+
+%We intend to add such
+%language, which will greatly improve the paper.
+More particularly, we would like to point out the following applications of individual theorems.
+%the introduction
+%about applications:
 \begin{itemize}
     \item
     By guaranteeing that ``the expected reward of a weighted mixture is the weighted
@@ -48,7 +65,7 @@ the introduction about applications:
     that the results there
     have implications for the search for inherently desirable properties of universal Turing
     machines. We will put this more front-and-center by adding language to that effect in the
-    Introduction.
+    Introduction/Conclusion.
     \item
     Section 5 (Discernability and Separability) has applications for determining what
     sorts of things can or cannot be incentivized by reinforcement learning, in a formal sense 
@@ -64,5 +81,10 @@ the introduction about applications:
     terms, the work here shows that nothing is gained by allowing agents to invoke
     genuine random number generators, e.g.\ expensive RNGs based on quantum mechanics etc.
 \end{itemize}
+
+
+
+\bibliographystyle{apalike} % AISTATS 
+\bibliography{main}
 
 \end{document}
