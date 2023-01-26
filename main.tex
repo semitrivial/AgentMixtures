@@ -161,6 +161,7 @@ By $\mathcal E$ we mean $\mathcal O\times\mathcal R$ (the set of all observation
 pairs); elements of $\mathcal E$ are called \emph{percepts}.
 By $\Delta\mathcal A$ (resp.\ $\Delta\mathcal E$) we mean the set of all
 probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
+Elements of $\Delta \mathcal A$ are also known as \emph{policies}.
 
 \begin{definition}
 \label{omnibusdefn}
@@ -190,7 +191,9 @@ probability distributions on $\mathcal A$ (resp.\ on $\mathcal E$).
         we write $\pi(\cdot|h)$ for the value of $\pi$ at $h$, and
         for any $y\in \mathcal A$, we write $\pi(y|h)$ for
         $(\pi(\cdot|h))(y)$.
-        Intuitively, $\pi(y|h)$ is the probability that agent $\pi$
+        Intuitively, $\pi$ takes a history $h$ and outputs a policy
+        $\pi(\cdot|h)$; for any action $y$,
+        $\pi(y|h)$ is the probability that agent $\pi$
         takes action $y$ in response to history $h$.
         \item
         An \emph{environment} is defined to be a function
