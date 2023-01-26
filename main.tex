@@ -420,6 +420,13 @@ Now we are ready to define mixture agents.
     $\vec w\cdot\vec\pi$ would never take in those circumstances).
 \end{remark}
 
+Intuitively, $\vec w\cdot\vec\pi$ can be thought of as being driven by an entity
+who believes that actions are to be chosen by one of the $\vec\pi$, but does not
+know which. The entitiy initially assigns each $w_i$ to $\pi_i$ as a prior, and
+attempts to guess the probability of each action being chosen by the unknown
+agent $\pi_i$, using these priors to do so. As new actions are seen, said priors
+are updated using Bayes' rule.
+
 \begin{lemma}
 \label{mixturereallyisanagent}
     If $\vec\pi$ and $\vec w$ are as in Definition \ref{maindefn}
